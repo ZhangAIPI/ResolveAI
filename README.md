@@ -1,5 +1,9 @@
 # ResolveAI
 
+[**中文可视化 Demo：不同工具操作的实际结果**](docs/demo/README.zh-CN.md)
+
+![工具操作展示](docs/demo/assets/operations.webp)
+
 A multi-turn visual evidence environment for training and evaluating agents that
 choose what to inspect, request and cite. Verdicts are `Supported`, `Refuted` and
 `Need more evidence`. Visual state changes do not establish liability.

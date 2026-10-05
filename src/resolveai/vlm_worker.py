@@ -129,7 +129,8 @@ def main():
                       "model_type": model.config.model_type,
                       "assistant_prefix": "<tool_call>\n{\"name\":" if adapter == "portable" else None,
                       "processor": type(processor).__name__,
-                      "image_processor": type(processor.image_processor).__name__}), flush=True)
+                      "image_processor": type(processor.image_processor).__name__,
+                      "crop_to_patches": False if model.config.model_type == "internvl" else None}), flush=True)
     for line in sys.stdin:
         request = json.loads(line)
         tool_mode = request.get("mode") == "tools"
@@ -154,7 +155,8 @@ def main():
                 message["content"] = [{"type": "text", "text": message["content"]}]
         started = time.perf_counter()
         inputs = processor.apply_chat_template(messages, tools=request.get("tools") if adapter == "native" else None,
-            tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt")
+            tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt",
+            **({"crop_to_patches": False} if model.config.model_type == "internvl" else {}))
         prefix = '<tool_call>\n{"name":' if tool_mode and adapter == "portable" else ""
         if prefix:
             prefix_ids = processor.tokenizer(prefix, add_special_tokens=False, return_tensors="pt").input_ids

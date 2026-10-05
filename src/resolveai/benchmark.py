@@ -69,7 +69,7 @@ def main():
         "policies": ["initial", "agent"], "tool_adapter": "portable-prefix-v1",
         "costs": asdict(Costs()), "limit_families": args.limit_families,
         "decoding": {"do_sample": False, "max_new_tokens": 384},
-        "image_max_pixels": 512 * 512, "dtype": "bfloat16", "attention": "sdpa"}
+        "image_max_pixels": 512 * 512, "internvl_crop_to_patches": False, "dtype": "bfloat16", "attention": "sdpa"}
     manifest_path = args.output / "manifest.json"
     manifest = locked_manifest(manifest_path, config)
     results_path = args.output / "results.jsonl"
