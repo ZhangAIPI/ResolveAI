@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-05T18:32:13+00:00",
+  "as_of_utc": "2026-10-05T18:52:55+00:00",
   "status": "partial_not_a_final_model_comparison",
   "evaluation_commit": "4810a1e",
   "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
@@ -14,40 +14,40 @@
   "max_turns": 6,
   "max_context_tokens": 8192,
   "tool_adapter": "portable-prefix-v1",
-  "recorded_episodes": 6207,
+  "recorded_episodes": 6421,
   "planned_episodes": 7200,
   "runs": [
     {
       "run": "qwen3",
       "model": "Qwen3-VL-8B",
       "state": "running",
-      "recorded_episodes": 1762,
+      "recorded_episodes": 1819,
       "planned_episodes": 2400,
-      "completed_family_pairs": 220,
+      "completed_family_pairs": 227,
       "policies": {
-        "initial": 881,
-        "agent": 881
+        "initial": 910,
+        "agent": 909
       },
       "termination": {
-        "finished": 683,
-        "max_turns": 1079
+        "finished": 702,
+        "max_turns": 1117
       },
       "tool_errors": {
-        "unreleased_citation": 3868,
-        "unreleased_image": 1426,
-        "invalid_bbox": 174,
-        "view_too_large": 38,
+        "unreleased_citation": 4000,
+        "unreleased_image": 1468,
+        "invalid_bbox": 177,
+        "view_too_large": 42,
         "invalid_arguments": 5
       },
       "attempted_calls": {
-        "finish": 4561,
-        "compare": 1167,
-        "inspect": 1457,
-        "request_photo": 583,
-        "ground_image_to_image": 125,
+        "finish": 4712,
+        "compare": 1202,
+        "inspect": 1502,
+        "request_photo": 601,
+        "ground_image_to_image": 128,
         "ground_text_to_image": 89,
-        "crop": 549,
-        "zoom": 165,
+        "crop": 573,
+        "zoom": 174,
         "ocr": 72
       }
     },
@@ -55,29 +55,29 @@
       "run": "qwen25",
       "model": "Qwen2.5-VL-7B",
       "state": "running",
-      "recorded_episodes": 2289,
+      "recorded_episodes": 2360,
       "planned_episodes": 2400,
-      "completed_family_pairs": 286,
+      "completed_family_pairs": 295,
       "policies": {
-        "initial": 1145,
-        "agent": 1144
+        "initial": 1180,
+        "agent": 1180
       },
       "termination": {
-        "finished": 1084,
-        "max_turns": 1205
+        "finished": 1124,
+        "max_turns": 1236
       },
       "tool_errors": {
-        "unreleased_citation": 1992,
-        "unreleased_image": 198,
+        "unreleased_citation": 2061,
+        "unreleased_image": 201,
         "invalid_arguments": 156,
         "invalid_bbox": 79,
         "insufficient_budget": 3
       },
       "attempted_calls": {
-        "finish": 3295,
-        "inspect": 2481,
-        "compare": 1224,
-        "ground_image_to_image": 760,
+        "finish": 3404,
+        "inspect": 2558,
+        "compare": 1271,
+        "ground_image_to_image": 765,
         "request_photo": 60,
         "ground_image_to_text": 10,
         "crop": 9
@@ -87,31 +87,31 @@
       "run": "internvl35-shard0",
       "model": "InternVL3.5-8B / shard 0",
       "state": "running",
-      "recorded_episodes": 1079,
+      "recorded_episodes": 1126,
       "planned_episodes": 1200,
-      "completed_family_pairs": 134,
+      "completed_family_pairs": 140,
       "policies": {
-        "initial": 540,
-        "agent": 539
+        "initial": 563,
+        "agent": 563
       },
       "termination": {
-        "finished": 286,
-        "max_turns": 793
+        "finished": 298,
+        "max_turns": 828
       },
       "tool_errors": {
-        "unreleased_citation": 1658,
-        "unreleased_image": 515,
-        "invalid_bbox": 360,
-        "invalid_arguments": 20,
+        "unreleased_citation": 1724,
+        "unreleased_image": 527,
+        "invalid_bbox": 375,
+        "invalid_arguments": 22,
         "insufficient_budget": 4
       },
       "attempted_calls": {
-        "finish": 1955,
-        "compare": 941,
-        "crop": 1329,
-        "inspect": 478,
-        "zoom": 206,
-        "ground_image_to_image": 69,
+        "finish": 2034,
+        "compare": 978,
+        "crop": 1417,
+        "inspect": 490,
+        "zoom": 210,
+        "ground_image_to_image": 71,
         "request_photo": 131,
         "assess_quality": 19,
         "ocr": 3
@@ -121,33 +121,33 @@
       "run": "internvl35-shard1",
       "model": "InternVL3.5-8B / shard 1",
       "state": "running",
-      "recorded_episodes": 1077,
+      "recorded_episodes": 1116,
       "planned_episodes": 1200,
-      "completed_family_pairs": 134,
+      "completed_family_pairs": 139,
       "policies": {
-        "initial": 539,
-        "agent": 538
+        "initial": 558,
+        "agent": 558
       },
       "termination": {
-        "finished": 297,
-        "max_turns": 780
+        "finished": 303,
+        "max_turns": 813
       },
       "tool_errors": {
-        "unreleased_citation": 1590,
-        "invalid_bbox": 406,
-        "unreleased_image": 440,
+        "unreleased_citation": 1674,
+        "invalid_bbox": 416,
+        "unreleased_image": 465,
         "insufficient_budget": 10,
         "invalid_arguments": 26,
         "view_too_large": 3
       },
       "attempted_calls": {
-        "finish": 1935,
-        "compare": 916,
-        "crop": 1367,
-        "ground_image_to_image": 58,
-        "zoom": 203,
-        "inspect": 436,
-        "request_photo": 139,
+        "finish": 2025,
+        "compare": 941,
+        "crop": 1397,
+        "ground_image_to_image": 60,
+        "zoom": 208,
+        "inspect": 461,
+        "request_photo": 151,
         "assess_quality": 26,
         "read_metadata": 2
       }
@@ -155,7 +155,7 @@
   ],
   "scheduler": {
     "24679": "TIMEOUT; InternVL resumed in 24845",
-    "24689": "RUNNING; approximately 27 minutes remaining at snapshot",
+    "24689": "RUNNING; less than ten minutes remaining at snapshot",
     "24845": "RUNNING; InternVL resumption verified",
     "24846": "PENDING; afterany:24689; Qwen resumption queued"
   },
@@ -185,5 +185,6 @@
       "24845": "RUNNING; both InternVL shards recording new episodes",
       "24846": "PENDING; afterany:24689"
     }
-  }
+  },
+  "as_of_america_new_york": "2026-10-05T14:52:55-04:00"
 }
