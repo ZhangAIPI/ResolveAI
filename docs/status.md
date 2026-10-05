@@ -26,6 +26,19 @@ Conference dates in the supplied plan have not been independently verified here.
 ## Validation
 
 Python environment: PyTorch 2.4.0+cu121 and Pillow 12.2.0 already available.
-Blender was not found in the current executable path. No model weights or
-large data files have been downloaded. `docs/collection.csv` is an empty real
+Blender was not found in the current executable path. One pinned Qwen3-VL-8B
+snapshot and 24 public MVTec test images are stored outside the checkout in
+`/home/cxu-serve/p62/zzh136/experiments/resolveai-poc`.
+The isolated `.venv` adds Transformers 4.57.6, tokenizers 0.22.2 and
+Torchvision 0.19.0+cu121, reusing the existing CUDA PyTorch. `docs/collection.csv` is an empty real
 collection inventory template, not fabricated evidence.
+
+The public-data milestone compares initial-only, fixed-request, prompted-agent
+and original-image reference policies under controlled resolution release.
+The software suite has 12 passing tests; actual image preprocessing and CUDA
+inference run on the GPU allocations. No simulation-to-real training or
+self-collected real-case results are claimed.
+
+Completed public pilot: 384 episodes, zero parse/citation errors, 16.51 GB peak
+GPU memory. See [measured results](results/public_pilot.md) for actual gains,
+costs and the remaining perception/policy limitations.

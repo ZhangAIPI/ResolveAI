@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-04",
+  "dataset": {
+    "dataset": "Voxel51/mvtec-ad",
+    "revision": "30a183a3b96e3aef953f230784b123b719b09d97",
+    "official_source": "https://www.mvtec.com/research-teaching/datasets/mvtec-ad",
+    "license": "CC-BY-NC-SA-4.0",
+    "families": 24,
+    "cases": 96,
+    "per_label_per_category": 4,
+    "preview_max_side": 48,
+    "categories": [
+      "bottle",
+      "hazelnut",
+      "metal_nut"
+    ],
+    "sampling": "sha256(resolveai-poc-v1|sample_id) within category and binary label",
+    "split": "official test; no training or policy tuning on this pilot",
+    "evidence_rule": "Original image required as an operational quality proxy, not human-annotated sufficiency."
+  },
+  "runs": [
+    {
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "budget": 6,
+      "policies": [
+        "initial",
+        "fixed_request"
+      ],
+      "families": 24,
+      "gpu": "NVIDIA RTX A6000",
+      "slurm_job": "24689",
+      "decoding": {
+        "do_sample": false,
+        "max_new_tokens": 180
+      },
+      "image_max_pixels": 262144,
+      "dtype": "bfloat16",
+      "attention": "sdpa",
+      "prompt_version": "defect-poc-v1",
+      "commit": "b2d98934b1014019d16fc21bfda475d446b41cc5",
+      "grounding": "full-resolution-proxy-v1; not human-annotated sufficiency"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "budget": 6,
+      "policies": [
+        "agent",
+        "oracle"
+      ],
+      "families": 24,
+      "gpu": "NVIDIA RTX A6000",
+      "slurm_job": "24679",
+      "decoding": {
+        "do_sample": false,
+        "max_new_tokens": 180
+      },
+      "image_max_pixels": 262144,
+      "dtype": "bfloat16",
+      "attention": "sdpa",
+      "prompt_version": "defect-poc-v1",
+      "commit": "b2d98934b1014019d16fc21bfda475d446b41cc5",
+      "grounding": "full-resolution-proxy-v1; not human-annotated sufficiency"
+    }
+  ],
+  "runtime": {
+    "torch": "2.4.0+cu121",
+    "torchvision": "0.19.0+cu121",
+    "transformers": "4.57.6",
+    "pillow": "12.2.0",
+    "tokenizers": "0.22.2",
+    "huggingface_hub": "0.34.4"
+  },
+  "integrity": {
+    "unique_episodes": 384,
+    "parse_errors": 0,
+    "invalid_citations": 0,
+    "model_calls": 450
+  },
+  "raw_results_directory": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/runs",
+  "raw_result_files": [
+    "initial-fixed.jsonl",
+    "agent-oracle.jsonl"
+  ]
+}

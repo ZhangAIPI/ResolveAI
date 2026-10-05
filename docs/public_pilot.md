@@ -54,7 +54,16 @@ Transformers 4.57.6 and tokenizers 0.22.2. Torchvision must match PyTorch.
 export PYTHONPATH=src
 export PYTHONDONTWRITEBYTECODE=1
 python -m resolveai.public_data /p62/resolveai-poc --per-label 4
-# Download the pinned Qwen snapshot once into /p62/resolveai-poc/model.
+# Download one pinned Qwen snapshot into shared storage (no duplicate cache).
+python - <<'MODEL'
+from huggingface_hub import snapshot_download
+snapshot_download(
+    "Qwen/Qwen3-VL-8B-Instruct",
+    revision="0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    local_dir="/p62/resolveai-poc/model",
+    allow_patterns=["*.json", "*.txt", "*.safetensors"],
+)
+MODEL
 python -m resolveai.pilot /p62/resolveai-poc /p62/resolveai-poc/model \
   /p62/resolveai-poc/runs/initial-fixed.jsonl --policies initial fixed_request
 python -m resolveai.pilot /p62/resolveai-poc /p62/resolveai-poc/model \
@@ -67,3 +76,9 @@ The two result files can run on the two existing Slurm allocations with one
 GPU per model process. Do not use the jump host for inference. Result files
 resume by case/policy key; only resume under the same data, model and settings.
 Keep one manifest/log/result per run and do not save decoded-image duplicates.
+
+Source-image families here consist of one original and its resolution variants.
+MVTec does not establish the physical identity of objects across images, so these
+are not the physical-object families planned for our later collection. Public
+pretraining exposure is uncontrolled. No anomaly mask or oracle-generated region
+was supplied to the model; region localization is not evaluated by this pilot.

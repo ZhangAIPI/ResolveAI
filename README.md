@@ -15,10 +15,15 @@ Independent branches retain their own released images and budgets. An evaluator
 checks cited image sets against independently annotated sufficient evidence.
 Family splits keep shared physical objects/assets in one partition.
 
-This is infrastructure, not an evaluated model or a dataset. No real-photo or
-synthetic research results have been produced. Region-level semantic sufficiency,
-confidence intervals, Blender rendering, VLM inference and policy training remain
-to be implemented. Fixture tests use generated pixels only for software validation.
+The public-image proof of concept uses a frozen Qwen3-VL-8B model and a pinned
+24-image MVTec test subset. [Measured results](docs/results/public_pilot.md)
+show 50% correct decisions with fixed requests versus 0% from the initial
+preview in obtainable cases; the prompted agent reaches 41.7%. This is a small
+resolution-release pilot. See [pilot protocol](docs/public_pilot.md) for paired
+policies, independent labels, evidence-release conditions and scope limits.
+Self-collected cases, region-level semantic sufficiency, Blender rendering and
+policy training remain future work. Fixture tests use generated pixels only for
+software validation; the public pilot uses original dataset pixels.
 
 ## Run
 
