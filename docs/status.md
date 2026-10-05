@@ -1,44 +1,40 @@
-# Execution status — 2026-10-04
+# Execution status
 
 Repository: https://github.com/ZhangAIPI/ResolveAI
 Checkout: `/home/cxu-serve/p62/zzh136/experiments/ResolveAI`.
+Runtime/data: `/home/cxu-serve/p62/zzh136/experiments/resolveai-poc`.
 
-Existing Slurm allocations 24679 and 24689 each provide 2 RTX A6000 GPUs
-(48 GB per GPU). Both are on Slurm node `sclera`, whose hostname is
-`node2x32b.cs.rochester.edu`; these are two allocations on one host, not two hosts.
-Use `srun --jobid=JOB --overlap -N1 -n1 -c1 COMMAND` for bounded work inside
-an allocation. Confirm occupancy before running new models. Never cancel or
-replace existing allocations without coordinating their other experiments.
+Existing Slurm allocations 24679 and 24689 each provide two RTX A6000 GPUs
+(48 GB each), 16 CPUs and 128 GB host memory. Both allocations are on `sclera`,
+hostname `node2x32b.cs.rochester.edu`; they are two allocations on one host.
+All implementation, dependencies, rendering and model runs execute inside these
+allocations using `srun --jobid=JOB --overlap`, not on the control host. p62 had
+approximately 62 TB free at initialization; p61 was nearly full. Never cancel or
+replace these allocations without authorization for the other experiments.
 
-p62 has approximately 62 TB available at initialization; p61 is nearly full.
-Keep model weights and image pools in shared p62 storage, outside Git.
-The proposed 2×80 GB configuration is not the actual allocation. Measure memory
-before selecting image resolution, batch size, student or teacher loading.
+Isolated runtime reuses PyTorch 2.4.0+cu121 with Transformers 4.57.6,
+Torchvision 0.19.0+cu121, Pillow 12.2.0 and RapidOCR 1.4.4. Portable Blender 4.3.2
+Cycles successfully rendered six multi-view/time images on CUDA. Frozen grounding
+providers use Grounding DINO tiny, DINOv2 base and CLIP-B/32. Models and datasets
+remain outside Git. CLIP original tensors are converted to safetensors without
+changing values; conversion and source hashes are recorded.
 
-First milestone: freeze schema/annotation protocol, implement controlled renders,
-collect 50 real families, validate visual perception with two models, then
-establish zero-shot and rule baselines. Later: static/simulator SFT, equal-budget
-branch preferences, family-level intervals, real transfer and ablations.
-Model choices in the supplied plan are candidates, not tested dependencies.
-Real-photo collection and two independent annotators require human resources.
-Conference dates in the supplied plan have not been independently verified here.
+The environment supports persistent function-call conversations, source-coordinate
+crop/zoom/OCR, three grounding tools, quality/metadata, exact requests, immutable
+world state, isolated branches, region/time sufficient-evidence evaluation and
+training-compatible trajectories/preferences. See [contract](environment.md).
 
-## Validation
+The earlier pilot completed 384 episodes on 24 public images; its
+[results](results/public_pilot.md) remain a historical resolution-release baseline.
+The fixed evaluation now contains 300 public source images and 1,200 availability
+cases, excludes previous pilot originals and compares three local frozen MLLMs.
+[Protocol](benchmark.md) specifies paired policies, bounds and scope. Do not read
+benchmark construction or a running process as completed evaluation results.
 
-Python environment: PyTorch 2.4.0+cu121 and Pillow 12.2.0 already available.
-Blender was not found in the current executable path. One pinned Qwen3-VL-8B
-snapshot and 24 public MVTec test images are stored outside the checkout in
-`/home/cxu-serve/p62/zzh136/experiments/resolveai-poc`.
-The isolated `.venv` adds Transformers 4.57.6, tokenizers 0.22.2 and
-Torchvision 0.19.0+cu121, reusing the existing CUDA PyTorch. `docs/collection.csv` is an empty real
-collection inventory template, not fabricated evidence.
-
-The public-data milestone compares initial-only, fixed-request, prompted-agent
-and original-image reference policies under controlled resolution release.
-The software suite has 12 passing tests; actual image preprocessing and CUDA
-inference run on the GPU allocations. No simulation-to-real training or
-self-collected real-case results are claimed.
-
-Completed public pilot: 384 episodes, zero parse/citation errors, 16.51 GB peak
-GPU memory. See [measured results](results/public_pilot.md) for actual gains,
-costs and the remaining perception/policy limitations.
+No new self-collected photographs are assumed. Region-level independent annotation,
+LoRA/DPO training, broad multi-view simulation construction and verified public
+identity/time adaptation remain research work. The six-image Blender scene is
+unreviewed integration data. Neither it nor a quality-proxy public score establishes
+simulation-training transfer or actual dispute-case accuracy. `collection.csv` is
+an unused collection template, not evidence. Conference dates from the supplied
+proposal have not been independently checked in this implementation task.

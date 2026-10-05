@@ -1,31 +1,44 @@
-"""Private case state; only public image observations leave the environment.
-
-Run this module's environment in a separate process from model policies.
-Annotations and unreleased paths must never enter policy prompts.
-"""
+"""Private state, real pixels, budgets and source-preserving visual tools."""
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+import hashlib
 from io import BytesIO
+import json
+import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter, ImageStat
+
+from .grounding import sufficient
+from .ocr import RapidOCRBackend
+from .tools import ActionError, VERDICTS, validate_action
+from .world import EvidenceWorld
 
 
 @dataclass(frozen=True)
 class Costs:
     inspect: int = 1
     crop: int = 1
+    zoom: int = 1
+    ocr: int = 2
     compare: int = 2
     request_photo: int = 3
+    assess_quality: int = 1
+    read_metadata: int = 1
+    ground_text_to_image: int = 3
+    ground_image_to_image: int = 3
+    ground_image_to_text: int = 2
 
 
 class Environment:
-    def __init__(self, case: dict, asset_root: Path, budget: int = 12):
-        if budget < 0:
-            raise ValueError("budget must be nonnegative")
+    MAX_VIEW_PIXELS = 1024 * 1024
+
+    def __init__(self, case, asset_root, budget=12, *, costs=None, ocr_backend=None, grounding_backend=None):
+        if type(budget) is not int or budget < 0:
+            raise ValueError("budget must be a nonnegative integer")
         self._case = deepcopy(case)
         self._root = Path(asset_root).resolve()
-        self._evidence = {e["id"]: e for e in case["evidence"]}
+        self._evidence = {e["id"]: deepcopy(e) for e in case["evidence"]}
         if len(self._evidence) != len(case["evidence"]):
             raise ValueError("duplicate evidence IDs")
         self._released = set(case["initial"])
@@ -33,88 +46,189 @@ class Environment:
             raise ValueError("unknown initial evidence")
         if any(not self._evidence[i]["available"] for i in self._released):
             raise ValueError("unavailable initial evidence")
+        self._world = EvidenceWorld.from_case(case)
+        self._views = {}
+        self._ocr = ocr_backend if ocr_backend is not None else RapidOCRBackend()
+        self._grounding = grounding_backend
         self.budget = budget
-        self.costs = Costs()
-        self.calls = 0
-        self.requests = 0
-        self.tool_cost = 0
-        self.request_cost = 0
+        self.costs = costs or Costs()
+        if any(type(v) is not int or v <= 0 for v in asdict(self.costs).values()):
+            raise ValueError("tool costs must be positive integers")
+        self.calls = self.requests = self.tool_cost = self.request_cost = 0
         self.finished = False
+        self.decision = None
 
     def fork(self):
-        """Clone a branch without changing the scene or sibling state."""
-        return deepcopy(self)
+        """Branch evidence/history/budget; share only immutable world and OCR backend."""
+        branch = object.__new__(type(self))
+        branch.__dict__ = {k: (v if k in {"_world", "_ocr", "_grounding"} else deepcopy(v))
+                           for k, v in self.__dict__.items()}
+        return branch
 
-    def _image(self, evidence_id, bbox=None):
-        e = self._evidence[evidence_id]
+    @staticmethod
+    def _check_box(box, size):
+        if (not isinstance(box, list) or len(box) != 4 or any(type(v) is not int for v in box)
+                or not 0 <= box[0] < box[2] <= size[0]
+                or not 0 <= box[1] < box[3] <= size[1]):
+            raise ActionError("invalid_bbox")
+
+    def _load(self, image_id):
+        e = self._evidence[image_id]
         path = (self._root / e["path"]).resolve()
         if not path.is_relative_to(self._root):
-            raise ValueError("asset path escapes root")
+            raise ActionError("invalid_asset")
         with Image.open(path) as image:
-            image = image.convert("RGB")
-            width, height = image.size
-            region = [0, 0, width, height] if bbox is None else bbox
-            if (len(region) != 4 or any(type(v) is not int for v in region)
-                    or not 0 <= region[0] < region[2] <= width
-                    or not 0 <= region[1] < region[3] <= height):
-                raise ValueError("bbox must be integer pixel coordinates within source")
-            buffer = BytesIO()
-            image.crop(tuple(region)).save(buffer, format="PNG")
-        return {"image_id": evidence_id, "source_id": e["source_id"],
+            return image.convert("RGB")
+
+    def _render(self, reference):
+        if reference in self._views:
+            descriptor = self._views[reference]
+            image_id, operations = descriptor["image_id"], descriptor["operations"]
+        elif reference in self._released:
+            image_id, operations = reference, []
+        else:
+            raise ActionError("unreleased_image")
+        image = self._load(image_id)
+        evidence = self._evidence[image_id]
+        source_size = evidence.get("source_size", list(image.size))
+        box = list(evidence.get("source_bbox", [0, 0, *image.size]))
+        for operation in operations:
+            if operation["type"] == "crop":
+                region = operation["bbox"]
+                width, height = image.size
+                sx, sy = (box[2] - box[0]) / width, (box[3] - box[1]) / height
+                box = [box[0] + region[0] * sx, box[1] + region[1] * sy,
+                       box[0] + region[2] * sx, box[1] + region[3] * sy]
+                image = image.crop(tuple(region))
+            else:
+                image = image.resize(tuple(operation["size"]), Image.Resampling.LANCZOS)
+        return image, image_id, operations, box, source_size
+
+    def _image(self, reference, bbox=None):
+        image, image_id, operations, box, source_size = self._render(reference)
+        if bbox is not None:
+            self._check_box(bbox, image.size)
+            sx, sy = (box[2] - box[0]) / image.width, (box[3] - box[1]) / image.height
+            box = [box[0] + bbox[0] * sx, box[1] + bbox[1] * sy,
+                   box[0] + bbox[2] * sx, box[1] + bbox[3] * sy]
+            image = image.crop(tuple(bbox))
+        buffer = BytesIO()
+        image.save(buffer, format="PNG")
+        e = self._evidence[image_id]
+        return {"image_id": image_id, "view_id": reference, "source_id": e["source_id"],
                 "party": e["party"], "time": e["time"],
-                "source_bbox": region, "source_size": [width, height],
+                "source_bbox": [math.floor(box[0]), math.floor(box[1]), math.ceil(box[2]), math.ceil(box[3])],
+                "source_size": source_size, "display_size": list(image.size),
                 "image_png": buffer.getvalue()}
 
     def observation(self):
         return {"claim": self._case["claim"], "budget": self.budget,
                 "images": [self._image(i) for i in sorted(self._released)],
+                "request_options": deepcopy(self._case.get("request_options", {})),
+                "tool_costs": asdict(self.costs), "ocr_available": bool(self._ocr.available),
                 "finished": self.finished}
 
-    def step(self, action: dict):
+    def _validate_citations(self, citations):
+        for citation in citations:
+            image_id = citation["image_id"]
+            if image_id not in self._released:
+                raise ActionError("unreleased_citation")
+            image = self._image(image_id)
+            self._check_box(citation["bbox"], image["source_size"])
+            if citation["time"] != image["time"]:
+                raise ActionError("citation_time_mismatch")
+            if not covers_box(image["source_bbox"], citation["bbox"]):
+                raise ActionError("citation_outside_observed_region")
+
+    def _derive(self, reference, operation):
+        _, image_id, operations, _, _ = self._render(reference)
+        operations = [*operations, operation]
+        key = "view-" + hashlib.sha256(json.dumps([image_id, operations], sort_keys=True).encode()).hexdigest()[:16]
+        previously_known = key in self._views
+        self._views[key] = {"image_id": image_id, "operations": operations}
+        try:
+            return self._image(key)
+        except Exception:
+            if not previously_known:
+                self._views.pop(key, None)
+            raise
+
+    def step(self, action):
         if self.finished:
-            raise ValueError("episode already finished")
+            raise ActionError("episode_finished")
+        validate_action(action)
         kind = action["type"]
         if kind == "finish":
-            if action.get("verdict") not in {"Supported", "Refuted", "Need more evidence"}:
-                raise ValueError("invalid verdict")
-            citations = action.get("citations", [])
-            if not isinstance(citations, list):
-                raise ValueError("citations must be a list")
-            for citation in citations:
-                if citation["image_id"] not in self._released:
-                    raise ValueError("citation references unreleased evidence")
-                self._image(citation["image_id"], citation["bbox"])
+            self._validate_citations(action["citations"])
             self.finished = True
-            return {"decision": deepcopy(action), "budget": self.budget}
-        if kind not in {"inspect", "crop", "compare", "request_photo"}:
-            raise ValueError("unknown action")
+            self.decision = deepcopy(action)
+            return {"decision": deepcopy(action), "budget": self.budget, "finished": True}
         cost = getattr(self.costs, kind)
         if self.budget < cost:
-            raise ValueError("budget exhausted")
-        if kind in {"inspect", "crop", "compare"}:
-            ids = action.get("image_ids", []) if kind == "compare" else [action["image_id"]]
-            if kind == "compare" and (len(ids) != 2 or ids[0] == ids[1]):
-                raise ValueError("compare requires two distinct images")
-            if any(i not in self._released for i in ids):
-                raise ValueError("cannot inspect unreleased evidence")
-            images = [self._image(i, action["bbox"] if kind == "crop" else None) for i in ids]
-            # The visual model compares these pixels; no oracle text is supplied.
-            result = {"images": images}
-        else:
-            query = action["query"]
-            required = {"object", "time", "view"}
-            if set(query) != required:
-                raise ValueError("request requires object, time and view")
-            matches = [e for e in self._evidence.values()
-                       if all(e[k] == query[k] for k in required)]
-            available = sorted((e for e in matches if e["available"]), key=lambda e: e["id"])
-            if available:
-                selected = next((e for e in available if e["id"] not in self._released), available[0])
-                result = {"status": "provided", "images": [self._image(selected["id"])]}
-                self._released.add(selected["id"])
-            else:
-                # Identical response: material existence is hidden from the agent.
+            raise ActionError("insufficient_budget")
+        if kind == "request_photo":
+            selected = self._world.select(action["query"], self._released)
+            if selected is None:
                 result = {"status": "unable_to_provide", "images": []}
+            else:
+                previously_released = selected["id"] in self._released
+                self._released.add(selected["id"])
+                try:
+                    images = [self._image(selected["id"])]
+                except Exception:
+                    if not previously_released:
+                        self._released.discard(selected["id"])
+                    raise
+                result = {"status": "provided", "images": images}
+        elif kind.startswith("ground_"):
+            result = self._ground(action)
+        elif kind == "compare":
+            result = {"images": [self._image(i) for i in action["image_ids"]]}
+        else:
+            reference = action["image_id"]
+            image, _, _, source_box, _ = self._render(reference)
+            if kind == "inspect":
+                result = {"images": [self._image(reference)]}
+            elif kind == "crop":
+                self._check_box(action["bbox"], image.size)
+                result = {"images": [self._derive(reference, {"type": "crop", "bbox": action["bbox"]})]}
+            elif kind == "zoom":
+                size = [max(1, round(v * action["factor"])) for v in image.size]
+                if size[0] * size[1] > self.MAX_VIEW_PIXELS:
+                    raise ActionError("view_too_large")
+                result = {"images": [self._derive(reference, {"type": "resize", "size": size})]}
+            elif kind == "assess_quality":
+                gray = image.convert("L")
+                histogram = gray.histogram()
+                stats = ImageStat.Stat(gray)
+                result = {"image_id": self._image(reference)["image_id"], "view_id": reference,
+                    "display_size": list(image.size), "luminance_mean": stats.mean[0],
+                    "contrast_std": stats.stddev[0],
+                    "edge_variance": ImageStat.Stat(gray.filter(ImageFilter.FIND_EDGES)).var[0],
+                    "dark_fraction": sum(histogram[:5])/(image.width*image.height),
+                    "bright_fraction": sum(histogram[251:])/(image.width*image.height)}
+            elif kind == "read_metadata":
+                metadata = self._image(reference)
+                source_id = metadata["image_id"]
+                path = (self._root / self._evidence[source_id]["path"]).resolve()
+                with Image.open(path) as original:
+                    exif = original.getexif()
+                    allowed = {name: str(exif[tag]) for tag, name in [(274,"orientation"),(36867,"DateTimeOriginal")]
+                               if tag in exif}
+                result = {k: metadata[k] for k in ("image_id","view_id","source_id","time","party","source_bbox","source_size","display_size")}
+                result.update(embedded_exif=allowed, file_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+            else:
+                if not self._ocr.available:
+                    raise ActionError("ocr_unavailable")
+                rows = self._ocr.read(image)
+                metadata = self._image(reference)
+                x0, y0, x1, y1 = source_box
+                for row in rows:
+                    row["source_polygon"] = [[x0 + x * (x1-x0)/image.width,
+                                              y0 + y * (y1-y0)/image.height] for x, y in row["polygon"]]
+                result = {"image_id": metadata["image_id"], "view_id": reference,
+                          "source_id": metadata["source_id"], "time": metadata["time"],
+                          "text_regions": rows, "status": "read"}
         self.budget -= cost
         self.calls += 1
         if kind == "request_photo":
@@ -122,28 +236,61 @@ class Environment:
             self.request_cost += cost
         else:
             self.tool_cost += cost
-        return {**result, "budget": self.budget}
+        return {**result, "budget": self.budget, "finished": False}
 
-    def evaluate(self, decision: dict):
-        """Evaluator-only; never expose this result during an episode."""
+    @property
+    def grounding_available(self):
+        kinds = {"ground_text_to_image": "text_image", "ground_image_to_image": "image_image",
+                 "ground_image_to_text": "image_text"}
+        return [tool for tool, kind in kinds.items() if self._grounding and self._grounding.available(kind)]
+
+    def _ground(self, action):
+        kind = action["type"]
+        if kind not in self.grounding_available:
+            raise ActionError("grounding_unavailable")
+        target = action.get("target_image_id", action.get("image_id"))
+        image, _, _, box, _ = self._render(target)
+        metadata = {k: v for k, v in self._image(target).items() if k != "image_png"}
+        if kind == "ground_text_to_image":
+            proposals = self._grounding.text_image(image, action["text"])
+        elif kind == "ground_image_to_image":
+            query, *_ = self._render(action["query_image_id"])
+            proposals = self._grounding.image_image(query, image, action.get("top_k", 3))
+            metadata["query_view_id"] = action["query_image_id"]
+        else:
+            proposals = self._grounding.image_text(image, action["candidates"])
+        for proposal in proposals:
+            a, b, c, d = proposal.get("bbox", [0, 0, image.width, image.height])
+            proposal["source_bbox"] = [max(box[0], box[0]+a*(box[2]-box[0])/image.width),
+                max(box[1], box[1]+b*(box[3]-box[1])/image.height),
+                min(box[2], box[0]+c*(box[2]-box[0])/image.width),
+                min(box[3], box[1]+d*(box[3]-box[1])/image.height)]
+        return {**metadata, "proposals": proposals, "status": "predicted"}
+
+    def evaluate(self, decision):
+        """Evaluator-only terminal supervision, never tool feedback."""
         verdict = decision["verdict"]
         citations = decision.get("citations", [])
         valid = True
-        cited = set()
-        for c in citations:
-            try:
-                if c["image_id"] not in self._released:
-                    raise ValueError("unreleased")
-                self._image(c["image_id"], c["bbox"])
-                cited.add(c["image_id"])
-            except (KeyError, TypeError, ValueError):
-                valid = False
-        sufficient = valid and any(set(s) <= cited for s in
-                self._case["annotation"]["minimal_evidence_sets"].get(verdict, []))
+        try:
+            # Legacy evaluation records may omit time; runtime finish requires it.
+            citations = [dict(c, time=c.get("time", self._evidence[c["image_id"]]["time"])) for c in citations]
+            self._validate_citations(citations)
+        except (KeyError, TypeError, ValueError):
+            valid = False
+        grounded = valid and sufficient(self._case["annotation"], verdict, citations)
         correct = verdict == self._case["annotation"]["verdict"]
         abstains = verdict == "Need more evidence"
-        return {"correct": correct, "grounded_correct": correct and (abstains or sufficient),
-                "unsupported_decision": not abstains and not sufficient,
+        requirements = self._case["annotation"]["minimal_evidence_sets"]
+        region_protocol = any(isinstance(item, dict) for alternatives in requirements.values()
+                              for group in alternatives for item in group)
+        return {"correct": correct, "grounded_correct": correct and (abstains or grounded),
+                "unsupported_decision": not abstains and not grounded,
                 "coverage": not abstains, "requests": self.requests, "tool_calls": self.calls,
                 "tool_cost": self.tool_cost, "request_cost": self.request_cost,
-                "remaining_budget": self.budget}
+                "remaining_budget": self.budget,
+                "grounding_protocol": "region-time-v1" if region_protocol else "image-set-proxy-v1"}
+
+
+def covers_box(outer, inner):
+    return outer[0] <= inner[0] < inner[2] <= outer[2] and outer[1] <= inner[1] < inner[3] <= outer[3]

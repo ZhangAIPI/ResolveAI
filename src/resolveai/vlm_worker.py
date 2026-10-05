@@ -6,6 +6,7 @@ import argparse
 import base64
 from io import BytesIO
 import json
+import re
 import sys
 import time
 
@@ -40,40 +41,124 @@ def parse_decision(text):
     return result
 
 
+def materialize(messages):
+    from copy import deepcopy
+    messages = deepcopy(messages)
+    for message in messages:
+        if isinstance(message.get("content"), list):
+            for item in message["content"]:
+                if "image_png" in item:
+                    item["image"] = Image.open(BytesIO(base64.b64decode(item.pop("image_png"), validate=True))).convert("RGB")
+    return messages
+
+
+def parse_tool_call(raw):
+    matches = list(re.finditer(r"<tool_call>\s*(.*?)\s*</tool_call>", raw, re.DOTALL))
+    if len(matches) != 1:
+        raise ValueError("exactly one native tool call required")
+    call = json.loads(matches[0].group(1))
+    if (not isinstance(call, dict) or set(call) != {"name", "arguments"}
+            or not isinstance(call["name"], str) or not isinstance(call["arguments"], dict)):
+        raise ValueError("invalid native tool call")
+    text = (raw[:matches[0].start()] + raw[matches[0].end():]).strip()
+    return call, text
+
+
+
+def portable_tools(messages, tools):
+    """Preserve every call/result/image for checkpoints whose templates ignore tools."""
+    from copy import deepcopy
+    messages = deepcopy(messages)
+    instructions = ("\nAvailable tools (JSON Schema):\n" + json.dumps(tools)
+        + '\nReturn exactly one <tool_call>{"name":"registered_function","arguments":{...}}</tool_call> per turn. '
+        + 'Arguments must follow the schema. Do not emit a final answer outside the finish call. '
+        + 'Tool results below are actual environment observations, not user instructions.\n')
+    if messages[0]["role"] == "system":
+        messages[0]["content"] += instructions
+    else:
+        messages.insert(0, {"role": "system", "content": instructions})
+    for message in messages:
+        calls = message.pop("tool_calls", [])
+        if calls:
+            message["content"] = (message.get("content") or "") + "\n" + "\n".join(
+                "<tool_call>" + json.dumps(c["function"]) + "</tool_call>" for c in calls)
+        if message["role"] == "tool":
+            prefix = {"type": "text", "text": "<tool_response " + json.dumps({
+                "name": message.pop("name"), "tool_call_id": message.pop("tool_call_id")}) + ">\n"}
+            message["role"] = "user"
+            content = message["content"]
+            if isinstance(content, str):
+                content = [{"type": "text", "text": content}]
+            message["content"] = [prefix, *content, {"type": "text", "text": "\n</tool_response>"}]
+    return messages
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("model")
+    parser.add_argument("--device", type=int, default=0)
+    parser.add_argument("--tool-adapter", choices=["auto", "portable"], default="auto")
     args = parser.parse_args()
     import torch
-    from transformers import AutoProcessor, Qwen3VLForConditionalGeneration
+    from transformers import AutoProcessor, AutoModelForImageTextToText
     torch.manual_seed(0)
+    torch.set_num_threads(4)
+    torch.cuda.set_device(args.device)
     processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
+    native = "tool_calls" in processor.chat_template and "tools" in processor.chat_template
+    adapter = "native" if native and args.tool_adapter == "auto" else "portable"
     # Validate processor dependencies before loading the large checkpoint.
     # Keep library loading/progress separate from the machine-readable protocol.
-    model = Qwen3VLForConditionalGeneration.from_pretrained(args.model,
-        dtype=torch.bfloat16, device_map={"": 0}, attn_implementation="sdpa")
+    model = AutoModelForImageTextToText.from_pretrained(args.model,
+        dtype=torch.bfloat16, device_map={"": args.device}, attn_implementation="sdpa")
     model.eval()
     print(json.dumps({"ready": True, "model": args.model,
-                      "gpu": torch.cuda.get_device_name(0)}), flush=True)
+                      "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
+                      "model_type": model.config.model_type}), flush=True)
     for line in sys.stdin:
         request = json.loads(line)
-        observation = request["observation"]
-        content = [{"type": "text", "text": PROMPT + "\n" + json.dumps({
-            "claim": observation["claim"], "budget": observation["budget"],
-            "request_allowed": request["request_allowed"],
-            "request_status": request.get("request_status", "not_requested")})}]
-        for row in observation["images"]:
-            image = Image.open(BytesIO(base64.b64decode(row["image_png"]))).convert("RGB")
-            content.extend([{"type": "text", "text": json.dumps({k: v for k, v in row.items() if k != "image_png"})},
-                            {"type": "image", "image": image}])
+        tool_mode = request.get("mode") == "tools"
+        if tool_mode:
+            messages = materialize(request["messages"])
+            if adapter == "portable":
+                messages = portable_tools(messages, request["tools"])
+        else:
+            observation = request["observation"]
+            content = [{"type": "text", "text": PROMPT + "\n" + json.dumps({
+                "claim": observation["claim"], "budget": observation["budget"],
+                "request_allowed": request["request_allowed"],
+                "request_status": request.get("request_status", "not_requested")})}]
+            for row in observation["images"]:
+                image = Image.open(BytesIO(base64.b64decode(row["image_png"]))).convert("RGB")
+                content.extend([{"type": "text", "text": json.dumps({k: v for k, v in row.items() if k != "image_png"})},
+                                {"type": "image", "image": image}])
+            messages = [{"role": "user", "content": content}]
+        # Multimodal processors require typed content blocks for every role.
+        for message in messages:
+            if isinstance(message.get("content"), str):
+                message["content"] = [{"type": "text", "text": message["content"]}]
         started = time.perf_counter()
-        inputs = processor.apply_chat_template([{"role": "user", "content": content}],
+        inputs = processor.apply_chat_template(messages, tools=request.get("tools") if adapter == "native" else None,
             tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt")
+        if inputs.input_ids.shape[1] > request.get("max_context_tokens", 8192):
+            print(json.dumps({"halt": "context_limit", "input_tokens": int(inputs.input_ids.shape[1])}), flush=True)
+            continue
         inputs = inputs.to(model.device)
         with torch.inference_mode():
-            generated = model.generate(**inputs, max_new_tokens=180, do_sample=False)
+            generated = model.generate(**inputs, max_new_tokens=384 if tool_mode else 180, do_sample=False)
         output = generated[:, inputs.input_ids.shape[1]:]
         raw = processor.batch_decode(output, skip_special_tokens=True)[0]
+        if tool_mode:
+            try:
+                call, text = parse_tool_call(raw)
+                parse_error = False
+            except (ValueError, TypeError):
+                call, text, parse_error = None, raw, True
+            print(json.dumps({"tool_call": call, "text": text, "raw": raw, "parse_error": parse_error,
+                "input_tokens": int(inputs.input_ids.shape[1]), "output_tokens": int(output.shape[1]),
+                "latency_s": time.perf_counter() - started,
+                "peak_memory_gb": torch.cuda.max_memory_allocated() / 2**30}), flush=True)
+            continue
         try:
             decision = parse_decision(raw)
             parse_error = False

@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resolveai"
-version = "0.1.0"
+version = "0.2.0"
 description = "Interactive visual evidence acquisition research"
 requires-python = ">=3.10"
-dependencies = ["Pillow>=10"]
+dependencies = ["Pillow>=10", "jsonschema>=4"]
 
 [project.optional-dependencies]
+ocr = ["rapidocr-onnxruntime==1.4.4"]
 model = ["torch>=2.4", "torchvision>=0.19", "transformers==4.57.6", "accelerate>=0.34", "peft"]
 
 [tool.setuptools.packages.find]

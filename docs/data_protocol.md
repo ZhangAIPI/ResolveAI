@@ -1,37 +1,40 @@
-# Data and annotation protocol v0.1
+# Data and annotation protocol v0.2
 
-Each private case contains `family_id`, `claim`, `initial` (image IDs), `evidence`
-and `annotation`. An evidence row contains `id`, relative `path`, `source_id`,
-`party`, `object` (requestable public name, not a hidden identity label), `time`,
-`view`, and `available`. Private annotations contain `verdict` and
-`minimal_evidence_sets`, a mapping from each verdict to alternative lists of
-original image IDs. A reliable counterexample can suffice for Refuted; Supported
-must cover every conjunct. The current evaluator checks image membership only;
-annotated region coverage is required before reporting paper grounded accuracy.
+Each private case contains `family_id`, `claim`, `initial` image IDs, `evidence`,
+public `request_options` and private `annotation`. Evidence rows contain `id`,
+relative `path`, `source_id`, `party`, requestable `object`, `time`, `view` and
+`available`. Optional `source_size`/`source_bbox` map degraded images to source
+coordinates. Never derive public request options from hidden evidence availability.
 
-Record subclaims, hidden object identity, condition, visibility, region boxes,
-uncertainty, annotator decisions, arbitration and annotation protocol version in
-private annotations. Collect independent labels from two annotators. Do not force
-uncertain identity, time or condition into deterministic labels.
+`minimal_evidence_sets` maps verdicts to alternative conjunctions. Region/time
+requirements use `{"image_id":"before","bbox":[0,0,100,100],"time":"before"}`.
+The evaluator checks source IDs, valid observed bounds, source time and union
+coverage of each required region; overlapping duplicate citations cannot inflate
+coverage. Support covers every conjunct; a decisive counterexample may suffice
+for Refuted. Legacy lists of image IDs remain a clearly marked quality proxy.
 
-Construct Sufficient, Obtainable, Missing and Unavailable variants for each
-family. Missing and Unavailable deliberately share a public failure response.
-Decisive material must be obtained by matching a requested view/time/object,
-never by selecting evidence based on the truth label. Party/source must be
-randomized independently of verdict.
+Record subclaims, object identity, condition, visibility, uncertainty, two annotator
+decisions, arbitration, protocol version and `status: reviewed` in private
+annotations. Uncertain identity, time or state must not be forced into deterministic
+labels. Geometric render boxes alone are not independently validated sufficiency.
+Default training filters reject unreviewed annotations and image-set proxies.
 
-Group split by family, physical object, asset and scene, targeting 70/10/20.
-`split_families` uses shared group IDs and connected components; proportions are
-expected rather than exact. All variants and claim paraphrases stay together.
-Maintain an additional unseen-category evaluation. Bootstrap over families.
+Each family has Sufficient, Obtainable, Missing and Unavailable versions. Requests
+match public object/time/view, never truth labels or the most decisive image.
+Source/party should be independently randomized where the source protocol permits.
+All crops retain the same original evidence identity and do not become new proof.
 
-Real collection starts with the complete photo pool, then controls release.
-Use reversible stains, interchangeable parts or existing damage; log timestamps
-and operations. Target 50 real families initially, then 300, with 6–10 views each.
-Simulation target: 2,000 families and four availability variants. Never use
-hidden state to generate the model's observation text.
+Use connected-component family, physical-object, asset and scene groups targeting
+70/10/20. `split_families` keeps shared group IDs together; proportions are expected,
+not exact. Variants and claim paraphrases stay in one split. Maintain an unseen
+category test and bootstrap by the available independent source unit. Public official
+splits take precedence over a new split; freeze public test samples before training.
 
-Public datasets require source and official-split preservation. WebQA is an
-evidence-selection supplement; AVerImaTeC uses closed-pool retrieval; MVTec AD
-is an anomaly/localization supplement and different objects must not be relabeled
-as before/after pairs. Review licenses before importing data.
+No new self-collected data is assumed in the current project scope. Public datasets
+must preserve source, license and original task semantics. MVTec AD provides anomaly
+and region labels, not same-object before/after pairs. WebQA can test multi-source
+evidence selection. AVerImaTeC can support closed-pool statement verification;
+releasing existing evidence is not new photography. Review and independently
+annotate any adaptation that extends the original task. State-driven Blender
+simulation supplies controlled identity, camera and time; keep simulation and public
+photograph results separate and avoid hidden-state-generated observation text.

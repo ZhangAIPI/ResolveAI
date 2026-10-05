@@ -32,7 +32,7 @@ class EnvironmentTests(unittest.TestCase):
         obs = self.env.observation()
         self.assertNotIn("annotation", obs)
         self.assertEqual(set(obs["images"][0]), {"image_id", "source_id", "party",
-            "time", "source_bbox", "source_size", "image_png"})
+            "time", "source_bbox", "source_size", "image_png", "view_id", "display_size"})
         with self.assertRaises(ValueError):
             self.env.step({"type": "inspect", "image_id": "side"})
         self.assertEqual(self.env.budget, 12)
@@ -58,11 +58,11 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(self.env.budget, budget)
 
     def test_grounded_decision_and_decisive_refutation(self):
-        citation = {"image_id": "front", "bbox": [0, 0, 16, 16]}
+        citation = {"image_id": "front", "bbox": [0, 0, 16, 16], "time": "after"}
         decision = {"type": "finish", "verdict": "Supported", "citations": [citation]}
         self.assertTrue(self.env.evaluate(decision)["unsupported_decision"])
         self.env.step(self.request("side"))
-        decision["citations"] = [{"image_id": "side", "bbox": [0, 0, 16, 16]}]
+        decision["citations"] = [{"image_id": "side", "bbox": [0, 0, 16, 16], "time": "after"}]
         self.assertTrue(self.env.evaluate(decision)["grounded_correct"])
         self.case["annotation"]["verdict"] = "Refuted"
         env = Environment(self.case, self.root)

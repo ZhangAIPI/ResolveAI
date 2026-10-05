@@ -26,7 +26,7 @@ class ServerTests(unittest.TestCase):
                         {"type": "inspect", "branch": "alternative", "image_id": "a"},
                         {"type": "inspect", "image_id": "private-id"}]
             result = subprocess.run([sys.executable, "-m", "resolveai.server",
-                str(root / "case.json"), str(root)],
+                str(root / "case.json"), str(root), "--allow-forks"],
                 input="\n".join(json.dumps(c) for c in commands) + "\n",
                 capture_output=True, text=True, check=True, timeout=30)
             self.assertNotIn("PRIVATE_MARKER", result.stdout)
@@ -36,4 +36,4 @@ class ServerTests(unittest.TestCase):
             self.assertTrue(base64.b64decode(rows[0]["images"][0]["image_png"]).startswith(b"\x89PNG"))
             self.assertEqual(rows[1]["branch"], "alternative")
             self.assertEqual(rows[2]["budget"], 11)
-            self.assertEqual(rows[3], {"error": "invalid_action"})
+            self.assertEqual(rows[3], {"error": "unreleased_image"})

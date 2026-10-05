@@ -23,8 +23,9 @@ def transport(observation):
 
 
 class ModelClient:
-    def __init__(self, model):
-        self.process = subprocess.Popen([sys.executable, "-m", "resolveai.vlm_worker", str(model)],
+    def __init__(self, model, device=0, tool_adapter="auto"):
+        self.process = subprocess.Popen([sys.executable, "-m", "resolveai.vlm_worker", str(model),
+            "--device", str(device), "--tool-adapter", tool_adapter],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
         line = self.process.stdout.readline()
         if not line:
@@ -40,6 +41,14 @@ class ModelClient:
         line = self.process.stdout.readline()
         if not line:
             raise RuntimeError("model process exited during inference")
+        return json.loads(line)
+
+    def ask_conversation(self, payload, max_context_tokens=8192):
+        self.process.stdin.write(json.dumps({**payload, "max_context_tokens": max_context_tokens}) + "\n")
+        self.process.stdin.flush()
+        line = self.process.stdout.readline()
+        if not line:
+            raise RuntimeError("model process exited during conversation")
         return json.loads(line)
 
     def close(self):
@@ -78,7 +87,7 @@ def episode(case, root, client, policy, budget):
         responses.append(response)
     predicted = response["decision"]
     public = {i["image_id"]: i for i in env.observation()["images"]}
-    citations = [{"image_id": i, "bbox": public[i]["source_bbox"]}
+    citations = [{"image_id": i, "bbox": public[i]["source_bbox"], "time": public[i]["time"]}
                  for i in predicted["image_ids"] if i in public]
     invalid_citations = any(i not in public for i in predicted["image_ids"])
     decision = {"type": "finish", "verdict": predicted["verdict"], "citations": citations}

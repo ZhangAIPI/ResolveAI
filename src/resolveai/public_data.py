@@ -1,4 +1,4 @@
-"""Build a pinned, small MVTec pilot using only the official test split.
+"""Build a pinned MVTec benchmark using only the official test split.
 
 This is controlled resolution release, not new-camera photography. Preview
 quality is changed uniformly, without using defect masks or truth labels.
@@ -27,18 +27,25 @@ def fetch(url, path):
     return path
 
 
-def prepare(root, per_label=4, preview_size=48):
+def prepare(root, per_label=4, preview_size=48, categories=None, exclude_cases=None):
     if per_label < 1 or preview_size < 1:
         raise ValueError("sample count and preview size must be positive")
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     metadata_path = fetch(BASE + "/samples.json", root / "mvtec_samples.json")
     rows = json.loads(metadata_path.read_text())["samples"]
+    categories = categories or ["bottle", "hazelnut", "metal_nut"]
+    if categories == ["all"]:
+        categories = sorted({r["category"]["label"] for r in rows})
+    excluded = set()
+    if exclude_cases:
+        excluded = {c["provenance"]["sample_id"] for c in json.loads(Path(exclude_cases).read_text())}
     selected = []
-    for category in ("bottle", "hazelnut", "metal_nut"):
+    for category in categories:
         for anomalous in (False, True):
             candidates = [r for r in rows if r["split"] == "test"
                           and r["category"]["label"] == category
+                          and r["_id"]["$oid"] not in excluded
                           and (r["defect"]["label"] != "good") == anomalous]
             candidates.sort(key=lambda r: hashlib.sha256(
                 ("resolveai-poc-v1|" + r["_id"]["$oid"]).encode()).hexdigest())
@@ -61,7 +68,7 @@ def prepare(root, per_label=4, preview_size=48):
         common = {"source_id": uid, "party": "public", "object": category,
                   "time": "capture", "available": True}
         full = {**common, "id": "original", "path": str(relative / "original.png"), "view": "original"}
-        preview = {**common, "id": "preview", "path": str(relative / "preview.png"), "view": "overview"}
+        preview = {**common, "source_size": dimensions, "source_bbox": [0, 0, *dimensions], "id": "preview", "path": str(relative / "preview.png"), "view": "overview"}
         provenance = {"repo": REPO, "revision": REVISION, "filepath": row["filepath"],
                       "sample_id": uid, "official_split": row["split"],
                       "category": row["category"]["label"], "defect_label": row["defect"]["label"],
@@ -80,6 +87,7 @@ def prepare(root, per_label=4, preview_size=48):
                 "initial": ["original"] if variant == "Sufficient" else ["preview"],
                 "evidence": evidence,
                 "request_spec": {"object": category, "time": "capture", "view": "original"},
+                "request_options": {"objects": [category], "times": ["capture"], "views": ["overview", "original"]},
                 "annotation": {"verdict": label, "visual_verdict": label,
                     "minimal_evidence_sets": {label: [["original"]]},
                     "protocol": "full-resolution-proxy-v1"},
@@ -93,7 +101,7 @@ def prepare(root, per_label=4, preview_size=48):
         "official_source": "https://www.mvtec.com/research-teaching/datasets/mvtec-ad",
         "license": "CC-BY-NC-SA-4.0", "families": len(selected), "cases": len(cases),
         "per_label_per_category": per_label, "preview_max_side": preview_size,
-        "categories": ["bottle", "hazelnut", "metal_nut"],
+        "categories": categories, "excluded_pilot_sample_ids": sorted(excluded),
         "sampling": "sha256(resolveai-poc-v1|sample_id) within category and binary label",
         "split": "official test; no training or policy tuning on this pilot",
         "evidence_rule": "Original image required as an operational quality proxy, not human-annotated sufficiency."}
@@ -106,8 +114,10 @@ def main():
     parser.add_argument("root", type=Path)
     parser.add_argument("--per-label", type=int, default=4)
     parser.add_argument("--preview-size", type=int, default=48)
+    parser.add_argument("--categories", nargs="+", default=["bottle", "hazelnut", "metal_nut"])
+    parser.add_argument("--exclude-cases", type=Path)
     args = parser.parse_args()
-    prepare(args.root, args.per_label, args.preview_size)
+    prepare(args.root, args.per_label, args.preview_size, args.categories, args.exclude_cases)
 
 
 if __name__ == "__main__":
