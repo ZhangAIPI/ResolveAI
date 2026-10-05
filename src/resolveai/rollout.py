@@ -13,6 +13,7 @@ from .pilot import ModelClient
 
 def run(session, client, max_turns=12, max_context_tokens=8192):
     started = time.perf_counter()
+    session.messages[0]["content"] += f"\nEpisode limit: {max_turns} assistant turns; finish within this limit.\n"
     generation = []
     for _ in range(max_turns):
         output = client.ask_conversation(session.public(), max_context_tokens)

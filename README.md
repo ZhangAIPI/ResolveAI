@@ -27,7 +27,7 @@ supervision from prompts and reject unreviewed/proxy traces by default.
 ## Data and evaluation
 
 The fixed public benchmark contains **300 independent source images across all
-15 MVTec AD categories and 1,200 availability cases**, excluding the 24 images in
+15 MVTec AD categories and 1,200 availability cases**, excluding the 24 pilot images and one compatibility image used for development. See
 the [earlier pilot](docs/results/public_pilot.md). No future self-collected data is
 assumed. Static and full multi-turn policies use frozen Qwen3-VL-8B,
 Qwen2.5-VL-7B and InternVL3.5-8B checkpoints with the same interactive tool pool,

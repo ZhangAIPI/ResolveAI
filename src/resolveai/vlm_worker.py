@@ -52,7 +52,12 @@ def materialize(messages):
     return messages
 
 
-def parse_tool_call(raw):
+def parse_tool_call(raw, allow_unclosed=False):
+    if allow_unclosed and raw.startswith("<tool_call>") and "</tool_call>" not in raw:
+        # Some portable models terminate after a complete JSON object. Delimiters
+        # are transport syntax; never infer a missing function or argument.
+        json.loads(raw[len("<tool_call>"):])
+        raw += "</tool_call>"
     matches = list(re.finditer(r"<tool_call>\s*(.*?)\s*</tool_call>", raw, re.DOTALL))
     if len(matches) != 1:
         raise ValueError("exactly one native tool call required")
@@ -90,6 +95,13 @@ def portable_tools(messages, tools):
             if isinstance(content, str):
                 content = [{"type": "text", "text": content}]
             message["content"] = [prefix, *content, {"type": "text", "text": "\n</tool_response>"}]
+    footer = ("Choose one available tool. Emit one <tool_call> JSON with exactly name and arguments, "
+              "then </tool_call>. Use actual schema arguments; do not emit tool, function or cost keys. "
+              "No markdown. The assistant prefix below begins the required JSON.")
+    if isinstance(messages[-1].get("content"), str):
+        messages[-1]["content"] += "\n" + footer
+    else:
+        messages[-1]["content"].append({"type": "text", "text": "\n" + footer})
     return messages
 
 
@@ -114,7 +126,10 @@ def main():
     model.eval()
     print(json.dumps({"ready": True, "model": args.model,
                       "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
-                      "model_type": model.config.model_type}), flush=True)
+                      "model_type": model.config.model_type,
+                      "assistant_prefix": "<tool_call>\n{\"name\":" if adapter == "portable" else None,
+                      "processor": type(processor).__name__,
+                      "image_processor": type(processor.image_processor).__name__}), flush=True)
     for line in sys.stdin:
         request = json.loads(line)
         tool_mode = request.get("mode") == "tools"
@@ -140,17 +155,23 @@ def main():
         started = time.perf_counter()
         inputs = processor.apply_chat_template(messages, tools=request.get("tools") if adapter == "native" else None,
             tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt")
+        prefix = '<tool_call>\n{"name":' if tool_mode and adapter == "portable" else ""
+        if prefix:
+            prefix_ids = processor.tokenizer(prefix, add_special_tokens=False, return_tensors="pt").input_ids
+            inputs["input_ids"] = torch.cat([inputs.input_ids, prefix_ids], dim=1)
+            inputs["attention_mask"] = torch.cat([inputs.attention_mask, torch.ones_like(prefix_ids)], dim=1)
         if inputs.input_ids.shape[1] > request.get("max_context_tokens", 8192):
             print(json.dumps({"halt": "context_limit", "input_tokens": int(inputs.input_ids.shape[1])}), flush=True)
             continue
         inputs = inputs.to(model.device)
         with torch.inference_mode():
-            generated = model.generate(**inputs, max_new_tokens=384 if tool_mode else 180, do_sample=False)
+            generated = model.generate(**inputs, max_new_tokens=384 if tool_mode else 180, do_sample=False,
+                                       pad_token_id=processor.tokenizer.eos_token_id)
         output = generated[:, inputs.input_ids.shape[1]:]
-        raw = processor.batch_decode(output, skip_special_tokens=True)[0]
+        raw = prefix + processor.batch_decode(output, skip_special_tokens=True)[0]
         if tool_mode:
             try:
-                call, text = parse_tool_call(raw)
+                call, text = parse_tool_call(raw, allow_unclosed=adapter == "portable")
                 parse_error = False
             except (ValueError, TypeError):
                 call, text, parse_error = None, raw, True

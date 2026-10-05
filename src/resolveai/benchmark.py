@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import subprocess
 
-from .conversation import Conversation, TrajectoryStore
+from .conversation import Conversation, TrajectoryStore, content_for
 from .environment import Costs, Environment
 from .grounding_tools import FrozenGrounding
 from .pilot import ModelClient
@@ -50,7 +50,7 @@ def main():
     parser.add_argument("--grounding-root", type=Path, required=True)
     parser.add_argument("--device", type=int, default=0)
     parser.add_argument("--budget", type=int, default=12)
-    parser.add_argument("--max-turns", type=int, default=12)
+    parser.add_argument("--max-turns", type=int, default=16)
     parser.add_argument("--max-context-tokens", type=int, default=8192)
     parser.add_argument("--limit-families", type=int)
     args = parser.parse_args()
@@ -66,7 +66,7 @@ def main():
         "source_sha256": source_digest(), "model_id": args.model_id, "revision": args.revision,
         "grounding_manifest": json.loads((args.grounding_root / "manifest.json").read_text()),
         "budget": args.budget, "max_turns": args.max_turns, "max_context_tokens": args.max_context_tokens,
-        "policies": ["initial", "agent"], "tool_adapter": "portable",
+        "policies": ["initial", "agent"], "tool_adapter": "portable-prefix-v1",
         "costs": asdict(Costs()), "limit_families": args.limit_families,
         "decoding": {"do_sample": False, "max_new_tokens": 384},
         "image_max_pixels": 512 * 512, "dtype": "bfloat16", "attention": "sdpa"}
@@ -102,7 +102,15 @@ def main():
                     session = Conversation(env)
                     if policy == "initial":
                         session.tools = [t for t in session.tools if t["function"]["name"] == "finish"]
-                        session.messages[0]["content"] += "\nThis is the static baseline: decide from the initially supplied images; only finish is available."
+                        session.messages[1]["content"] = content_for({"claim": case["claim"],
+                            "images": env.observation()["images"], "available_tools": ["finish"]})
+                        session.messages[0]["content"] = (
+                            "Verify the stated visual claim using only the initially supplied pixels. "
+                            "Supported means a visible defect supports the claim; Refuted means the object "
+                            "looks defect-free. Use Need more evidence if uncertain. "
+                            "Only finish is available. Do not inspect, crop, zoom or request material. "
+                            "Return one finish tool call with verdict and citations using supplied original "
+                            "image IDs, source-pixel boxes and source time. Do not invent observations.")
                     record = run(session, client, args.max_turns, args.max_context_tokens)
                     record["metadata"]["policy"] = policy
                     store.write(record)

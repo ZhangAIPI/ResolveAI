@@ -35,6 +35,5 @@ No new self-collected photographs are assumed. Region-level independent annotati
 LoRA/DPO training, broad multi-view simulation construction and verified public
 identity/time adaptation remain research work. The six-image Blender scene is
 unreviewed integration data. Neither it nor a quality-proxy public score establishes
-simulation-training transfer or actual dispute-case accuracy. `collection.csv` is
-an unused collection template, not evidence. Conference dates from the supplied
+simulation-training transfer or actual dispute-case accuracy. Conference dates from the supplied
 proposal have not been independently checked in this implementation task.

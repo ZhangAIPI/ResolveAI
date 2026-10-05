@@ -66,11 +66,13 @@ class Environment:
         return branch
 
     @staticmethod
-    def _check_box(box, size):
+    def _check_box(box, size, coordinate_space="display_pixels"):
         if (not isinstance(box, list) or len(box) != 4 or any(type(v) is not int for v in box)
                 or not 0 <= box[0] < box[2] <= size[0]
                 or not 0 <= box[1] < box[3] <= size[1]):
-            raise ActionError("invalid_bbox")
+            raise ActionError("invalid_bbox", {"coordinate_space": coordinate_space,
+                "display_size" if coordinate_space == "display_pixels" else "source_size": list(size),
+                "valid_bounds": [0, 0, *size]})
 
     def _load(self, image_id):
         e = self._evidence[image_id]
@@ -134,7 +136,7 @@ class Environment:
             if image_id not in self._released:
                 raise ActionError("unreleased_citation")
             image = self._image(image_id)
-            self._check_box(citation["bbox"], image["source_size"])
+            self._check_box(citation["bbox"], image["source_size"], "source_pixels")
             if citation["time"] != image["time"]:
                 raise ActionError("citation_time_mismatch")
             if not covers_box(image["source_bbox"], citation["bbox"]):

@@ -10,7 +10,7 @@ The current Blender scene is integration-only, not a substitute real-photo test.
 ## Frozen sample
 
 Select ten good and ten anomalous official-test originals in each of all 15
-categories: **300 source images**. Exclude all 24 previous pilot originals.
+categories: **300 source images**. Exclude all 24 previous pilot originals and the one compatibility-development original.
 Sampling is hash-deterministic within category and binary label. Preserve dataset
 revision, original path, original split, original label, dimensions and file hash.
 The source unit is an original image; physical-object identity is not provided,
@@ -27,7 +27,7 @@ sufficiency proxy, not an independently annotated minimal semantic evidence set.
 
 ```bash
 python -m resolveai.public_data /p62/benchmark-data --categories all --per-label 10 \
-  --exclude-cases /p62/previous-pilot/cases.json
+  --exclude-cases /p62/development_cases.json
 python -m resolveai.benchmark /p62/benchmark-data /p62/model /p62/runs/model-name \
   --model-id OWNER/MODEL --revision COMMIT --grounding-root /p62/frozen-tools
 ```
@@ -37,7 +37,7 @@ python -m resolveai.benchmark /p62/benchmark-data /p62/model /p62/runs/model-nam
 Pinned local models: Qwen/Qwen3-VL-8B-Instruct,
 Qwen/Qwen2.5-VL-7B-Instruct and OpenGVLab/InternVL3_5-8B-HF.
 Use bfloat16, SDPA, greedy decoding, at most 384 generated tokens per turn,
-12 turns, 8,192 context tokens and budget 12. Tool schemas, prices and frozen
+16 turns, 8,192 context tokens and budget 12. Tool schemas, prices and frozen
 perception providers are shared across interactive models. Checkpoint-native
 image preprocessing is recorded; it is not assumed identical across architectures.
 Qwen input is bounded by 512² pixels; InternVL's standard image processor uses
@@ -54,7 +54,9 @@ Each model runs both policies on all cases: **2,400 episodes/model**, planned
 Qwen2.5-VL and InternVL official chat templates omit structured calls and tool
 definitions. All three benchmark models therefore use the same portable adapter:
 JSON tool schemas in system instructions, one `<tool_call>` JSON per assistant
-turn, and identified tool results represented as user-role typed content. The
+turn, and identified tool results represented as user-role typed content. A fixed assistant syntax prefix `<tool_call>{"name":` is supplied to every model;
+the model generates the tool name and arguments. A complete JSON object is accepted
+if the model omits the closing transport tag; missing functions or arguments are never inferred. The
 stored canonical conversation retains actual assistant/tool roles. This preserves
 history and pixels without claiming native function-call training for every model.
 Qwen3-VL's native template remains available for integration tests.

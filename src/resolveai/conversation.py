@@ -19,6 +19,11 @@ sufficient or more useful material cannot be obtained. Cite original image IDs,
 source-pixel rectangles and the source time, not derived view IDs. For a
 conjunction, support all subclaims; one decisive counterexample can refute it.
 Use Need more evidence when uncertain. State changes do not establish liability.
+Tools never mutate the original or earlier views. Crop/zoom return a NEW view_id;
+use that view_id to operate on the returned pixels. Crop boxes use display_size,
+not source_size or normalized coordinates. Request choices are in request_options.
+Choose informative actions rather than trying every tool or repeating the same
+observation; stop when evidence is sufficient or useful requests are exhausted.
 Always finish via the finish tool; do not return an unstructured final answer.
 """
 
@@ -76,7 +81,9 @@ class Conversation:
             result = self._env.step({**function["arguments"], "type": function["name"]})
         except ActionError as error:
             self.errors += 1
-            result = {"error": error.code, "budget": self._env.budget, "finished": self._env.finished}
+            result = {"error": error.code, "constraints": deepcopy(error.details),
+                "available_tools": [t["function"]["name"] for t in self.tools],
+                "budget": self._env.budget, "finished": self._env.finished}
         except (OSError, RuntimeError, KeyError, TypeError, ValueError):
             self.errors += 1
             result = {"error": "tool_backend_error", "budget": self._env.budget, "finished": self._env.finished}
@@ -90,7 +97,10 @@ class Conversation:
         self.turns += 1
         self.errors += 1
         self.messages.extend([{"role": "assistant", "content": raw},
-            {"role": "user", "content": f"Invalid tool output. Emit exactly one registered tool call. Remaining budget: {self._env.budget}."}])
+            {"role": "user", "content": ("Invalid tool format. Required: <tool_call>{\"name\":\"REGISTERED_NAME\","
+                "\"arguments\":{}}</tool_call>. Supply the actual schema arguments. Do not use cost, tool or function keys. "
+                + "Available names: " + ", ".join(t["function"]["name"] for t in self.tools)
+                + f". Remaining budget: {self._env.budget}.")}])
 
     def record(self):
         """Trainer-only record: separate public prompt from terminal supervision."""

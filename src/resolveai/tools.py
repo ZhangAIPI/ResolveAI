@@ -45,17 +45,21 @@ TOOLS = [{"type": "function", "function": {"name": name, "description": descript
 
 class ActionError(ValueError):
     """Stable public code; never include private paths or annotations."""
-    def __init__(self, code):
+    def __init__(self, code, details=None):
         super().__init__(code)
         self.code = code
+        self.details = details or {}
 
 
 def validate_action(action):
     if not isinstance(action, dict) or not isinstance(action.get("type"), str) or action.get("type") not in SPECS:
         raise ActionError("unknown_action")
     args = {k: v for k, v in action.items() if k != "type"}
-    if not Draft202012Validator(SPECS[action["type"]][1]).is_valid(args):
-        raise ActionError("invalid_arguments")
+    errors = list(Draft202012Validator(SPECS[action["type"]][1]).iter_errors(args))
+    if errors:
+        raise ActionError("invalid_arguments", {"validation_errors": [
+            {"path": list(e.absolute_path), "rule": e.validator, "message": e.message}
+            for e in errors[:3]]})
 
 
 def tool_schemas(ocr_available=True, grounding_available=(), costs=None):

@@ -1,7 +1,7 @@
 # Environment contract v0.2
 
 A `Conversation` retains system instructions, initial pixels, assistant function
-calls and tool-role responses throughout an episode. Errors become actual tool
+calls and tool-role responses throughout an episode. Errors include public action constraints (for example display-pixel bounds) and available tool names. They become actual tool
 feedback; they do not invent observations or finish decisions. Invalid output,
 budget exhaustion and context limits have bounded recovery. Unfinished episodes
 remain unfinished and count as failures in headline accuracy.
