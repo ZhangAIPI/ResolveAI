@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-05T17:11:30+00:00",
+  "as_of_utc": "2026-10-05T18:32:13+00:00",
   "status": "partial_not_a_final_model_comparison",
   "evaluation_commit": "4810a1e",
   "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
@@ -14,105 +14,105 @@
   "max_turns": 6,
   "max_context_tokens": 8192,
   "tool_adapter": "portable-prefix-v1",
-  "recorded_episodes": 5509,
+  "recorded_episodes": 6207,
   "planned_episodes": 7200,
   "runs": [
     {
       "run": "qwen3",
       "model": "Qwen3-VL-8B",
       "state": "running",
-      "recorded_episodes": 1538,
+      "recorded_episodes": 1762,
       "planned_episodes": 2400,
-      "completed_family_pairs": 192,
+      "completed_family_pairs": 220,
       "policies": {
-        "initial": 769,
-        "agent": 769
+        "initial": 881,
+        "agent": 881
       },
       "termination": {
-        "finished": 594,
-        "max_turns": 944
+        "finished": 683,
+        "max_turns": 1079
       },
       "tool_errors": {
-        "unreleased_citation": 3360,
-        "unreleased_image": 1238,
-        "invalid_bbox": 168,
-        "view_too_large": 35,
+        "unreleased_citation": 3868,
+        "unreleased_image": 1426,
+        "invalid_bbox": 174,
+        "view_too_large": 38,
         "invalid_arguments": 5
       },
       "attempted_calls": {
-        "finish": 3964,
-        "compare": 1022,
-        "inspect": 1267,
-        "request_photo": 503,
-        "ground_image_to_image": 113,
-        "ground_text_to_image": 79,
-        "crop": 495,
-        "zoom": 145,
-        "ocr": 55
+        "finish": 4561,
+        "compare": 1167,
+        "inspect": 1457,
+        "request_photo": 583,
+        "ground_image_to_image": 125,
+        "ground_text_to_image": 89,
+        "crop": 549,
+        "zoom": 165,
+        "ocr": 72
       }
     },
     {
       "run": "qwen25",
       "model": "Qwen2.5-VL-7B",
       "state": "running",
-      "recorded_episodes": 2007,
+      "recorded_episodes": 2289,
       "planned_episodes": 2400,
-      "completed_family_pairs": 250,
+      "completed_family_pairs": 286,
       "policies": {
-        "initial": 1004,
-        "agent": 1003
+        "initial": 1145,
+        "agent": 1144
       },
       "termination": {
-        "finished": 977,
-        "max_turns": 1030
+        "finished": 1084,
+        "max_turns": 1205
       },
       "tool_errors": {
-        "unreleased_citation": 1698,
-        "unreleased_image": 180,
-        "invalid_arguments": 133,
-        "invalid_bbox": 73,
+        "unreleased_citation": 1992,
+        "unreleased_image": 198,
+        "invalid_arguments": 156,
+        "invalid_bbox": 79,
         "insufficient_budget": 3
       },
       "attempted_calls": {
-        "finish": 2865,
-        "inspect": 2178,
-        "compare": 1085,
-        "ground_image_to_image": 634,
+        "finish": 3295,
+        "inspect": 2481,
+        "compare": 1224,
+        "ground_image_to_image": 760,
         "request_photo": 60,
-        "ground_image_to_text": 7,
+        "ground_image_to_text": 10,
         "crop": 9
       }
     },
     {
       "run": "internvl35-shard0",
       "model": "InternVL3.5-8B / shard 0",
-      "state": "allocation_timeout",
-      "recorded_episodes": 988,
+      "state": "running",
+      "recorded_episodes": 1079,
       "planned_episodes": 1200,
-      "completed_family_pairs": 123,
+      "completed_family_pairs": 134,
       "policies": {
-        "initial": 494,
-        "agent": 494
+        "initial": 540,
+        "agent": 539
       },
       "termination": {
-        "finished": 258,
-        "max_turns": 730
+        "finished": 286,
+        "max_turns": 793
       },
       "tool_errors": {
-        "unreleased_citation": 1538,
-        "unreleased_image": 480,
-        "invalid_bbox": 334,
-        "invalid_arguments": 17,
+        "unreleased_citation": 1658,
+        "unreleased_image": 515,
+        "invalid_bbox": 360,
+        "invalid_arguments": 20,
         "insufficient_budget": 4
       },
       "attempted_calls": {
-        "finish": 1805,
-        "compare": 869,
-        "crop": 1217,
-        "inspect": 440,
-        "zoom": 181,
-        "ground_image_to_image": 64,
-        "request_photo": 117,
+        "finish": 1955,
+        "compare": 941,
+        "crop": 1329,
+        "inspect": 478,
+        "zoom": 206,
+        "ground_image_to_image": 69,
+        "request_photo": 131,
         "assess_quality": 19,
         "ocr": 3
       }
@@ -120,42 +120,44 @@
     {
       "run": "internvl35-shard1",
       "model": "InternVL3.5-8B / shard 1",
-      "state": "allocation_timeout",
-      "recorded_episodes": 976,
+      "state": "running",
+      "recorded_episodes": 1077,
       "planned_episodes": 1200,
-      "completed_family_pairs": 122,
+      "completed_family_pairs": 134,
       "policies": {
-        "initial": 488,
-        "agent": 488
+        "initial": 539,
+        "agent": 538
       },
       "termination": {
-        "finished": 252,
-        "max_turns": 724
+        "finished": 297,
+        "max_turns": 780
       },
       "tool_errors": {
-        "unreleased_citation": 1517,
-        "invalid_bbox": 384,
-        "unreleased_image": 423,
+        "unreleased_citation": 1590,
+        "invalid_bbox": 406,
+        "unreleased_image": 440,
         "insufficient_budget": 10,
         "invalid_arguments": 26,
         "view_too_large": 3
       },
       "attempted_calls": {
-        "finish": 1817,
-        "compare": 825,
-        "crop": 1213,
-        "ground_image_to_image": 53,
-        "zoom": 196,
-        "inspect": 415,
-        "request_photo": 129,
-        "assess_quality": 22,
+        "finish": 1935,
+        "compare": 916,
+        "crop": 1367,
+        "ground_image_to_image": 58,
+        "zoom": 203,
+        "inspect": 436,
+        "request_photo": 139,
+        "assess_quality": 26,
         "read_metadata": 2
       }
     }
   ],
   "scheduler": {
-    "24679": "TIMEOUT",
-    "24689": "RUNNING; less than two hours remaining at snapshot"
+    "24679": "TIMEOUT; InternVL resumed in 24845",
+    "24689": "RUNNING; approximately 27 minutes remaining at snapshot",
+    "24845": "RUNNING; InternVL resumption verified",
+    "24846": "PENDING; afterany:24689; Qwen resumption queued"
   },
   "limitations": [
     "Different models have covered different families; no model ranking from partial results.",
@@ -180,7 +182,7 @@
       "qwen": "24846"
     },
     "state_at_verification": {
-      "24845": "RUNNING; InternVL checkpoints loaded and new episodes recorded",
+      "24845": "RUNNING; both InternVL shards recording new episodes",
       "24846": "PENDING; afterany:24689"
     }
   }
