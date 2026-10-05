@@ -9,7 +9,7 @@ from pathlib import Path
 
 from PIL import Image, ImageFilter, ImageStat
 
-from .grounding import chain_report, sufficient, validate_annotation
+from .grounding import chain_report, full_pool_verdict, sufficient, validate_annotation
 from .ocr import RapidOCRBackend
 from .tools import ActionError, VERDICTS, validate_action
 from .world import EvidenceWorld
@@ -292,7 +292,8 @@ class Environment:
         except (KeyError, TypeError, ValueError):
             valid = False
         grounded = valid and sufficient(self._case["annotation"], verdict, citations, links)
-        correct = verdict == self._case["annotation"]["verdict"]
+        expected = full_pool_verdict(self._case["annotation"], {i for i,e in self._evidence.items() if e["available"]})
+        correct = verdict == expected
         abstains = verdict == "Need more evidence"
         annotation = self._case["annotation"]
         chain = annotation.get("protocol") == "evidence-chain-v1"
@@ -305,7 +306,7 @@ class Environment:
                 "coverage": not abstains, "requests": self.requests, "tool_calls": self.calls,
                 "tool_cost": self.tool_cost, "request_cost": self.request_cost,
                 "remaining_budget": self.budget,
-                "evidence_audit": audit,
+                "evidence_audit": audit, "expected_verdict": expected,
                 "grounding_protocol": "evidence-chain-v1" if chain else "region-time-v1" if region_protocol else "image-set-proxy-v1"}
 
 

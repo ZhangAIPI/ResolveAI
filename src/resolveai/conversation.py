@@ -181,6 +181,14 @@ def preference_pair(left, right, allow_proxy=False):
     chosen, rejected = (left, right) if score(left) > score(right) else (right, left)
     if not chosen["evaluation"]["grounded_correct"]:
         return None
+    # Do not reward hindsight about a provider failure hidden at the common prefix.
+    if (chosen["decision"]["verdict"] == rejected["decision"]["verdict"] == "Need more evidence"
+            and chosen["evaluation"]["grounded_correct"] == rejected["evaluation"]["grounded_correct"]):
+        observed_failure = any(m["role"] == "tool" and isinstance(m.get("content"),list)
+            and any(item.get("type")=="text" and '"status": "unable_to_provide"' in item.get("text","")
+                    for item in m["content"]) for m in chosen["messages"][:n])
+        if not observed_failure:
+            return None
     a, b = chosen["messages"][n], rejected["messages"][n]
     if a == b or a["role"] != "assistant" or b["role"] != "assistant":
         return None

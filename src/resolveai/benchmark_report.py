@@ -90,6 +90,7 @@ def model_summary(directory, allow_partial=False):
         "actual_episodes": len(rows), "source_families": len({r["family_id"] for r in rows}),
         "source_commit": manifest["source_commit"], "dataset_sha256": config["dataset_sha256"],
         "revision": config["revision"], "worker": manifest.get("worker"),
+        "dataset_manifest":config.get("dataset_manifest",{}),
         "overall": {p: summarize_rows([r for r in rows if r["policy"] == p]) for p in ("initial", "agent")},
         "by_variant": {}, "by_category": {}}
     for variant in VARIANTS:
@@ -133,10 +134,12 @@ def merge_shards(directories, destination):
 
 
 def markdown(report):
-    lines = ["# Fixed public multi-model evaluation", "",
-        "300 original MVTec test images, 15 categories and four availability versions. "
-        "The evidence-sufficiency metric below is an original-image quality proxy, not human-annotated grounded accuracy.", "",
-        "| Model | Condition | Static proxy accuracy | Agent proxy accuracy | Paired change (95% source-family CI) | Agent requests | Completed agent episodes |", 
+    dataset=report["models"][0].get("dataset_manifest",{})
+    chain=dataset.get("grounding_protocol")=="evidence-chain-v1"
+    lines=["# 冻结公共数据的多模型评测", "",
+        f"数据：{dataset.get('dataset','见运行清单')}；统计单位：原始案件族／序列，四种证据版本共同重采样。",
+        "候选标注尚未独立审核时，证据充分性结果属于协议代理指标，不能称为正式 grounded accuracy。", "",
+        "| 模型 | 证据版本 | 初始池评分 | Agent 评分 | 配对变化（95% 案件族 CI） | 平均索证次数 | 完成 Agent 案件 |",
         "|---|---|---:|---:|---|---:|---:|"]
     for model in report["models"]:
         for variant, data in model["by_variant"].items():
@@ -145,21 +148,21 @@ def markdown(report):
             delta = data["paired"]
             lo, hi = delta["family_ci95"]
             lines.append(f"| {model['model']} | {variant} | {data['initial']['grounded_correct']['mean']:.1%} | {data['agent']['grounded_correct']['mean']:.1%} | {delta['grounded_proxy_delta']:+.1%} [{lo:+.1%}, {hi:+.1%}] | {data['agent']['mean_requests']:.2f} | {data['agent']['completed']}/{data['agent']['episodes']} |")
-    lines += ["", "Safe abstention is not a correct binary visual label. Missing/Unavailable therefore have zero proxy accuracy when originals cannot be cited; examine unsupported decisions, coverage and completion in the JSON summary.", "",
-        "| Model | Agent coverage | Unsupported proxy decisions | Selective error | Mean tool cost | Mean request cost | Mean episode seconds | Errors |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    note=("证据链协议区分物理真假和可获得的充分证据：必要材料不可获得时，Need more evidence 可以是正确案件目标。"
+          if chain else "旧图片集合代理使用二分类视觉标签，安全弃答不等于标签正确；Missing/Unavailable 的零分需要结合无依据结论、覆盖率和完成率解读。")
+    lines += ["", note, "",
+        "| 模型 | Agent 覆盖率 | 无依据确定结论 | 选择性错误率 | 工具费用 | 索证费用 | 案件耗时（秒） | 格式／工具错误 |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for model in report["models"]:
         a = model["overall"]["agent"]
         if a:
             risk = f"{a['selective_error']:.1%}" if a['selective_error'] is not None else 'n/a'
             lines.append(f"| {model['model']} | {a['coverage']['mean']:.1%} | {a['unsupported_decision']['mean']:.1%} | {risk} | {a['mean_tool_cost']:.2f} | {a['mean_request_cost']:.2f} | {a['mean_wall_latency_s']:.2f} | {a['errors']} |")
-    lines += ["", "Status: " + ("all runs complete" if report["complete"] else "partial results; evaluation remains incomplete") + ".", "",
-        "Intervals resample original-image families, keeping correlated conditions together. "
-        "Static policies receive initial evidence only; agents have the same frozen tool pool and budget 12. "
-        "All models use a lossless portable function-call adapter and greedy decoding. "
-        "Unfinished episodes contribute zero accuracy and retain their actual termination reason.", "",
-        "These results measure frozen visual policies and controlled resolution release. "
-        "They do not demonstrate cross-view identity, before/after real damage, LoRA/DPO gains, or simulation-training transfer. "
-        "See [protocol](../benchmark.md) and the companion JSON for per-category results, usage and manifests."]
+    lines += ["", "状态："+("全部完成。" if report["complete"] else "部分结果，评测尚未完成。"), "",
+        "置信区间以原始案件族／序列为单位，保留相关证据版本。初始池策略只看到初始材料；Agent 使用相同冻结工具与预算。"
+        "各模型使用相同 portable 工具传输与确定性生成。未完成案件计零分，保留实际终止原因。", "",
+        "这些结果不证明训练增益、仿真到真实的迁移或真实前后损坏变化。候选身份标注来自公开序列，充分性仍需独立审核。"
+        "模型版本、数据哈希、协议、预算、分项统计和用量见配套 JSON；研究边界见 [中文协议](../research_protocol.zh-CN.md)。"]
     return "\n".join(lines) + "\n"
 
 
@@ -177,7 +180,7 @@ def main():
     if len({m["dataset_sha256"] for m in models}) != 1:
         raise ValueError("models evaluated different frozen datasets")
     report = {"complete": all(m["complete"] for m in models), "models": models,
-              "bootstrap": "10000 source-family resamples; seed 42", "metric": "original-image quality proxy"}
+              "bootstrap": "10000 source-family resamples; seed 42", "metric": "source-derived evidence-chain proxy" if models[0].get("dataset_manifest",{}).get("grounding_protocol")=="evidence-chain-v1" else "original-image quality proxy"}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.with_suffix(".json").write_text(json.dumps(report, indent=2) + "\n")
     args.output.with_suffix(".md").write_text(markdown(report))

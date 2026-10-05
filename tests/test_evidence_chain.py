@@ -102,3 +102,20 @@ class ChainTests(unittest.TestCase):
         self.assertEqual(len(session.messages),2)
         self.assertEqual(session._env.budget,12)
         self.assertEqual(result["records"][0]["metadata"]["world_fingerprint"],result["records"][1]["metadata"]["world_fingerprint"])
+
+    def test_unobtainable_evidence_changes_episode_target_not_physical_truth(self):
+        from resolveai.conversation import preference_pair
+        case=deepcopy(self.case);case["initial"]=["a"];case["evidence"][1]["available"]=False
+        env=Environment(case,self.root)
+        result=env.evaluate({"verdict":"Need more evidence","citations":[]})
+        self.assertTrue(result["grounded_correct"]);self.assertEqual(result["expected_verdict"],"Need more evidence")
+        self.assertEqual(case["annotation"]["verdict"],"Supported")
+        parent=Conversation(env);request,stop=parent.fork(),parent.fork()
+        request.call({"name":"request_photo","arguments":{"query":{"object":"item","time":"b","view":"b"}}})
+        finish={"name":"finish","arguments":{"verdict":"Need more evidence","citations":[]}}
+        request.call(finish);stop.call(finish)
+        self.assertIsNone(preference_pair(request.record(),stop.record()))
+        parent.call({"name":"request_photo","arguments":{"query":{"object":"item","time":"b","view":"b"}}})
+        inspect,stop=parent.fork(),parent.fork()
+        inspect.call({"name":"inspect","arguments":{"image_id":"a"}});inspect.call(finish);stop.call(finish)
+        self.assertIsNotNone(preference_pair(inspect.record(),stop.record()))

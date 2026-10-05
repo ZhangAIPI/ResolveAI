@@ -112,3 +112,21 @@ def sufficient(annotation, verdict, citations, links=()):
     if annotation.get("protocol") == "evidence-chain-v1":
         return chain_report(annotation, verdict, citations, links)["sufficient"]
     return alternatives_satisfied(annotation["minimal_evidence_sets"].get(verdict, []), citations, links)
+
+
+def full_pool_verdict(annotation, available_ids):
+    """Separate physical truth from a structurally evidence-obtainable episode target."""
+    if annotation.get("protocol") != "evidence-chain-v1":
+        return annotation["verdict"]
+    def reachable(subclaim, verdict):
+        def available(requirement):
+            ids = [requirement["left"]["image_id"], requirement["right"]["image_id"]] if "relation" in requirement else [requirement["image_id"]]
+            return all(image_id in available_ids for image_id in ids)
+        return any(group and all(available(r) for r in group)
+                   for group in subclaim["minimal_evidence_sets"].get(verdict, []))
+    parts = annotation["subclaims"]
+    if any(s["truth"]=="Refuted" and reachable(s,"Refuted") for s in parts):
+        return "Refuted"
+    if all(s["truth"]=="Supported" and reachable(s,"Supported") for s in parts):
+        return "Supported"
+    return "Need more evidence"

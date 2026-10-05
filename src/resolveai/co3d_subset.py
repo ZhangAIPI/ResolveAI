@@ -133,7 +133,8 @@ def collect(root,categories,families=300,views=16,workers=12,seed=42):
     (root/"subset_assets.json").write_text(json.dumps(records,indent=2)+"\n")
     manifest={"dataset":"CO3Dv2 selected official test sequences","revision":REVISION,"categories":categories,
               "families":families,"candidate_views_per_family":views,"seed":seed,"asset_count":len(records),
-              "source":"https://github.com/facebookresearch/co3d","archive_sha256_reference":checks,
+              "source":"https://github.com/facebookresearch/co3d",
+              "archive_sha256_reference":{url.rsplit("/",1)[1]:checks[url.rsplit("/",1)[1]] for c in categories for url in links[c]},
               "verification":"metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
               "license":"CC-BY-NC-4.0"}
     (root/"source_manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
