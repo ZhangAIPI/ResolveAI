@@ -93,3 +93,10 @@ or simulation-to-real training transfer. Those claims require separate experimen
 Official sources: [MVTec AD](https://www.mvtec.com/research-teaching/datasets/mvtec-ad),
 [Qwen2.5-VL](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct),
 [InternVL3.5](https://huggingface.co/OpenGVLab/InternVL3_5-8B-HF).
+
+
+## Repartitioning completed evaluations
+
+Stop the original writers before using `python -m resolveai.repartition SOURCE DATA OUTPUT --shards 8 --name qwen3`. The helper checks the dataset hash, preserves each completed result and its exact matching trajectory, hardlinks immutable image blobs, keeps availability variants together by family, and aborts if a writer changes source files. Model weights, source code and rollout settings remain unchanged; only execution shard fields differ. Keep the serial archive for provenance and exclude it from merged episode counts.
+
+`scripts/evaluate_local_models.py qwen3 RUNTIME DATA OUTPUT --code FROZEN_CODE --gpus 4 --shards 8` queues the shards by remaining episode count across four GPUs. Finished results are reused. Final reporting requires all shards with no overlapping episodes. The node count and GPU count are execution resources, not independent statistical units; confidence intervals still resample source families.

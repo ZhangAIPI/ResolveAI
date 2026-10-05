@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-05T19:40:32+00:00",
+  "as_of_utc": "2026-10-05T20:04:59+00:00",
   "status": "partial_not_a_final_model_comparison",
   "evaluation_commit": "4810a1e",
   "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
@@ -14,41 +14,275 @@
   "max_turns": 6,
   "max_context_tokens": 8192,
   "tool_adapter": "portable-prefix-v1",
-  "recorded_episodes": 6748,
+  "recorded_episodes": 6828,
   "planned_episodes": 7200,
   "runs": [
     {
-      "run": "qwen3",
-      "model": "Qwen3-VL-8B",
+      "run": "qwen3-shard0",
+      "model": "Qwen3-VL-8B / shard 0",
       "state": "running",
-      "recorded_episodes": 1948,
-      "planned_episodes": 2400,
-      "completed_family_pairs": 243,
+      "recorded_episodes": 259,
+      "planned_episodes": 304,
+      "completed_family_pairs": 32,
       "policies": {
-        "initial": 974,
-        "agent": 974
+        "initial": 130,
+        "agent": 129
       },
       "termination": {
-        "finished": 754,
-        "max_turns": 1194
+        "finished": 95,
+        "max_turns": 164
       },
       "tool_errors": {
-        "unreleased_citation": 4270,
-        "unreleased_image": 1566,
-        "invalid_bbox": 187,
-        "view_too_large": 44,
-        "invalid_arguments": 7
+        "unreleased_citation": 578,
+        "unreleased_image": 216,
+        "invalid_bbox": 29,
+        "view_too_large": 4,
+        "invalid_arguments": 3
       },
       "attempted_calls": {
-        "finish": 5035,
-        "compare": 1287,
-        "inspect": 1599,
-        "request_photo": 649,
-        "ground_image_to_image": 140,
-        "ground_text_to_image": 95,
-        "crop": 609,
-        "zoom": 190,
-        "ocr": 74
+        "finish": 674,
+        "compare": 164,
+        "inspect": 214,
+        "request_photo": 87,
+        "ground_image_to_image": 22,
+        "ground_text_to_image": 10,
+        "zoom": 21,
+        "ocr": 13,
+        "crop": 89
+      }
+    },
+    {
+      "run": "qwen3-shard1",
+      "model": "Qwen3-VL-8B / shard 1",
+      "state": "running",
+      "recorded_episodes": 280,
+      "planned_episodes": 304,
+      "completed_family_pairs": 35,
+      "policies": {
+        "initial": 140,
+        "agent": 140
+      },
+      "termination": {
+        "finished": 102,
+        "max_turns": 178
+      },
+      "tool_errors": {
+        "unreleased_citation": 632,
+        "unreleased_image": 230,
+        "invalid_bbox": 30,
+        "view_too_large": 9,
+        "invalid_arguments": 1
+      },
+      "attempted_calls": {
+        "finish": 735,
+        "compare": 180,
+        "inspect": 228,
+        "crop": 97,
+        "zoom": 24,
+        "ground_image_to_image": 22,
+        "request_photo": 93,
+        "ground_text_to_image": 14,
+        "ocr": 9
+      }
+    },
+    {
+      "run": "qwen3-shard2",
+      "model": "Qwen3-VL-8B / shard 2",
+      "state": "running",
+      "recorded_episodes": 218,
+      "planned_episodes": 304,
+      "completed_family_pairs": 27,
+      "policies": {
+        "initial": 109,
+        "agent": 109
+      },
+      "termination": {
+        "finished": 79,
+        "max_turns": 139
+      },
+      "tool_errors": {
+        "unreleased_citation": 486,
+        "unreleased_image": 177,
+        "invalid_bbox": 17,
+        "view_too_large": 7,
+        "invalid_arguments": 2
+      },
+      "attempted_calls": {
+        "finish": 565,
+        "compare": 144,
+        "inspect": 177,
+        "ground_text_to_image": 14,
+        "request_photo": 67,
+        "crop": 84,
+        "zoom": 22,
+        "ground_image_to_image": 11,
+        "ocr": 4
+      }
+    },
+    {
+      "run": "qwen3-shard3",
+      "model": "Qwen3-VL-8B / shard 3",
+      "state": "running",
+      "recorded_episodes": 256,
+      "planned_episodes": 304,
+      "completed_family_pairs": 32,
+      "policies": {
+        "initial": 128,
+        "agent": 128
+      },
+      "termination": {
+        "finished": 104,
+        "max_turns": 152
+      },
+      "tool_errors": {
+        "unreleased_citation": 542,
+        "unreleased_image": 205,
+        "invalid_bbox": 25,
+        "view_too_large": 2,
+        "invalid_arguments": 1
+      },
+      "attempted_calls": {
+        "finish": 646,
+        "compare": 170,
+        "inspect": 212,
+        "request_photo": 89,
+        "crop": 73,
+        "ocr": 6,
+        "ground_text_to_image": 16,
+        "zoom": 26,
+        "ground_image_to_image": 16
+      }
+    },
+    {
+      "run": "qwen3-shard4",
+      "model": "Qwen3-VL-8B / shard 4",
+      "state": "running",
+      "recorded_episodes": 249,
+      "planned_episodes": 296,
+      "completed_family_pairs": 31,
+      "policies": {
+        "initial": 125,
+        "agent": 124
+      },
+      "termination": {
+        "finished": 110,
+        "max_turns": 139
+      },
+      "tool_errors": {
+        "unreleased_citation": 524,
+        "unreleased_image": 182,
+        "invalid_bbox": 18,
+        "view_too_large": 2
+      },
+      "attempted_calls": {
+        "finish": 634,
+        "compare": 171,
+        "inspect": 189,
+        "request_photo": 80,
+        "crop": 54,
+        "ground_image_to_image": 22,
+        "ground_text_to_image": 16,
+        "zoom": 28,
+        "ocr": 8
+      }
+    },
+    {
+      "run": "qwen3-shard5",
+      "model": "Qwen3-VL-8B / shard 5",
+      "state": "running",
+      "recorded_episodes": 285,
+      "planned_episodes": 296,
+      "completed_family_pairs": 35,
+      "policies": {
+        "initial": 143,
+        "agent": 142
+      },
+      "termination": {
+        "finished": 104,
+        "max_turns": 181
+      },
+      "tool_errors": {
+        "unreleased_citation": 628,
+        "unreleased_image": 241,
+        "invalid_bbox": 20,
+        "view_too_large": 7
+      },
+      "attempted_calls": {
+        "finish": 732,
+        "compare": 185,
+        "inspect": 230,
+        "request_photo": 94,
+        "ground_image_to_image": 28,
+        "crop": 84,
+        "ocr": 12,
+        "ground_text_to_image": 11,
+        "zoom": 27
+      }
+    },
+    {
+      "run": "qwen3-shard6",
+      "model": "Qwen3-VL-8B / shard 6",
+      "state": "running",
+      "recorded_episodes": 233,
+      "planned_episodes": 296,
+      "completed_family_pairs": 29,
+      "policies": {
+        "initial": 117,
+        "agent": 116
+      },
+      "termination": {
+        "finished": 97,
+        "max_turns": 136
+      },
+      "tool_errors": {
+        "unreleased_citation": 506,
+        "unreleased_image": 171,
+        "view_too_large": 10,
+        "invalid_bbox": 18
+      },
+      "attempted_calls": {
+        "finish": 603,
+        "compare": 156,
+        "inspect": 189,
+        "request_photo": 74,
+        "crop": 80,
+        "zoom": 29,
+        "ocr": 16,
+        "ground_text_to_image": 6,
+        "ground_image_to_image": 5
+      }
+    },
+    {
+      "run": "qwen3-shard7",
+      "model": "Qwen3-VL-8B / shard 7",
+      "state": "running",
+      "recorded_episodes": 248,
+      "planned_episodes": 296,
+      "completed_family_pairs": 31,
+      "policies": {
+        "initial": 124,
+        "agent": 124
+      },
+      "termination": {
+        "finished": 96,
+        "max_turns": 152
+      },
+      "tool_errors": {
+        "unreleased_citation": 542,
+        "unreleased_image": 186,
+        "invalid_bbox": 34,
+        "view_too_large": 8
+      },
+      "attempted_calls": {
+        "finish": 647,
+        "compare": 166,
+        "inspect": 213,
+        "request_photo": 85,
+        "ocr": 6,
+        "crop": 70,
+        "ground_image_to_image": 21,
+        "zoom": 29,
+        "ground_text_to_image": 16
       }
     },
     {
@@ -157,7 +391,8 @@
     "24679": "TIMEOUT; InternVL resumed in 24845",
     "24689": "TIMEOUT; Qwen resumed in 24846",
     "24845": "COMPLETED; both InternVL shards complete and merged",
-    "24846": "RUNNING; Qwen3 continuation; Qwen2.5 complete"
+    "24846": "CANCELLED intentionally after lossless repartition to replace two-card execution",
+    "24847": "RUNNING; 4 x A6000; 32 CPUs; 256G; 4-hour limit; 8 family shards"
   },
   "limitations": [
     "Different models have covered different families; no model ranking from partial results.",
@@ -186,10 +421,10 @@
       "24846": "RUNNING; Qwen3 remaining"
     }
   },
-  "as_of_america_new_york": "2026-10-05T15:40:32-04:00",
+  "as_of_america_new_york": "2026-10-05T16:04:59-04:00",
   "development_update": {
     "environment_contract": "v0.3",
-    "tests_passed": 36,
+    "tests_passed": 39,
     "changes": [
       "Released-ID-only correction feedback",
       "Preview image_id distinguished from original source_id",
@@ -198,7 +433,7 @@
     "evaluation_unchanged": true,
     "new_model_evaluation_complete": false,
     "paired_check": {
-      "status": "started",
+      "status": "complete; both development runs exited 0; analysis pending",
       "model": "Qwen2.5-VL-7B",
       "families": 3,
       "cases_per_run": 12,
@@ -214,5 +449,27 @@
   "completed_model_reports": [
     "docs/results/qwen25_co3d_candidates.md",
     "docs/results/internvl35_co3d_candidates.md"
-  ]
+  ],
+  "qwen3_parallelization": {
+    "job": "24847",
+    "gpus": 4,
+    "shards": 8,
+    "preserved_episodes": 1989,
+    "serial_archive": "qwen3-serial",
+    "remaining_at_switch": 411,
+    "gpu_workloads_at_start": [
+      107,
+      96,
+      104,
+      104
+    ],
+    "observed_gpu_utilization_percent": [
+      97,
+      98,
+      98,
+      98
+    ],
+    "evaluation_commit": "4810a1e",
+    "completed_results_identical_before_and_after_repartition": true
+  }
 }

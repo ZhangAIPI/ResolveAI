@@ -44,3 +44,7 @@ proposal have not been independently checked in this implementation task.
 - `24846`: Qwen resume, submitted with `afterany:24689` to avoid concurrent result writers.
 - Each allocation: 2×A6000, 16 CPUs, 128GB RAM, 12 hours, partition `macula`.
 - Outputs and scheduler logs remain on p62 under the existing runtime. Evaluation code stays frozen at `4810a1e`; completed episodes are reused. Jobs exit after their evaluation/reporting work finishes.
+
+## Qwen3 parallel continuation: 2026-10-05
+
+`24847` runs Qwen3 on all four A6000 GPUs in `sclera`, with 32 CPUs, 256GB RAM and a four-hour limit. `24846` was intentionally replaced after 1,989 completed episodes and matching native trajectories were verified and migrated. Eight family shards preserve the frozen `4810a1e` evaluation; GPU queues begin with 107/96/104/104 remaining episodes. Model and image contents were not duplicated. The serial archive is excluded from the final counts. The job merges results and publishes the three-model report after completion, then exits.
