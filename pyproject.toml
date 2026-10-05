@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["Pillow>=10"]
 
 [project.optional-dependencies]
-model = ["torch", "transformers", "accelerate", "peft"]
+model = ["torch>=2.4", "transformers==4.57.6", "accelerate>=0.34", "peft"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
