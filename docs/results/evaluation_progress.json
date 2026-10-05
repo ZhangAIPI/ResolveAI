@@ -433,7 +433,7 @@
     "evaluation_unchanged": true,
     "new_model_evaluation_complete": false,
     "paired_check": {
-      "status": "complete; both development runs exited 0; analysis pending",
+      "status": "complete; no Agent proxy improvement; initial-only completion regressed due to format errors",
       "model": "Qwen2.5-VL-7B",
       "families": 3,
       "cases_per_run": 12,
@@ -443,7 +443,8 @@
         "6a57514"
       ],
       "candidate_benchmark_disjoint_sequences_verified": true,
-      "included_in_7200_episode_benchmark": false
+      "included_in_7200_episode_benchmark": false,
+      "report": "docs/results/protocol_development.md"
     }
   },
   "completed_model_reports": [

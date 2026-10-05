@@ -1,0 +1,71 @@
+{
+  "scope": "independent software/development integration, not benchmark evidence",
+  "families": 3,
+  "cases_per_version": 12,
+  "episodes_per_version": 24,
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "candidate_benchmark_disjoint": true,
+  "budget": 12,
+  "max_turns": 6,
+  "versions": {
+    "v02": {
+      "source_commit": "4810a1eb39e2401b54f73f68bddb53e653687129",
+      "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "by_policy": {
+        "initial": {
+          "episodes": 12,
+          "finished": 6,
+          "proxy_correct": 2,
+          "errors": 36,
+          "verdicts": {
+            "Need more evidence": 6,
+            "unfinished": 6
+          }
+        },
+        "agent": {
+          "episodes": 12,
+          "finished": 8,
+          "proxy_correct": 4,
+          "errors": 13,
+          "verdicts": {
+            "Need more evidence": 8,
+            "unfinished": 4
+          }
+        }
+      },
+      "parse_errors": 13,
+      "tool_errors": {
+        "unreleased_citation": 36
+      }
+    },
+    "v03": {
+      "source_commit": "6a575140f4dbec9fafb78d6aeba4d449d2c40d11",
+      "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "by_policy": {
+        "initial": {
+          "episodes": 12,
+          "finished": 0,
+          "proxy_correct": 0,
+          "errors": 72,
+          "verdicts": {
+            "unfinished": 12
+          }
+        },
+        "agent": {
+          "episodes": 12,
+          "finished": 8,
+          "proxy_correct": 4,
+          "errors": 25,
+          "verdicts": {
+            "Need more evidence": 8,
+            "unfinished": 4
+          }
+        }
+      },
+      "parse_errors": 96,
+      "tool_errors": {
+        "invalid_arguments": 1
+      }
+    }
+  }
+}
