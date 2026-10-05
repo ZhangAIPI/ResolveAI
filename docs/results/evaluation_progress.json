@@ -164,5 +164,24 @@
     "Current photo intervention primarily releases the original of an existing low-resolution preview.",
     "Unreleased-citation errors may include ambiguity between source_id and the released preview image_id; inspect public tool protocol before attributing all failures to vision.",
     "No simulator SFT/DPO or CounterCredit comparison has been completed."
-  ]
+  ],
+  "resumption": {
+    "submitted_at_utc": "2026-10-05T17:56:14.618133+00:00",
+    "resources_per_job": {
+      "gpu": "2 x a6000",
+      "cpus": 16,
+      "memory": "128G",
+      "time_limit": "12:00:00",
+      "node": "sclera"
+    },
+    "evaluation_code": "4810a1e",
+    "jobs": {
+      "internvl": "24845",
+      "qwen": "24846"
+    },
+    "state_at_verification": {
+      "24845": "RUNNING; InternVL checkpoints loaded and new episodes recorded",
+      "24846": "PENDING; afterany:24689"
+    }
+  }
 }

@@ -37,3 +37,10 @@ identity/time adaptation remain research work. The six-image Blender scene is
 unreviewed integration data. Neither it nor a quality-proxy public score establishes
 simulation-training transfer or actual dispute-case accuracy. Conference dates from the supplied
 proposal have not been independently checked in this implementation task.
+
+## GPU renewal: 2026-10-05
+
+- `24845`: InternVL resume, running on `sclera`; new episodes verified.
+- `24846`: Qwen resume, submitted with `afterany:24689` to avoid concurrent result writers.
+- Each allocation: 2×A6000, 16 CPUs, 128GB RAM, 12 hours, partition `macula`.
+- Outputs and scheduler logs remain on p62 under the existing runtime. Evaluation code stays frozen at `4810a1e`; completed episodes are reused. Jobs exit after their evaluation/reporting work finishes.
