@@ -20,6 +20,7 @@ def main():
     parser.add_argument("group",choices=["qwen","internvl"])
     parser.add_argument("runtime",type=Path);parser.add_argument("data",type=Path);parser.add_argument("output",type=Path)
     parser.add_argument("--code",type=Path,required=True);parser.add_argument("--publish-repo",type=Path)
+    parser.add_argument("--max-turns",type=int,default=6)
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
     env={**os.environ,"PYTHONPATH":str(args.code/"src"),"OMP_NUM_THREADS":"4","OPENBLAS_NUM_THREADS":"1"}
     configurations=[("qwen3",0,None),("qwen25",1,None)] if args.group=="qwen" else [("internvl35",0,0),("internvl35",1,1)]
@@ -29,7 +30,7 @@ def main():
         path,model_id,revision=MODELS[name]
         command=[sys.executable,"-u","-m","resolveai.benchmark",str(args.data),str(args.runtime/path),str(folder),
             "--model-id",model_id,"--revision",revision,"--grounding-root",str(args.runtime/"grounding"),"--device",str(device),
-            "--budget","12","--max-turns","16","--max-context-tokens","8192"]
+            "--budget","12","--max-turns",str(args.max_turns),"--max-context-tokens","8192"]
         if shard is not None:command += ["--shards","2","--shard-index",str(shard)]
         log=(folder/"worker.log").open("a")
         process=subprocess.Popen(command,cwd=args.code,env=env,stdout=log,stderr=subprocess.STDOUT)

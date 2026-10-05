@@ -90,7 +90,7 @@ def model_summary(directory, allow_partial=False):
         "actual_episodes": len(rows), "source_families": len({r["family_id"] for r in rows}),
         "source_commit": manifest["source_commit"], "dataset_sha256": config["dataset_sha256"],
         "revision": config["revision"], "worker": manifest.get("worker"),
-        "dataset_manifest":config.get("dataset_manifest",{}),
+        "dataset_manifest":config.get("dataset_manifest",{}), "configuration":config,
         "overall": {p: summarize_rows([r for r in rows if r["policy"] == p]) for p in ("initial", "agent")},
         "by_variant": {}, "by_category": {}}
     for variant in VARIANTS:
