@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-05T19:18:41+00:00",
+  "as_of_utc": "2026-10-05T19:40:32+00:00",
   "status": "partial_not_a_final_model_comparison",
   "evaluation_commit": "4810a1e",
   "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
@@ -14,40 +14,40 @@
   "max_turns": 6,
   "max_context_tokens": 8192,
   "tool_adapter": "portable-prefix-v1",
-  "recorded_episodes": 6641,
+  "recorded_episodes": 6748,
   "planned_episodes": 7200,
   "runs": [
     {
       "run": "qwen3",
       "model": "Qwen3-VL-8B",
       "state": "running",
-      "recorded_episodes": 1886,
+      "recorded_episodes": 1948,
       "planned_episodes": 2400,
-      "completed_family_pairs": 235,
+      "completed_family_pairs": 243,
       "policies": {
-        "initial": 943,
-        "agent": 943
+        "initial": 974,
+        "agent": 974
       },
       "termination": {
-        "finished": 727,
-        "max_turns": 1159
+        "finished": 754,
+        "max_turns": 1194
       },
       "tool_errors": {
-        "unreleased_citation": 4150,
-        "unreleased_image": 1520,
-        "invalid_bbox": 183,
-        "view_too_large": 42,
-        "invalid_arguments": 6
+        "unreleased_citation": 4270,
+        "unreleased_image": 1566,
+        "invalid_bbox": 187,
+        "view_too_large": 44,
+        "invalid_arguments": 7
       },
       "attempted_calls": {
-        "finish": 4888,
-        "compare": 1247,
-        "inspect": 1550,
-        "request_photo": 626,
-        "ground_image_to_image": 136,
-        "ground_text_to_image": 93,
-        "crop": 589,
-        "zoom": 180,
+        "finish": 5035,
+        "compare": 1287,
+        "inspect": 1599,
+        "request_photo": 649,
+        "ground_image_to_image": 140,
+        "ground_text_to_image": 95,
+        "crop": 609,
+        "zoom": 190,
         "ocr": 74
       }
     },
@@ -86,33 +86,33 @@
     {
       "run": "internvl35-shard0",
       "model": "InternVL3.5-8B / shard 0",
-      "state": "running",
-      "recorded_episodes": 1185,
+      "state": "complete",
+      "recorded_episodes": 1200,
       "planned_episodes": 1200,
-      "completed_family_pairs": 148,
+      "completed_family_pairs": 150,
       "policies": {
-        "initial": 593,
-        "agent": 592
+        "initial": 600,
+        "agent": 600
       },
       "termination": {
-        "finished": 318,
-        "max_turns": 867
+        "finished": 319,
+        "max_turns": 881
       },
       "tool_errors": {
-        "unreleased_citation": 1806,
-        "unreleased_image": 563,
-        "invalid_bbox": 384,
+        "unreleased_citation": 1842,
+        "unreleased_image": 575,
+        "invalid_bbox": 390,
         "invalid_arguments": 23,
         "insufficient_budget": 4
       },
       "attempted_calls": {
-        "finish": 2136,
-        "compare": 1028,
-        "crop": 1475,
-        "inspect": 520,
-        "zoom": 216,
-        "ground_image_to_image": 77,
-        "request_photo": 149,
+        "finish": 2173,
+        "compare": 1041,
+        "crop": 1494,
+        "inspect": 529,
+        "zoom": 219,
+        "ground_image_to_image": 78,
+        "request_photo": 152,
         "assess_quality": 20,
         "ocr": 3
       }
@@ -120,34 +120,34 @@
     {
       "run": "internvl35-shard1",
       "model": "InternVL3.5-8B / shard 1",
-      "state": "running",
-      "recorded_episodes": 1170,
+      "state": "complete",
+      "recorded_episodes": 1200,
       "planned_episodes": 1200,
-      "completed_family_pairs": 146,
+      "completed_family_pairs": 150,
       "policies": {
-        "initial": 585,
-        "agent": 585
+        "initial": 600,
+        "agent": 600
       },
       "termination": {
-        "finished": 317,
-        "max_turns": 853
+        "finished": 323,
+        "max_turns": 877
       },
       "tool_errors": {
-        "unreleased_citation": 1759,
-        "invalid_bbox": 430,
-        "unreleased_image": 485,
+        "unreleased_citation": 1813,
+        "invalid_bbox": 445,
+        "unreleased_image": 497,
         "insufficient_budget": 10,
         "invalid_arguments": 26,
         "view_too_large": 3
       },
       "attempted_calls": {
-        "finish": 2124,
-        "compare": 983,
-        "crop": 1457,
+        "finish": 2184,
+        "compare": 1010,
+        "crop": 1494,
         "ground_image_to_image": 60,
-        "zoom": 211,
-        "inspect": 482,
-        "request_photo": 165,
+        "zoom": 223,
+        "inspect": 494,
+        "request_photo": 167,
         "assess_quality": 26,
         "read_metadata": 2
       }
@@ -156,8 +156,8 @@
   "scheduler": {
     "24679": "TIMEOUT; InternVL resumed in 24845",
     "24689": "TIMEOUT; Qwen resumed in 24846",
-    "24845": "RUNNING; InternVL recording new episodes",
-    "24846": "RUNNING; both Qwen checkpoints resumed"
+    "24845": "COMPLETED; both InternVL shards complete and merged",
+    "24846": "RUNNING; Qwen3 continuation; Qwen2.5 complete"
   },
   "limitations": [
     "Different models have covered different families; no model ranking from partial results.",
@@ -182,11 +182,11 @@
       "qwen": "24846"
     },
     "state_at_verification": {
-      "24845": "RUNNING; both InternVL shards recording new episodes",
-      "24846": "RUNNING; both Qwen workers resumed"
+      "24845": "COMPLETED",
+      "24846": "RUNNING; Qwen3 remaining"
     }
   },
-  "as_of_america_new_york": "2026-10-05T15:18:41-04:00",
+  "as_of_america_new_york": "2026-10-05T15:40:32-04:00",
   "development_update": {
     "environment_contract": "v0.3",
     "tests_passed": 36,
@@ -196,9 +196,23 @@
       "Public timestamp and observed-region correction bounds"
     ],
     "evaluation_unchanged": true,
-    "new_model_evaluation_complete": false
+    "new_model_evaluation_complete": false,
+    "paired_check": {
+      "status": "started",
+      "model": "Qwen2.5-VL-7B",
+      "families": 3,
+      "cases_per_run": 12,
+      "episodes_per_run": 24,
+      "commits": [
+        "4810a1e",
+        "6a57514"
+      ],
+      "candidate_benchmark_disjoint_sequences_verified": true,
+      "included_in_7200_episode_benchmark": false
+    }
   },
   "completed_model_reports": [
-    "docs/results/qwen25_co3d_candidates.md"
+    "docs/results/qwen25_co3d_candidates.md",
+    "docs/results/internvl35_co3d_candidates.md"
   ]
 }
