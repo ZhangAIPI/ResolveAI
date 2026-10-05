@@ -1,0 +1,268 @@
+{
+  "protocol": "capability-diagnostic-v1",
+  "complete": true,
+  "source_commit": "b057f717ca94a2335c33a130e13846fc6a1ff9ae",
+  "plan_sha256": "e3550db58441ef835084900ce8f80bfa9221b9aea8b5e32ace38264cf7d72525",
+  "preflight": {
+    "scripted_request_passed": 120,
+    "world_state_unchanged": 120
+  },
+  "families": 120,
+  "episodes": 2160,
+  "limitations": [
+    "public candidate labels; target regions supplied; no reviewed sufficiency claim",
+    "Generated identity controls share source sequences; no independent-family confidence intervals.",
+    "30 same-sequence positive / 30 easy cross-category negative; no hard-negative claim",
+    "Finite-action menus control tool arguments and decoding; not free-form agent equivalence.",
+    "Correct supplied-source labels are not independently reviewed visual sufficiency.",
+    "Unavailable conclusions are described, not assigned a synthetic evidence-sufficiency label."
+  ],
+  "models": {
+    "Qwen/Qwen3-VL-8B-Instruct": {
+      "mvtec": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 0,
+          "scripted_request": 14,
+          "menu_agent": 24,
+          "rich_agent": 10
+        },
+        "evidence_sensitive_cases": 14,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 8,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 14,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 60,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 8,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 14,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 54,
+            "all_cases_errors": 37
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 21,
+            "determinate": 39,
+            "failed": 0
+          },
+          "rich_unavailable": {
+            "finished_need_more": 41,
+            "determinate": 13,
+            "failed": 6
+          }
+        }
+      },
+      "co3d": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 35,
+          "scripted_request": 55,
+          "menu_agent": 36,
+          "rich_agent": 37
+        },
+        "evidence_sensitive_cases": 20,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 10,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 20,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 60,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 9,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 20,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 47,
+            "all_cases_errors": 33
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 21,
+            "determinate": 39,
+            "failed": 0
+          },
+          "rich_unavailable": {
+            "finished_need_more": 4,
+            "determinate": 43,
+            "failed": 13
+          }
+        }
+      }
+    },
+    "Qwen/Qwen2.5-VL-7B-Instruct": {
+      "mvtec": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 1,
+          "scripted_request": 1,
+          "menu_agent": 0,
+          "rich_agent": 0
+        },
+        "evidence_sensitive_cases": 1,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 1,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 0,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 0,
+            "obtained_original_but_wrong": 1,
+            "all_cases_finished": 5,
+            "all_cases_errors": 29
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 0,
+            "determinate": 0,
+            "failed": 60
+          },
+          "rich_unavailable": {
+            "finished_need_more": 6,
+            "determinate": 0,
+            "failed": 54
+          }
+        }
+      },
+      "co3d": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 0,
+          "scripted_request": 0,
+          "menu_agent": 17,
+          "rich_agent": 0
+        },
+        "evidence_sensitive_cases": 0,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 0,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 60,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 0,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 19,
+            "all_cases_errors": 128
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 29,
+            "determinate": 31,
+            "failed": 0
+          },
+          "rich_unavailable": {
+            "finished_need_more": 19,
+            "determinate": 0,
+            "failed": 41
+          }
+        }
+      }
+    },
+    "OpenGVLab/InternVL3_5-8B-HF": {
+      "mvtec": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 1,
+          "scripted_request": 22,
+          "menu_agent": 1,
+          "rich_agent": 0
+        },
+        "evidence_sensitive_cases": 21,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 10,
+            "obtained_original_but_wrong": 11,
+            "all_cases_finished": 14,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 21,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 0,
+            "all_cases_errors": 99
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 14,
+            "determinate": 0,
+            "failed": 46
+          },
+          "rich_unavailable": {
+            "finished_need_more": 0,
+            "determinate": 0,
+            "failed": 60
+          }
+        }
+      },
+      "co3d": {
+        "cases": 60,
+        "correct_by_arm": {
+          "initial": 30,
+          "scripted_request": 42,
+          "menu_agent": 11,
+          "rich_agent": 1
+        },
+        "evidence_sensitive_cases": 12,
+        "conditional": {
+          "menu_agent": {
+            "answered_correctly": 6,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 12,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 59,
+            "all_cases_errors": 0
+          },
+          "rich_agent": {
+            "answered_correctly": 0,
+            "obtained_original_and_correct": 0,
+            "did_not_obtain_original": 12,
+            "obtained_original_but_wrong": 0,
+            "all_cases_finished": 1,
+            "all_cases_errors": 139
+          }
+        },
+        "unavailable_descriptive": {
+          "menu_unavailable": {
+            "finished_need_more": 41,
+            "determinate": 18,
+            "failed": 1
+          },
+          "rich_unavailable": {
+            "finished_need_more": 0,
+            "determinate": 1,
+            "failed": 59
+          }
+        }
+      }
+    }
+  }
+}
