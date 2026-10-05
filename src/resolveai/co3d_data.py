@@ -146,7 +146,7 @@ def prepare(source, output, categories, families=300, views=8, split="test", see
             preview = image.convert("RGB"); source_size=list(preview.size); preview.thumbnail((48,48))
             preview_path=assets/(second["id"]+"-preview.jpg");preview.save(preview_path,quality=85)
         preview_row = {**second,"id":second["id"]+"-preview","path":"assets/"+preview_path.name,
-                       "source_size":source_size,"source_bbox":[0,0,*source_size],"view":"preview"}
+                       "source_size":source_size,"source_bbox":[0,0,*source_size],"view":"preview", "camera_view":second["view"]}
         endpoint = lambda row: {"image_id":row["id"],"bbox":boxes[row["id"]],"time":"capture"}
         identity = {"relation":"same_object","left":endpoint(first),"right":endpoint(second),"min_iou":.5}
         annotation = {"protocol":"evidence-chain-v1","status":"source-derived-unreviewed","verdict":"Supported",

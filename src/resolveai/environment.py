@@ -119,7 +119,8 @@ class Environment:
         image.save(buffer, format="PNG")
         e = self._evidence[image_id]
         return {"image_id": image_id, "view_id": reference, "source_id": e["source_id"],
-                "party": e["party"], "time": e["time"],
+                "party": e["party"], "time": e["time"], "object": e["object"],
+                "camera_view": e.get("camera_view",e["view"]),
                 "source_bbox": [math.floor(box[0]), math.floor(box[1]), math.ceil(box[2]), math.ceil(box[3])],
                 "source_size": source_size, "display_size": list(image.size),
                 "image_png": buffer.getvalue()}

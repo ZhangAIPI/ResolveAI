@@ -32,7 +32,7 @@ class EnvironmentTests(unittest.TestCase):
         obs = self.env.observation()
         self.assertNotIn("annotation", obs)
         self.assertEqual(set(obs["images"][0]), {"image_id", "source_id", "party",
-            "time", "source_bbox", "source_size", "image_png", "view_id", "display_size"})
+            "time", "source_bbox", "source_size", "image_png", "view_id", "display_size", "object", "camera_view"})
         with self.assertRaises(ValueError):
             self.env.step({"type": "inspect", "image_id": "side"})
         self.assertEqual(self.env.budget, 12)

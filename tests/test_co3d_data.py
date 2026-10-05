@@ -36,7 +36,9 @@ class CO3DTests(unittest.TestCase):
             self.assertNotIn("private-sequence",json.dumps({k:v for k,v in observation.items() if k!="images"}))
             target=cases[1]["annotation"]["subclaims"][0]["minimal_evidence_sets"]["Supported"][0][0]["right"]["image_id"]
             row=next(r for r in cases[1]["evidence"] if r["id"]==target)
-            query={"type":"request_photo","query":{k:row[k] for k in ("object","time","view")}}
+            preview=next(image for image in observation["images"] if image["image_id"].endswith("-preview"))
+            self.assertEqual(preview["camera_view"],row["view"])
+            query={"type":"request_photo","query":{"object":preview["object"],"time":preview["time"],"view":preview["camera_view"]}}
             self.assertEqual(env.step(query)["status"],"provided")
             a,b=Environment(cases[2],output),Environment(cases[3],output)
             self.assertEqual(a.step(query),b.step(query))
