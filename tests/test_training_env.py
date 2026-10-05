@@ -148,6 +148,55 @@ class TrainingTests(unittest.TestCase):
         with self.assertRaises(ActionError): session.call(self.request())
         self.assertEqual(len(session.messages),length)
 
+    def test_reference_errors_offer_public_recovery_without_hidden_ids(self):
+        session = Conversation(self.env)
+        view = session.call({"name":"zoom", "arguments":{"image_id":"before", "factor":2}})["images"][0]
+        budget = self.env.budget
+        error = session.call({"name":"inspect", "arguments":{"image_id":"unknown"}})
+        self.assertEqual(error["constraints"]["released_image_ids"], ["before"])
+        self.assertEqual(error["constraints"]["derived_view_ids"], [view["view_id"]])
+        self.assertNotIn("after", json.dumps(error["constraints"]))
+        self.assertEqual(self.env.budget, budget)
+        recovered = session.call({"name":"inspect", "arguments":{
+            "image_id":error["constraints"]["derived_view_ids"][0]}})
+        self.assertEqual(recovered["images"][0]["display_size"], [32,32])
+        error = session.call(self.finish())
+        self.assertEqual(error["error"], "unreleased_citation")
+        self.assertEqual(error["constraints"]["released_image_ids"], ["before"])
+        self.assertNotIn("after", json.dumps(error["constraints"]))
+        self.assertFalse(self.env.finished)
+
+    def test_preview_provenance_does_not_authorize_original_citation(self):
+        case = deepcopy(self.case)
+        case["evidence"][0].update(source_id="after", source_size=[64,64], source_bbox=[0,0,64,64])
+        env = Environment(case, self.root, ocr_backend=OCRFixture())
+        session = Conversation(env)
+        image = env.observation()["images"][0]
+        self.assertEqual(image["source_id"], "after")
+        citation = {"image_id":"after", "bbox":[0,0,64,64], "time":"before"}
+        error = session.call({"name":"finish", "arguments":{
+            "verdict":"Need more evidence", "citations":[citation]}})
+        self.assertEqual(error["error"], "unreleased_citation")
+        self.assertEqual(error["constraints"]["released_image_ids"], ["before"])
+        citation["image_id"] = image["image_id"]
+        response = session.call({"name":"finish", "arguments":{
+            "verdict":"Need more evidence", "citations":[citation]}})
+        self.assertTrue(response["finished"])
+        self.assertEqual(env.budget, 12)
+        self.assertEqual(env._released, {"before"})
+
+    def test_citation_time_feedback_can_be_corrected_from_public_metadata(self):
+        session = Conversation(self.env)
+        citation = {"image_id":"before", "bbox":[0,0,8,8], "time":"incorrect"}
+        error = session.call({"name":"finish", "arguments":{
+            "verdict":"Need more evidence", "citations":[citation]}})
+        self.assertEqual(error["error"], "citation_time_mismatch")
+        self.assertEqual(error["constraints"], {"image_id":"before", "expected_time":"before"})
+        citation["time"] = error["constraints"]["expected_time"]
+        self.assertTrue(session.call({"name":"finish", "arguments":{
+            "verdict":"Need more evidence", "citations":[citation]}})["finished"])
+        self.assertEqual(self.env.budget, 24)
+
     def test_invalid_or_exhausted_rollouts_do_not_fabricate_finish(self):
         class Policy:
             def __init__(self): self.lengths=[]

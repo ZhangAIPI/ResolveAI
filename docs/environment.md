@@ -1,4 +1,4 @@
-# Environment contract v0.2
+# Environment contract v0.3
 
 A `Conversation` retains system instructions, initial pixels, assistant function
 calls and tool-role responses throughout an episode. Errors include public action constraints (for example display-pixel bounds) and available tool names. They become actual tool
@@ -36,6 +36,18 @@ original `image_id`, derived `view_id`, original dimensions, source rectangle,
 display dimensions and time. Crop inputs use display coordinates; finish uses
 integer original coordinates. Derived views never count as independent evidence.
 Failed requests use the same public response for Missing and Unavailable.
+
+Finish citations use the released `image_id` from image metadata. `source_id`
+records provenance and may refer to an original that has not been released; it
+does not authorize citing that original. A submitted low-resolution preview
+uses its own `image_id` and retains source coordinates without gaining original
+detail. `Need more evidence` permits an empty citations list. Unknown image/view
+errors return only already released image IDs and derived view IDs; citation
+errors return only released IDs, with public time/region bounds when applicable.
+These corrections never disclose the private pool or evaluation verdict.
+
+This clarification is a new source version. The ongoing 7,200-episode evaluation
+continues to use frozen commit `4810a1e` and must not be mixed with later runs.
 
 ## World simulation
 

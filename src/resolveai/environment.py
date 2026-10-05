@@ -90,7 +90,8 @@ class Environment:
         elif reference in self._released:
             image_id, operations = reference, []
         else:
-            raise ActionError("unreleased_image")
+            raise ActionError("unreleased_image", {"released_image_ids": sorted(self._released),
+                "derived_view_ids": sorted(self._views)})
         image = self._load(image_id)
         evidence = self._evidence[image_id]
         source_size = evidence.get("source_size", list(image.size))
@@ -137,13 +138,15 @@ class Environment:
         for citation in citations:
             image_id = citation["image_id"]
             if image_id not in self._released:
-                raise ActionError("unreleased_citation")
+                raise ActionError("unreleased_citation", {"released_image_ids": sorted(self._released),
+                    "citation_rule": "Use a released image_id, not source_id or derived view_id."})
             image = self._image(image_id)
             self._check_box(citation["bbox"], image["source_size"], "source_pixels")
             if citation["time"] != image["time"]:
-                raise ActionError("citation_time_mismatch")
+                raise ActionError("citation_time_mismatch", {"image_id": image_id, "expected_time": image["time"]})
             if not covers_box(image["source_bbox"], citation["bbox"]):
-                raise ActionError("citation_outside_observed_region")
+                raise ActionError("citation_outside_observed_region", {"image_id": image_id,
+                    "coordinate_space": "source_pixels", "valid_bounds": image["source_bbox"]})
 
     def _validate_links(self, links):
         for link in links:

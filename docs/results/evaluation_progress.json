@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-05T18:52:55+00:00",
+  "as_of_utc": "2026-10-05T19:04:55+00:00",
   "status": "partial_not_a_final_model_comparison",
   "evaluation_commit": "4810a1e",
   "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
@@ -14,70 +14,70 @@
   "max_turns": 6,
   "max_context_tokens": 8192,
   "tool_adapter": "portable-prefix-v1",
-  "recorded_episodes": 6421,
+  "recorded_episodes": 6539,
   "planned_episodes": 7200,
   "runs": [
     {
       "run": "qwen3",
       "model": "Qwen3-VL-8B",
       "state": "running",
-      "recorded_episodes": 1819,
+      "recorded_episodes": 1850,
       "planned_episodes": 2400,
-      "completed_family_pairs": 227,
+      "completed_family_pairs": 231,
       "policies": {
-        "initial": 910,
-        "agent": 909
+        "initial": 925,
+        "agent": 925
       },
       "termination": {
-        "finished": 702,
-        "max_turns": 1117
+        "finished": 713,
+        "max_turns": 1137
       },
       "tool_errors": {
-        "unreleased_citation": 4000,
-        "unreleased_image": 1468,
+        "unreleased_citation": 4066,
+        "unreleased_image": 1498,
         "invalid_bbox": 177,
         "view_too_large": 42,
         "invalid_arguments": 5
       },
       "attempted_calls": {
-        "finish": 4712,
-        "compare": 1202,
-        "inspect": 1502,
-        "request_photo": 601,
-        "ground_image_to_image": 128,
-        "ground_text_to_image": 89,
-        "crop": 573,
-        "zoom": 174,
-        "ocr": 72
+        "finish": 4789,
+        "compare": 1224,
+        "inspect": 1529,
+        "request_photo": 613,
+        "ground_image_to_image": 132,
+        "ground_text_to_image": 93,
+        "crop": 579,
+        "zoom": 176,
+        "ocr": 74
       }
     },
     {
       "run": "qwen25",
       "model": "Qwen2.5-VL-7B",
-      "state": "running",
-      "recorded_episodes": 2360,
+      "state": "complete",
+      "recorded_episodes": 2400,
       "planned_episodes": 2400,
-      "completed_family_pairs": 295,
+      "completed_family_pairs": 300,
       "policies": {
-        "initial": 1180,
-        "agent": 1180
+        "initial": 1200,
+        "agent": 1200
       },
       "termination": {
-        "finished": 1124,
-        "max_turns": 1236
+        "finished": 1147,
+        "max_turns": 1253
       },
       "tool_errors": {
-        "unreleased_citation": 2061,
-        "unreleased_image": 201,
-        "invalid_arguments": 156,
+        "unreleased_citation": 2097,
+        "unreleased_image": 204,
+        "invalid_arguments": 159,
         "invalid_bbox": 79,
-        "insufficient_budget": 3
+        "insufficient_budget": 4
       },
       "attempted_calls": {
-        "finish": 3404,
-        "inspect": 2558,
-        "compare": 1271,
-        "ground_image_to_image": 765,
+        "finish": 3466,
+        "inspect": 2599,
+        "compare": 1290,
+        "ground_image_to_image": 780,
         "request_photo": 60,
         "ground_image_to_text": 10,
         "crop": 9
@@ -87,33 +87,33 @@
       "run": "internvl35-shard0",
       "model": "InternVL3.5-8B / shard 0",
       "state": "running",
-      "recorded_episodes": 1126,
+      "recorded_episodes": 1151,
       "planned_episodes": 1200,
-      "completed_family_pairs": 140,
+      "completed_family_pairs": 143,
       "policies": {
-        "initial": 563,
-        "agent": 563
+        "initial": 576,
+        "agent": 575
       },
       "termination": {
-        "finished": 298,
-        "max_turns": 828
+        "finished": 306,
+        "max_turns": 845
       },
       "tool_errors": {
-        "unreleased_citation": 1724,
-        "unreleased_image": 527,
-        "invalid_bbox": 375,
+        "unreleased_citation": 1767,
+        "unreleased_image": 539,
+        "invalid_bbox": 380,
         "invalid_arguments": 22,
         "insufficient_budget": 4
       },
       "attempted_calls": {
-        "finish": 2034,
-        "compare": 978,
-        "crop": 1417,
-        "inspect": 490,
-        "zoom": 210,
-        "ground_image_to_image": 71,
-        "request_photo": 131,
-        "assess_quality": 19,
+        "finish": 2085,
+        "compare": 999,
+        "crop": 1438,
+        "inspect": 502,
+        "zoom": 215,
+        "ground_image_to_image": 72,
+        "request_photo": 138,
+        "assess_quality": 20,
         "ocr": 3
       }
     },
@@ -121,32 +121,32 @@
       "run": "internvl35-shard1",
       "model": "InternVL3.5-8B / shard 1",
       "state": "running",
-      "recorded_episodes": 1116,
+      "recorded_episodes": 1138,
       "planned_episodes": 1200,
-      "completed_family_pairs": 139,
+      "completed_family_pairs": 142,
       "policies": {
-        "initial": 558,
-        "agent": 558
+        "initial": 569,
+        "agent": 569
       },
       "termination": {
-        "finished": 303,
-        "max_turns": 813
+        "finished": 309,
+        "max_turns": 829
       },
       "tool_errors": {
-        "unreleased_citation": 1674,
-        "invalid_bbox": 416,
-        "unreleased_image": 465,
+        "unreleased_citation": 1705,
+        "invalid_bbox": 421,
+        "unreleased_image": 467,
         "insufficient_budget": 10,
         "invalid_arguments": 26,
         "view_too_large": 3
       },
       "attempted_calls": {
-        "finish": 2025,
-        "compare": 941,
-        "crop": 1397,
+        "finish": 2062,
+        "compare": 953,
+        "crop": 1428,
         "ground_image_to_image": 60,
         "zoom": 208,
-        "inspect": 461,
+        "inspect": 464,
         "request_photo": 151,
         "assess_quality": 26,
         "read_metadata": 2
@@ -155,9 +155,9 @@
   ],
   "scheduler": {
     "24679": "TIMEOUT; InternVL resumed in 24845",
-    "24689": "RUNNING; less than ten minutes remaining at snapshot",
-    "24845": "RUNNING; InternVL resumption verified",
-    "24846": "PENDING; afterany:24689; Qwen resumption queued"
+    "24689": "TIMEOUT; Qwen resumed in 24846",
+    "24845": "RUNNING; InternVL recording new episodes",
+    "24846": "RUNNING; both Qwen checkpoints resumed"
   },
   "limitations": [
     "Different models have covered different families; no model ranking from partial results.",
@@ -183,8 +183,19 @@
     },
     "state_at_verification": {
       "24845": "RUNNING; both InternVL shards recording new episodes",
-      "24846": "PENDING; afterany:24689"
+      "24846": "RUNNING; both Qwen workers resumed"
     }
   },
-  "as_of_america_new_york": "2026-10-05T14:52:55-04:00"
+  "as_of_america_new_york": "2026-10-05T15:04:55-04:00",
+  "development_update": {
+    "environment_contract": "v0.3",
+    "tests_passed": 36,
+    "changes": [
+      "Released-ID-only correction feedback",
+      "Preview image_id distinguished from original source_id",
+      "Public timestamp and observed-region correction bounds"
+    ],
+    "evaluation_unchanged": true,
+    "new_model_evaluation_complete": false
+  }
 }

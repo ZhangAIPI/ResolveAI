@@ -119,7 +119,7 @@ def main():
                             "Verify the stated visual facts using only the initially supplied pixels. "
                             "Supported requires every conjunct; Refuted requires a decisive counterexample. "
                             "Use Need more evidence if uncertain. Only finish is available. "
-                            "Return one finish call with original image IDs, source-pixel boxes and source time. "
+                            "Return one finish call with released image_id, source-pixel boxes and source time. source_id is provenance and may refer to an unreleased original; previews use their own image_id. Need more evidence may use empty citations. "
                             "For cross-image identity/time claims include explicit links with source-region endpoints "
                             "(same_object/different_object/earlier_than/same_time). Similarity is not identity truth. "
                             "Do not invent observations or infer liability.")

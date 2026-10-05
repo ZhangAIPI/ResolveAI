@@ -14,7 +14,8 @@ def obj(properties, required=None):
             "additionalProperties": False}
 
 
-CITATION = obj({"image_id": {"type": "string", "minLength": 1}, "bbox": BOX,
+CITATION = obj({"image_id": {"type": "string", "minLength": 1,
+                "description": "Released image_id from image metadata; not source_id or derived view_id. A preview uses its own image_id."}, "bbox": BOX,
                 "time": {"type": "string", "minLength": 1}})
 RELATIONS = ["same_object", "different_object", "earlier_than", "same_time"]
 LINK = obj({"relation": {"type": "string", "enum": RELATIONS},
@@ -33,7 +34,7 @@ SPECS = {
                 obj({"image_ids": {"type": "array", "items": IMAGE, "minItems": 2, "maxItems": 2, "uniqueItems": True}})),
     "request_photo": ("Request material matching object/time/view exactly; cost 3 even on failure. Does not change scene state.",
                       obj({"query": obj({k: {"type": "string", "minLength": 1} for k in ("object", "time", "view")})})),
-    "finish": ("Stop with a visual-fact verdict and citations. Cite original image_id, source-pixel bbox and source time; cost 0. For cross-image identity/time claims include explicit links with source-pixel endpoints. No liability inference.",
+    "finish": ("Stop with a visual-fact verdict and citations. Cite released image_id, source-pixel bbox and source time; cost 0. source_id is provenance, not permission to cite an unreleased original. Need more evidence may use empty citations. For cross-image identity/time claims include explicit links with source-pixel endpoints. No liability inference.",
                obj({"verdict": {"type": "string", "enum": VERDICTS},
                     "citations": {"type": "array", "items": CITATION},
                     "links": {"type": "array", "items": LINK}}, ["verdict", "citations"])),

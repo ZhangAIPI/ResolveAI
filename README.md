@@ -58,8 +58,9 @@ python -m resolveai.server /private/case.json /private/assets --conversation --b
 
 The JSONL server emits public observations and accepts
 `{"name":"crop","arguments":{"image_id":"photo","bbox":[0,0,100,100]}}`.
-Finish citations require original image IDs, source-pixel rectangles and source
-time. `--allow-forks` is for trusted training controllers; branching is not a policy
+Finish citations require released `image_id`, source-pixel rectangles and source
+time. `source_id` is provenance and may name an unreleased original; cite a
+preview with its own released ID. `--allow-forks` is for trusted training controllers; branching is not a policy
 tool. Run untrusted policies in a separate account/container without access to
 private assets: a subprocess alone does not enforce filesystem isolation.
 
