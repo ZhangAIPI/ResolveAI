@@ -64,3 +64,5 @@ private assets: a subprocess alone does not enforce filesystem isolation.
 [Execution status](docs/status.md) records the allocated GPUs and storage. Keep
 weights, datasets and trajectories outside Git. Store one pinned snapshot per
 model and one deduplicated image blob per run, with compact manifests and summaries.
+
+证据链协议、公开多视角数据与 world model 的研究范围见 [中文研究协议](docs/research_protocol.zh-CN.md)。

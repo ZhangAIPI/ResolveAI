@@ -113,14 +113,16 @@ def main():
                     if policy == "initial":
                         session.tools = [t for t in session.tools if t["function"]["name"] == "finish"]
                         session.messages[1]["content"] = content_for({"claim": case["claim"],
+                            "claim_parts":case.get("claim_parts",[]),
                             "images": env.observation()["images"], "available_tools": ["finish"]})
                         session.messages[0]["content"] = (
-                            "Verify the stated visual claim using only the initially supplied pixels. "
-                            "Supported means a visible defect supports the claim; Refuted means the object "
-                            "looks defect-free. Use Need more evidence if uncertain. "
-                            "Only finish is available. Do not inspect, crop, zoom or request material. "
-                            "Return one finish tool call with verdict and citations using supplied original "
-                            "image IDs, source-pixel boxes and source time. Do not invent observations.")
+                            "Verify the stated visual facts using only the initially supplied pixels. "
+                            "Supported requires every conjunct; Refuted requires a decisive counterexample. "
+                            "Use Need more evidence if uncertain. Only finish is available. "
+                            "Return one finish call with original image IDs, source-pixel boxes and source time. "
+                            "For cross-image identity/time claims include explicit links with source-region endpoints "
+                            "(same_object/different_object/earlier_than/same_time). Similarity is not identity truth. "
+                            "Do not invent observations or infer liability.")
                     record = run(session, client, args.max_turns, args.max_context_tokens)
                     record["metadata"]["policy"] = policy
                     store.write(record)
@@ -128,10 +130,11 @@ def main():
                         "unsupported_decision": False, "coverage": False, "requests": env.requests,
                         "tool_calls": env.calls, "request_cost": env.request_cost,
                         "tool_cost": env.tool_cost, "remaining_budget": env.budget,
-                        "grounding_protocol": "image-set-proxy-v1"}
+                        "grounding_protocol": case["annotation"].get("protocol", "image-set-proxy-v1")}
                     row = {"case_id": case["case_id"], "family_id": case["family_id"],
-                        "variant": case["variant"], "category": case["provenance"]["category"],
-                        "policy": policy, "visual_truth": case["annotation"]["visual_verdict"],
+                        "variant": case["variant"], "category": case.get("category", case.get("provenance", {}).get("category", "unspecified")),
+                        "policy": policy, "visual_truth": case["annotation"].get("visual_verdict",case["annotation"]["verdict"]),
+                        "annotation_status":case["annotation"].get("status","unreviewed"),
                         "decision": record["decision"], "termination": session.termination,
                         "turns": session.turns, "errors": session.errors,
                         "calls": [m["tool_calls"][0]["function"]["name"] for m in session.messages if m.get("tool_calls")],

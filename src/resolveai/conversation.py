@@ -18,6 +18,9 @@ shown in tool responses. Retain previous observations; finish when evidence is
 sufficient or more useful material cannot be obtained. Cite original image IDs,
 source-pixel rectangles and the source time, not derived view IDs. For a
 conjunction, support all subclaims; one decisive counterexample can refute it.
+For cross-image identity or time claims, provide explicit finish links between
+original source regions (same_object/different_object/earlier_than/same_time).
+A similarity tool proposes matches; it does not establish object identity.
 Use Need more evidence when uncertain. State changes do not establish liability.
 Tools never mutate the original or earlier views. Crop/zoom return a NEW view_id;
 use that view_id to operate on the returned pixels. Crop boxes use display_size,
@@ -148,7 +151,7 @@ def sft_example(record, allow_proxy=False):
     if (record["metadata"]["termination"] != "finished" or not evaluation
             or not evaluation["grounded_correct"] or record["metadata"]["errors"]):
         return None
-    if not allow_proxy and (evaluation["grounding_protocol"] != "region-time-v1"
+    if not allow_proxy and (evaluation["grounding_protocol"] not in {"region-time-v1", "evidence-chain-v1"}
                             or record["metadata"]["annotation_status"] != "reviewed"):
         return None
     return {"messages": deepcopy(record["messages"]), "tools": deepcopy(record["tools"]),
@@ -162,7 +165,7 @@ def preference_pair(left, right, allow_proxy=False):
     if left["metadata"]["world_fingerprint"] != right["metadata"]["world_fingerprint"]:
         raise ValueError("branches belong to different worlds")
     if not allow_proxy and any(not r.get("evaluation")
-            or r["evaluation"]["grounding_protocol"] != "region-time-v1"
+            or r["evaluation"]["grounding_protocol"] not in {"region-time-v1", "evidence-chain-v1"}
             or r["metadata"]["annotation_status"] != "reviewed" for r in (left, right)):
         return None
     n = left["prefix_length"]

@@ -105,7 +105,7 @@ def main():
     scene.world.color=(.25,.25,.25)
     bpy.ops.object.camera_add();camera=bpy.context.object;scene.camera=camera
     views={"front":(2.4,-3.2,2.7),"side":(2.5,1.9,2.5),"detail":(.45,-.65,1.55)}
-    evidence=[];regions={}
+    evidence=[];regions={};object_regions={}
     for time in ("before","after"):
         scratch.hide_render=time=="before"
         for view,position in views.items():
@@ -121,11 +121,28 @@ def main():
                 "object":"table","time":time,"view":view,"available":True})
             points=[tuple(table.matrix_world @ v.co) for v in table.data.vertices] if time=="before" else scratch_points
             regions[image_id]=projected_box(scene,camera,points,512)
+            object_regions[image_id]=projected_box(scene,camera,[tuple(table.matrix_world @ v.co) for v in table.data.vertices],512)
     family=f"blender-table-{args.seed}"
     scene_state={"scene_id":family,"asset_id":f"table-{args.seed}",
                  "objects":[{"identity":f"table-{args.seed}","public_name":"table",
                              "conditions":{"before":"intact","after":"scratched"}}],
                  "views":views,"renderer":"Blender 4.3.2 Cycles"}
+    def region(image_id, box):
+        return {"image_id":image_id,"time":image_id.split("-")[0],"bbox":box}
+    endpoints={i:region(i,object_regions[i]) for i in ("before-front","after-detail")}
+    identity={"relation":"same_object","left":endpoints["before-front"],"right":endpoints["after-detail"]}
+    order={**identity,"relation":"earlier_than"}
+    subclaims=[
+        {"id":"identity","kind":"identity","truth":"Supported","minimal_evidence_sets":{"Supported":[[identity]]}},
+        {"id":"before","kind":"state","truth":"Supported","minimal_evidence_sets":{"Supported":[[region("before-front",regions["before-front"])]]}},
+        {"id":"after","kind":"state","truth":"Supported","minimal_evidence_sets":{"Supported":[[region("after-detail",regions["after-detail"])]]}},
+        {"id":"order","kind":"time","truth":"Supported","minimal_evidence_sets":{"Supported":[[order]]}}]
+    annotation={"verdict":"Supported","status":"unreviewed","protocol":"evidence-chain-v1",
+                "annotation_origin":"provisional procedural geometry, not independent review","subclaims":subclaims}
+    parts=[{"id":"identity","text":"The two pictures show the same table."},
+           {"id":"before","text":"The visible tabletop region was unmarked before."},
+           {"id":"after","text":"That region has a scratch after."},
+           {"id":"order","text":"The unmarked photograph precedes the scratched photograph."}]
     cases=[]
     for variant in ("Sufficient","Obtainable","Missing","Unavailable"):
         rows=[dict(e) for e in evidence]
@@ -135,14 +152,11 @@ def main():
                 if row["id"]=="after-detail": row["available"]=False
         cases.append({"case_id":family+"-"+variant,"family_id":family,
             "variant":variant,"scene":scene_state,
-            "claim":"The same table was intact before and has a scratch after.",
+            "claim":"The same table has an unmarked visible tabletop region before and a scratch in that region after.",
+            "claim_parts":parts,
             "initial":["before-front","after-detail" if variant=="Sufficient" else "after-front"],
             "evidence":rows,"request_options":{"objects":["table"],"times":["before","after"],"views":list(views)},
-            "annotation":{"verdict":"Supported","status":"unreviewed",
-                "protocol":"provisional-blender-geometry-smoke-v1",
-                "minimal_evidence_sets":{"Supported":[[
-                    {"image_id":"before-front","time":"before","bbox":regions["before-front"],"subclaim":"before/intact/identity"},
-                    {"image_id":"after-detail","time":"after","bbox":regions["after-detail"],"subclaim":"after/scratch/identity"}]]}}})
+            "annotation":annotation})
     (args.output/"cases.json").write_text(json.dumps(cases,indent=2)+"\n")
     manifest={"renderer":"Blender 4.3.2","device":device,"images":len(evidence),
               "seed":args.seed,"annotation_status":"unreviewed",

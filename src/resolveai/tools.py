@@ -14,6 +14,13 @@ def obj(properties, required=None):
             "additionalProperties": False}
 
 
+CITATION = obj({"image_id": {"type": "string", "minLength": 1}, "bbox": BOX,
+                "time": {"type": "string", "minLength": 1}})
+RELATIONS = ["same_object", "different_object", "earlier_than", "same_time"]
+LINK = obj({"relation": {"type": "string", "enum": RELATIONS},
+            "left": CITATION, "right": CITATION})
+
+
 SPECS = {
     "inspect": ("Read an already released image/view; cost 1.", obj({"image_id": IMAGE})),
     "crop": ("Crop display-pixel bbox [x0,y0,x1,y1] from an image/view; cost 1. Preserves occlusion and provenance.",
@@ -26,11 +33,10 @@ SPECS = {
                 obj({"image_ids": {"type": "array", "items": IMAGE, "minItems": 2, "maxItems": 2, "uniqueItems": True}})),
     "request_photo": ("Request material matching object/time/view exactly; cost 3 even on failure. Does not change scene state.",
                       obj({"query": obj({k: {"type": "string", "minLength": 1} for k in ("object", "time", "view")})})),
-    "finish": ("Stop with a visual-fact verdict and citations. Cite original image_id, source-pixel bbox and source time; cost 0. No liability inference.",
+    "finish": ("Stop with a visual-fact verdict and citations. Cite original image_id, source-pixel bbox and source time; cost 0. For cross-image identity/time claims include explicit links with source-pixel endpoints. No liability inference.",
                obj({"verdict": {"type": "string", "enum": VERDICTS},
-                    "citations": {"type": "array", "items": obj({
-                        "image_id": {"type": "string", "minLength": 1}, "bbox": BOX,
-                        "time": {"type": "string", "minLength": 1}})}})),
+                    "citations": {"type": "array", "items": CITATION},
+                    "links": {"type": "array", "items": LINK}}, ["verdict", "citations"])),
 }
 SPECS.update({
     "assess_quality": ("Measure resolution, contrast, exposure and edge strength; cost 1. Scores are advisory, not defect/visibility truth.", obj({"image_id": IMAGE})),

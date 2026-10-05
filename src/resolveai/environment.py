@@ -9,7 +9,7 @@ from pathlib import Path
 
 from PIL import Image, ImageFilter, ImageStat
 
-from .grounding import sufficient
+from .grounding import chain_report, sufficient, validate_annotation
 from .ocr import RapidOCRBackend
 from .tools import ActionError, VERDICTS, validate_action
 from .world import EvidenceWorld
@@ -36,6 +36,7 @@ class Environment:
     def __init__(self, case, asset_root, budget=12, *, costs=None, ocr_backend=None, grounding_backend=None):
         if type(budget) is not int or budget < 0:
             raise ValueError("budget must be a nonnegative integer")
+        validate_annotation(case["annotation"])
         self._case = deepcopy(case)
         self._root = Path(asset_root).resolve()
         self._evidence = {e["id"]: deepcopy(e) for e in case["evidence"]}
@@ -124,7 +125,8 @@ class Environment:
                 "image_png": buffer.getvalue()}
 
     def observation(self):
-        return {"claim": self._case["claim"], "budget": self.budget,
+        return {"claim": self._case["claim"], "claim_parts": deepcopy(self._case.get("claim_parts", [])),
+                "budget": self.budget,
                 "images": [self._image(i) for i in sorted(self._released)],
                 "request_options": deepcopy(self._case.get("request_options", {})),
                 "tool_costs": asdict(self.costs), "ocr_available": bool(self._ocr.available),
@@ -141,6 +143,12 @@ class Environment:
                 raise ActionError("citation_time_mismatch")
             if not covers_box(image["source_bbox"], citation["bbox"]):
                 raise ActionError("citation_outside_observed_region")
+
+    def _validate_links(self, links):
+        for link in links:
+            self._validate_citations([link["left"], link["right"]])
+            if link["left"]["image_id"] == link["right"]["image_id"]:
+                raise ActionError("link_requires_distinct_images")
 
     def _derive(self, reference, operation):
         _, image_id, operations, _, _ = self._render(reference)
@@ -162,6 +170,7 @@ class Environment:
         kind = action["type"]
         if kind == "finish":
             self._validate_citations(action["citations"])
+            self._validate_links(action.get("links", []))
             self.finished = True
             self.decision = deepcopy(action)
             return {"decision": deepcopy(action), "budget": self.budget, "finished": True}
@@ -273,25 +282,31 @@ class Environment:
         """Evaluator-only terminal supervision, never tool feedback."""
         verdict = decision["verdict"]
         citations = decision.get("citations", [])
+        links = decision.get("links", [])
         valid = True
         try:
             # Legacy evaluation records may omit time; runtime finish requires it.
             citations = [dict(c, time=c.get("time", self._evidence[c["image_id"]]["time"])) for c in citations]
             self._validate_citations(citations)
+            self._validate_links(links)
         except (KeyError, TypeError, ValueError):
             valid = False
-        grounded = valid and sufficient(self._case["annotation"], verdict, citations)
+        grounded = valid and sufficient(self._case["annotation"], verdict, citations, links)
         correct = verdict == self._case["annotation"]["verdict"]
         abstains = verdict == "Need more evidence"
-        requirements = self._case["annotation"]["minimal_evidence_sets"]
+        annotation = self._case["annotation"]
+        chain = annotation.get("protocol") == "evidence-chain-v1"
+        audit = chain_report(annotation, verdict, citations, links) if chain and valid else {}
+        requirements = annotation.get("minimal_evidence_sets", {})
         region_protocol = any(isinstance(item, dict) for alternatives in requirements.values()
                               for group in alternatives for item in group)
-        return {"correct": correct, "grounded_correct": correct and (abstains or grounded),
+        return {"correct": correct, "grounded_correct": correct and valid and (abstains or grounded),
                 "unsupported_decision": not abstains and not grounded,
                 "coverage": not abstains, "requests": self.requests, "tool_calls": self.calls,
                 "tool_cost": self.tool_cost, "request_cost": self.request_cost,
                 "remaining_budget": self.budget,
-                "grounding_protocol": "region-time-v1" if region_protocol else "image-set-proxy-v1"}
+                "evidence_audit": audit,
+                "grounding_protocol": "evidence-chain-v1" if chain else "region-time-v1" if region_protocol else "image-set-proxy-v1"}
 
 
 def covers_box(outer, inner):
