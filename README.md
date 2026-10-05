@@ -2,6 +2,8 @@
 
 [**中文可视化 Demo：不同工具操作的实际结果**](docs/demo/README.zh-CN.md)
 
+[**中文评测进度：完成量、GPU 到期与当前问题**](docs/results/evaluation_progress.md)
+
 ![工具操作展示](docs/demo/assets/operations.webp)
 
 A multi-turn visual evidence environment for training and evaluating agents that
