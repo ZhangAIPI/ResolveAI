@@ -47,11 +47,12 @@ def main():
     import torch
     from transformers import AutoProcessor, Qwen3VLForConditionalGeneration
     torch.manual_seed(0)
+    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
+    # Validate processor dependencies before loading the large checkpoint.
     # Keep library loading/progress separate from the machine-readable protocol.
     model = Qwen3VLForConditionalGeneration.from_pretrained(args.model,
         dtype=torch.bfloat16, device_map={"": 0}, attn_implementation="sdpa")
     model.eval()
-    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
     print(json.dumps({"ready": True, "model": args.model,
                       "gpu": torch.cuda.get_device_name(0)}), flush=True)
     for line in sys.stdin:

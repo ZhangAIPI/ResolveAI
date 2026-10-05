@@ -5,13 +5,11 @@ an original-image quality proxy; semantic truth is from the independent dataset.
 """
 import argparse
 import base64
-from collections import defaultdict
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
-import time
 
 from .environment import Environment
 

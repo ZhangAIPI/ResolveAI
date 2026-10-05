@@ -47,7 +47,8 @@ still incur their cost. No annotation-generated observation text is used.
 ## Reproduce on an allocated GPU
 
 Keep one shared data/model directory outside Git. Use an isolated `.venv` with
-PyTorch 2.4.0+cu121, Pillow 12.2.0, Transformers 4.57.6 and tokenizers 0.22.2.
+PyTorch 2.4.0+cu121, Torchvision 0.19.0+cu121, Pillow 12.2.0,
+Transformers 4.57.6 and tokenizers 0.22.2. Torchvision must match PyTorch.
 
 ```bash
 export PYTHONPATH=src
