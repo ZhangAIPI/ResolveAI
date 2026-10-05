@@ -82,6 +82,21 @@ def portable_tools(messages, tools):
         messages[0]["content"] += instructions
     else:
         messages.insert(0, {"role": "system", "content": instructions})
+    messages = portable_history(messages)
+    footer = ("Choose one available tool. Emit one <tool_call> JSON with exactly name and arguments, "
+              "then </tool_call>. Use actual schema arguments; do not emit tool, function or cost keys. "
+              "No markdown. The assistant prefix below begins the required JSON.")
+    if isinstance(messages[-1].get("content"), str):
+        messages[-1]["content"] += "\n" + footer
+    else:
+        messages[-1]["content"].append({"type": "text", "text": "\n" + footer})
+    return messages
+
+
+def portable_history(messages):
+    """Serialize actual function calls/results without adding tool-generation syntax."""
+    from copy import deepcopy
+    messages = deepcopy(messages)
     for message in messages:
         calls = message.pop("tool_calls", [])
         if calls:
@@ -95,13 +110,6 @@ def portable_tools(messages, tools):
             if isinstance(content, str):
                 content = [{"type": "text", "text": content}]
             message["content"] = [prefix, *content, {"type": "text", "text": "\n</tool_response>"}]
-    footer = ("Choose one available tool. Emit one <tool_call> JSON with exactly name and arguments, "
-              "then </tool_call>. Use actual schema arguments; do not emit tool, function or cost keys. "
-              "No markdown. The assistant prefix below begins the required JSON.")
-    if isinstance(messages[-1].get("content"), str):
-        messages[-1]["content"] += "\n" + footer
-    else:
-        messages[-1]["content"].append({"type": "text", "text": "\n" + footer})
     return messages
 
 
@@ -134,7 +142,10 @@ def main():
     for line in sys.stdin:
         request = json.loads(line)
         tool_mode = request.get("mode") == "tools"
-        if tool_mode:
+        choice_mode = request.get("mode") == "choice"
+        if choice_mode:
+            messages = materialize(request["messages"])
+        elif tool_mode:
             messages = materialize(request["messages"])
             if adapter == "portable":
                 messages = portable_tools(messages, request["tools"])
@@ -166,6 +177,27 @@ def main():
             print(json.dumps({"halt": "context_limit", "input_tokens": int(inputs.input_ids.shape[1])}), flush=True)
             continue
         inputs = inputs.to(model.device)
+        if choice_mode:
+            labels = request["choices"]
+            if (not labels or len(set(labels)) != len(labels)
+                    or any(label not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" or len(label) != 1 for label in labels)):
+                raise ValueError("choice labels must be distinct single letters")
+            label_ids = [processor.tokenizer.encode(label, add_special_tokens=False) for label in labels]
+            if any(len(ids) != 1 for ids in label_ids):
+                raise ValueError("checkpoint must tokenize each displayed label as one token")
+            # Finite-action decoding removes syntax errors; the model still
+            # chooses every action. No hidden label affects the candidate set.
+            with torch.inference_mode():
+                logits = model(**inputs).logits[0, -1]
+                scores = logits[torch.tensor([ids[0] for ids in label_ids], device=logits.device)].float()
+                index = int(scores.argmax().item())
+                probabilities = scores.softmax(0).tolist()
+            print(json.dumps({"choice": labels[index], "raw": labels[index],
+                "option_probabilities": dict(zip(labels, probabilities)),
+                "input_tokens": int(inputs.input_ids.shape[1]), "output_tokens": 1,
+                "latency_s": time.perf_counter()-started,
+                "peak_memory_gb": torch.cuda.max_memory_allocated()/2**30}), flush=True)
+            continue
         with torch.inference_mode():
             generated = model.generate(**inputs, max_new_tokens=384 if tool_mode else 180, do_sample=False,
                                        pad_token_id=processor.tokenizer.eos_token_id)
