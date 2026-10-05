@@ -1,0 +1,4872 @@
+{
+  "complete": true,
+  "models": [
+    {
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "complete": true,
+      "expected_episodes": 2400,
+      "actual_episodes": 2400,
+      "source_families": 300,
+      "source_commit": "4810a1eb39e2401b54f73f68bddb53e653687129",
+      "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+      "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "worker": {
+        "workers": [
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 2,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 1,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 0,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 2,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 3,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 0,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 1,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 3,
+            "tool_adapter": "portable",
+            "model_type": "qwen3_vl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "Qwen3VLProcessor",
+            "image_processor": "Qwen2VLImageProcessorFast",
+            "crop_to_patches": null
+          }
+        ]
+      },
+      "dataset_manifest": {
+        "dataset": "CO3Dv2 multiview identity candidates",
+        "source_manifest": {
+          "dataset": "CO3Dv2 selected official test sequences",
+          "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+          "categories": [
+            "chair",
+            "cup",
+            "bottle",
+            "book",
+            "car",
+            "bench"
+          ],
+          "families": 300,
+          "candidate_views_per_family": 8,
+          "seed": 42,
+          "asset_count": 3188,
+          "source": "https://github.com/facebookresearch/co3d",
+          "archive_sha256_reference": {
+            "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+            "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+            "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+            "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+            "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+            "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+            "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+            "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+            "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+            "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+            "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+            "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+            "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+            "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+            "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+            "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+            "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+            "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+            "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+            "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+            "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+            "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+            "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+            "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+            "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+            "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+            "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+            "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+            "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+            "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+            "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+            "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+            "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+            "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+            "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+            "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+            "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+            "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+            "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+            "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+            "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+            "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+            "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+            "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+            "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+            "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+            "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+            "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+            "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+            "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+            "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+            "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+            "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+            "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+            "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+            "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+            "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+            "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+            "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+            "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+            "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+          },
+          "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+          "license": "CC-BY-NC-4.0"
+        },
+        "families": 300,
+        "cases": 1200,
+        "original_images": 1594,
+        "max_views_per_family": 8,
+        "views_per_family": {
+          "min": 2,
+          "max": 8,
+          "mean": 5.3133333333333335
+        },
+        "categories": {
+          "chair": 50,
+          "cup": 50,
+          "bottle": 50,
+          "book": 50,
+          "car": 50,
+          "bench": 50
+        },
+        "split": "test",
+        "seed": 42,
+        "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+        "annotation_status": "source-derived-unreviewed",
+        "grounding_protocol": "evidence-chain-v1",
+        "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+        "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+        "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+        "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+        "license": "CC-BY-NC-4.0; retain official attribution and source license"
+      },
+      "configuration": {
+        "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+        "dataset_manifest": {
+          "dataset": "CO3Dv2 multiview identity candidates",
+          "source_manifest": {
+            "dataset": "CO3Dv2 selected official test sequences",
+            "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+            "categories": [
+              "chair",
+              "cup",
+              "bottle",
+              "book",
+              "car",
+              "bench"
+            ],
+            "families": 300,
+            "candidate_views_per_family": 8,
+            "seed": 42,
+            "asset_count": 3188,
+            "source": "https://github.com/facebookresearch/co3d",
+            "archive_sha256_reference": {
+              "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+              "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+              "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+              "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+              "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+              "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+              "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+              "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+              "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+              "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+              "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+              "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+              "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+              "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+              "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+              "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+              "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+              "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+              "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+              "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+              "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+              "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+              "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+              "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+              "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+              "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+              "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+              "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+              "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+              "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+              "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+              "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+              "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+              "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+              "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+              "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+              "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+              "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+              "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+              "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+              "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+              "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+              "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+              "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+              "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+              "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+              "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+              "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+              "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+              "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+              "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+              "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+              "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+              "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+              "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+              "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+              "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+              "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+              "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+              "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+              "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+            },
+            "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+            "license": "CC-BY-NC-4.0"
+          },
+          "families": 300,
+          "cases": 1200,
+          "original_images": 1594,
+          "max_views_per_family": 8,
+          "views_per_family": {
+            "min": 2,
+            "max": 8,
+            "mean": 5.3133333333333335
+          },
+          "categories": {
+            "chair": 50,
+            "cup": 50,
+            "bottle": 50,
+            "book": 50,
+            "car": 50,
+            "bench": 50
+          },
+          "split": "test",
+          "seed": 42,
+          "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+          "annotation_status": "source-derived-unreviewed",
+          "grounding_protocol": "evidence-chain-v1",
+          "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+          "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+          "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+          "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+          "license": "CC-BY-NC-4.0; retain official attribution and source license"
+        },
+        "source_sha256": "8f01adf8ac7016ac189804f26d2f47310c452b76a08e2a42c49bbbf8d4c582d0",
+        "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+        "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+        "grounding_manifest": {
+          "text_image": {
+            "repo": "IDEA-Research/grounding-dino-tiny",
+            "revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/text_image"
+          },
+          "image_image": {
+            "repo": "facebook/dinov2-base",
+            "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_image"
+          },
+          "image_text": {
+            "repo": "openai/clip-vit-base-patch32",
+            "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_text",
+            "conversion": {
+              "source_file": "pytorch_model.bin",
+              "source_sha256": "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f",
+              "output_file": "model.safetensors",
+              "output_sha256": "99d28a652e6ec46629ab7047a0ac82c69b1fe11e0ce672c43af65d3a9a3fc05d",
+              "method": "weights_only state_dict to contiguous safetensors; tensor values unchanged"
+            }
+          }
+        },
+        "budget": 12,
+        "max_turns": 6,
+        "max_context_tokens": 8192,
+        "policies": [
+          "initial",
+          "agent"
+        ],
+        "tool_adapter": "portable-prefix-v1",
+        "costs": {
+          "inspect": 1,
+          "crop": 1,
+          "zoom": 1,
+          "ocr": 2,
+          "compare": 2,
+          "request_photo": 3,
+          "assess_quality": 1,
+          "read_metadata": 1,
+          "ground_text_to_image": 3,
+          "ground_image_to_image": 3,
+          "ground_image_to_text": 2
+        },
+        "limit_families": null,
+        "shards": 8,
+        "shard_index": null,
+        "selected_families": 300,
+        "decoding": {
+          "do_sample": false,
+          "max_new_tokens": 384
+        },
+        "image_max_pixels": 262144,
+        "internvl_crop_to_patches": false,
+        "dtype": "bfloat16",
+        "attention": "sdpa"
+      },
+      "overall": {
+        "initial": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.17,
+            "family_ci95": [
+              0.1525,
+              0.18833333333333332
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0.035,
+            "family_ci95": [
+              0.023333333333333334,
+              0.04833333333333333
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0.13666666666666666,
+            "family_ci95": [
+              0.1225,
+              0.15083333333333335
+            ]
+          },
+          "coverage": {
+            "mean": 0.15666666666666668,
+            "family_ci95": [
+              0.1425,
+              0.17083333333333334
+            ]
+          },
+          "selective_error": 0.010638297872340425,
+          "completed": 326,
+          "terminations": {
+            "max_turns": 874,
+            "finished": 326
+          },
+          "errors": 5245,
+          "mean_requests": 0,
+          "mean_tool_calls": 0,
+          "mean_request_cost": 0,
+          "mean_tool_cost": 0,
+          "mean_input_tokens": 8410.7925,
+          "mean_output_tokens": 610.5366666666666,
+          "mean_latency_s": 22.532367800571567,
+          "mean_wall_latency_s": 23.53280947731643,
+          "mean_model_calls": 4.6425,
+          "max_peak_memory_gb": 18.165565967559814,
+          "tools": {
+            "finish": 5571
+          }
+        },
+        "agent": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.45,
+            "family_ci95": [
+              0.43,
+              0.4708333333333333
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0.095,
+            "family_ci95": [
+              0.07333333333333333,
+              0.11833333333333333
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0.39666666666666667,
+            "family_ci95": [
+              0.37083333333333335,
+              0.42333333333333334
+            ]
+          },
+          "coverage": {
+            "mean": 0.46,
+            "family_ci95": [
+              0.44083333333333335,
+              0.48
+            ]
+          },
+          "selective_error": 0.09057971014492754,
+          "completed": 604,
+          "terminations": {
+            "max_turns": 596,
+            "finished": 604
+          },
+          "errors": 2228,
+          "mean_requests": 0.6625,
+          "mean_tool_calls": 2.92,
+          "mean_request_cost": 1.9875,
+          "mean_tool_cost": 3.236666666666667,
+          "mean_input_tokens": 20087.318333333333,
+          "mean_output_tokens": 330.34166666666664,
+          "mean_latency_s": 16.90576384019155,
+          "mean_wall_latency_s": 18.93747465626036,
+          "mean_model_calls": 5.28,
+          "max_peak_memory_gb": 18.165565967559814,
+          "tools": {
+            "compare": 1584,
+            "inspect": 1962,
+            "request_photo": 795,
+            "finish": 636,
+            "ground_image_to_image": 173,
+            "ground_text_to_image": 123,
+            "crop": 740,
+            "zoom": 238,
+            "ocr": 84
+          }
+        }
+      },
+      "by_variant": {
+        "Sufficient": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.62,
+              "family_ci95": [
+                0.5633333333333334,
+                0.6733333333333333
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.05,
+                0.11333333333333333
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.5466666666666666,
+              "family_ci95": [
+                0.49,
+                0.6033333333333334
+              ]
+            },
+            "coverage": {
+              "mean": 0.6266666666666667,
+              "family_ci95": [
+                0.57,
+                0.6833333333333333
+              ]
+            },
+            "selective_error": 0.010638297872340425,
+            "completed": 299,
+            "terminations": {
+              "finished": 299,
+              "max_turns": 1
+            },
+            "errors": 7,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 1602.41,
+            "mean_output_tokens": 204.45666666666668,
+            "mean_latency_s": 7.2803464303313135,
+            "mean_wall_latency_s": 8.77139821751664,
+            "mean_model_calls": 1.02,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 306
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.84,
+              "family_ci95": [
+                0.7966666666666666,
+                0.88
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.13333333333333333,
+              "family_ci95": [
+                0.09666666666666666,
+                0.17333333333333334
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.7433333333333333,
+              "family_ci95": [
+                0.6933333333333334,
+                0.7933333333333333
+              ]
+            },
+            "coverage": {
+              "mean": 0.8766666666666667,
+              "family_ci95": [
+                0.8366666666666667,
+                0.9133333333333333
+              ]
+            },
+            "selective_error": 0.04182509505703422,
+            "completed": 272,
+            "terminations": {
+              "finished": 272,
+              "max_turns": 28
+            },
+            "errors": 20,
+            "mean_requests": 0,
+            "mean_tool_calls": 2.74,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 4.57,
+            "mean_input_tokens": 16102.203333333333,
+            "mean_output_tokens": 352.1933333333333,
+            "mean_latency_s": 17.61522039744848,
+            "mean_wall_latency_s": 20.73340843435377,
+            "mean_model_calls": 3.7133333333333334,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "compare": 359,
+              "ground_image_to_image": 56,
+              "inspect": 316,
+              "finish": 275,
+              "crop": 36,
+              "ocr": 44,
+              "ground_text_to_image": 17,
+              "zoom": 10
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.05333333333333334,
+            "family_ci95": [
+              0.03,
+              0.08
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Obtainable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 9,
+            "terminations": {
+              "max_turns": 291,
+              "finished": 9
+            },
+            "errors": 1746,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10680.253333333334,
+            "mean_output_tokens": 745.8966666666666,
+            "mean_latency_s": 27.610000166168128,
+            "mean_wall_latency_s": 28.44722111042977,
+            "mean_model_calls": 5.85,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "finish": 1755
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.8333333333333334,
+              "family_ci95": [
+                0.79,
+                0.8733333333333333
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.12,
+              "family_ci95": [
+                0.08333333333333333,
+                0.15666666666666668
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.7366666666666667,
+              "family_ci95": [
+                0.6866666666666666,
+                0.7866666666666666
+              ]
+            },
+            "coverage": {
+              "mean": 0.8566666666666667,
+              "family_ci95": [
+                0.8166666666666667,
+                0.8933333333333333
+              ]
+            },
+            "selective_error": 0.027237354085603113,
+            "completed": 262,
+            "terminations": {
+              "finished": 262,
+              "max_turns": 38
+            },
+            "errors": 602,
+            "mean_requests": 0.8633333333333333,
+            "mean_tool_calls": 2.6666666666666665,
+            "mean_request_cost": 2.59,
+            "mean_tool_cost": 2.8033333333333332,
+            "mean_input_tokens": 20977.816666666666,
+            "mean_output_tokens": 415.97333333333336,
+            "mean_latency_s": 20.62585590870391,
+            "mean_wall_latency_s": 23.442279098375778,
+            "mean_model_calls": 5.546666666666667,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "compare": 567,
+              "inspect": 468,
+              "request_photo": 259,
+              "finish": 263,
+              "crop": 72,
+              "zoom": 30,
+              "ground_image_to_image": 1,
+              "ocr": 4
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.12,
+            "family_ci95": [
+              0.08333333333333333,
+              0.15666666666666668
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Missing": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.013333333333333334,
+                0.05
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.013333333333333334,
+                0.05
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 9,
+            "terminations": {
+              "max_turns": 291,
+              "finished": 9
+            },
+            "errors": 1746,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10680.253333333334,
+            "mean_output_tokens": 745.8966666666666,
+            "mean_latency_s": 27.616375949828264,
+            "mean_wall_latency_s": 28.45287580745217,
+            "mean_model_calls": 5.85,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "finish": 1755
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.06333333333333334,
+              "family_ci95": [
+                0.03666666666666667,
+                0.09333333333333334
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.06333333333333334,
+              "family_ci95": [
+                0.03666666666666667,
+                0.09333333333333334
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.05333333333333334,
+              "family_ci95": [
+                0.03,
+                0.08
+              ]
+            },
+            "coverage": {
+              "mean": 0.05333333333333334,
+              "family_ci95": [
+                0.03,
+                0.08
+              ]
+            },
+            "selective_error": 1,
+            "completed": 35,
+            "terminations": {
+              "max_turns": 265,
+              "finished": 35
+            },
+            "errors": 803,
+            "mean_requests": 0.8933333333333333,
+            "mean_tool_calls": 3.1366666666666667,
+            "mean_request_cost": 2.68,
+            "mean_tool_cost": 2.7866666666666666,
+            "mean_input_tokens": 21634.626666666667,
+            "mean_output_tokens": 276.6,
+            "mean_latency_s": 14.691484516913382,
+            "mean_wall_latency_s": 15.84264096038222,
+            "mean_model_calls": 5.93,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "compare": 329,
+              "inspect": 589,
+              "request_photo": 268,
+              "finish": 49,
+              "ground_image_to_image": 58,
+              "ground_text_to_image": 53,
+              "crop": 316,
+              "zoom": 99,
+              "ocr": 18
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.03333333333333333,
+            "family_ci95": [
+              0.0033333333333333335,
+              0.06333333333333334
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Unavailable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.013333333333333334,
+                0.05
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.013333333333333334,
+                0.05
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 9,
+            "terminations": {
+              "max_turns": 291,
+              "finished": 9
+            },
+            "errors": 1746,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10680.253333333334,
+            "mean_output_tokens": 745.8966666666666,
+            "mean_latency_s": 27.622748655958567,
+            "mean_wall_latency_s": 28.459742773867134,
+            "mean_model_calls": 5.85,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "finish": 1755
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.06333333333333334,
+              "family_ci95": [
+                0.03666666666666667,
+                0.09333333333333334
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.06333333333333334,
+              "family_ci95": [
+                0.03666666666666667,
+                0.09333333333333334
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.05333333333333334,
+              "family_ci95": [
+                0.03,
+                0.08
+              ]
+            },
+            "coverage": {
+              "mean": 0.05333333333333334,
+              "family_ci95": [
+                0.03,
+                0.08
+              ]
+            },
+            "selective_error": 1,
+            "completed": 35,
+            "terminations": {
+              "max_turns": 265,
+              "finished": 35
+            },
+            "errors": 803,
+            "mean_requests": 0.8933333333333333,
+            "mean_tool_calls": 3.1366666666666667,
+            "mean_request_cost": 2.68,
+            "mean_tool_cost": 2.7866666666666666,
+            "mean_input_tokens": 21634.626666666667,
+            "mean_output_tokens": 276.6,
+            "mean_latency_s": 14.690494537700433,
+            "mean_wall_latency_s": 15.731570131929669,
+            "mean_model_calls": 5.93,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "compare": 329,
+              "inspect": 589,
+              "request_photo": 268,
+              "finish": 49,
+              "ground_image_to_image": 58,
+              "ground_text_to_image": 53,
+              "crop": 316,
+              "zoom": 99,
+              "ocr": 18
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.03333333333333333,
+            "family_ci95": [
+              0.0033333333333333335,
+              0.06333333333333334
+            ],
+            "paired_source_families": 300
+          }
+        }
+      },
+      "by_category": {
+        "bench": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.165,
+              "family_ci95": [
+                0.125,
+                0.205
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.045,
+              "family_ci95": [
+                0.015,
+                0.075
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.12,
+              "family_ci95": [
+                0.085,
+                0.155
+              ]
+            },
+            "coverage": {
+              "mean": 0.155,
+              "family_ci95": [
+                0.12,
+                0.19
+              ]
+            },
+            "selective_error": 0,
+            "completed": 53,
+            "terminations": {
+              "max_turns": 147,
+              "finished": 53
+            },
+            "errors": 882,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8581.69,
+            "mean_output_tokens": 622.775,
+            "mean_latency_s": 23.01833512521116,
+            "mean_wall_latency_s": 24.95764855510497,
+            "mean_model_calls": 4.675,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 935
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.445,
+              "family_ci95": [
+                0.415,
+                0.47
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.085,
+              "family_ci95": [
+                0.035,
+                0.14
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.425,
+              "family_ci95": [
+                0.355,
+                0.495
+              ]
+            },
+            "coverage": {
+              "mean": 0.51,
+              "family_ci95": [
+                0.465,
+                0.56
+              ]
+            },
+            "selective_error": 0.12745098039215685,
+            "completed": 102,
+            "terminations": {
+              "max_turns": 98,
+              "finished": 102
+            },
+            "errors": 356,
+            "mean_requests": 0.67,
+            "mean_tool_calls": 2.82,
+            "mean_request_cost": 2.01,
+            "mean_tool_cost": 3.12,
+            "mean_input_tokens": 19388.915,
+            "mean_output_tokens": 331.73,
+            "mean_latency_s": 16.83978213490278,
+            "mean_wall_latency_s": 20.59488767962612,
+            "mean_model_calls": 5.11,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "compare": 264,
+              "inspect": 310,
+              "request_photo": 134,
+              "finish": 106,
+              "ground_image_to_image": 39,
+              "crop": 104,
+              "zoom": 43,
+              "ground_text_to_image": 22
+            }
+          }
+        },
+        "book": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.2,
+              "family_ci95": [
+                0.165,
+                0.24
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.03
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.16,
+                0.22
+              ]
+            },
+            "coverage": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.16,
+                0.22
+              ]
+            },
+            "selective_error": 0,
+            "completed": 53,
+            "terminations": {
+              "max_turns": 147,
+              "finished": 53
+            },
+            "errors": 882,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8408.09,
+            "mean_output_tokens": 616.35,
+            "mean_latency_s": 22.706711198640406,
+            "mean_wall_latency_s": 23.455877565003465,
+            "mean_model_calls": 4.675,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "finish": 935
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.475,
+              "family_ci95": [
+                0.395,
+                0.555
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.105,
+              "family_ci95": [
+                0.05,
+                0.165
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.4,
+              "family_ci95": [
+                0.35,
+                0.45
+              ]
+            },
+            "coverage": {
+              "mean": 0.405,
+              "family_ci95": [
+                0.355,
+                0.455
+              ]
+            },
+            "selective_error": 0.07407407407407407,
+            "completed": 102,
+            "terminations": {
+              "max_turns": 98,
+              "finished": 102
+            },
+            "errors": 409,
+            "mean_requests": 0.68,
+            "mean_tool_calls": 2.995,
+            "mean_request_cost": 2.04,
+            "mean_tool_cost": 3.37,
+            "mean_input_tokens": 21236.64,
+            "mean_output_tokens": 328.305,
+            "mean_latency_s": 17.017912920920644,
+            "mean_wall_latency_s": 18.58154559441493,
+            "mean_model_calls": 5.55,
+            "max_peak_memory_gb": 18.165565967559814,
+            "tools": {
+              "compare": 254,
+              "inspect": 346,
+              "request_photo": 136,
+              "crop": 136,
+              "zoom": 26,
+              "finish": 115,
+              "ocr": 69,
+              "ground_text_to_image": 17,
+              "ground_image_to_image": 11
+            }
+          }
+        },
+        "bottle": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.16,
+              "family_ci95": [
+                0.115,
+                0.21
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.0,
+                0.05
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.145,
+              "family_ci95": [
+                0.11,
+                0.18
+              ]
+            },
+            "coverage": {
+              "mean": 0.145,
+              "family_ci95": [
+                0.11,
+                0.18
+              ]
+            },
+            "selective_error": 0.034482758620689655,
+            "completed": 56,
+            "terminations": {
+              "max_turns": 144,
+              "finished": 56
+            },
+            "errors": 864,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8205.68,
+            "mean_output_tokens": 594.635,
+            "mean_latency_s": 21.904368370272568,
+            "mean_wall_latency_s": 22.493654427799047,
+            "mean_model_calls": 4.6,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 920
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.42,
+              "family_ci95": [
+                0.37,
+                0.47
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.025,
+              "family_ci95": [
+                0.0,
+                0.06
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.425,
+              "family_ci95": [
+                0.37,
+                0.48
+              ]
+            },
+            "coverage": {
+              "mean": 0.43,
+              "family_ci95": [
+                0.38,
+                0.485
+              ]
+            },
+            "selective_error": 0.06976744186046512,
+            "completed": 94,
+            "terminations": {
+              "max_turns": 106,
+              "finished": 94
+            },
+            "errors": 343,
+            "mean_requests": 0.68,
+            "mean_tool_calls": 3.09,
+            "mean_request_cost": 2.04,
+            "mean_tool_cost": 3.24,
+            "mean_input_tokens": 19842.775,
+            "mean_output_tokens": 323.135,
+            "mean_latency_s": 16.49603535478411,
+            "mean_wall_latency_s": 17.621555667605715,
+            "mean_model_calls": 5.275,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "compare": 271,
+              "inspect": 320,
+              "request_photo": 136,
+              "crop": 139,
+              "zoom": 62,
+              "finish": 96,
+              "ground_text_to_image": 10,
+              "ocr": 7,
+              "ground_image_to_image": 14
+            }
+          }
+        },
+        "car": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.15,
+              "family_ci95": [
+                0.11,
+                0.195
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.025,
+              "family_ci95": [
+                0.005,
+                0.055
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.125,
+              "family_ci95": [
+                0.09,
+                0.16
+              ]
+            },
+            "coverage": {
+              "mean": 0.14,
+              "family_ci95": [
+                0.105,
+                0.175
+              ]
+            },
+            "selective_error": 0,
+            "completed": 53,
+            "terminations": {
+              "max_turns": 147,
+              "finished": 53
+            },
+            "errors": 882,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8588.415,
+            "mean_output_tokens": 629.2,
+            "mean_latency_s": 23.25464626107947,
+            "mean_wall_latency_s": 24.557296631758216,
+            "mean_model_calls": 4.675,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 935
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.435,
+              "family_ci95": [
+                0.395,
+                0.47
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.105,
+              "family_ci95": [
+                0.055,
+                0.16
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.385,
+              "family_ci95": [
+                0.315,
+                0.455
+              ]
+            },
+            "coverage": {
+              "mean": 0.48,
+              "family_ci95": [
+                0.435,
+                0.525
+              ]
+            },
+            "selective_error": 0.11458333333333333,
+            "completed": 100,
+            "terminations": {
+              "max_turns": 100,
+              "finished": 100
+            },
+            "errors": 368,
+            "mean_requests": 0.69,
+            "mean_tool_calls": 3.22,
+            "mean_request_cost": 2.07,
+            "mean_tool_cost": 3.8,
+            "mean_input_tokens": 21772.47,
+            "mean_output_tokens": 349.01,
+            "mean_latency_s": 18.181542902943328,
+            "mean_wall_latency_s": 21.308380851863767,
+            "mean_model_calls": 5.56,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "compare": 268,
+              "inspect": 362,
+              "request_photo": 138,
+              "ground_image_to_image": 50,
+              "ground_text_to_image": 36,
+              "finish": 105,
+              "crop": 114,
+              "ocr": 6,
+              "zoom": 32
+            }
+          }
+        },
+        "chair": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.15,
+                0.23
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.045,
+                0.125
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.11,
+              "family_ci95": [
+                0.075,
+                0.145
+              ]
+            },
+            "coverage": {
+              "mean": 0.18,
+              "family_ci95": [
+                0.15,
+                0.21
+              ]
+            },
+            "selective_error": 0,
+            "completed": 53,
+            "terminations": {
+              "max_turns": 147,
+              "finished": 53
+            },
+            "errors": 882,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8471.005,
+            "mean_output_tokens": 603.405,
+            "mean_latency_s": 22.290079857789095,
+            "mean_wall_latency_s": 23.17574662255647,
+            "mean_model_calls": 4.675,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 935
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.49,
+              "family_ci95": [
+                0.455,
+                0.525
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.23,
+              "family_ci95": [
+                0.16,
+                0.305
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.285,
+              "family_ci95": [
+                0.21,
+                0.35512499999999814
+              ]
+            },
+            "coverage": {
+              "mean": 0.475,
+              "family_ci95": [
+                0.435,
+                0.515
+              ]
+            },
+            "selective_error": 0.05263157894736842,
+            "completed": 108,
+            "terminations": {
+              "max_turns": 92,
+              "finished": 108
+            },
+            "errors": 369,
+            "mean_requests": 0.64,
+            "mean_tool_calls": 2.605,
+            "mean_request_cost": 1.92,
+            "mean_tool_cost": 2.95,
+            "mean_input_tokens": 18709.47,
+            "mean_output_tokens": 319.45,
+            "mean_latency_s": 16.131926255963627,
+            "mean_wall_latency_s": 17.69326491450949,
+            "mean_model_calls": 4.99,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "compare": 254,
+              "inspect": 303,
+              "request_photo": 128,
+              "finish": 110,
+              "crop": 87,
+              "zoom": 39,
+              "ground_text_to_image": 32,
+              "ground_image_to_image": 45
+            }
+          }
+        },
+        "cup": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.155,
+              "family_ci95": [
+                0.105,
+                0.21
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.0,
+                0.07
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.13,
+              "family_ci95": [
+                0.095,
+                0.165
+              ]
+            },
+            "coverage": {
+              "mean": 0.13,
+              "family_ci95": [
+                0.095,
+                0.165
+              ]
+            },
+            "selective_error": 0.038461538461538464,
+            "completed": 58,
+            "terminations": {
+              "max_turns": 142,
+              "finished": 58
+            },
+            "errors": 853,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8209.875,
+            "mean_output_tokens": 596.855,
+            "mean_latency_s": 22.020065990436706,
+            "mean_wall_latency_s": 22.556633061676404,
+            "mean_model_calls": 4.555,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "finish": 911
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.435,
+              "family_ci95": [
+                0.385,
+                0.48
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.0,
+                0.05
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.46,
+              "family_ci95": [
+                0.41,
+                0.51
+              ]
+            },
+            "coverage": {
+              "mean": 0.46,
+              "family_ci95": [
+                0.41,
+                0.51
+              ]
+            },
+            "selective_error": 0.09782608695652174,
+            "completed": 98,
+            "terminations": {
+              "max_turns": 102,
+              "finished": 98
+            },
+            "errors": 383,
+            "mean_requests": 0.615,
+            "mean_tool_calls": 2.79,
+            "mean_request_cost": 1.845,
+            "mean_tool_cost": 2.94,
+            "mean_input_tokens": 19573.64,
+            "mean_output_tokens": 330.42,
+            "mean_latency_s": 16.767383471634822,
+            "mean_wall_latency_s": 17.825213229542133,
+            "mean_model_calls": 5.195,
+            "max_peak_memory_gb": 18.03623867034912,
+            "tools": {
+              "compare": 273,
+              "inspect": 321,
+              "request_photo": 123,
+              "ground_image_to_image": 14,
+              "crop": 160,
+              "finish": 104,
+              "zoom": 36,
+              "ground_text_to_image": 6,
+              "ocr": 2
+            }
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "complete": true,
+      "expected_episodes": 2400,
+      "actual_episodes": 2400,
+      "source_families": 300,
+      "source_commit": "4810a1eb39e2401b54f73f68bddb53e653687129",
+      "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+      "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+      "worker": {
+        "ready": true,
+        "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/qwen25",
+        "gpu": "NVIDIA RTX A6000",
+        "device": 1,
+        "tool_adapter": "portable",
+        "model_type": "qwen2_5_vl",
+        "assistant_prefix": "<tool_call>\n{\"name\":",
+        "processor": "Qwen2_5_VLProcessor",
+        "image_processor": "Qwen2VLImageProcessorFast",
+        "crop_to_patches": null
+      },
+      "dataset_manifest": {
+        "dataset": "CO3Dv2 multiview identity candidates",
+        "source_manifest": {
+          "dataset": "CO3Dv2 selected official test sequences",
+          "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+          "categories": [
+            "chair",
+            "cup",
+            "bottle",
+            "book",
+            "car",
+            "bench"
+          ],
+          "families": 300,
+          "candidate_views_per_family": 8,
+          "seed": 42,
+          "asset_count": 3188,
+          "source": "https://github.com/facebookresearch/co3d",
+          "archive_sha256_reference": {
+            "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+            "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+            "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+            "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+            "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+            "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+            "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+            "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+            "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+            "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+            "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+            "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+            "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+            "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+            "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+            "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+            "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+            "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+            "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+            "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+            "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+            "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+            "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+            "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+            "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+            "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+            "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+            "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+            "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+            "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+            "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+            "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+            "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+            "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+            "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+            "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+            "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+            "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+            "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+            "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+            "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+            "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+            "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+            "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+            "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+            "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+            "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+            "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+            "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+            "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+            "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+            "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+            "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+            "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+            "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+            "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+            "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+            "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+            "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+            "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+            "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+          },
+          "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+          "license": "CC-BY-NC-4.0"
+        },
+        "families": 300,
+        "cases": 1200,
+        "original_images": 1594,
+        "max_views_per_family": 8,
+        "views_per_family": {
+          "min": 2,
+          "max": 8,
+          "mean": 5.3133333333333335
+        },
+        "categories": {
+          "chair": 50,
+          "cup": 50,
+          "bottle": 50,
+          "book": 50,
+          "car": 50,
+          "bench": 50
+        },
+        "split": "test",
+        "seed": 42,
+        "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+        "annotation_status": "source-derived-unreviewed",
+        "grounding_protocol": "evidence-chain-v1",
+        "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+        "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+        "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+        "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+        "license": "CC-BY-NC-4.0; retain official attribution and source license"
+      },
+      "configuration": {
+        "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+        "dataset_manifest": {
+          "dataset": "CO3Dv2 multiview identity candidates",
+          "source_manifest": {
+            "dataset": "CO3Dv2 selected official test sequences",
+            "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+            "categories": [
+              "chair",
+              "cup",
+              "bottle",
+              "book",
+              "car",
+              "bench"
+            ],
+            "families": 300,
+            "candidate_views_per_family": 8,
+            "seed": 42,
+            "asset_count": 3188,
+            "source": "https://github.com/facebookresearch/co3d",
+            "archive_sha256_reference": {
+              "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+              "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+              "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+              "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+              "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+              "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+              "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+              "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+              "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+              "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+              "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+              "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+              "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+              "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+              "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+              "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+              "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+              "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+              "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+              "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+              "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+              "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+              "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+              "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+              "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+              "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+              "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+              "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+              "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+              "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+              "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+              "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+              "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+              "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+              "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+              "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+              "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+              "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+              "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+              "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+              "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+              "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+              "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+              "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+              "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+              "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+              "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+              "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+              "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+              "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+              "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+              "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+              "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+              "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+              "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+              "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+              "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+              "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+              "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+              "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+              "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+            },
+            "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+            "license": "CC-BY-NC-4.0"
+          },
+          "families": 300,
+          "cases": 1200,
+          "original_images": 1594,
+          "max_views_per_family": 8,
+          "views_per_family": {
+            "min": 2,
+            "max": 8,
+            "mean": 5.3133333333333335
+          },
+          "categories": {
+            "chair": 50,
+            "cup": 50,
+            "bottle": 50,
+            "book": 50,
+            "car": 50,
+            "bench": 50
+          },
+          "split": "test",
+          "seed": 42,
+          "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+          "annotation_status": "source-derived-unreviewed",
+          "grounding_protocol": "evidence-chain-v1",
+          "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+          "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+          "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+          "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+          "license": "CC-BY-NC-4.0; retain official attribution and source license"
+        },
+        "source_sha256": "8f01adf8ac7016ac189804f26d2f47310c452b76a08e2a42c49bbbf8d4c582d0",
+        "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+        "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+        "grounding_manifest": {
+          "text_image": {
+            "repo": "IDEA-Research/grounding-dino-tiny",
+            "revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/text_image"
+          },
+          "image_image": {
+            "repo": "facebook/dinov2-base",
+            "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_image"
+          },
+          "image_text": {
+            "repo": "openai/clip-vit-base-patch32",
+            "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_text",
+            "conversion": {
+              "source_file": "pytorch_model.bin",
+              "source_sha256": "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f",
+              "output_file": "model.safetensors",
+              "output_sha256": "99d28a652e6ec46629ab7047a0ac82c69b1fe11e0ce672c43af65d3a9a3fc05d",
+              "method": "weights_only state_dict to contiguous safetensors; tensor values unchanged"
+            }
+          }
+        },
+        "budget": 12,
+        "max_turns": 6,
+        "max_context_tokens": 8192,
+        "policies": [
+          "initial",
+          "agent"
+        ],
+        "tool_adapter": "portable-prefix-v1",
+        "costs": {
+          "inspect": 1,
+          "crop": 1,
+          "zoom": 1,
+          "ocr": 2,
+          "compare": 2,
+          "request_photo": 3,
+          "assess_quality": 1,
+          "read_metadata": 1,
+          "ground_text_to_image": 3,
+          "ground_image_to_image": 3,
+          "ground_image_to_text": 2
+        },
+        "limit_families": null,
+        "shards": 1,
+        "shard_index": 0,
+        "selected_families": 300,
+        "decoding": {
+          "do_sample": false,
+          "max_new_tokens": 384
+        },
+        "image_max_pixels": 262144,
+        "internvl_crop_to_patches": false,
+        "dtype": "bfloat16",
+        "attention": "sdpa"
+      },
+      "overall": {
+        "initial": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.16833333333333333,
+            "family_ci95": [
+              0.14166666666666666,
+              0.195
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0.16833333333333333,
+            "family_ci95": [
+              0.14166666666666666,
+              0.195
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0.0175,
+            "family_ci95": [
+              0.006666666666666667,
+              0.030833333333333334
+            ]
+          },
+          "coverage": {
+            "mean": 0.0175,
+            "family_ci95": [
+              0.006666666666666667,
+              0.030833333333333334
+            ]
+          },
+          "selective_error": 1,
+          "completed": 582,
+          "terminations": {
+            "finished": 582,
+            "max_turns": 618
+          },
+          "errors": 3916,
+          "mean_requests": 0,
+          "mean_tool_calls": 0,
+          "mean_request_cost": 0,
+          "mean_tool_cost": 0,
+          "mean_input_tokens": 6964.236666666667,
+          "mean_output_tokens": 488.51416666666665,
+          "mean_latency_s": 15.065801657464084,
+          "mean_wall_latency_s": 15.579068756386016,
+          "mean_model_calls": 3.7483333333333335,
+          "max_peak_memory_gb": 16.859039783477783,
+          "tools": {
+            "finish": 2745
+          }
+        },
+        "agent": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.195,
+            "family_ci95": [
+              0.16833333333333333,
+              0.22333333333333333
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0.195,
+            "family_ci95": [
+              0.16833333333333333,
+              0.22333333333333333
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "coverage": {
+            "mean": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "selective_error": null,
+          "completed": 565,
+          "terminations": {
+            "finished": 565,
+            "max_turns": 635
+          },
+          "errors": 1708,
+          "mean_requests": 0.05,
+          "mean_tool_calls": 3.77,
+          "mean_request_cost": 0.15,
+          "mean_tool_cost": 6.064166666666667,
+          "mean_input_tokens": 23310.7475,
+          "mean_output_tokens": 357.3591666666667,
+          "mean_latency_s": 15.533935604729825,
+          "mean_wall_latency_s": 16.92600989216085,
+          "mean_model_calls": 5.664166666666667,
+          "max_peak_memory_gb": 16.859039783477783,
+          "tools": {
+            "inspect": 2599,
+            "compare": 1290,
+            "finish": 721,
+            "ground_image_to_image": 780,
+            "request_photo": 60,
+            "ground_image_to_text": 10,
+            "crop": 9
+          }
+        }
+      },
+      "by_variant": {
+        "Sufficient": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "coverage": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "selective_error": 1,
+            "completed": 261,
+            "terminations": {
+              "finished": 261,
+              "max_turns": 39
+            },
+            "errors": 277,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 3439.3366666666666,
+            "mean_output_tokens": 251.52666666666667,
+            "mean_latency_s": 7.8288128752284685,
+            "mean_wall_latency_s": 8.795962442728536,
+            "mean_model_calls": 1.7933333333333332,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 309
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 213,
+            "terminations": {
+              "finished": 213,
+              "max_turns": 87
+            },
+            "errors": 398,
+            "mean_requests": 0,
+            "mean_tool_calls": 3.4033333333333333,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 5.373333333333333,
+            "mean_input_tokens": 24902.693333333333,
+            "mean_output_tokens": 384.3333333333333,
+            "mean_latency_s": 17.28954591643104,
+            "mean_wall_latency_s": 19.705635674234944,
+            "mean_model_calls": 5.44,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 528,
+              "compare": 394,
+              "finish": 223,
+              "ground_image_to_image": 102,
+              "ground_image_to_text": 1
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Obtainable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 107,
+            "terminations": {
+              "max_turns": 193,
+              "finished": 107
+            },
+            "errors": 1213,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8139.203333333333,
+            "mean_output_tokens": 567.51,
+            "mean_latency_s": 17.473669143109582,
+            "mean_wall_latency_s": 17.83488391979093,
+            "mean_model_calls": 4.4,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 812
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 118,
+            "terminations": {
+              "finished": 118,
+              "max_turns": 182
+            },
+            "errors": 436,
+            "mean_requests": 0.06666666666666667,
+            "mean_tool_calls": 3.89,
+            "mean_request_cost": 0.2,
+            "mean_tool_cost": 6.303333333333334,
+            "mean_input_tokens": 22792.756666666668,
+            "mean_output_tokens": 348.5966666666667,
+            "mean_latency_s": 14.957569282694797,
+            "mean_wall_latency_s": 16.050639054975083,
+            "mean_model_calls": 5.736666666666666,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 687,
+              "compare": 302,
+              "ground_image_to_image": 226,
+              "finish": 166,
+              "request_photo": 20,
+              "ground_image_to_text": 3,
+              "crop": 3
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Missing": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.33666666666666667,
+              "family_ci95": [
+                0.2833333333333333,
+                0.39
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.33666666666666667,
+              "family_ci95": [
+                0.2833333333333333,
+                0.39
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 107,
+            "terminations": {
+              "max_turns": 193,
+              "finished": 107
+            },
+            "errors": 1213,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8139.203333333333,
+            "mean_output_tokens": 567.51,
+            "mean_latency_s": 17.47874105123376,
+            "mean_wall_latency_s": 17.840227938407335,
+            "mean_model_calls": 4.4,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 812
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.39,
+              "family_ci95": [
+                0.33666666666666667,
+                0.44666666666666666
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.39,
+              "family_ci95": [
+                0.33666666666666667,
+                0.44666666666666666
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 117,
+            "terminations": {
+              "finished": 117,
+              "max_turns": 183
+            },
+            "errors": 437,
+            "mean_requests": 0.06666666666666667,
+            "mean_tool_calls": 3.8933333333333335,
+            "mean_request_cost": 0.2,
+            "mean_tool_cost": 6.29,
+            "mean_input_tokens": 22773.77,
+            "mean_output_tokens": 348.25333333333333,
+            "mean_latency_s": 14.944194183973984,
+            "mean_wall_latency_s": 15.973591857786134,
+            "mean_model_calls": 5.74,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 692,
+              "compare": 297,
+              "ground_image_to_image": 226,
+              "finish": 166,
+              "request_photo": 20,
+              "ground_image_to_text": 3,
+              "crop": 3
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.05333333333333334,
+            "family_ci95": [
+              -0.03,
+              0.13333333333333333
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Unavailable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.33666666666666667,
+              "family_ci95": [
+                0.2833333333333333,
+                0.39
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.33666666666666667,
+              "family_ci95": [
+                0.2833333333333333,
+                0.39
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.006666666666666667,
+                0.03666666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 107,
+            "terminations": {
+              "max_turns": 193,
+              "finished": 107
+            },
+            "errors": 1213,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8139.203333333333,
+            "mean_output_tokens": 567.51,
+            "mean_latency_s": 17.481983560284522,
+            "mean_wall_latency_s": 17.845200724617268,
+            "mean_model_calls": 4.4,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 812
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.39,
+              "family_ci95": [
+                0.33666666666666667,
+                0.44666666666666666
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.39,
+              "family_ci95": [
+                0.33666666666666667,
+                0.44666666666666666
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 117,
+            "terminations": {
+              "finished": 117,
+              "max_turns": 183
+            },
+            "errors": 437,
+            "mean_requests": 0.06666666666666667,
+            "mean_tool_calls": 3.8933333333333335,
+            "mean_request_cost": 0.2,
+            "mean_tool_cost": 6.29,
+            "mean_input_tokens": 22773.77,
+            "mean_output_tokens": 348.25333333333333,
+            "mean_latency_s": 14.94443303581948,
+            "mean_wall_latency_s": 15.97417298164723,
+            "mean_model_calls": 5.74,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 692,
+              "compare": 297,
+              "ground_image_to_image": 226,
+              "finish": 166,
+              "request_photo": 20,
+              "ground_image_to_text": 3,
+              "crop": 3
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0.05333333333333334,
+            "family_ci95": [
+              -0.03,
+              0.13333333333333333
+            ],
+            "paired_source_families": 300
+          }
+        }
+      },
+      "by_category": {
+        "bench": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12975000000000023,
+                0.26
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12975000000000023,
+                0.26
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "coverage": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "selective_error": 1,
+            "completed": 103,
+            "terminations": {
+              "finished": 103,
+              "max_turns": 97
+            },
+            "errors": 618,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 6738.41,
+            "mean_output_tokens": 452.29,
+            "mean_latency_s": 14.023465485780035,
+            "mean_wall_latency_s": 14.97463241282443,
+            "mean_model_calls": 3.605,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 487
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.21,
+              "family_ci95": [
+                0.14,
+                0.28
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.21,
+              "family_ci95": [
+                0.14,
+                0.28
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 96,
+            "terminations": {
+              "finished": 96,
+              "max_turns": 104
+            },
+            "errors": 281,
+            "mean_requests": 0.03,
+            "mean_tool_calls": 3.745,
+            "mean_request_cost": 0.09,
+            "mean_tool_cost": 6.2,
+            "mean_input_tokens": 23580.46,
+            "mean_output_tokens": 345.98,
+            "mean_latency_s": 15.365224494112772,
+            "mean_wall_latency_s": 17.96125739018549,
+            "mean_model_calls": 5.63,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "compare": 203,
+              "inspect": 429,
+              "ground_image_to_image": 154,
+              "finish": 126,
+              "request_photo": 6,
+              "crop": 3
+            }
+          }
+        },
+        "book": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.17,
+              "family_ci95": [
+                0.11,
+                0.24
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.17,
+              "family_ci95": [
+                0.11,
+                0.24
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 93,
+            "terminations": {
+              "finished": 93,
+              "max_turns": 107
+            },
+            "errors": 662,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 6957.645,
+            "mean_output_tokens": 474.975,
+            "mean_latency_s": 14.669683412838495,
+            "mean_wall_latency_s": 15.062451225486003,
+            "mean_model_calls": 3.775,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 450
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.27,
+              "family_ci95": [
+                0.2,
+                0.34
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.27,
+              "family_ci95": [
+                0.2,
+                0.34
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 116,
+            "terminations": {
+              "finished": 116,
+              "max_turns": 84
+            },
+            "errors": 241,
+            "mean_requests": 0,
+            "mean_tool_calls": 3.79,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 6.08,
+            "mean_input_tokens": 22760.22,
+            "mean_output_tokens": 361.405,
+            "mean_latency_s": 15.541821633061627,
+            "mean_wall_latency_s": 16.601613722192706,
+            "mean_model_calls": 5.575,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 425,
+              "compare": 223,
+              "finish": 138,
+              "ground_image_to_image": 118,
+              "ground_image_to_text": 3
+            }
+          }
+        },
+        "bottle": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.14,
+              "family_ci95": [
+                0.08,
+                0.2
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.14,
+              "family_ci95": [
+                0.08,
+                0.2
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "coverage": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "selective_error": 1,
+            "completed": 83,
+            "terminations": {
+              "finished": 83,
+              "max_turns": 117
+            },
+            "errors": 737,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 7603.84,
+            "mean_output_tokens": 549.51,
+            "mean_latency_s": 16.898064369636703,
+            "mean_wall_latency_s": 17.160443250608512,
+            "mean_model_calls": 4.1,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 359
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.17,
+              "family_ci95": [
+                0.11,
+                0.24
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.17,
+              "family_ci95": [
+                0.11,
+                0.24
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 89,
+            "terminations": {
+              "finished": 89,
+              "max_turns": 111
+            },
+            "errors": 272,
+            "mean_requests": 0.075,
+            "mean_tool_calls": 3.895,
+            "mean_request_cost": 0.225,
+            "mean_tool_cost": 6.32,
+            "mean_input_tokens": 23221.95,
+            "mean_output_tokens": 365.47,
+            "mean_latency_s": 15.707414140135516,
+            "mean_wall_latency_s": 16.50574264513969,
+            "mean_model_calls": 5.7,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 438,
+              "compare": 217,
+              "finish": 125,
+              "ground_image_to_image": 140,
+              "request_photo": 15,
+              "ground_image_to_text": 3
+            }
+          }
+        },
+        "car": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.18,
+              "family_ci95": [
+                0.11,
+                0.25
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.18,
+              "family_ci95": [
+                0.11,
+                0.25
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.0,
+                0.075
+              ]
+            },
+            "coverage": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.0,
+                0.075
+              ]
+            },
+            "selective_error": 1,
+            "completed": 107,
+            "terminations": {
+              "finished": 107,
+              "max_turns": 93
+            },
+            "errors": 589,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 6526.105,
+            "mean_output_tokens": 460.73,
+            "mean_latency_s": 14.215513649701606,
+            "mean_wall_latency_s": 14.953645218212623,
+            "mean_model_calls": 3.48,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 563
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12,
+                0.26
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12,
+                0.26
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 94,
+            "terminations": {
+              "finished": 94,
+              "max_turns": 106
+            },
+            "errors": 320,
+            "mean_requests": 0.075,
+            "mean_tool_calls": 3.635,
+            "mean_request_cost": 0.225,
+            "mean_tool_cost": 5.75,
+            "mean_input_tokens": 23706.12,
+            "mean_output_tokens": 365.73,
+            "mean_latency_s": 15.91352869747323,
+            "mean_wall_latency_s": 17.969393983725457,
+            "mean_model_calls": 5.705,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "compare": 228,
+              "inspect": 406,
+              "finish": 108,
+              "ground_image_to_image": 112,
+              "request_photo": 15
+            }
+          }
+        },
+        "chair": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.23,
+              "family_ci95": [
+                0.16,
+                0.3
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.23,
+              "family_ci95": [
+                0.16,
+                0.3
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.005,
+                0.105
+              ]
+            },
+            "coverage": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.005,
+                0.105
+              ]
+            },
+            "selective_error": 1,
+            "completed": 124,
+            "terminations": {
+              "finished": 124,
+              "max_turns": 76
+            },
+            "errors": 520,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 5855.37,
+            "mean_output_tokens": 409.325,
+            "mean_latency_s": 12.608944791168906,
+            "mean_wall_latency_s": 13.026928419445175,
+            "mean_model_calls": 3.22,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 391
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.14,
+              "family_ci95": [
+                0.08,
+                0.2
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.14,
+              "family_ci95": [
+                0.08,
+                0.2
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 81,
+            "terminations": {
+              "finished": 81,
+              "max_turns": 119
+            },
+            "errors": 297,
+            "mean_requests": 0.06,
+            "mean_tool_calls": 3.815,
+            "mean_request_cost": 0.18,
+            "mean_tool_cost": 5.945,
+            "mean_input_tokens": 23555.915,
+            "mean_output_tokens": 351.345,
+            "mean_latency_s": 15.381068566219183,
+            "mean_wall_latency_s": 16.492148271990008,
+            "mean_model_calls": 5.705,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "inspect": 466,
+              "compare": 225,
+              "finish": 100,
+              "ground_image_to_image": 111,
+              "request_photo": 12,
+              "crop": 3,
+              "ground_image_to_text": 3
+            }
+          }
+        },
+        "cup": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.1,
+              "family_ci95": [
+                0.05,
+                0.16
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.1,
+              "family_ci95": [
+                0.05,
+                0.16
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.015,
+              "family_ci95": [
+                0.0,
+                0.045
+              ]
+            },
+            "coverage": {
+              "mean": 0.015,
+              "family_ci95": [
+                0.0,
+                0.045
+              ]
+            },
+            "selective_error": 1,
+            "completed": 72,
+            "terminations": {
+              "max_turns": 128,
+              "finished": 72
+            },
+            "errors": 790,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8104.05,
+            "mean_output_tokens": 584.255,
+            "mean_latency_s": 17.979138235658755,
+            "mean_wall_latency_s": 18.296312011739357,
+            "mean_model_calls": 4.31,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "finish": 495
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12,
+                0.26
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.19,
+              "family_ci95": [
+                0.12,
+                0.26
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "coverage": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "selective_error": null,
+            "completed": 89,
+            "terminations": {
+              "max_turns": 111,
+              "finished": 89
+            },
+            "errors": 297,
+            "mean_requests": 0.06,
+            "mean_tool_calls": 3.74,
+            "mean_request_cost": 0.18,
+            "mean_tool_cost": 6.09,
+            "mean_input_tokens": 23039.82,
+            "mean_output_tokens": 354.225,
+            "mean_latency_s": 15.294556097376626,
+            "mean_wall_latency_s": 16.02590333973174,
+            "mean_model_calls": 5.67,
+            "max_peak_memory_gb": 16.859039783477783,
+            "tools": {
+              "compare": 194,
+              "inspect": 435,
+              "ground_image_to_image": 145,
+              "finish": 124,
+              "request_photo": 12,
+              "ground_image_to_text": 1,
+              "crop": 3
+            }
+          }
+        }
+      }
+    },
+    {
+      "model": "OpenGVLab/InternVL3_5-8B-HF",
+      "complete": true,
+      "expected_episodes": 2400,
+      "actual_episodes": 2400,
+      "source_families": 300,
+      "source_commit": "4810a1eb39e2401b54f73f68bddb53e653687129",
+      "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+      "revision": "741a7d03020411e666c6109218ab71e08151ef86",
+      "worker": {
+        "workers": [
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/internvl35",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 0,
+            "tool_adapter": "portable",
+            "model_type": "internvl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "InternVLProcessor",
+            "image_processor": "GotOcr2ImageProcessorFast",
+            "crop_to_patches": false
+          },
+          {
+            "ready": true,
+            "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/internvl35",
+            "gpu": "NVIDIA RTX A6000",
+            "device": 1,
+            "tool_adapter": "portable",
+            "model_type": "internvl",
+            "assistant_prefix": "<tool_call>\n{\"name\":",
+            "processor": "InternVLProcessor",
+            "image_processor": "GotOcr2ImageProcessorFast",
+            "crop_to_patches": false
+          }
+        ]
+      },
+      "dataset_manifest": {
+        "dataset": "CO3Dv2 multiview identity candidates",
+        "source_manifest": {
+          "dataset": "CO3Dv2 selected official test sequences",
+          "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+          "categories": [
+            "chair",
+            "cup",
+            "bottle",
+            "book",
+            "car",
+            "bench"
+          ],
+          "families": 300,
+          "candidate_views_per_family": 8,
+          "seed": 42,
+          "asset_count": 3188,
+          "source": "https://github.com/facebookresearch/co3d",
+          "archive_sha256_reference": {
+            "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+            "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+            "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+            "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+            "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+            "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+            "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+            "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+            "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+            "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+            "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+            "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+            "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+            "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+            "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+            "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+            "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+            "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+            "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+            "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+            "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+            "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+            "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+            "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+            "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+            "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+            "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+            "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+            "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+            "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+            "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+            "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+            "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+            "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+            "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+            "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+            "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+            "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+            "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+            "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+            "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+            "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+            "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+            "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+            "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+            "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+            "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+            "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+            "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+            "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+            "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+            "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+            "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+            "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+            "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+            "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+            "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+            "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+            "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+            "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+            "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+          },
+          "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+          "license": "CC-BY-NC-4.0"
+        },
+        "families": 300,
+        "cases": 1200,
+        "original_images": 1594,
+        "max_views_per_family": 8,
+        "views_per_family": {
+          "min": 2,
+          "max": 8,
+          "mean": 5.3133333333333335
+        },
+        "categories": {
+          "chair": 50,
+          "cup": 50,
+          "bottle": 50,
+          "book": 50,
+          "car": 50,
+          "bench": 50
+        },
+        "split": "test",
+        "seed": 42,
+        "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+        "annotation_status": "source-derived-unreviewed",
+        "grounding_protocol": "evidence-chain-v1",
+        "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+        "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+        "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+        "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+        "license": "CC-BY-NC-4.0; retain official attribution and source license"
+      },
+      "configuration": {
+        "dataset_sha256": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e",
+        "dataset_manifest": {
+          "dataset": "CO3Dv2 multiview identity candidates",
+          "source_manifest": {
+            "dataset": "CO3Dv2 selected official test sequences",
+            "revision": "eb51d7583c56ff23dc918d9deafee50f4d8178c3",
+            "categories": [
+              "chair",
+              "cup",
+              "bottle",
+              "book",
+              "car",
+              "bench"
+            ],
+            "families": 300,
+            "candidate_views_per_family": 8,
+            "seed": 42,
+            "asset_count": 3188,
+            "source": "https://github.com/facebookresearch/co3d",
+            "archive_sha256_reference": {
+              "chair_000.zip": "78f09f2c92cce85af3f71b8c7a79dbc14142641648133bb60b927e3279666b79",
+              "chair_001.zip": "11c076365493a5e380e47beb39e65507674940592436967be0c5428558086c9a",
+              "chair_002.zip": "f8a7f5f372e1bc59f6c91abded0ae7f08474ed6a90e1c10f5f927e14fe3ad9ca",
+              "chair_003.zip": "954ec2b96993bbdb9f80db8881b2fc9e66663d509166787991bb54f5eb8151c3",
+              "chair_004.zip": "f4e655bc7d25c1dfcba117beb914bd52ff8f6d127e494e9ebedcb4151a68b4fd",
+              "chair_005.zip": "d5a6682ac6e336b2d89a3af7853b203cb425bb2b51ded483259f4a9f1aaa2947",
+              "chair_006.zip": "029e1c414b7c8921cb32860d92e8b275ad97d2f12e7d6a9928b225f931990403",
+              "chair_007.zip": "7890b46e64eeb15ad17f505e40b1218458a40aa555bf306c3afc4da11f05c4e3",
+              "chair_008.zip": "beb6ba8ee60a8a926cfe7253bb977704f84fe05218e12cfe59de3650ef187cd4",
+              "chair_009.zip": "34b3f00be1ab76ef7601086e0a9bbd4eb1a6cad4e9b1888bc17f576dad4c899b",
+              "chair_010.zip": "5888423e4e647685d9a623319a4a9f6b98210b04fb8396cdeda0acf81c87b4d7",
+              "chair_011.zip": "74cb42f92a835365ff7b89d0d08f61d40fa73b03f6b89986578b990fc03fdada",
+              "chair_012.zip": "9cf61a44a01e05c81bcb541198570ee1fc91c0952d6ee13915da16b5a9a35694",
+              "chair_013.zip": "5dde453191f109388d7344023a5c96f09830a80a7df8479e5564f4b9808eafa6",
+              "cup_000.zip": "34635a7bb25ed1207fa2f8c2b195d420a9111c4c41a874f8d9e06f2be355d6a1",
+              "cup_001.zip": "38f227b052ca2d2c01b1d656ae76f9c62b606f470eb362c32ff17ac998840e39",
+              "cup_002.zip": "550a568406a8205c8cb25b4da87056a1ba6b6c450f95779ccd888a587debc162",
+              "cup_003.zip": "b5f0bd0a7c7520336207149ff2fb8b3a2bde5b8ceb2df7726f93d256bf88a2c6",
+              "cup_004.zip": "25c9248350834ae0b16d5ee107e2c2344765243d8bff0405f00575fd04d37528",
+              "cup_005.zip": "4baf1ece08be1e93d33d742c965d57f85c3d50492e61791fa52a76b14796e460",
+              "bottle_000.zip": "706386501901405a31ee731ce6bf28121cb689c2a04d40bb5d3dd46cc0e172d4",
+              "bottle_001.zip": "f36f8068e5515c8cdd96dba79ca09f3edba6fba8e8e0338f0dc60c963f2fb138",
+              "bottle_002.zip": "c83cd9ad5935dff55cd481c0f89e69e219befcaf030dd14318992548917d7111",
+              "bottle_003.zip": "87e276857dfd4af889e36b83cbf74bae3e56d947943ac91b01094dc6e22c74c4",
+              "bottle_004.zip": "40dc5a818d2410a767fb179b78c79dea9f3d74f045846645c62458caae9c88d1",
+              "bottle_005.zip": "a5f7fec74e17ab472c439db523a823164dfbfb02eb185931b8b9efe8666e623a",
+              "book_000.zip": "07e3af28971a118a655838c97f39d7491cf1b24b4699c0b535194d3b7348a4eb",
+              "book_001.zip": "d448ab20005990672305e558c1eda25a0056d643ccdd2cfe30312296e4bd0dd6",
+              "book_002.zip": "86152231e3f72db98866f35b592ace7c817bb02eb955bb6ac1259ae48502c92e",
+              "book_003.zip": "49ca64d2d2ecb9a2adad9ab9743847f330bd1428e0ebe4e23382fa21838349f2",
+              "book_004.zip": "7482f5086dcd058fcf8e9c9403edf79527cea7b3c20e355e06862f8d998f5ab4",
+              "book_005.zip": "c4e520e2afbec5ed2c1ce4a1394c3bc217d54c230fe26558cb71b75cf779210a",
+              "book_006.zip": "54f57b477690ddc33043eb4a9672848c13ea939f415b364a843dfa0abcf8e105",
+              "book_007.zip": "9108322b5504a7d7bddc05e09e1cc9f073d75e293dfa3122a3b408baaf951cf1",
+              "book_008.zip": "68b41eff67885c40acb7451253119579b99c866bc57724a0ca73f5fb08f6eb2a",
+              "book_009.zip": "be79dd2613fd04970fedc8b72b7c23c47be04a692f3ab18aeb8c60c060b22c7e",
+              "book_010.zip": "95f5bcec3e22e0956f6427e64c0b8ac7fc984cefee649733fb4f021794feea00",
+              "book_011.zip": "ebc46a0d3bd2bd24829fc2b2a4a0698c0566fd1dfe7e8d7b3d2f80cd9fc768b0",
+              "book_012.zip": "86720dd8cc8b10970d1a771a55a31e04f65ec4efc98bc6331814567a531f9423",
+              "book_013.zip": "c40575ac1a5d0a4920140da6ed2bb7ac1ad87180aa050d523edc983e72f5f6c4",
+              "book_014.zip": "91fb6891bbf385bb0f356f00c68939e6ae6c57a84c09c2be5b122d4b71f822d3",
+              "book_015.zip": "4366b11f183b7c01d486525c5599808734d1269862452c8f95cd9ce9e317d2cd",
+              "book_016.zip": "0520c777b4b18cd255bb4f79fdd1302032e26a5833f9db0fb7e3500652fd2a0a",
+              "book_017.zip": "bd3e9dbc00a0d35eb2e628493b415069419f78bc7ab118a9103925077d52ffe8",
+              "book_018.zip": "ad1d6bc1f435f921a6566a79c17b6af016d7a8e40dc4fec35be3dfd3272bc25b",
+              "book_019.zip": "8aea9f2f0f004c680a6c7dd51b8a3ab6cd1c04b5fb4b890209a80df3e756b28d",
+              "car_000.zip": "96bc0a3d3a5e2b2f954ba0032cbb5b4e8196d6a97f10bfc12d198eb5384b7866",
+              "car_001.zip": "c2e16e6d38823c31d609f7c760172b49b537fdff5230ec6402319219aa90cc62",
+              "car_002.zip": "d4040e9b5b8bb1c0df02fdd8d7e1c335643d03545293997af8e2bd9cd0139198",
+              "car_003.zip": "53bef04ab7adba4bc1f8ef3acc3af9236b2c9ea1a0c20b129a0dcc2e06f1672f",
+              "car_004.zip": "2d2fe2f1ba2a47a02ba1a1c922a2af00b8abbaea046b3461d81445735b231f44",
+              "car_005.zip": "7dd3d01f398a4992e67a1359ed98231d7d86ec27dd1128c0b139f2737b9a5f28",
+              "bench_000.zip": "5c69b28801ae77466755146cdbf5443f56d38baeed59af93cbc9bb8393b6845a",
+              "bench_001.zip": "276e4f9d2422f84d0235973f96aa656004361067166686b79c18e3fc2f5039ba",
+              "bench_002.zip": "9008f4c1e7d16c3ac3ed1a12b539f8c172710824e0d7a4330ad9df678488972f",
+              "bench_003.zip": "922b8caae42bc545b4d4604c76ceecfb498d5f0af4fa08ab8e63181143cbc020",
+              "bench_004.zip": "c70d561e9b95e1ed0e8ec1b879026c080e9ed00b284c46cddef32449b1a8ffd4",
+              "bench_005.zip": "9932d0e64f821dbcf21f03051bf87ce70cc72f7bbb7384cba1bc7f47284af713",
+              "bench_006.zip": "a7a2d02b9f8d70c2fc56fa4e5be7b398c5c22d6c049562053c704c08e20438b6",
+              "bench_007.zip": "1753268470ed910302fbec994774c25df38bae626e18c118c326569f32a2568b",
+              "bench_008.zip": "338e07a00c259178a6b9e31add0da0ac26c3f368ae4567950c38c281b7e9d084"
+            },
+            "verification": "metadata archives verified by official SHA256; ranged members checked by ZIP CRC32 and recorded SHA256; whole ranged archives not SHA256-verified",
+            "license": "CC-BY-NC-4.0"
+          },
+          "families": 300,
+          "cases": 1200,
+          "original_images": 1594,
+          "max_views_per_family": 8,
+          "views_per_family": {
+            "min": 2,
+            "max": 8,
+            "mean": 5.3133333333333335
+          },
+          "categories": {
+            "chair": 50,
+            "cup": 50,
+            "bottle": 50,
+            "book": 50,
+            "car": 50,
+            "bench": 50
+          },
+          "split": "test",
+          "seed": 42,
+          "scope": "positive-identity integration candidates; no hard-negative or damage-change benchmark claim",
+          "annotation_status": "source-derived-unreviewed",
+          "grounding_protocol": "evidence-chain-v1",
+          "uncertainty": "source identity and masks are proxies; sufficiency/availability require independent review",
+          "grouping": "official sequence; variants are dependent; sequences crossing official task partitions excluded",
+          "frame_selection": "uniform frame targets with nearest nonempty official foreground masks; zero-mask placeholders excluded; source frame roles retained",
+          "time": "capture denotes one video; frame timestamps are not before/after damage labels",
+          "license": "CC-BY-NC-4.0; retain official attribution and source license"
+        },
+        "source_sha256": "8f01adf8ac7016ac189804f26d2f47310c452b76a08e2a42c49bbbf8d4c582d0",
+        "model_id": "OpenGVLab/InternVL3_5-8B-HF",
+        "revision": "741a7d03020411e666c6109218ab71e08151ef86",
+        "grounding_manifest": {
+          "text_image": {
+            "repo": "IDEA-Research/grounding-dino-tiny",
+            "revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/text_image"
+          },
+          "image_image": {
+            "repo": "facebook/dinov2-base",
+            "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_image"
+          },
+          "image_text": {
+            "repo": "openai/clip-vit-base-patch32",
+            "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+            "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_text",
+            "conversion": {
+              "source_file": "pytorch_model.bin",
+              "source_sha256": "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f",
+              "output_file": "model.safetensors",
+              "output_sha256": "99d28a652e6ec46629ab7047a0ac82c69b1fe11e0ce672c43af65d3a9a3fc05d",
+              "method": "weights_only state_dict to contiguous safetensors; tensor values unchanged"
+            }
+          }
+        },
+        "budget": 12,
+        "max_turns": 6,
+        "max_context_tokens": 8192,
+        "policies": [
+          "initial",
+          "agent"
+        ],
+        "tool_adapter": "portable-prefix-v1",
+        "costs": {
+          "inspect": 1,
+          "crop": 1,
+          "zoom": 1,
+          "ocr": 2,
+          "compare": 2,
+          "request_photo": 3,
+          "assess_quality": 1,
+          "read_metadata": 1,
+          "ground_text_to_image": 3,
+          "ground_image_to_image": 3,
+          "ground_image_to_text": 2
+        },
+        "limit_families": null,
+        "shards": 2,
+        "shard_index": null,
+        "selected_families": 300,
+        "decoding": {
+          "do_sample": false,
+          "max_new_tokens": 384
+        },
+        "image_max_pixels": 262144,
+        "internvl_crop_to_patches": false,
+        "dtype": "bfloat16",
+        "attention": "sdpa"
+      },
+      "overall": {
+        "initial": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.0825,
+            "family_ci95": [
+              0.06333333333333334,
+              0.1025
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0.04666666666666667,
+            "family_ci95": [
+              0.030833333333333334,
+              0.06333333333333334
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0.4216666666666667,
+            "family_ci95": [
+              0.385,
+              0.46
+            ]
+          },
+          "coverage": {
+            "mean": 0.42833333333333334,
+            "family_ci95": [
+              0.39166666666666666,
+              0.4666666666666667
+            ]
+          },
+          "selective_error": 0.9007782101167315,
+          "completed": 587,
+          "terminations": {
+            "finished": 587,
+            "max_turns": 613
+          },
+          "errors": 3688,
+          "mean_requests": 0,
+          "mean_tool_calls": 0,
+          "mean_request_cost": 0,
+          "mean_tool_cost": 0,
+          "mean_input_tokens": 8113.455833333333,
+          "mean_output_tokens": 821.5825,
+          "mean_latency_s": 30.758667327578586,
+          "mean_wall_latency_s": 31.684764923337205,
+          "mean_model_calls": 3.5625,
+          "max_peak_memory_gb": 17.639917373657227,
+          "tools": {
+            "finish": 4260
+          }
+        },
+        "agent": {
+          "episodes": 1200,
+          "source_families": 300,
+          "correct": {
+            "mean": 0.006666666666666667,
+            "family_ci95": [
+              0.0025,
+              0.011666666666666667
+            ]
+          },
+          "grounded_correct": {
+            "mean": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "unsupported_decision": {
+            "mean": 0.04583333333333333,
+            "family_ci95": [
+              0.03333333333333333,
+              0.06
+            ]
+          },
+          "coverage": {
+            "mean": 0.04583333333333333,
+            "family_ci95": [
+              0.03333333333333333,
+              0.06
+            ]
+          },
+          "selective_error": 0.8545454545454545,
+          "completed": 55,
+          "terminations": {
+            "max_turns": 1145,
+            "finished": 55
+          },
+          "errors": 2036,
+          "mean_requests": 0.2575,
+          "mean_tool_calls": 4.2491666666666665,
+          "mean_request_cost": 0.7725,
+          "mean_tool_cost": 5.53,
+          "mean_input_tokens": 27523.515833333335,
+          "mean_output_tokens": 338.895,
+          "mean_latency_s": 19.137080418737604,
+          "mean_wall_latency_s": 20.28410843952714,
+          "mean_model_calls": 5.991666666666666,
+          "max_peak_memory_gb": 17.639917373657227,
+          "tools": {
+            "compare": 2051,
+            "inspect": 1023,
+            "crop": 2988,
+            "ground_image_to_image": 138,
+            "zoom": 442,
+            "request_photo": 319,
+            "finish": 97,
+            "assess_quality": 46,
+            "ocr": 3,
+            "read_metadata": 2
+          }
+        }
+      },
+      "by_variant": {
+        "Sufficient": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.17,
+              "family_ci95": [
+                0.13,
+                0.21333333333333335
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.02666666666666667,
+              "family_ci95": [
+                0.01,
+                0.04666666666666667
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.9466666666666667,
+              "family_ci95": [
+                0.92,
+                0.97
+              ]
+            },
+            "coverage": {
+              "mean": 0.9733333333333334,
+              "family_ci95": [
+                0.9533333333333334,
+                0.99
+              ]
+            },
+            "selective_error": 0.8253424657534246,
+            "completed": 293,
+            "terminations": {
+              "finished": 293,
+              "max_turns": 7
+            },
+            "errors": 43,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 1954.1633333333334,
+            "mean_output_tokens": 280.29,
+            "mean_latency_s": 10.009171342806658,
+            "mean_wall_latency_s": 11.830279206781027,
+            "mean_model_calls": 1.12,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 336
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.02666666666666667,
+              "family_ci95": [
+                0.01,
+                0.04666666666666667
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.15333333333333332,
+              "family_ci95": [
+                0.11333333333333333,
+                0.19666666666666666
+              ]
+            },
+            "coverage": {
+              "mean": 0.15333333333333332,
+              "family_ci95": [
+                0.11333333333333333,
+                0.19666666666666666
+              ]
+            },
+            "selective_error": 0.8260869565217391,
+            "completed": 46,
+            "terminations": {
+              "max_turns": 254,
+              "finished": 46
+            },
+            "errors": 102,
+            "mean_requests": 0.06,
+            "mean_tool_calls": 5.473333333333334,
+            "mean_request_cost": 0.18,
+            "mean_tool_cost": 7.8,
+            "mean_input_tokens": 30300.4,
+            "mean_output_tokens": 401.8066666666667,
+            "mean_latency_s": 22.85394761134366,
+            "mean_wall_latency_s": 24.62285634723919,
+            "mean_model_calls": 5.966666666666667,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 590,
+              "crop": 955,
+              "finish": 73,
+              "assess_quality": 25,
+              "ground_image_to_image": 67,
+              "zoom": 20,
+              "request_photo": 26,
+              "read_metadata": 2,
+              "inspect": 8
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": -0.02666666666666667,
+            "family_ci95": [
+              -0.04666666666666667,
+              -0.01
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Obtainable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 98,
+            "terminations": {
+              "finished": 98,
+              "max_turns": 202
+            },
+            "errors": 1215,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10166.553333333333,
+            "mean_output_tokens": 1002.0133333333333,
+            "mean_latency_s": 37.67013272419067,
+            "mean_wall_latency_s": 38.298103418777075,
+            "mean_model_calls": 4.376666666666667,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 1308
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "coverage": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "selective_error": 1,
+            "completed": 3,
+            "terminations": {
+              "max_turns": 297,
+              "finished": 3
+            },
+            "errors": 642,
+            "mean_requests": 0.19666666666666666,
+            "mean_tool_calls": 3.85,
+            "mean_request_cost": 0.59,
+            "mean_tool_cost": 5.033333333333333,
+            "mean_input_tokens": 26691.876666666667,
+            "mean_output_tokens": 321.08666666666664,
+            "mean_latency_s": 18.06051737710756,
+            "mean_wall_latency_s": 19.06470464708594,
+            "mean_model_calls": 6,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 519,
+              "inspect": 335,
+              "crop": 687,
+              "ground_image_to_image": 25,
+              "zoom": 140,
+              "request_photo": 59,
+              "ocr": 1,
+              "assess_quality": 7,
+              "finish": 8
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": 0,
+            "family_ci95": [
+              0.0,
+              0.0
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Missing": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.05,
+                0.11333333333333333
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.05,
+                0.11333333333333333
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 98,
+            "terminations": {
+              "finished": 98,
+              "max_turns": 202
+            },
+            "errors": 1215,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10166.553333333333,
+            "mean_output_tokens": 1002.0133333333333,
+            "mean_latency_s": 37.6763207814047,
+            "mean_wall_latency_s": 38.30404669254281,
+            "mean_model_calls": 4.376666666666667,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 1308
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "coverage": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "selective_error": 1,
+            "completed": 3,
+            "terminations": {
+              "max_turns": 297,
+              "finished": 3
+            },
+            "errors": 646,
+            "mean_requests": 0.38666666666666666,
+            "mean_tool_calls": 3.8366666666666664,
+            "mean_request_cost": 1.16,
+            "mean_tool_cost": 4.6433333333333335,
+            "mean_input_tokens": 26550.893333333333,
+            "mean_output_tokens": 316.3433333333333,
+            "mean_latency_s": 17.816670157409973,
+            "mean_wall_latency_s": 18.724315797053666,
+            "mean_model_calls": 6,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 471,
+              "inspect": 340,
+              "crop": 673,
+              "ground_image_to_image": 23,
+              "zoom": 141,
+              "request_photo": 117,
+              "ocr": 1,
+              "assess_quality": 7,
+              "finish": 8
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": -0.08,
+            "family_ci95": [
+              -0.11333333333333333,
+              -0.05
+            ],
+            "paired_source_families": 300
+          }
+        },
+        "Unavailable": {
+          "initial": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.05,
+                0.11333333333333333
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.05,
+                0.11333333333333333
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "coverage": {
+              "mean": 0.24666666666666667,
+              "family_ci95": [
+                0.2,
+                0.2966666666666667
+              ]
+            },
+            "selective_error": 1,
+            "completed": 98,
+            "terminations": {
+              "finished": 98,
+              "max_turns": 202
+            },
+            "errors": 1215,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 10166.553333333333,
+            "mean_output_tokens": 1002.0133333333333,
+            "mean_latency_s": 37.67904446191232,
+            "mean_wall_latency_s": 38.30663037524791,
+            "mean_model_calls": 4.376666666666667,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 1308
+            }
+          },
+          "agent": {
+            "episodes": 300,
+            "source_families": 300,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "coverage": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.023333333333333334
+              ]
+            },
+            "selective_error": 1,
+            "completed": 3,
+            "terminations": {
+              "max_turns": 297,
+              "finished": 3
+            },
+            "errors": 646,
+            "mean_requests": 0.38666666666666666,
+            "mean_tool_calls": 3.8366666666666664,
+            "mean_request_cost": 1.16,
+            "mean_tool_cost": 4.6433333333333335,
+            "mean_input_tokens": 26550.893333333333,
+            "mean_output_tokens": 316.3433333333333,
+            "mean_latency_s": 17.81718652908923,
+            "mean_wall_latency_s": 18.72455696672977,
+            "mean_model_calls": 6,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 471,
+              "inspect": 340,
+              "crop": 673,
+              "ground_image_to_image": 23,
+              "zoom": 141,
+              "request_photo": 117,
+              "ocr": 1,
+              "assess_quality": 7,
+              "finish": 8
+            }
+          },
+          "paired": {
+            "grounded_proxy_delta": -0.08,
+            "family_ci95": [
+              -0.11333333333333333,
+              -0.05
+            ],
+            "paired_source_families": 300
+          }
+        }
+      },
+      "by_category": {
+        "bench": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.07,
+              "family_ci95": [
+                0.03,
+                0.12
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.06,
+              "family_ci95": [
+                0.02,
+                0.11
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.44,
+              "family_ci95": [
+                0.355,
+                0.535
+              ]
+            },
+            "coverage": {
+              "mean": 0.44,
+              "family_ci95": [
+                0.355,
+                0.535
+              ]
+            },
+            "selective_error": 0.9772727272727273,
+            "completed": 106,
+            "terminations": {
+              "finished": 106,
+              "max_turns": 94
+            },
+            "errors": 564,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 7673.59,
+            "mean_output_tokens": 806.355,
+            "mean_latency_s": 30.16411311961245,
+            "mean_wall_latency_s": 31.93233654548065,
+            "mean_model_calls": 3.35,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 670
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.01,
+                0.055
+              ]
+            },
+            "coverage": {
+              "mean": 0.03,
+              "family_ci95": [
+                0.01,
+                0.055
+              ]
+            },
+            "selective_error": 0.8333333333333334,
+            "completed": 6,
+            "terminations": {
+              "max_turns": 194,
+              "finished": 6
+            },
+            "errors": 265,
+            "mean_requests": 0.265,
+            "mean_tool_calls": 4.64,
+            "mean_request_cost": 0.795,
+            "mean_tool_cost": 6.06,
+            "mean_input_tokens": 28153.19,
+            "mean_output_tokens": 323.245,
+            "mean_latency_s": 18.703464923818828,
+            "mean_wall_latency_s": 20.96119620734069,
+            "mean_model_calls": 5.995,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 365,
+              "inspect": 150,
+              "crop": 543,
+              "ground_image_to_image": 22,
+              "zoom": 51,
+              "finish": 9,
+              "request_photo": 55,
+              "assess_quality": 4
+            }
+          }
+        },
+        "book": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.01,
+              "family_ci95": [
+                0.0,
+                0.025
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.365,
+              "family_ci95": [
+                0.285,
+                0.455
+              ]
+            },
+            "coverage": {
+              "mean": 0.365,
+              "family_ci95": [
+                0.285,
+                0.455
+              ]
+            },
+            "selective_error": 0.9726027397260274,
+            "completed": 73,
+            "terminations": {
+              "max_turns": 127,
+              "finished": 73
+            },
+            "errors": 765,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 9712.805,
+            "mean_output_tokens": 971.825,
+            "mean_latency_s": 36.48465917309513,
+            "mean_wall_latency_s": 37.20259818843333,
+            "mean_model_calls": 4.19,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 838
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.025,
+              "family_ci95": [
+                0.005,
+                0.05
+              ]
+            },
+            "coverage": {
+              "mean": 0.025,
+              "family_ci95": [
+                0.005,
+                0.05
+              ]
+            },
+            "selective_error": 0.8,
+            "completed": 5,
+            "terminations": {
+              "max_turns": 195,
+              "finished": 5
+            },
+            "errors": 403,
+            "mean_requests": 0.28,
+            "mean_tool_calls": 3.955,
+            "mean_request_cost": 0.84,
+            "mean_tool_cost": 5.025,
+            "mean_input_tokens": 27041.255,
+            "mean_output_tokens": 336.87,
+            "mean_latency_s": 18.902532703472534,
+            "mean_wall_latency_s": 19.653287066025076,
+            "mean_model_calls": 5.995,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 314,
+              "inspect": 203,
+              "crop": 478,
+              "request_photo": 56,
+              "finish": 14,
+              "assess_quality": 8,
+              "zoom": 90,
+              "ocr": 3,
+              "ground_image_to_image": 21,
+              "read_metadata": 1
+            }
+          }
+        },
+        "bottle": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.155,
+              "family_ci95": [
+                0.105,
+                0.21
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.015,
+                0.095
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.46,
+              "family_ci95": [
+                0.37,
+                0.555
+              ]
+            },
+            "coverage": {
+              "mean": 0.47,
+              "family_ci95": [
+                0.38,
+                0.565
+              ]
+            },
+            "selective_error": 0.7553191489361702,
+            "completed": 107,
+            "terminations": {
+              "finished": 107,
+              "max_turns": 93
+            },
+            "errors": 561,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 7430.355,
+            "mean_output_tokens": 723.465,
+            "mean_latency_s": 27.041174459773465,
+            "mean_wall_latency_s": 27.528446541299928,
+            "mean_model_calls": 3.34,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 668
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.005,
+                0.04
+              ]
+            },
+            "coverage": {
+              "mean": 0.02,
+              "family_ci95": [
+                0.005,
+                0.04
+              ]
+            },
+            "selective_error": 1,
+            "completed": 4,
+            "terminations": {
+              "max_turns": 196,
+              "finished": 4
+            },
+            "errors": 321,
+            "mean_requests": 0.135,
+            "mean_tool_calls": 4.37,
+            "mean_request_cost": 0.405,
+            "mean_tool_cost": 5.785,
+            "mean_input_tokens": 27632.905,
+            "mean_output_tokens": 328.555,
+            "mean_latency_s": 18.69718407985114,
+            "mean_wall_latency_s": 19.291312393711998,
+            "mean_model_calls": 5.995,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 345,
+              "crop": 534,
+              "inspect": 158,
+              "zoom": 93,
+              "request_photo": 29,
+              "ground_image_to_image": 21,
+              "finish": 7,
+              "assess_quality": 6
+            }
+          }
+        },
+        "car": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.06,
+              "family_ci95": [
+                0.02,
+                0.11
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.01,
+                0.1
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.36,
+              "family_ci95": [
+                0.285,
+                0.44
+              ]
+            },
+            "coverage": {
+              "mean": 0.36,
+              "family_ci95": [
+                0.285,
+                0.44
+              ]
+            },
+            "selective_error": 0.9722222222222222,
+            "completed": 87,
+            "terminations": {
+              "max_turns": 113,
+              "finished": 87
+            },
+            "errors": 679,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 8849.62,
+            "mean_output_tokens": 905.295,
+            "mean_latency_s": 33.95826023354428,
+            "mean_wall_latency_s": 35.258388398467794,
+            "mean_model_calls": 3.83,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 766
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.055,
+              "family_ci95": [
+                0.03,
+                0.085
+              ]
+            },
+            "coverage": {
+              "mean": 0.055,
+              "family_ci95": [
+                0.03,
+                0.085
+              ]
+            },
+            "selective_error": 1,
+            "completed": 11,
+            "terminations": {
+              "max_turns": 189,
+              "finished": 11
+            },
+            "errors": 367,
+            "mean_requests": 0.405,
+            "mean_tool_calls": 4.11,
+            "mean_request_cost": 1.215,
+            "mean_tool_cost": 5.315,
+            "mean_input_tokens": 27149.12,
+            "mean_output_tokens": 318.21,
+            "mean_latency_s": 18.17487469277519,
+            "mean_wall_latency_s": 19.978175094177715,
+            "mean_model_calls": 6,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 352,
+              "inspect": 202,
+              "crop": 429,
+              "zoom": 69,
+              "request_photo": 87,
+              "ground_image_to_image": 37,
+              "finish": 15,
+              "assess_quality": 9
+            }
+          }
+        },
+        "chair": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.105,
+              "family_ci95": [
+                0.055,
+                0.165
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.08,
+              "family_ci95": [
+                0.035,
+                0.135
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.445,
+              "family_ci95": [
+                0.345,
+                0.55
+              ]
+            },
+            "coverage": {
+              "mean": 0.475,
+              "family_ci95": [
+                0.385,
+                0.58
+              ]
+            },
+            "selective_error": 0.8842105263157894,
+            "completed": 110,
+            "terminations": {
+              "max_turns": 90,
+              "finished": 110
+            },
+            "errors": 540,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 7308.105,
+            "mean_output_tokens": 748.005,
+            "mean_latency_s": 27.947264160101767,
+            "mean_wall_latency_s": 28.701926110750648,
+            "mean_model_calls": 3.25,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 650
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.005,
+              "family_ci95": [
+                0.0,
+                0.015
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.025,
+                0.08
+              ]
+            },
+            "coverage": {
+              "mean": 0.05,
+              "family_ci95": [
+                0.025,
+                0.08
+              ]
+            },
+            "selective_error": 0.9,
+            "completed": 10,
+            "terminations": {
+              "max_turns": 190,
+              "finished": 10
+            },
+            "errors": 322,
+            "mean_requests": 0.235,
+            "mean_tool_calls": 4.33,
+            "mean_request_cost": 0.705,
+            "mean_tool_cost": 5.72,
+            "mean_input_tokens": 27720.835,
+            "mean_output_tokens": 331.29,
+            "mean_latency_s": 18.91346991439583,
+            "mean_wall_latency_s": 19.789698544343118,
+            "mean_model_calls": 5.99,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 348,
+              "crop": 507,
+              "inspect": 160,
+              "zoom": 78,
+              "finish": 22,
+              "ground_image_to_image": 23,
+              "assess_quality": 9,
+              "request_photo": 47
+            }
+          }
+        },
+        "cup": {
+          "initial": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.095,
+              "family_ci95": [
+                0.045,
+                0.15
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0.04,
+              "family_ci95": [
+                0.01,
+                0.08
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.46,
+              "family_ci95": [
+                0.37,
+                0.55
+              ]
+            },
+            "coverage": {
+              "mean": 0.46,
+              "family_ci95": [
+                0.37,
+                0.55
+              ]
+            },
+            "selective_error": 0.8804347826086957,
+            "completed": 104,
+            "terminations": {
+              "max_turns": 96,
+              "finished": 104
+            },
+            "errors": 579,
+            "mean_requests": 0,
+            "mean_tool_calls": 0,
+            "mean_request_cost": 0,
+            "mean_tool_cost": 0,
+            "mean_input_tokens": 7706.26,
+            "mean_output_tokens": 774.55,
+            "mean_latency_s": 28.956532819344428,
+            "mean_wall_latency_s": 29.484893755590893,
+            "mean_model_calls": 3.415,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "finish": 668
+            }
+          },
+          "agent": {
+            "episodes": 200,
+            "source_families": 50,
+            "correct": {
+              "mean": 0.025,
+              "family_ci95": [
+                0.005,
+                0.045
+              ]
+            },
+            "grounded_correct": {
+              "mean": 0,
+              "family_ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "unsupported_decision": {
+              "mean": 0.095,
+              "family_ci95": [
+                0.045,
+                0.16
+              ]
+            },
+            "coverage": {
+              "mean": 0.095,
+              "family_ci95": [
+                0.045,
+                0.16
+              ]
+            },
+            "selective_error": 0.7368421052631579,
+            "completed": 19,
+            "terminations": {
+              "max_turns": 181,
+              "finished": 19
+            },
+            "errors": 358,
+            "mean_requests": 0.225,
+            "mean_tool_calls": 4.09,
+            "mean_request_cost": 0.675,
+            "mean_tool_cost": 5.275,
+            "mean_input_tokens": 27443.79,
+            "mean_output_tokens": 395.2,
+            "mean_latency_s": 21.430956198112106,
+            "mean_wall_latency_s": 22.030981331564252,
+            "mean_model_calls": 5.975,
+            "max_peak_memory_gb": 17.639917373657227,
+            "tools": {
+              "compare": 327,
+              "crop": 497,
+              "finish": 30,
+              "inspect": 150,
+              "zoom": 61,
+              "request_photo": 45,
+              "assess_quality": 10,
+              "read_metadata": 1,
+              "ground_image_to_image": 14
+            }
+          }
+        }
+      }
+    }
+  ],
+  "bootstrap": "10000 source-family resamples; seed 42",
+  "metric": "source-derived evidence-chain proxy"
+}
