@@ -71,7 +71,7 @@ def model_summary(directory, allow_partial=False):
     manifest = json.loads((directory / "manifest.json").read_text())
     rows = [json.loads(line) for line in (directory / "results.jsonl").read_text().splitlines()]
     config = manifest["configuration"]
-    expected_families = config["limit_families"] or config["dataset_manifest"]["families"]
+    expected_families = config.get("selected_families") or config["limit_families"] or config["dataset_manifest"]["families"]
     expected_episodes = expected_families * 4 * 2
     keys = [(r["case_id"], r["policy"]) for r in rows]
     if len(keys) != len(set(keys)):
@@ -100,6 +100,36 @@ def model_summary(directory, allow_partial=False):
         selected = [r for r in rows if r["category"] == category]
         result["by_category"][category] = {p: summarize_rows([r for r in selected if r["policy"] == p]) for p in ("initial", "agent")}
     return result
+
+
+
+def merge_shards(directories, destination):
+    """Join disjoint complete runs of one model; preserve the original manifests."""
+    manifests = [json.loads((p / "manifest.json").read_text()) for p in directories]
+    first = manifests[0]
+    shards = first["configuration"]["shards"]
+    if {m["configuration"]["shard_index"] for m in manifests} != set(range(shards)):
+        raise ValueError("all execution shards are required")
+    def common(m):
+        return {k:v for k,v in m["configuration"].items() if k not in {"shard_index","selected_families"}}
+    if any(common(m) != common(first) for m in manifests):
+        raise ValueError("shard configurations differ")
+    for path in directories:
+        model_summary(path)
+    rows = [json.loads(line) for path in directories for line in (path / "results.jsonl").read_text().splitlines()]
+    if len({(r["case_id"],r["policy"]) for r in rows}) != len(rows):
+        raise ValueError("overlapping shard episodes")
+    manifest = dict(first)
+    manifest["configuration"] = {**first["configuration"], "shard_index": None,
+                                 "selected_families": len({r["family_id"] for r in rows})}
+    manifest["execution_shards"] = manifests
+    manifest["worker"] = {"workers": [m.get("worker") for m in manifests]}
+    destination.mkdir(parents=True,exist_ok=True)
+    if (destination / "results.jsonl").exists():
+        raise ValueError("merged results already exist")
+    (destination / "manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
+    (destination / "results.jsonl").write_text("".join(json.dumps(r)+"\n" for r in sorted(rows,key=lambda r:(r["case_id"],r["policy"]))))
+    model_summary(destination)
 
 
 def markdown(report):
@@ -138,7 +168,11 @@ def main():
     parser.add_argument("runs", nargs="+", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--allow-partial", action="store_true")
+    parser.add_argument("--merge-shards", action="store_true")
     args = parser.parse_args()
+    if args.merge_shards:
+        merge_shards(args.runs, args.output)
+        return
     models = [model_summary(path, args.allow_partial) for path in args.runs]
     if len({m["dataset_sha256"] for m in models}) != 1:
         raise ValueError("models evaluated different frozen datasets")

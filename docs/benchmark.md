@@ -61,6 +61,11 @@ stored canonical conversation retains actual assistant/tool roles. This preserve
 history and pixels without claiming native function-call training for every model.
 Qwen3-VL's native template remains available for integration tests.
 
+Execution may partition source families into disjoint `--shards N --shard-index I`
+runs on separate GPUs. Each episode still uses one GPU; shared source families
+remain in one shard. Reporting merges only complete, disjoint shards with identical
+model/data/tool settings and retains their manifests.
+
 ## Metrics and integrity
 
 Report source-label accuracy, original-image-grounded proxy accuracy, unsupported

@@ -1,0 +1,742 @@
+{
+  "manifest": {
+    "scope": "scripted interface demonstration; not a model accuracy result",
+    "source_commit": "e00a76c062c45c3137360edddbb69b8096e21421",
+    "renderer": {
+      "renderer": "Blender 4.3.2",
+      "device": "CUDA",
+      "images": 6,
+      "seed": 42,
+      "annotation_status": "unreviewed",
+      "scope": "state/camera/provenance smoke only; not research dataset validation"
+    },
+    "providers": {
+      "text_image": {
+        "repo": "IDEA-Research/grounding-dino-tiny",
+        "revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+        "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/text_image"
+      },
+      "image_image": {
+        "repo": "facebook/dinov2-base",
+        "revision": "f9e44c814b77203eaa57a6bdbbd535f21ede1415",
+        "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_image"
+      },
+      "image_text": {
+        "repo": "openai/clip-vit-base-patch32",
+        "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+        "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/grounding/image_text",
+        "conversion": {
+          "source_file": "pytorch_model.bin",
+          "source_sha256": "a63082132ba4f97a80bea76823f544493bffa8082296d62d71581a4feff1576f",
+          "output_file": "model.safetensors",
+          "output_sha256": "99d28a652e6ec46629ab7047a0ac82c69b1fe11e0ce672c43af65d3a9a3fc05d",
+          "method": "weights_only state_dict to contiguous safetensors; tensor values unchanged"
+        }
+      }
+    },
+    "budget": 30,
+    "operations": 14,
+    "model_generated_actions": false,
+    "ocr_fixture": "programmatically printed card; no real collection or annotation claim"
+  },
+  "operations": [
+    {
+      "action": {
+        "name": "inspect",
+        "arguments": {
+          "image_id": "after-front"
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "after-front",
+            "view_id": "after-front",
+            "source_id": "after-front",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              512,
+              512
+            ],
+            "image_sha256": "68c783ce9ea785faf6789379650e90b642a0c7491c0a813a8638a1471e4a9050"
+          }
+        ],
+        "budget": 29,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "zoom",
+        "arguments": {
+          "image_id": "after-front",
+          "factor": 2
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "after-front",
+            "view_id": "view-307ec6b4d754d0f5",
+            "source_id": "after-front",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              1024,
+              1024
+            ],
+            "image_sha256": "52af0bd315ae7166e37ddc3598c84ad3467bbe23ae239add0c674e7289d52865"
+          }
+        ],
+        "budget": 28,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "zoom",
+        "arguments": {
+          "image_id": "after-front",
+          "factor": 0.5
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "after-front",
+            "view_id": "view-9e7422d9e51e61ee",
+            "source_id": "after-front",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              256,
+              256
+            ],
+            "image_sha256": "8bd427a0c9e9d47a532bf3e7d7b1524169bc7fd9ff5ea6ee494fa641f099290e"
+          }
+        ],
+        "budget": 27,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "crop",
+        "arguments": {
+          "image_id": "after-front",
+          "bbox": [
+            210,
+            220,
+            320,
+            310
+          ]
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "after-front",
+            "view_id": "view-93e9f45156af3458",
+            "source_id": "after-front",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              210,
+              220,
+              320,
+              310
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              110,
+              90
+            ],
+            "image_sha256": "92f52c933cc7b96911f9ee6c5b2a35c4d63e1f16bd7ce970f4c5bbadfb6239f6"
+          }
+        ],
+        "budget": 26,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "ocr",
+        "arguments": {
+          "image_id": "note"
+        }
+      },
+      "result": {
+        "image_id": "note",
+        "view_id": "note",
+        "source_id": "synthetic-ocr-card",
+        "time": "capture",
+        "text_regions": [
+          {
+            "polygon": [
+              [
+                20.0,
+                45.0
+              ],
+              [
+                432.0,
+                46.0
+              ],
+              [
+                432.0,
+                82.0
+              ],
+              [
+                20.0,
+                81.0
+              ]
+            ],
+            "text": "BEFORE 2026TABLE",
+            "confidence": 0.9720740169286728,
+            "source_polygon": [
+              [
+                20.0,
+                45.0
+              ],
+              [
+                432.0,
+                46.0
+              ],
+              [
+                432.0,
+                82.0
+              ],
+              [
+                20.0,
+                81.0
+              ]
+            ]
+          }
+        ],
+        "status": "read",
+        "budget": 24,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "ground_text_to_image",
+        "arguments": {
+          "image_id": "after-front",
+          "text": "table"
+        }
+      },
+      "result": {
+        "image_id": "after-front",
+        "view_id": "after-front",
+        "source_id": "after-front",
+        "party": "B",
+        "time": "after",
+        "source_bbox": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "source_size": [
+          512,
+          512
+        ],
+        "display_size": [
+          512,
+          512
+        ],
+        "proposals": [
+          {
+            "bbox": [
+              90.57368469238281,
+              194.88677978515625,
+              425.24322509765625,
+              444.09771728515625
+            ],
+            "score": 0.9144505858421326,
+            "text": "table",
+            "source_bbox": [
+              90.57368469238281,
+              194.88677978515625,
+              425.24322509765625,
+              444.09771728515625
+            ]
+          }
+        ],
+        "status": "predicted",
+        "budget": 21,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "ground_image_to_text",
+        "arguments": {
+          "image_id": "after-front",
+          "candidates": [
+            "a wooden table",
+            "a bottle",
+            "a chair"
+          ]
+        }
+      },
+      "result": {
+        "image_id": "after-front",
+        "view_id": "after-front",
+        "source_id": "after-front",
+        "party": "B",
+        "time": "after",
+        "source_bbox": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "source_size": [
+          512,
+          512
+        ],
+        "display_size": [
+          512,
+          512
+        ],
+        "proposals": [
+          {
+            "text": "a wooden table",
+            "similarity": 0.3271782398223877,
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ]
+          },
+          {
+            "text": "a chair",
+            "similarity": 0.286137193441391,
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ]
+          },
+          {
+            "text": "a bottle",
+            "similarity": 0.21485549211502075,
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ]
+          }
+        ],
+        "status": "predicted",
+        "budget": 19,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "request_photo",
+        "arguments": {
+          "query": {
+            "object": "table",
+            "time": "after",
+            "view": "detail"
+          }
+        }
+      },
+      "result": {
+        "status": "provided",
+        "images": [
+          {
+            "image_id": "after-detail",
+            "view_id": "after-detail",
+            "source_id": "after-detail",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              512,
+              512
+            ],
+            "image_sha256": "7f63895a249b19def8b0a8beb2a2c1bc9184d0d0b971b95d638012d9eaa3c13f"
+          }
+        ],
+        "budget": 16,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "crop",
+        "arguments": {
+          "image_id": "after-detail",
+          "bbox": [
+            140,
+            150,
+            380,
+            280
+          ]
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "after-detail",
+            "view_id": "view-0ff73a1a049bf8ea",
+            "source_id": "after-detail",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              140,
+              150,
+              380,
+              280
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              240,
+              130
+            ],
+            "image_sha256": "b257c8dd8fd9c98e6695c138071974fdda5d52487dc6952d2eeb644acd33559a"
+          }
+        ],
+        "budget": 15,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "ground_image_to_image",
+        "arguments": {
+          "query_image_id": "view-0ff73a1a049bf8ea",
+          "target_image_id": "after-front",
+          "top_k": 2
+        }
+      },
+      "result": {
+        "image_id": "after-front",
+        "view_id": "after-front",
+        "source_id": "after-front",
+        "party": "B",
+        "time": "after",
+        "source_bbox": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "source_size": [
+          512,
+          512
+        ],
+        "display_size": [
+          512,
+          512
+        ],
+        "query_view_id": "view-0ff73a1a049bf8ea",
+        "proposals": [
+          {
+            "bbox": [
+              288.0,
+              240.0,
+              384.0,
+              304.0
+            ],
+            "similarity": 0.5162986516952515,
+            "source_bbox": [
+              288.0,
+              240.0,
+              384.0,
+              304.0
+            ]
+          },
+          {
+            "bbox": [
+              224.0,
+              256.0,
+              288.0,
+              304.0
+            ],
+            "similarity": 0.5000168085098267,
+            "source_bbox": [
+              224.0,
+              256.0,
+              288.0,
+              304.0
+            ]
+          }
+        ],
+        "status": "predicted",
+        "budget": 12,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "compare",
+        "arguments": {
+          "image_ids": [
+            "before-front",
+            "after-detail"
+          ]
+        }
+      },
+      "result": {
+        "images": [
+          {
+            "image_id": "before-front",
+            "view_id": "before-front",
+            "source_id": "before-front",
+            "party": "A",
+            "time": "before",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              512,
+              512
+            ],
+            "image_sha256": "4a3be39ce745df587fde5f4fd77fcd0ec858cf790b1059fdf001d2c668c42522"
+          },
+          {
+            "image_id": "after-detail",
+            "view_id": "after-detail",
+            "source_id": "after-detail",
+            "party": "B",
+            "time": "after",
+            "source_bbox": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_size": [
+              512,
+              512
+            ],
+            "display_size": [
+              512,
+              512
+            ],
+            "image_sha256": "7f63895a249b19def8b0a8beb2a2c1bc9184d0d0b971b95d638012d9eaa3c13f"
+          }
+        ],
+        "budget": 10,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "assess_quality",
+        "arguments": {
+          "image_id": "after-front"
+        }
+      },
+      "result": {
+        "image_id": "after-front",
+        "view_id": "after-front",
+        "display_size": [
+          512,
+          512
+        ],
+        "luminance_mean": 128.74137115478516,
+        "contrast_std": 56.15825109828719,
+        "edge_variance": 235.58462327718735,
+        "dark_fraction": 0.0,
+        "bright_fraction": 0.0,
+        "budget": 9,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "read_metadata",
+        "arguments": {
+          "image_id": "after-front"
+        }
+      },
+      "result": {
+        "image_id": "after-front",
+        "view_id": "after-front",
+        "source_id": "after-front",
+        "time": "after",
+        "party": "B",
+        "source_bbox": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "source_size": [
+          512,
+          512
+        ],
+        "display_size": [
+          512,
+          512
+        ],
+        "embedded_exif": {},
+        "file_sha256": "02aa9c3374b7a4be78b77c7279f7e2e02b0696cbd89008d88e71b395678327e5",
+        "budget": 8,
+        "finished": false
+      }
+    },
+    {
+      "action": {
+        "name": "finish",
+        "arguments": {
+          "verdict": "Supported",
+          "citations": [
+            {
+              "image_id": "before-front",
+              "bbox": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "time": "before"
+            },
+            {
+              "image_id": "after-detail",
+              "bbox": [
+                140,
+                150,
+                380,
+                280
+              ],
+              "time": "after"
+            }
+          ]
+        }
+      },
+      "result": {
+        "decision": {
+          "verdict": "Supported",
+          "citations": [
+            {
+              "image_id": "before-front",
+              "bbox": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "time": "before"
+            },
+            {
+              "image_id": "after-detail",
+              "bbox": [
+                140,
+                150,
+                380,
+                280
+              ],
+              "time": "after"
+            }
+          ],
+          "type": "finish"
+        },
+        "budget": 8,
+        "finished": true
+      }
+    }
+  ],
+  "failed_requests": [
+    {
+      "variant": "Missing",
+      "action": {
+        "name": "request_photo",
+        "arguments": {
+          "query": {
+            "object": "table",
+            "time": "after",
+            "view": "detail"
+          }
+        }
+      },
+      "result": {
+        "status": "unable_to_provide",
+        "images": [],
+        "budget": 9,
+        "finished": false
+      }
+    },
+    {
+      "variant": "Unavailable",
+      "action": {
+        "name": "request_photo",
+        "arguments": {
+          "query": {
+            "object": "table",
+            "time": "after",
+            "view": "detail"
+          }
+        }
+      },
+      "result": {
+        "status": "unable_to_provide",
+        "images": [],
+        "budget": 9,
+        "finished": false
+      }
+    }
+  ]
+}

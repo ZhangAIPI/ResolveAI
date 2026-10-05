@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from resolveai.benchmark import locked_manifest
-from resolveai.benchmark_report import model_summary, interval
+from resolveai.benchmark_report import model_summary, interval, merge_shards
 from resolveai.vlm_worker import portable_tools, parse_tool_call
 
 
@@ -66,3 +66,31 @@ class BenchmarkTests(unittest.TestCase):
             parse_tool_call(raw[:-1], allow_unclosed=True)
         with self.assertRaises(ValueError):
             parse_tool_call(raw, allow_unclosed=False)
+
+    def test_shard_merge_rejects_overlap_and_keeps_complete_disjoint_families(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = [root / "first", root / "second"]
+            for index, path in enumerate(paths):
+                path.mkdir()
+                config = {"model_id":"fixture","revision":"pinned","dataset_sha256":"same",
+                    "dataset_manifest":{"families":2},"limit_families":None,
+                    "selected_families":1,"shards":2,"shard_index":index}
+                (path/"manifest.json").write_text(json.dumps({"configuration":config,"source_commit":"fixture"}))
+                rows=[]
+                for variant in ("Sufficient","Obtainable","Missing","Unavailable"):
+                    for policy in ("initial","agent"):
+                        row={"family_id":f"family-{index}","case_id":f"family-{index}-"+variant,
+                            "variant":variant,"policy":policy,"category":"fixture",
+                            "termination":"finished","calls":[]}
+                        row.update({key:0 for key in ("correct","grounded_correct","unsupported_decision",
+                            "coverage","errors","requests","tool_calls","request_cost","tool_cost",
+                            "input_tokens","output_tokens","latency_s","wall_latency_s","model_calls","peak_memory_gb")})
+                        rows.append(row)
+                (path/"results.jsonl").write_text("".join(json.dumps(r)+"\n" for r in rows))
+            merge_shards(paths,root/"merged")
+            self.assertEqual(model_summary(root/"merged")["source_families"],2)
+            first=(paths[0]/"results.jsonl").read_text()
+            (paths[1]/"results.jsonl").write_text(first)
+            with self.assertRaises(ValueError):
+                merge_shards(paths,root/"overlap")

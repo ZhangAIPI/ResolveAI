@@ -53,13 +53,22 @@ def main():
     parser.add_argument("--max-turns", type=int, default=16)
     parser.add_argument("--max-context-tokens", type=int, default=8192)
     parser.add_argument("--limit-families", type=int)
+    parser.add_argument("--shards", type=int, default=1)
+    parser.add_argument("--shard-index", type=int, default=0)
     args = parser.parse_args()
+    if args.shards < 1 or not 0 <= args.shard_index < args.shards:
+        parser.error("invalid shard bounds")
     if args.max_turns < 1 or args.budget < 0 or args.max_context_tokens < 1:
         parser.error("invalid rollout bounds")
     cases = json.loads((args.data / "cases.json").read_text())
     if args.limit_families:
         families = sorted({c["family_id"] for c in cases})[:args.limit_families]
         cases = [c for c in cases if c["family_id"] in families]
+    families = sorted({c["family_id"] for c in cases})[args.shard_index::args.shards]
+    selected = set(families)
+    cases = [c for c in cases if c["family_id"] in selected]
+    if not cases:
+        parser.error("empty shard")
     args.output.mkdir(parents=True, exist_ok=True)
     config = {"dataset_sha256": hashlib.sha256((args.data / "cases.json").read_bytes()).hexdigest(),
         "dataset_manifest": json.loads((args.data / "dataset_manifest.json").read_text()),
@@ -68,6 +77,7 @@ def main():
         "budget": args.budget, "max_turns": args.max_turns, "max_context_tokens": args.max_context_tokens,
         "policies": ["initial", "agent"], "tool_adapter": "portable-prefix-v1",
         "costs": asdict(Costs()), "limit_families": args.limit_families,
+        "shards": args.shards, "shard_index": args.shard_index, "selected_families": len(families),
         "decoding": {"do_sample": False, "max_new_tokens": 384},
         "image_max_pixels": 512 * 512, "internvl_crop_to_patches": False, "dtype": "bfloat16", "attention": "sdpa"}
     manifest_path = args.output / "manifest.json"
