@@ -73,6 +73,19 @@ def main():
     rows = []
     path = args.output / "results.jsonl"
     try:
+        for task in ["state", "identity"]:
+            case = next(c for c in cases if c["task"] == task)
+            env = Environment(case, case["asset_root"])
+            for evidence in case["evidence"]:
+                if evidence["available"]:
+                    env._released.add(evidence["id"])
+            response = client.ask_conversation({"mode": "text", "messages": [
+                {"role": "user", "content": content_for({"images": env.observation()["images"]})},
+                {"role": "user", "content": "Describe the target objects and visible details in the pictures. "
+                 "Do not give a verdict or call tools. Describe only what the pixels show."}],
+                "max_new_tokens": 192})
+            with (args.output / "perception_controls.jsonl").open("a") as stream:
+                stream.write(json.dumps({"family_id": case["family_id"], "task": task, "response": response}) + "\n")
         for case in cases:
             original = "original" if case["task"] == "state" else next(
                 e["id"] for e in case["evidence"] if e["object"] == "subject-B" and e["view"] == "view-02")
