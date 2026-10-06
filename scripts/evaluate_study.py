@@ -16,6 +16,15 @@ from resolveai.rollout import run
 ARMS=("initial_text","full_available_text","interactive_agent")
 
 
+def normalize_agent_record(trace, env):
+    """Native rollouts keep terminal fields in metadata; direct text uses top-level fields."""
+    trace["termination"] = trace["metadata"]["termination"]
+    trace["errors"] = trace["metadata"]["errors"]
+    trace["requests"] = env.requests
+    trace["tool_calls"] = env.calls
+    return trace
+
+
 class Records:
     """Commit each result and its actual trace in one transaction."""
     def __init__(self,output):
@@ -84,7 +93,7 @@ def main():
                 if arm.endswith("text"):
                     trace=text_direct(env,case,client);trace["tools"]=[]
                 else:
-                    trace=run(Conversation(env),client,plan["max_turns"])
+                    trace=normalize_agent_record(run(Conversation(env),client,plan["max_turns"]),env)
                 if fingerprint!=env._world.fingerprint: raise RuntimeError("World changed")
                 trace.update(evaluation=None,schema_version="resolveai-diagnostic-v1")
                 trace["metadata"]={"family_id":case["family_id"],"case_id":case["case_id"],"arm":arm,
