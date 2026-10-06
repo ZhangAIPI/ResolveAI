@@ -1,6 +1,6 @@
 # Execution status
 
-Current: the 7,200-episode candidate evaluation and the subsequent 2,160-episode paired diagnostic are complete and published. These are separate experiments, not one score. See the [plain Chinese diagnosis](benchmark_diagnosis.zh-CN.md) for the next benchmark fixes. Allocation entries below describe execution history, not live resources.
+Historical: the 7,200-episode candidate evaluation and the subsequent 2,160-episode paired diagnostic are complete and published. These are separate experiments, not one score. See the [plain Chinese diagnosis](benchmark_diagnosis.zh-CN.md) for the next benchmark fixes. Allocation entries below describe execution history, not live resources.
 
 Repository: https://github.com/ZhangAIPI/ResolveAI
 Checkout: `/home/cxu-serve/p62/zzh136/experiments/ResolveAI`.
@@ -72,3 +72,11 @@ All 478 retrieval/immutable-world preflights and 62 software checks passed.
 claim-wording rules match 50% of their balanced binary source labels. Independent
 visual truth and sufficient-evidence review remains pending; formal scoring and
 training exports reject unreviewed material.
+
+## Current human study and model evaluation: 2026-10-06
+
+The short study has 20 participants, each assigned three search trials (75 seconds each) and two staged independent reviews (120 seconds each). The sampled 20 families are source-disjoint within participants; 10 families receive two people per search condition, and all 20 receive two independent reviews. See the [Chinese instructions and design](human_study.zh-CN.md). No real participant responses have been collected at launch.
+
+Jobs 24937–24940 run four independent workers on sclera: two Qwen3-VL-8B shards, one Qwen2.5-VL-7B worker and one InternVL3.5-8B worker. Each worker has one A6000, six CPUs and 56 GB RAM, with a 12-hour limit. Their code is frozen at 5dc8125. The model set has 96 families, four releases and three arms: 1,152 episodes per model, 3,456 total. All 20 human families are included. SQLite commits each completed episode and native trace together for resume. Formal metrics await independent visual reviews; startup failures from jobs 24930–24933 are archived separately and are not model failures or current completed episodes.
+
+73 software tests and a full isolated Chromium study flow passed. The web service will use a separate CPU-only allocation on the GPU node; credentials and raw responses remain private on p62.

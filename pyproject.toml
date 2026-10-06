@@ -16,3 +16,6 @@ model = ["torch>=2.4", "torchvision>=0.19", "transformers==4.57.6", "accelerate>
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+resolveai = ["web/*.html", "web/*.js", "web/*.css"]

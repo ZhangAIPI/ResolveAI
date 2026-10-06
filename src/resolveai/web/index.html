@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ResolveAI · 看图与搜证</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/">ResolveAI</a><span>看图与搜证 · 约 8 分钟</span
+      ><span id="clock"></span>
+    </header>
+    <main>
+      <section id="welcome">
+        <p class="eyebrow">人工验证实验</p>
+        <h1>这些照片，足以判断吗？</h1>
+        <p>
+          我们想知道：题目是否清楚、照片是否能帮助判断，以及多拿一张照片能否改变结论。
+        </p>
+        <p>
+          每位参与者完成 3 道搜证题与 2
+          道审核题。没有必须猜出的答案；看不清时可以选择“需要更多证据”。
+        </p>
+        <div class="info">
+          请使用电脑或平板，并用研究者发给你的个人邀请链接进入。不要转发链接，也不要与其他参与者讨论题目。
+        </div>
+        <details>
+          <summary>先看看操作示例</summary>
+          <img
+            class="demo"
+            src="/demo.webp"
+            alt="检查、裁剪、放大和索证的实际操作示例"
+          />
+          <p>这个示例来自可控渲染，不是正式实验题。</p>
+        </details>
+      </section>
+      <section id="intro" hidden>
+        <h1>开始前，花半分钟看说明</h1>
+        <p>
+          你会做 3 道搜证题，每题最多 75 秒；再做 2 道证据审核题，每题最多 120
+          秒。无需填姓名、邮箱或上传照片。
+        </p>
+        <ol>
+          <li>
+            只判断照片里的事实。正常参考是另一个正常实物，不能当作目标的“之前照片”。
+          </li>
+          <li>
+            绿色框指出目标。选依据时勾选图片，点击图片两角可标记证据区域。
+          </li>
+          <li>放大只改变显示；索证才可能获得原有小图里看不见的材料。</li>
+          <li>
+            审核先看有限材料，再看完整材料。前面的判断保存后不能改，请独立作答。
+          </li>
+        </ol>
+        <label
+          ><input
+            id="agree"
+            type="checkbox"
+          />我理解以上说明并自愿参与。记录包括答案、选图区域、操作与用时；可随时关闭网页退出，未完成记录不会当作弃答。</label
+        ><button id="begin" class="primary">开始短实验</button>
+      </section>
+      <section id="task" hidden>
+        <div class="eyebrow" id="progress"></div>
+        <h1 id="claim"></h1>
+        <p id="context"></p>
+        <p class="muted" id="original"></p>
+        <div class="info" id="condition"></div>
+        <div id="pictures" class="grid"></div>
+        <section id="tools">
+          <h2>选择下一步</h2>
+          <div class="toolrow">
+            <select id="operation">
+              <option value="inspect">检查图片（1 点）</option>
+              <option value="crop">裁剪区域（1 点）</option>
+              <option value="zoom">放大 / 缩小（1 点）</option>
+              <option value="compare">比较两张图片（2 点）</option>
+              <option value="ocr">识别文字（2 点）</option>
+              <option value="request_photo">请求照片（3 点）</option></select
+            ><select id="image"></select
+            ><select id="factor">
+              <option value="2">放大 2 倍</option>
+              <option value="0.5">缩小一半</option></select
+            ><span id="requests"
+              ><select id="object"></select
+              ><select id="view"></select
+              ><select id="time"></select></span
+            ><button id="operate">执行操作</button>
+          </div>
+          <div id="feedback" class="muted"></div>
+        </section>
+        <section id="answer">
+          <h2 id="answer-title">你的判断</h2>
+          <p>
+            确定判断请勾选依据图片。身份题选择 A、B
+            各一张；需要更多证据时可以不选。
+          </p>
+          <div class="choices">
+            <label
+              ><input
+                type="radio"
+                name="verdict"
+                value="Supported"
+              />支持</label
+            ><label
+              ><input type="radio" name="verdict" value="Refuted" />反驳</label
+            ><label
+              ><input
+                type="radio"
+                name="verdict"
+                value="Need more evidence"
+              />需要更多证据</label
+            >
+          </div>
+          <label
+            >把握程度
+            <select id="confidence">
+              <option value="3">一般</option>
+              <option value="1">很低</option>
+              <option value="2">较低</option>
+              <option value="4">较高</option>
+              <option value="5">很高</option>
+            </select></label
+          ><label class="block"
+            >一句话理由
+            <input
+              id="reason"
+              placeholder="例如：瓶口左边可见缺口；或缺少能确认身份的细节"
+              maxlength="500"
+          /></label>
+          <div id="review-checks" hidden>
+            <label
+              ><input id="clear" type="checkbox" checked />声明和目标清楚</label
+            ><label
+              ><input
+                id="checked"
+                type="checkbox"
+              />已经检查其他视角和缩略图能否构成替代证据</label
+            >
+          </div>
+          <button id="submit" class="primary">提交判断</button>
+        </section>
+      </section>
+      <section id="saved" hidden>
+        <h1 id="saved-message">已保存</h1>
+        <button id="next" class="primary">继续下一题</button>
+      </section>
+      <section id="done" hidden>
+        <h1>谢谢，短实验已完成。</h1>
+        <p>你的回答已保存。研究者会合并独立判断；这里不显示答案或模型结果。</p>
+      </section>
+      <section id="admin" hidden>
+        <h1>研究者入口</h1>
+        <p>
+          将不同邀请链接分别发给 20
+          位参与者，每人使用一个链接。两道审核题已自动分配给未见过相关来源实物的人。
+        </p>
+        <button id="refresh">刷新进度</button
+        ><button id="export">下载匿名记录</button
+        ><button id="votes">下载独立审核 JSONL</button
+        ><button id="copy-links">复制全部邀请链接</button>
+        <p id="study-info"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>完成</th>
+              <th>个人邀请链接</th>
+            </tr>
+          </thead>
+          <tbody id="invitations"></tbody>
+        </table>
+      </section>
+      <p id="error" role="alert"></p>
+    </main>
+    <footer>ResolveAI · 仅视觉事实验证 · 相似并不等于同一实物</footer>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "browser": "Chromium 141 / Playwright 1.56",
+  "flows": [
+    "consent",
+    "actual image rendering",
+    "actual photo request",
+    "3 search answers",
+    "10 locked review stages",
+    "final completion",
+    "organizer progress"
+  ],
+  "synthetic_responses_only": true,
+  "official_response_db_untouched": true,
+  "screenshot_family": "case-7d53235c8442a2971e7f",
+  "screenshot_source": {
+    "category": "zipper",
+    "criterion": "deformed teeth",
+    "defect_label": "good",
+    "filepath": "data/data_21/024-12.png",
+    "official_split": "test",
+    "original_size": [
+      1024,
+      1024
+    ],
+    "reference": {
+      "filepath": "data/data_19/236-3.png",
+      "official_split": "train",
+      "sample_id": "6621d769324f6e05d58381ab",
+      "sha256": "00488b2281a838f27ca8206d91bf453bd37cca5c434839f36b53500fc776fafe"
+    },
+    "repo": "Voxel51/mvtec-ad",
+    "revision": "30a183a3b96e3aef953f230784b123b719b09d97",
+    "sample_id": "6621d769324f6e05d583824f",
+    "sha256": "5647763d41c628d0c574591d6f0a2cf009c72c48988f58afda372bd6d8d91003"
+  },
+  "page_errors": []
+}

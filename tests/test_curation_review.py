@@ -196,6 +196,24 @@ class ReviewTests(unittest.TestCase):
             self.assertEqual(len(labels), 2)
         self.assertNotIn("5", criteria)
 
+    def test_regrading_distinguishes_reasonable_abstention_and_text_without_citations(self):
+        from scripts.analyze_human_study import grade, summarize
+        case=deepcopy(self.family[1])
+        case["annotation"]=merge_votes(self.votes(),self.family)
+        case["review"]={"protocol":"visual-review-v1","initial_verdict":"Need more evidence",
+                        "pool_verdict":"Supported"}
+        result=grade(case,{"verdict":"Need more evidence","citations":[]},case["initial"])
+        self.assertTrue(result["decision_matches_current_evidence"])
+        self.assertTrue(result["unused_obtainable_evidence"])
+        self.assertFalse(result["unsupported_verdict"])
+        result=grade(case,{"verdict":"Supported"},case["initial"])
+        self.assertTrue(result["unsupported_verdict"])
+        self.assertIsNone(result["grounded_correct"])
+        result.update(actor="text-only",condition="initial",requests=0)
+        summary=summarize([result])[0]
+        self.assertIsNone(summary["grounded_correct"])
+        self.assertEqual(summary["citation_scoring_available"],0)
+
     def test_same_category_other_sequence_is_unknown_not_negative(self):
         co3d = self.root / "co3d"
         co3d.mkdir()
