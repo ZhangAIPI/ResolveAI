@@ -9,7 +9,7 @@ from PIL import Image
 
 from resolveai.curation import identity_families, variants
 from resolveai.environment import Environment
-from resolveai.review import merge_votes, require_admitted
+from resolveai.review import merge_votes, require_admitted, reviewed_outcome, availability_class, admit
 from resolveai.vlm_worker import parse_tool_call
 
 
@@ -121,6 +121,68 @@ class ReviewTests(unittest.TestCase):
                     '{"name":"inspect","arguments":{}} {"name":"finish","arguments":{}}']:
             with self.assertRaises(ValueError):
                 parse_tool_call(raw, allow_bare=True)
+
+    def test_admission_reclassifies_release_flags_without_duplicate_case_ids(self):
+        import hashlib
+        data=self.root/"fixture-data";data.mkdir()
+        (data/"cases.json").write_text(json.dumps(self.family))
+        (data/"dataset_manifest.json").write_text(json.dumps({"protocol":"benchmark-v0.4",
+                    "formal_evaluation_ready":False,"stage":"unreviewed-curation-pool"}))
+        votes=self.votes()
+        for vote in votes:
+            vote["dataset_sha256"]=hashlib.sha256((data/"cases.json").read_bytes()).hexdigest()
+        path=self.root/"fixture-votes.jsonl"
+        path.write_text("\n".join(json.dumps(v) for v in votes)+"\n")
+        output=self.root/"fixture-admitted"
+        manifest=admit(data,path,output)
+        cases=json.loads((output/"cases.json").read_text())
+        self.assertEqual(manifest["availability_classes"],{"Sufficient":1,"Obtainable":3})
+        self.assertEqual(len({c["case_id"] for c in cases}),4)
+        self.assertEqual({c["release_configuration"] for c in cases},
+                         {"Sufficient","Obtainable","Missing","Unavailable"})
+        require_admitted(manifest,cases)
+
+    def test_images_follow_submission_and_acquisition_order_not_opaque_ids(self):
+        case=deepcopy(self.family[1])
+        case["initial"]=["b-preview","a"]
+        env=Environment(case,self.root,ocr_backend=NoOCR())
+        self.assertEqual([r["image_id"] for r in env.observation()["images"]],["b-preview","a"])
+        branch=env.fork()
+        branch.step({"type":"request_photo","query":{"object":"subject-B","time":"capture","view":"view-01"}})
+        self.assertEqual([r["image_id"] for r in branch.observation()["images"]],["b-preview","a","b-side"])
+        self.assertEqual([r["image_id"] for r in env.observation()["images"]],["b-preview","a"])
+
+    def test_view_limits_are_public_and_failed_zoom_keeps_budget(self):
+        from resolveai.tools import ActionError
+        env=Environment(self.family[1],self.root,ocr_backend=NoOCR())
+        self.assertIn("max_pixels",env.observation()["view_limits"])
+        env.MAX_VIEW_PIXELS=32*32
+        with self.assertRaises(ActionError) as error:
+            env.step({"type":"zoom","image_id":"a","factor":4})
+        self.assertEqual(error.exception.details["max_pixels"],32*32)
+        self.assertEqual(env.budget,12)
+
+    def test_availability_means_semantic_evidence_not_a_withheld_original(self):
+        self.assertEqual(availability_class("Refuted", "Refuted", "Refuted", [{"available": False}]), "Sufficient")
+        self.assertEqual(availability_class("Need more evidence", "Supported", "Supported", [{"available": False}]), "Obtainable")
+        self.assertEqual(availability_class("Need more evidence", "Need more evidence", "Supported", [{"available": False}]), "Unavailable")
+        self.assertEqual(availability_class("Need more evidence", "Need more evidence", "Supported", [{"available": True}]), "Missing")
+        self.assertEqual(availability_class("Need more evidence", "Need more evidence", "Need more evidence", [{"available": False}]), "Underdetermined")
+
+    def test_reasonable_current_abstention_is_not_completed_search(self):
+        case = deepcopy(self.family[1])
+        case["annotation"] = merge_votes(self.votes(), self.family)
+        case["review"] = {"protocol": "visual-review-v1", "initial_verdict": "Need more evidence",
+                         "pool_verdict": "Supported"}
+        env = Environment(case, self.root, ocr_backend=NoOCR())
+        audit = reviewed_outcome(env, "Need more evidence")
+        self.assertTrue(audit["decision_matches_current_evidence"])
+        self.assertTrue(audit["acquisition_opportunity"])
+        self.assertTrue(audit["unused_obtainable_evidence"])
+        env.step({"type": "request_photo", "query": {"object": "subject-B", "time": "capture", "view": "view-01"}})
+        audit = reviewed_outcome(env, "Supported")
+        self.assertTrue(audit["decision_matches_current_evidence"])
+        self.assertFalse(audit["unused_obtainable_evidence"])
 
     def test_same_category_other_sequence_is_unknown_not_negative(self):
         co3d = self.root / "co3d"

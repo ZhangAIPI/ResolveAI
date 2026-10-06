@@ -2,7 +2,11 @@
 
 [**中文可视化 Demo：不同工具操作的实际结果**](docs/demo/README.zh-CN.md)
 
-[**中文评测进度：完成量、GPU 到期与当前问题**](docs/results/evaluation_progress.md)
+[**Benchmark 修复：具体题目、真实视角与中文审核**](docs/benchmark_v04.zh-CN.md)
+
+[**模型答题与工具接口的实际检查**](docs/results/interface_checks.zh-CN.md)
+
+[首轮候选评测进度（历史）](docs/results/evaluation_progress.md)
 
 ![工具操作展示](docs/demo/assets/operations.webp)
 
@@ -32,7 +36,7 @@ supervision from prompts and reject unreviewed/proxy traces by default.
 
 ## Data and evaluation
 
-The fixed public benchmark contains **300 independent source images across all
+The fixed public benchmark contains **300 source images across all
 15 MVTec AD categories and 1,200 availability cases**, excluding the 24 pilot images and one compatibility image used for development. See
 the [earlier pilot](docs/results/public_pilot.md). No future self-collected data is
 assumed. Static and full multi-turn policies use frozen Qwen3-VL-8B,

@@ -1,0 +1,52 @@
+{
+  "protocol": "benchmark-v0.4",
+  "stage": "unreviewed-curation-pool",
+  "formal_evaluation_ready": false,
+  "families": 872,
+  "cases": 3488,
+  "tasks": {
+    "state": 194,
+    "identity": 678
+  },
+  "identity_constructions": {
+    "source-positive": 226,
+    "easy-negative": 226,
+    "same-category-candidate": 226
+  },
+  "state_categories": {
+    "zipper": 18,
+    "screw": 20,
+    "hazelnut": 20,
+    "bottle": 20,
+    "metal_nut": 20,
+    "transistor": 20,
+    "capsule": 20,
+    "cable": 19,
+    "pill": 17,
+    "toothbrush": 20
+  },
+  "unique_query_images": 194,
+  "public_train_references": 10,
+  "unique_co3d_sequences": 226,
+  "preflight": {
+    "correct_request_and_unchanged_world": 872
+  },
+  "source_sha256": {
+    "mvtec": "8a538286efbf85b1da309ad18fd00bc7361edcd03be210d6f1ce9a195b00a9d6",
+    "co3d": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e"
+  },
+  "cases_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+  "scope": "Public development material. Not a fresh held-out benchmark or training supervision.",
+  "grouping": "Share source-image and sequence groups across rewrites, pairs and availability versions.",
+  "uncertainty": "Same-category pairs have unknown physical truth until visual review; no automatic negative label.",
+  "licenses": [
+    "MVTec AD: CC-BY-NC-SA-4.0",
+    "CO3D: CC-BY-NC-4.0"
+  ],
+  "storage": "Existing query images referenced in place; only official-train normal references downloaded.",
+  "construction_source_sha256": "f5311efb1018ec051928c97ff5090eb004a701e82db6d3783607bc5ba657a64e",
+  "exclusion_counts": {
+    "excluded_states": 106,
+    "excluded_identities": 74
+  }
+}

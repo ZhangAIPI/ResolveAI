@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from PIL import Image
 
-from resolveai.diagnostic import direct, menu_actions, menu_rollout, outcome, request_query
+from resolveai.diagnostic import direct, menu_actions, menu_rollout, outcome, request_query, text_direct
 from resolveai.environment import Environment
 
 
@@ -90,6 +90,19 @@ class DiagnosticTests(unittest.TestCase):
         self.assertNotIn("Supported means a defect", prompt)
         self.assertNotIn("minimal_evidence_sets", prompt)
         self.assertIn("target_regions", prompt)
+
+    def test_text_format_failure_is_not_an_abstention(self):
+        class TextClient:
+            def __init__(self, raw):
+                self.raw = raw
+            def ask_conversation(self, payload, max_context_tokens=8192):
+                return {"raw": self.raw}
+        record = text_direct(self.env(), self.case, TextClient("I do not follow the format."))
+        self.assertIsNone(record["decision"])
+        self.assertEqual(record["termination"], "invalid_decision")
+        record = text_direct(self.env(), self.case, TextClient("Need more evidence"))
+        self.assertEqual(record["decision"]["verdict"], "Need more evidence")
+        self.assertEqual(record["errors"], 0)
 
     def test_context_halt_and_turn_exhaustion_are_not_abstentions(self):
         class Halt:

@@ -1,0 +1,221 @@
+{
+  "complete": true,
+  "source_commit": "a86df02",
+  "models": [
+    {
+      "complete": true,
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "families": 54,
+      "records": 279,
+      "metrics": {
+        "text_copy": {
+          "records": 3,
+          "passed": 3
+        },
+        "tool_copy": {
+          "records": 6,
+          "by_transport": {
+            "native": {
+              "exact": 2,
+              "valid": 2
+            },
+            "portable-plain": {
+              "exact": 2,
+              "valid": 2
+            },
+            "portable-prefix": {
+              "exact": 2,
+              "valid": 2
+            }
+          }
+        },
+        "full_choice": {
+          "records": 162,
+          "label_matches": 126,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 83,
+            "Supported": 78,
+            "Need more evidence": 1
+          }
+        },
+        "full_text": {
+          "records": 54,
+          "label_matches": 39,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 27,
+            "Supported": 19,
+            "Need more evidence": 8
+          }
+        },
+        "full_letter": {
+          "records": 54,
+          "label_matches": 35,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 17,
+            "Supported": 22,
+            "Need more evidence": 15
+          }
+        }
+      },
+      "scope": "source-label agreement and interface controls; no reviewed sufficiency claim",
+      "option_order_changed_cases": 5,
+      "tool_transport_controls": {
+        "portable-prefix": {
+          "records": 2,
+          "before_exact": 2,
+          "normalized_exact": 2
+        },
+        "portable-plain": {
+          "records": 2,
+          "before_exact": 2,
+          "normalized_exact": 2
+        },
+        "native": {
+          "records": 2,
+          "before_exact": 2,
+          "normalized_exact": 2
+        }
+      }
+    },
+    {
+      "complete": true,
+      "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "families": 54,
+      "records": 277,
+      "metrics": {
+        "text_copy": {
+          "records": 3,
+          "passed": 3
+        },
+        "tool_copy": {
+          "records": 4,
+          "by_transport": {
+            "portable-plain": {
+              "exact": 0,
+              "valid": 0
+            },
+            "portable-prefix": {
+              "exact": 1,
+              "valid": 1
+            }
+          }
+        },
+        "full_choice": {
+          "records": 162,
+          "label_matches": 51,
+          "parse_errors": 0,
+          "answers": {
+            "Need more evidence": 78,
+            "Refuted": 80,
+            "Supported": 4
+          }
+        },
+        "full_text": {
+          "records": 54,
+          "label_matches": 0,
+          "parse_errors": 0,
+          "answers": {
+            "Need more evidence": 54
+          }
+        },
+        "full_letter": {
+          "records": 54,
+          "label_matches": 11,
+          "parse_errors": 0,
+          "answers": {
+            "Need more evidence": 40,
+            "Refuted": 9,
+            "Supported": 5
+          }
+        }
+      },
+      "scope": "source-label agreement and interface controls; no reviewed sufficiency claim",
+      "option_order_changed_cases": 12,
+      "tool_transport_controls": {
+        "portable-prefix": {
+          "records": 2,
+          "before_exact": 1,
+          "normalized_exact": 1
+        },
+        "portable-plain": {
+          "records": 2,
+          "before_exact": 0,
+          "normalized_exact": 1
+        }
+      }
+    },
+    {
+      "complete": true,
+      "model_id": "OpenGVLab/InternVL3_5-8B-HF",
+      "families": 54,
+      "records": 277,
+      "metrics": {
+        "text_copy": {
+          "records": 3,
+          "passed": 3
+        },
+        "tool_copy": {
+          "records": 4,
+          "by_transport": {
+            "portable-plain": {
+              "exact": 0,
+              "valid": 0
+            },
+            "portable-prefix": {
+              "exact": 2,
+              "valid": 2
+            }
+          }
+        },
+        "full_choice": {
+          "records": 162,
+          "label_matches": 109,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 58,
+            "Supported": 75,
+            "Need more evidence": 29
+          }
+        },
+        "full_text": {
+          "records": 54,
+          "label_matches": 36,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 41,
+            "Supported": 11,
+            "Need more evidence": 2
+          }
+        },
+        "full_letter": {
+          "records": 54,
+          "label_matches": 36,
+          "parse_errors": 0,
+          "answers": {
+            "Refuted": 16,
+            "Supported": 25,
+            "Need more evidence": 13
+          }
+        }
+      },
+      "scope": "source-label agreement and interface controls; no reviewed sufficiency claim",
+      "option_order_changed_cases": 10,
+      "tool_transport_controls": {
+        "portable-prefix": {
+          "records": 2,
+          "before_exact": 2,
+          "normalized_exact": 2
+        },
+        "portable-plain": {
+          "records": 2,
+          "before_exact": 0,
+          "normalized_exact": 2
+        }
+      }
+    }
+  ],
+  "scope": "actual interface controls on unreviewed development source labels"
+}

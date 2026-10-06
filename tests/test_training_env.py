@@ -131,6 +131,15 @@ class TrainingTests(unittest.TestCase):
         self.assertNotIn("PRIVATE_STATE_MARKER",json.dumps(example))
         self.assertNotIn("image_png",json.dumps(example))
 
+    def test_official_test_cases_do_not_enter_training_exports(self):
+        session=Conversation(self.env)
+        a,b=session.fork(),session.fork()
+        a.call(self.request());a.call(self.finish());b.call(self.finish(False))
+        left,right=a.record(),b.record()
+        left["metadata"]["official_split"]="test"
+        self.assertIsNone(sft_example(left))
+        self.assertIsNone(preference_pair(left,right))
+
     def test_unknown_extra_arguments_unreleased_and_budget_errors_are_atomic(self):
         session=Conversation(self.env)
         for call in [{"name":"inspect","arguments":{"image_id":"after"}},

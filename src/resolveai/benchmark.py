@@ -156,6 +156,9 @@ def main():
                         "wall_latency_s": record["wall_latency_s"],
                         "peak_memory_gb": max((g.get("peak_memory_gb", 0) for g in record["generation"]), default=0),
                         **metrics}
+                    if v04:
+                        from .review import reviewed_outcome
+                        row.update(reviewed_outcome(env, record["decision"]["verdict"] if record["decision"] else None))
                     output.write(json.dumps(row) + "\n")
                     output.flush()
                     completed.add((case["case_id"], policy))

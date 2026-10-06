@@ -1,6 +1,6 @@
 """Blind visual-review UI and strict two-human-review admission for benchmark v0.4."""
 import argparse
-from collections import defaultdict
+from collections import Counter, defaultdict
 from copy import deepcopy
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
@@ -17,6 +17,8 @@ from .tools import VERDICTS
 
 
 def validate_vote(vote):
+    if not isinstance(vote, dict):
+        raise ValueError("Review must be an object")
     if (vote.get("protocol") != "visual-review-v1" or vote.get("reviewer_type") != "human"
             or not isinstance(vote.get("reviewer_id"), str) or not vote["reviewer_id"].strip()
             or not vote.get("family_id") or not vote.get("reason", "").strip()):
@@ -29,6 +31,8 @@ def validate_vote(vote):
     for key in ["initial_verdicts", "pool_verdicts"]:
         if set(vote.get(key, {})) != set(VARIANTS) or any(v not in VERDICTS for v in vote[key].values()):
             raise ValueError("Review all four initial and obtainable-pool conditions")
+    if not isinstance(vote.get("annotation"), dict):
+        raise ValueError("Review requires a structured evidence annotation")
     validate_annotation(vote["annotation"])
     if vote["annotation"].get("protocol") != "evidence-chain-v1":
         raise ValueError("Review requires explicit region/time or relation evidence")
@@ -85,6 +89,17 @@ def merge_votes(votes, family):
     return merged
 
 
+def availability_class(initial, pool, oracle, evidence):
+    """Proposal classes follow reviewed judgeability, not a missing-original flag."""
+    if initial != "Need more evidence":
+        return "Sufficient"
+    if pool != "Need more evidence":
+        return "Obtainable"
+    if oracle == "Need more evidence":
+        return "Underdetermined"
+    return "Unavailable" if any(not row["available"] for row in evidence) else "Missing"
+
+
 def admit(data, votes_path, output):
     if output.exists():
         raise ValueError("Use a fresh admitted dataset directory")
@@ -112,9 +127,13 @@ def admit(data, votes_path, output):
         for case in family:
             case = deepcopy(case)
             case["annotation"] = deepcopy(annotation)
+            release = case["variant"]
             case["review"] = {"protocol": "visual-review-v1", "reviewers": [v["reviewer_id"] for v in votes[family_id]],
-                             "initial_verdict": votes[family_id][0]["initial_verdicts"][case["variant"]],
-                             "pool_verdict": votes[family_id][0]["pool_verdicts"][case["variant"]]}
+                             "initial_verdict": votes[family_id][0]["initial_verdicts"][release],
+                             "pool_verdict": votes[family_id][0]["pool_verdicts"][release]}
+            case["release_configuration"] = release
+            case["variant"] = availability_class(case["review"]["initial_verdict"], case["review"]["pool_verdict"],
+                                                  annotation["verdict"], case["evidence"])
             admitted.append(case)
     output.mkdir(parents=True)
     (output / "cases.json").write_text(json.dumps(admitted, indent=2) + "\n")
@@ -123,10 +142,28 @@ def admit(data, votes_path, output):
     manifest.update(stage="reviewed" if admitted else "no-admitted-cases", formal_evaluation_ready=bool(admitted),
                     families=len(admitted)//4, cases=len(admitted), pending_families=len(pending),
                     parent_dataset=str(data), review_records_sha256=hashlib.sha256(votes_path.read_bytes()).hexdigest())
+    manifest["availability_classes"] = dict(Counter(c["variant"] for c in admitted))
+    manifest["release_configurations"] = dict(Counter(c["release_configuration"] for c in admitted))
     manifest["scope"] = "Two-human-reviewed development subset; source splits and shared-family limitations retained."
     manifest["cases_sha256"] = hashlib.sha256((output / "cases.json").read_bytes()).hexdigest()
     (output / "dataset_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
+
+
+def reviewed_outcome(environment, verdict):
+    """Evaluator-only diagnosis: reasonable abstention is distinct from search success."""
+    case = environment._case
+    if case.get("review", {}).get("protocol") != "visual-review-v1":
+        return {}
+    annotation = case["annotation"]
+    current = full_pool_verdict(annotation, environment._released)
+    initial = case["review"]["initial_verdict"]
+    obtainable = case["review"]["pool_verdict"]
+    return {"reviewed_initial_verdict": initial, "reviewed_pool_verdict": obtainable,
+            "current_evidence_verdict": current,
+            "decision_matches_current_evidence": verdict == current,
+            "acquisition_opportunity": initial == "Need more evidence" and obtainable != "Need more evidence",
+            "unused_obtainable_evidence": current == "Need more evidence" and obtainable != "Need more evidence"}
 
 
 def require_admitted(manifest, cases):
@@ -203,7 +240,17 @@ function render(){
   const c=document.createElement('div');c.className='card';
   const title=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.dataset.photo=p.id;
   title.append(cb,document.createTextNode(p.object+' / '+p.view+' / '+p.id));c.append(title);
-  const img=document.createElement('img');img.src='/image/'+index+'/'+encodeURIComponent(p.id);
+  const wrap=document.createElement('div');wrap.style.position='relative';wrap.style.width='fit-content';wrap.style.maxWidth='100%';
+  const img=document.createElement('img');img.src='/image/'+index+'/'+encodeURIComponent(p.id);img.style.display='block';
+  const overlay=document.createElement('canvas');overlay.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+  function draw(){
+   overlay.width=img.naturalWidth;overlay.height=img.naturalHeight;
+   const ctx=overlay.getContext('2d'),box=boxes[p.id],b=p.source_bbox;
+   ctx.strokeStyle='#18aa6a';ctx.lineWidth=Math.max(2,overlay.width/180);
+   ctx.strokeRect((box[0]-b[0])/(b[2]-b[0])*overlay.width,(box[1]-b[1])/(b[3]-b[1])*overlay.height,
+   (box[2]-box[0])/(b[2]-b[0])*overlay.width,(box[3]-box[1])/(b[3]-b[1])*overlay.height);
+  }
+  img.onload=draw;wrap.append(img,overlay);
   const note=document.createElement('p');note.textContent='原图坐标框：'+JSON.stringify(boxes[p.id]);
   img.onclick=e=>{
    const b=img.getBoundingClientRect(),x=Math.round((e.clientX-b.left)/b.width*(p.source_bbox[2]-p.source_bbox[0])+p.source_bbox[0]),
@@ -211,8 +258,8 @@ function render(){
    if(!corners[p.id]){corners[p.id]=[x,y];note.textContent='已选第一角，再点对角';return}
    const [x0,y0]=corners[p.id];delete corners[p.id];
    boxes[p.id]=[Math.min(x0,x),Math.min(y0,y),Math.max(x0,x),Math.max(y0,y)];
-   note.textContent='原图坐标框：'+JSON.stringify(boxes[p.id]);
-  };c.append(img,note);container.append(c);
+   note.textContent='原图坐标框：'+JSON.stringify(boxes[p.id]);draw();
+  };c.append(wrap,note);container.append(c);
  });
 }
 function annotation(){
@@ -269,7 +316,10 @@ def serve(data, votes_path, port):
                 return self.respond(PAGE.encode(), "text/html; charset=utf-8")
             try:
                 parts = self.path.split("/")
-                family = entries[int(parts[2])]
+                index = int(parts[2])
+                if index < 0:
+                    raise ValueError("Negative family index")
+                family = entries[index]
                 case = next(c for c in family if c["variant"] == "Obtainable")
                 rows = {r["id"]: r for r in case["evidence"]}
                 if parts[1] == "image" and len(parts) == 4:

@@ -43,6 +43,7 @@ class Environment:
         if len(self._evidence) != len(case["evidence"]):
             raise ValueError("duplicate evidence IDs")
         self._released = set(case["initial"])
+        self._release_order = list(dict.fromkeys(case["initial"]))
         if not self._released <= self._evidence.keys():
             raise ValueError("unknown initial evidence")
         if any(not self._evidence[i]["available"] for i in self._released):
@@ -130,10 +131,14 @@ class Environment:
         return result
 
     def observation(self):
+        ids = [i for i in self._release_order if i in self._released]
+        ids.extend(i for i in self._evidence if i in self._released and i not in ids)
         return {"claim": self._case["claim"], "claim_parts": deepcopy(self._case.get("claim_parts", [])),
                 "task_instructions": self._case.get("task_instructions", ""),
+                "view_limits": {"max_pixels": self.MAX_VIEW_PIXELS, "zoom_factor": [.125, 4],
+                                "crop_coordinate_space": "display_pixels"},
                 "budget": self.budget,
-                "images": [self._image(i) for i in sorted(self._released)],
+                "images": [self._image(i) for i in ids],
                 "request_options": deepcopy(self._case.get("request_options", {})),
                 "tool_costs": asdict(self.costs), "ocr_available": bool(self._ocr.available),
                 "finished": self.finished}
@@ -198,6 +203,8 @@ class Environment:
                     if not previously_released:
                         self._released.discard(selected["id"])
                     raise
+                if not previously_released:
+                    self._release_order.append(selected["id"])
                 result = {"status": "provided", "images": images}
         elif kind.startswith("ground_"):
             result = self._ground(action)
@@ -214,7 +221,8 @@ class Environment:
             elif kind == "zoom":
                 size = [max(1, round(v * action["factor"])) for v in image.size]
                 if size[0] * size[1] > self.MAX_VIEW_PIXELS:
-                    raise ActionError("view_too_large")
+                    raise ActionError("view_too_large", {"requested_size": size, "max_pixels": self.MAX_VIEW_PIXELS,
+                        "suggestion": "Crop a smaller region before zooming."})
                 result = {"images": [self._derive(reference, {"type": "resize", "size": size})]}
             elif kind == "assess_quality":
                 gray = image.convert("L")

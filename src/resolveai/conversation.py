@@ -117,6 +117,8 @@ class Conversation:
                 "family_id": self._env._case.get("family_id"),
                 "world_fingerprint": self._env._world.fingerprint,
                 "annotation_status": self._env._case.get("annotation", {}).get("status", "unreviewed"),
+                "official_split": self._env._case.get("official_split", self._env._case.get("split")),
+                "review_partition": self._env._case.get("review_partition"),
                 "termination": self.termination, "turns": self.turns, "errors": self.errors},
             "decision": deepcopy(self._env.decision),
             "evaluation": self._env.evaluate(self._env.decision) if self._env.finished else None}
@@ -150,6 +152,8 @@ class TrajectoryStore:
 
 def sft_example(record, allow_proxy=False):
     """Select correct completed traces; never include private evaluation in prompts."""
+    if record["metadata"].get("official_split") == "test":
+        return None
     evaluation = record.get("evaluation")
     if (record["metadata"]["termination"] != "finished" or not evaluation
             or not evaluation["grounded_correct"] or record["metadata"]["errors"]):
@@ -163,6 +167,8 @@ def sft_example(record, allow_proxy=False):
 
 def preference_pair(left, right, allow_proxy=False):
     """Compare completed sibling outcomes; supervise only their first differing action."""
+    if any(r["metadata"].get("official_split") == "test" for r in (left, right)):
+        return None
     if not left["branch_origin"] or left["branch_origin"] != right["branch_origin"]:
         raise ValueError("preferences require sibling branches from the same state")
     if left["metadata"]["world_fingerprint"] != right["metadata"]["world_fingerprint"]:
