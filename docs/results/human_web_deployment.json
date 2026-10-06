@@ -1,0 +1,19 @@
+{
+  "public_url": "https://pathology-decision-solved-mood.trycloudflare.com",
+  "job_id": 24958,
+  "service_source_commit": "c153b52",
+  "node": "sclera",
+  "storage": "p62",
+  "gpu_count": 0,
+  "expires_at": "2026-10-09T00:16:28-04:00",
+  "external_home_status": 200,
+  "external_unauthorized_api_status": 403,
+  "public_browser_admin_invites": 20,
+  "official_database_rows_after_readonly_checks": {
+    "consent": 0,
+    "starts": 0,
+    "answers": 0,
+    "events": 0
+  },
+  "page_errors": []
+}
