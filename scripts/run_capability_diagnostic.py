@@ -136,13 +136,14 @@ def publish(plan_path):
             text.append(f"\n{title}中，{n} 道题初始答错、直接补齐后答对。这些是本轮可诊断搜证的候选题。\n")
             for a,label in [("menu_agent","菜单"),("rich_agent","完整接口")]:
                 c=group["conditional"][a]
-                text.append(f"- {label}：{c['obtained_original_and_correct']}/{n} 取得原图且答对；"
+                text.append(f"- {label}：最终 {c['answered_correctly']}/{n} 答对；"
+                    f"{c['obtained_original_and_correct']} 题取得原图且答对；"
                     f"{c['did_not_obtain_original']} 题未取得原图；"
                     f"{c['obtained_original_but_wrong']} 题取得后仍答错。\n")
         report["models"][model]=grouped
     text.extend(["\n## 如何据此决策\n",
         "- 简单菜单成功、完整接口失败：先修工具接口与参数生成，不直接称为视觉能力不足。\n",
-        "- 补齐材料能答对，但菜单下不取证：这是搜索策略训练的候选失败案例，仍需复核题目。\n",
+        "- 补齐材料能答对，但菜单下不取证且仍答错：这是搜索策略训练的候选失败案例，仍需复核题目。\n",
         "- 取证后仍答错：检查多轮历史处理与证据整合。\n",
         "- 补齐材料也答错：先人工复核题目、来源标签与视觉可判断性，再区分感知能力不足。\n",
         "- 初始图片就能答对：该题不能用来证明索证收益；预览不能机械判为不充分。\n",
