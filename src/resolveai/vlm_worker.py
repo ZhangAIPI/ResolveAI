@@ -70,7 +70,7 @@ def parse_tool_call(raw, allow_unclosed=False):
 
 
 
-def portable_tools(messages, tools):
+def portable_tools(messages, tools, *, assistant_prefix=True):
     """Preserve every call/result/image for checkpoints whose templates ignore tools."""
     from copy import deepcopy
     messages = deepcopy(messages)
@@ -85,7 +85,9 @@ def portable_tools(messages, tools):
     messages = portable_history(messages)
     footer = ("Choose one available tool. Emit one <tool_call> JSON with exactly name and arguments, "
               "then </tool_call>. Use actual schema arguments; do not emit tool, function or cost keys. "
-              "No markdown. The assistant prefix below begins the required JSON.")
+              "No markdown.")
+    if assistant_prefix:
+        footer += " The assistant prefix below begins the required JSON."
     if isinstance(messages[-1].get("content"), str):
         messages[-1]["content"] += "\n" + footer
     else:
@@ -143,12 +145,19 @@ def main():
         request = json.loads(line)
         tool_mode = request.get("mode") == "tools"
         choice_mode = request.get("mode") == "choice"
-        if choice_mode:
+        text_mode = request.get("mode") == "text"
+        request_adapter = request.get("tool_adapter", adapter)
+        if request_adapter not in {"native", "portable"} or (request_adapter == "native" and not native):
+            raise ValueError("unsupported tool adapter")
+        use_prefix = request.get("assistant_prefix", True)
+        if type(use_prefix) is not bool:
+            raise ValueError("assistant_prefix must be boolean")
+        if choice_mode or text_mode:
             messages = materialize(request["messages"])
         elif tool_mode:
             messages = materialize(request["messages"])
-            if adapter == "portable":
-                messages = portable_tools(messages, request["tools"])
+            if request_adapter == "portable":
+                messages = portable_tools(messages, request["tools"], assistant_prefix=use_prefix)
         else:
             observation = request["observation"]
             content = [{"type": "text", "text": PROMPT + "\n" + json.dumps({
@@ -165,10 +174,10 @@ def main():
             if isinstance(message.get("content"), str):
                 message["content"] = [{"type": "text", "text": message["content"]}]
         started = time.perf_counter()
-        inputs = processor.apply_chat_template(messages, tools=request.get("tools") if adapter == "native" else None,
+        inputs = processor.apply_chat_template(messages, tools=request.get("tools") if tool_mode and request_adapter == "native" else None,
             tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt",
             **({"crop_to_patches": False} if model.config.model_type == "internvl" else {}))
-        prefix = '<tool_call>\n{"name":' if tool_mode and adapter == "portable" else ""
+        prefix = '<tool_call>\n{"name":' if tool_mode and request_adapter == "portable" and use_prefix else ""
         if prefix:
             prefix_ids = processor.tokenizer(prefix, add_special_tokens=False, return_tensors="pt").input_ids
             inputs["input_ids"] = torch.cat([inputs.input_ids, prefix_ids], dim=1)
@@ -199,13 +208,18 @@ def main():
                 "peak_memory_gb": torch.cuda.max_memory_allocated()/2**30}), flush=True)
             continue
         with torch.inference_mode():
-            generated = model.generate(**inputs, max_new_tokens=384 if tool_mode else 180, do_sample=False,
+            generated = model.generate(**inputs, max_new_tokens=request.get("max_new_tokens", 384 if tool_mode else 180), do_sample=False,
                                        pad_token_id=processor.tokenizer.eos_token_id)
         output = generated[:, inputs.input_ids.shape[1]:]
         raw = prefix + processor.batch_decode(output, skip_special_tokens=True)[0]
+        if text_mode:
+            print(json.dumps({"raw": raw, "input_tokens": int(inputs.input_ids.shape[1]),
+                "output_tokens": int(output.shape[1]), "latency_s": time.perf_counter()-started,
+                "peak_memory_gb": torch.cuda.max_memory_allocated()/2**30}), flush=True)
+            continue
         if tool_mode:
             try:
-                call, text = parse_tool_call(raw, allow_unclosed=adapter == "portable")
+                call, text = parse_tool_call(raw, allow_unclosed=request_adapter == "portable")
                 parse_error = False
             except (ValueError, TypeError):
                 call, text, parse_error = None, raw, True
