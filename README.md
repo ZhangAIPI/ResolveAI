@@ -6,6 +6,8 @@
 
 [**模型答题与工具接口的实际检查**](docs/results/interface_checks.zh-CN.md)
 
+[**三模型复测：具体回答、搜证失败与题池修复**](docs/results/repaired_checks.zh-CN.md)
+
 [首轮候选评测进度（历史）](docs/results/evaluation_progress.md)
 
 ![工具操作展示](docs/demo/assets/operations.webp)
@@ -36,7 +38,14 @@ supervision from prompts and reject unreviewed/proxy traces by default.
 
 ## Data and evaluation
 
-The fixed public benchmark contains **300 source images across all
+The current **v0.4.1 curation pool has 478 claim combinations and 1,912 release
+configurations**, built from 188 public state queries and 226 multiview source
+sequences. Normal references, explicit targets and resolution/wording controls
+make failures easier to diagnose. Independent visual-sufficiency review is still
+required before formal evaluation; these materials are not training supervision.
+See the [repair guide](docs/benchmark_v04.zh-CN.md).
+
+The historical resolution-release benchmark contains **300 source images across all
 15 MVTec AD categories and 1,200 availability cases**, excluding the 24 pilot images and one compatibility image used for development. See
 the [earlier pilot](docs/results/public_pilot.md). No future self-collected data is
 assumed. Static and full multi-turn policies use frozen Qwen3-VL-8B,

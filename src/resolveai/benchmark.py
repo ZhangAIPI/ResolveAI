@@ -71,7 +71,9 @@ def main():
         parser.error(str(error))
     v04 = dataset_manifest.get("protocol") == "benchmark-v0.4"
     adapter = args.tool_adapter or ("auto" if v04 else "portable")
-    prefix = not (args.no_assistant_prefix or v04)
+    # Native templates ignore prefixes. Portable checkpoints retain the
+    # scaffold unless explicitly ablated; removing it can break their calls.
+    prefix = not args.no_assistant_prefix
     if args.limit_families:
         families = sorted({c["family_id"] for c in cases})[:args.limit_families]
         cases = [c for c in cases if c["family_id"] in families]

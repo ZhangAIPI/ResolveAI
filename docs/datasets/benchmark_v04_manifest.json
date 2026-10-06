@@ -1,41 +1,58 @@
 {
   "protocol": "benchmark-v0.4",
+  "construction_revision": "0.4.1",
   "stage": "unreviewed-curation-pool",
   "formal_evaluation_ready": false,
-  "families": 872,
-  "cases": 3488,
+  "families": 478,
+  "cases": 1912,
   "tasks": {
-    "state": 194,
-    "identity": 678
+    "state": 188,
+    "identity": 290
   },
   "identity_constructions": {
-    "source-positive": 226,
-    "easy-negative": 226,
-    "same-category-candidate": 226
+    "same-category-candidate": 226,
+    "source-positive": 32,
+    "easy-negative": 32
   },
   "state_categories": {
-    "zipper": 18,
+    "zipper": 16,
     "screw": 20,
     "hazelnut": 20,
     "bottle": 20,
     "metal_nut": 20,
     "transistor": 20,
     "capsule": 20,
-    "cable": 19,
-    "pill": 17,
+    "cable": 18,
+    "pill": 14,
     "toothbrush": 20
   },
-  "unique_query_images": 194,
+  "unique_query_images": 188,
   "public_train_references": 10,
   "unique_co3d_sequences": 226,
   "preflight": {
-    "correct_request_and_unchanged_world": 872
+    "correct_request_and_unchanged_world": 478
+  },
+  "shortcut_audit": {
+    "scope": "source-derived construction labels; unknown pairs unscored",
+    "state_category_condition_oracle_majority": {
+      "matches": 94,
+      "cases": 188
+    },
+    "identity_category_resolution_oracle_majority": {
+      "matches": 32,
+      "cases": 64
+    },
+    "identity_equal_dimensions_rule": {
+      "matches": 32,
+      "cases": 64
+    },
+    "all_known_label_strata_balanced": true
   },
   "source_sha256": {
     "mvtec": "8a538286efbf85b1da309ad18fd00bc7361edcd03be210d6f1ce9a195b00a9d6",
     "co3d": "8d834a32126fc9bcc3ff1a6daf9fb0f3aed20ae2feaff635f61fc0b0201d782e"
   },
-  "cases_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+  "cases_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
   "scope": "Public development material. Not a fresh held-out benchmark or training supervision.",
   "grouping": "Share source-image and sequence groups across rewrites, pairs and availability versions.",
   "uncertainty": "Same-category pairs have unknown physical truth until visual review; no automatic negative label.",
@@ -43,10 +60,10 @@
     "MVTec AD: CC-BY-NC-SA-4.0",
     "CO3D: CC-BY-NC-4.0"
   ],
-  "storage": "Existing query images referenced in place; only official-train normal references downloaded.",
-  "construction_source_sha256": "f5311efb1018ec051928c97ff5090eb004a701e82db6d3783607bc5ba657a64e",
+  "storage": "Query images referenced in place; official-train references may be reused without copying.",
+  "construction_source_sha256": "80e30d7c1549e6938f01b4a0e1944b688869e4e41d8a07550313cd75e7cc595b",
   "exclusion_counts": {
-    "excluded_states": 106,
-    "excluded_identities": 74
+    "excluded_states": 112,
+    "excluded_identities": 268
   }
 }

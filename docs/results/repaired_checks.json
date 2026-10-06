@@ -1,0 +1,570 @@
+{
+  "complete": true,
+  "episodes": 456,
+  "source_commit": "6217b47",
+  "dataset_revision": "0.4 (historical, before shortcut repair)",
+  "scope": "Transport and acquisition diagnosis, not reviewed grounded accuracy",
+  "models": [
+    {
+      "complete": true,
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "families": 38,
+      "episodes": 152,
+      "metrics": {
+        "initial_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 15,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Refuted": 34,
+            "Supported": 3,
+            "Need more evidence": 1
+          }
+        },
+        "supplied_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 24,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 38,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Refuted": 28,
+            "Supported": 10
+          }
+        },
+        "portable_prefix_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 13,
+          "finished": 28,
+          "errors": 13,
+          "originals_obtained": 0,
+          "new_view_cases": 1,
+          "verdicts": {
+            "Refuted": 17,
+            "Supported": 7,
+            "Need more evidence": 4,
+            "None": 10
+          }
+        },
+        "auto_plain_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 15,
+          "finished": 30,
+          "errors": 18,
+          "originals_obtained": 2,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Refuted": 20,
+            "None": 8,
+            "Supported": 10
+          }
+        }
+      },
+      "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+    },
+    {
+      "complete": true,
+      "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "families": 38,
+      "episodes": 152,
+      "metrics": {
+        "initial_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 0,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Need more evidence": 37,
+            "Refuted": 1
+          }
+        },
+        "supplied_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 2,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 38,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Need more evidence": 33,
+            "Refuted": 5
+          }
+        },
+        "portable_prefix_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 0,
+          "finished": 19,
+          "errors": 36,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Need more evidence": 19,
+            "None": 19
+          }
+        },
+        "auto_plain_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 0,
+          "finished": 0,
+          "errors": 228,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "None": 38
+          }
+        }
+      },
+      "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+    },
+    {
+      "complete": true,
+      "model_id": "OpenGVLab/InternVL3_5-8B-HF",
+      "families": 38,
+      "episodes": 152,
+      "metrics": {
+        "initial_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 17,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Refuted": 37,
+            "Supported": 1
+          }
+        },
+        "supplied_text": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 21,
+          "finished": 38,
+          "errors": 0,
+          "originals_obtained": 38,
+          "new_view_cases": 0,
+          "verdicts": {
+            "Refuted": 33,
+            "Supported": 5
+          }
+        },
+        "portable_prefix_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 0,
+          "finished": 0,
+          "errors": 77,
+          "originals_obtained": 3,
+          "new_view_cases": 0,
+          "verdicts": {
+            "None": 38
+          }
+        },
+        "auto_plain_agent": {
+          "episodes": 38,
+          "known_label_cases": 32,
+          "source_label_matches": 0,
+          "finished": 0,
+          "errors": 228,
+          "originals_obtained": 0,
+          "new_view_cases": 0,
+          "verdicts": {
+            "None": 38
+          }
+        }
+      },
+      "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+    }
+  ],
+  "manifests": {
+    "qwen3": {
+      "configuration": {
+        "protocol": "repaired-check-v1",
+        "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+        "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+        "source_sha256": "f6233a3693fe6c26cdb28a3092274795b09c22107fb33d865165568063ec5f31",
+        "script_sha256": "8e56d28cdfa328a9edd88a152b69ba15d463b05b15653427a19a0474dedcc2eb",
+        "data_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+        "families": [
+          "case-74edd89ec9dc8c9ef338",
+          "case-44fd5f4334a92f667fc5",
+          "case-83e1e69518d482ef4109",
+          "case-d0e53fcb0eb388e6a1d2",
+          "case-6e5b561d47e1b47f064f",
+          "case-84726da18c39ea85a416",
+          "case-dbed18cf174c9677b615",
+          "case-acd0e4093c33d399b0ce",
+          "case-4723eb51d5338fcbbab0",
+          "case-642ae56026e94a478ebb",
+          "case-36844ddbf2737e3b4ee0",
+          "case-6146e69f35ec8c88325d",
+          "case-7107fb6ce66e5820ba6d",
+          "case-7fad0153c719cd089b4f",
+          "case-222c6c2972b06672480f",
+          "case-916206bdde88bef27fc5",
+          "case-71b8cfebbe5a036602e3",
+          "case-623b810655d8a5c6e376",
+          "case-34b138b6b9fcc6824172",
+          "case-dc86349c2f41289ea794",
+          "case-e7bfea26d147fa1c01a4",
+          "case-f3ef3a720edd1a3c552e",
+          "case-1e688e6208ebb40a4ab2",
+          "case-5f3570aff0075cfce6cb",
+          "case-4ca0bdc9023fb6ddf0f7",
+          "case-2462de3af747832feb12",
+          "case-8c9d51c74eec203b938c",
+          "case-81e0e8f4cfa94f3deadd",
+          "case-ba451534da84ef988051",
+          "case-5ebe8ae572d5aab88e3e",
+          "case-035e4ca9730fd6a3fcab",
+          "case-ea8807b1691a1c3a7a1e",
+          "case-aa88b43fddefd22c3288",
+          "case-a64d88e560addf16c7cd",
+          "case-e99887eab9a3c9787e88",
+          "case-a58b60a912dacc29a8ba",
+          "case-6b4789d7dc561bbf8b63",
+          "case-995af3c4557049fb0e18"
+        ],
+        "max_turns": 6,
+        "budget": 12,
+        "arms": [
+          "initial_text",
+          "supplied_text",
+          "portable_prefix_agent",
+          "auto_plain_agent"
+        ],
+        "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+      },
+      "source_commit": "6217b47be043d179f4f08ac700c1d5eaadb1ab20",
+      "slurm_job": "24895",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "worker": {
+        "ready": true,
+        "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+        "gpu": "NVIDIA RTX A6000",
+        "device": 0,
+        "tool_adapter": "native",
+        "model_type": "qwen3_vl",
+        "assistant_prefix": null,
+        "processor": "Qwen3VLProcessor",
+        "image_processor": "Qwen2VLImageProcessorFast",
+        "crop_to_patches": null
+      }
+    },
+    "qwen25": {
+      "configuration": {
+        "protocol": "repaired-check-v1",
+        "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+        "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+        "source_sha256": "f6233a3693fe6c26cdb28a3092274795b09c22107fb33d865165568063ec5f31",
+        "script_sha256": "8e56d28cdfa328a9edd88a152b69ba15d463b05b15653427a19a0474dedcc2eb",
+        "data_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+        "families": [
+          "case-74edd89ec9dc8c9ef338",
+          "case-44fd5f4334a92f667fc5",
+          "case-83e1e69518d482ef4109",
+          "case-d0e53fcb0eb388e6a1d2",
+          "case-6e5b561d47e1b47f064f",
+          "case-84726da18c39ea85a416",
+          "case-dbed18cf174c9677b615",
+          "case-acd0e4093c33d399b0ce",
+          "case-4723eb51d5338fcbbab0",
+          "case-642ae56026e94a478ebb",
+          "case-36844ddbf2737e3b4ee0",
+          "case-6146e69f35ec8c88325d",
+          "case-7107fb6ce66e5820ba6d",
+          "case-7fad0153c719cd089b4f",
+          "case-222c6c2972b06672480f",
+          "case-916206bdde88bef27fc5",
+          "case-71b8cfebbe5a036602e3",
+          "case-623b810655d8a5c6e376",
+          "case-34b138b6b9fcc6824172",
+          "case-dc86349c2f41289ea794",
+          "case-e7bfea26d147fa1c01a4",
+          "case-f3ef3a720edd1a3c552e",
+          "case-1e688e6208ebb40a4ab2",
+          "case-5f3570aff0075cfce6cb",
+          "case-4ca0bdc9023fb6ddf0f7",
+          "case-2462de3af747832feb12",
+          "case-8c9d51c74eec203b938c",
+          "case-81e0e8f4cfa94f3deadd",
+          "case-ba451534da84ef988051",
+          "case-5ebe8ae572d5aab88e3e",
+          "case-035e4ca9730fd6a3fcab",
+          "case-ea8807b1691a1c3a7a1e",
+          "case-aa88b43fddefd22c3288",
+          "case-a64d88e560addf16c7cd",
+          "case-e99887eab9a3c9787e88",
+          "case-a58b60a912dacc29a8ba",
+          "case-6b4789d7dc561bbf8b63",
+          "case-995af3c4557049fb0e18"
+        ],
+        "max_turns": 6,
+        "budget": 12,
+        "arms": [
+          "initial_text",
+          "supplied_text",
+          "portable_prefix_agent",
+          "auto_plain_agent"
+        ],
+        "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+      },
+      "source_commit": "6217b47be043d179f4f08ac700c1d5eaadb1ab20",
+      "slurm_job": "24895",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "worker": {
+        "ready": true,
+        "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/qwen25",
+        "gpu": "NVIDIA RTX A6000",
+        "device": 1,
+        "tool_adapter": "portable",
+        "model_type": "qwen2_5_vl",
+        "assistant_prefix": "<tool_call>\n{\"name\":",
+        "processor": "Qwen2_5_VLProcessor",
+        "image_processor": "Qwen2VLImageProcessorFast",
+        "crop_to_patches": null
+      }
+    },
+    "internvl35": {
+      "configuration": {
+        "protocol": "repaired-check-v1",
+        "model_id": "OpenGVLab/InternVL3_5-8B-HF",
+        "revision": "741a7d03020411e666c6109218ab71e08151ef86",
+        "source_sha256": "f6233a3693fe6c26cdb28a3092274795b09c22107fb33d865165568063ec5f31",
+        "script_sha256": "8e56d28cdfa328a9edd88a152b69ba15d463b05b15653427a19a0474dedcc2eb",
+        "data_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+        "families": [
+          "case-74edd89ec9dc8c9ef338",
+          "case-44fd5f4334a92f667fc5",
+          "case-83e1e69518d482ef4109",
+          "case-d0e53fcb0eb388e6a1d2",
+          "case-6e5b561d47e1b47f064f",
+          "case-84726da18c39ea85a416",
+          "case-dbed18cf174c9677b615",
+          "case-acd0e4093c33d399b0ce",
+          "case-4723eb51d5338fcbbab0",
+          "case-642ae56026e94a478ebb",
+          "case-36844ddbf2737e3b4ee0",
+          "case-6146e69f35ec8c88325d",
+          "case-7107fb6ce66e5820ba6d",
+          "case-7fad0153c719cd089b4f",
+          "case-222c6c2972b06672480f",
+          "case-916206bdde88bef27fc5",
+          "case-71b8cfebbe5a036602e3",
+          "case-623b810655d8a5c6e376",
+          "case-34b138b6b9fcc6824172",
+          "case-dc86349c2f41289ea794",
+          "case-e7bfea26d147fa1c01a4",
+          "case-f3ef3a720edd1a3c552e",
+          "case-1e688e6208ebb40a4ab2",
+          "case-5f3570aff0075cfce6cb",
+          "case-4ca0bdc9023fb6ddf0f7",
+          "case-2462de3af747832feb12",
+          "case-8c9d51c74eec203b938c",
+          "case-81e0e8f4cfa94f3deadd",
+          "case-ba451534da84ef988051",
+          "case-5ebe8ae572d5aab88e3e",
+          "case-035e4ca9730fd6a3fcab",
+          "case-ea8807b1691a1c3a7a1e",
+          "case-aa88b43fddefd22c3288",
+          "case-a64d88e560addf16c7cd",
+          "case-e99887eab9a3c9787e88",
+          "case-a58b60a912dacc29a8ba",
+          "case-6b4789d7dc561bbf8b63",
+          "case-995af3c4557049fb0e18"
+        ],
+        "max_turns": 6,
+        "budget": 12,
+        "arms": [
+          "initial_text",
+          "supplied_text",
+          "portable_prefix_agent",
+          "auto_plain_agent"
+        ],
+        "scope": "unreviewed development source-label agreement; unknown identity pairs unscored"
+      },
+      "source_commit": "6217b47be043d179f4f08ac700c1d5eaadb1ab20",
+      "slurm_job": "24895",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "worker": {
+        "ready": true,
+        "model": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/internvl35",
+        "gpu": "NVIDIA RTX A6000",
+        "device": 2,
+        "tool_adapter": "portable",
+        "model_type": "internvl",
+        "assistant_prefix": "<tool_call>\n{\"name\":",
+        "processor": "InternVLProcessor",
+        "image_processor": "GotOcr2ImageProcessorFast",
+        "crop_to_patches": false
+      }
+    }
+  },
+  "binding_probe": {
+    "source_commit": "5d09620",
+    "qualitative_only": true,
+    "responses": [
+      {
+        "kind": "identity_fifo_metadata",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "Refuted",
+          "verdict": {
+            "verdict": "Refuted"
+          },
+          "termination": "finished"
+        }
+      },
+      {
+        "kind": "identity_sorted_metadata",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "Need more evidence",
+          "verdict": {
+            "verdict": "Need more evidence"
+          },
+          "termination": "finished"
+        }
+      },
+      {
+        "kind": "identity_single_A",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "The main foreground object is a wooden bench with slatted seating, placed on a concrete surface.",
+          "input_tokens": 348,
+          "output_tokens": 20,
+          "latency_s": 0.631713823066093,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "identity_single_B",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "The main foreground object is a book titled \"Soul Fire\" by Jack Weyoff, lying on a wooden floor.",
+          "input_tokens": 257,
+          "output_tokens": 26,
+          "latency_s": 0.7538961360696703,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "identity_kind_ab",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "The foreground object in Image A is a wooden bench, while the foreground object in Image B is a book. No, they are not the same kind of object; one is furniture (a bench) and the other is a book.",
+          "input_tokens": 583,
+          "output_tokens": 48,
+          "latency_s": 1.5366407900583,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "identity_kind_ba",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "The foreground object in Image A is a wooden bench, and the foreground object in Image B is a book lying on a wooden floor. They are not the same kind of object; one is furniture (a bench), and the other is a book.",
+          "input_tokens": 583,
+          "output_tokens": 51,
+          "latency_s": 1.5261977519840002,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "identity_plain_verdict",
+        "family_id": "case-74edd89ec9dc8c9ef338",
+        "response": {
+          "raw": "Refuted.",
+          "input_tokens": 596,
+          "output_tokens": 4,
+          "latency_s": 0.2960765149910003,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "state_fifo_metadata",
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "response": {
+          "raw": "Need more evidence",
+          "verdict": {
+            "verdict": "Need more evidence"
+          },
+          "termination": "finished"
+        }
+      },
+      {
+        "kind": "state_sorted_metadata",
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "response": {
+          "raw": "Need more evidence",
+          "verdict": {
+            "verdict": "Need more evidence"
+          },
+          "termination": "finished"
+        }
+      },
+      {
+        "kind": "state_plain_reference_first",
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "response": {
+          "raw": "Need more evidence",
+          "input_tokens": 722,
+          "output_tokens": 4,
+          "latency_s": 0.3195759340887889,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "state_plain_target_first",
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "response": {
+          "raw": "Need more evidence.",
+          "input_tokens": 722,
+          "output_tokens": 5,
+          "latency_s": 0.34607653599232435,
+          "peak_memory_gb": 15.746312618255615
+        }
+      },
+      {
+        "kind": "state_plain_single_target",
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "response": {
+          "raw": "Supported",
+          "input_tokens": 389,
+          "output_tokens": 2,
+          "latency_s": 0.1800045589916408,
+          "peak_memory_gb": 15.746312618255615
+        }
+      }
+    ]
+  }
+}

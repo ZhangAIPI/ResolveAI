@@ -1,0 +1,32 @@
+{
+  "scope": "Source-derived construction audit; not MLLM performance or independently reviewed visual labels",
+  "historical_v04": {
+    "cases_sha256": "41d5ff46f527e51339ea0d42bbc2668b1eecda8acfddcf2dfe1a94f0a1ff8041",
+    "identity_equal_dimensions_rule": {
+      "matches": 452,
+      "cases": 452
+    },
+    "state_category_condition_oracle_majority": {
+      "matches": 121,
+      "cases": 194
+    }
+  },
+  "current_v041": {
+    "cases_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+    "scope": "source-derived construction labels; unknown pairs unscored",
+    "state_category_condition_oracle_majority": {
+      "matches": 94,
+      "cases": 188
+    },
+    "identity_category_resolution_oracle_majority": {
+      "matches": 32,
+      "cases": 64
+    },
+    "identity_equal_dimensions_rule": {
+      "matches": 32,
+      "cases": 64
+    },
+    "all_known_label_strata_balanced": true
+  },
+  "repair": "Match native resolutions across positive/negative controls; pair normal/anomaly claim wording; no image edits"
+}

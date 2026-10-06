@@ -7,7 +7,7 @@ import unittest
 
 from PIL import Image
 
-from resolveai.curation import identity_families, variants
+from resolveai.curation import identity_families, variants, balanced_state_criteria
 from resolveai.environment import Environment
 from resolveai.review import merge_votes, require_admitted, reviewed_outcome, availability_class, admit
 from resolveai.vlm_worker import parse_tool_call
@@ -184,6 +184,18 @@ class ReviewTests(unittest.TestCase):
         self.assertTrue(audit["decision_matches_current_evidence"])
         self.assertFalse(audit["unused_obtainable_evidence"])
 
+    def test_claim_words_have_opposite_label_controls_without_reusing_queries(self):
+        cases = [{"family_id": str(i), "provenance": {"category": "capsule", "defect_label": label}}
+                 for i, label in enumerate(["good", "good", "good", "crack", "scratch", "combined"])]
+        criteria = balanced_state_criteria(cases)
+        self.assertEqual(len(criteria), 4)
+        for condition in set(criteria.values()):
+            labels = [cases[int(f)]["provenance"]["defect_label"] for f, value in criteria.items()
+                      if value == condition]
+            self.assertEqual(labels.count("good"), 1)
+            self.assertEqual(len(labels), 2)
+        self.assertNotIn("5", criteria)
+
     def test_same_category_other_sequence_is_unknown_not_negative(self):
         co3d = self.root / "co3d"
         co3d.mkdir()
@@ -191,6 +203,8 @@ class ReviewTests(unittest.TestCase):
         for category in ["chair", "cup"]:
             for seq in ["one", "two"]:
                 ids = [category + seq + str(i) for i in range(4)]
+                for image_id in ids:
+                    Image.new("RGB", (32, 32), "white").save(co3d / (image_id + ".png"))
                 rows = [{"id": image_id, "source_id": image_id, "path": image_id + ".png",
                          "party": "submitted", "object": "item", "time": "capture",
                          "view": f"view-{i+1:02d}", "available": True} for i, image_id in enumerate(ids)]
@@ -206,6 +220,13 @@ class ReviewTests(unittest.TestCase):
         self.assertTrue(all(f["provenance_truth"] is None for f in unknown))
         self.assertTrue(all(f["annotation"]["subclaims"][0]["truth"] == "uncertain" for f in unknown))
         self.assertTrue(all(len(f["evidence"]) == 5 for f, _ in families))
+        for image_id in [r["id"] for c in cases if c["category"] == "cup" for r in c["evidence"]
+                         if not r["id"].endswith("-preview")]:
+            Image.new("RGB", (64, 32), "white").save(co3d / (image_id + ".png"))
+        unmatched, omitted = identity_families(co3d, self.root)
+        self.assertEqual(len(unmatched), 4)
+        self.assertTrue(all(f["provenance_truth"] is None for f, _ in unmatched))
+        self.assertTrue(all(e["reason"] == "unmatched-resolution-controls-omitted" for e in omitted))
 
 
 if __name__ == "__main__":

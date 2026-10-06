@@ -76,7 +76,7 @@ def variants(family, withheld):
         yield case
 
 
-def reference_images(mvtec, output, runtime):
+def reference_images(mvtec, output, runtime, reuse=None):
     metadata = json.loads((mvtec / "mvtec_samples.json").read_text())["samples"]
     references = {}
     for category in sorted(CONDITIONS):
@@ -86,7 +86,11 @@ def reference_images(mvtec, output, runtime):
             raise ValueError("official training reference absent: " + category)
         normal.sort(key=lambda r: stable("reference|" + r["_id"]["$oid"]))
         row = normal[0]
-        path = fetch(BASE + "/" + row["filepath"], output / "references" / (category + ".png"))
+        path = reuse / "references" / (category + ".png") if reuse else None
+        if path is None:
+            path = fetch(BASE + "/" + row["filepath"], output / "references" / (category + ".png"))
+        if not path.resolve().is_relative_to(runtime) or not path.is_file():
+            raise ValueError("Reference must exist under the private asset root")
         with Image.open(path) as image:
             size = list(image.size)
         references[category] = {
@@ -100,9 +104,33 @@ def reference_images(mvtec, output, runtime):
     return references
 
 
+def balanced_state_criteria(sources):
+    """Pair each concrete anomaly claim with a distinct normal query.
+
+    Identical category/condition wording has both labels equally often. Spare
+    normals are left out rather than creating a text-only majority shortcut.
+    """
+    groups = defaultdict(list)
+    for case in sources:
+        groups[case["provenance"]["category"]].append(case)
+    criteria = {}
+    for category, bucket in groups.items():
+        if category not in CONDITIONS:
+            continue
+        normal = sorted((c for c in bucket if c["provenance"]["defect_label"] == "good"),
+                        key=lambda c: stable(c["family_id"]))
+        abnormal = sorted((c for c in bucket if c["provenance"]["defect_label"] in CONDITIONS[category]),
+                          key=lambda c: stable(c["family_id"]))
+        for good, bad in zip(normal, abnormal):
+            condition = CONDITIONS[category][bad["provenance"]["defect_label"]]
+            criteria[good["family_id"]] = criteria[bad["family_id"]] = condition
+    return criteria
+
+
 def state_families(mvtec, references, runtime):
     sources = [c for c in json.loads((mvtec / "cases.json").read_text()) if c["variant"] == "Obtainable"]
     families, excluded = [], []
+    criteria = balanced_state_criteria(sources)
     for case in sorted(sources, key=lambda c: stable(c["family_id"])):
         category = case["provenance"]["category"]
         label = case["provenance"]["defect_label"]
@@ -110,8 +138,11 @@ def state_families(mvtec, references, runtime):
             excluded.append({"family_id": case["family_id"], "category": category, "defect_label": label,
                              "reason": "texture-auxiliary" if category in TEXTURES else "condition-needs-definition"})
             continue
-        choices = sorted(set(CONDITIONS[category].values()))
-        criterion = choices[int(stable(case["family_id"])[:8], 16) % len(choices)] if label == "good" else CONDITIONS[category][label]
+        if case["family_id"] not in criteria:
+            excluded.append({"family_id": case["family_id"], "category": category, "defect_label": label,
+                             "reason": "no-opposite-label-condition-match"})
+            continue
+        criterion = criteria[case["family_id"]]
         evidence = deepcopy(case["evidence"])
         for row in evidence:
             row["path"] = str((mvtec / row["path"]).relative_to(runtime))
@@ -157,13 +188,27 @@ def identity_families(co3d, runtime):
     for bucket in groups.values():
         bucket.sort(key=lambda c: stable(c["family_id"]))
     categories = sorted(groups)
+    signatures = {}
+    for bucket in groups.values():
+        for case in bucket:
+            sizes = []
+            for row in case["evidence"]:
+                if not row["id"].endswith("-preview"):
+                    with Image.open(co3d / row["path"]) as image:
+                        sizes.append(image.size)
+            signatures[case["family_id"]] = tuple(sizes[:2] + sizes[-2:])
     families = []
     for n, category in enumerate(categories):
         for index, anchor in enumerate(groups[category]):
-            choices = [
-                ("source-positive", anchor),
-                ("easy-negative", groups[categories[(n + 1) % len(categories)]][index % len(groups[categories[(n + 1) % len(categories)]])]),
-            ]
+            # The same camera resolution must occur under both source labels.
+            # Keep hard unknown pairs even when no matched easy control exists.
+            matched = [c for other in categories if other != category for c in groups[other]
+                       if signatures[c["family_id"]] == signatures[anchor["family_id"]]]
+            matched.sort(key=lambda c: stable(anchor["family_id"] + "|" + c["family_id"]))
+            choices = [("source-positive", anchor), ("easy-negative", matched[0])] if matched else []
+            if not matched:
+                excluded.append({"family_id": anchor["family_id"],
+                                 "reason": "unmatched-resolution-controls-omitted"})
             if len(groups[category]) > 1:
                 choices.append(("same-category-candidate", groups[category][(index + 1) % len(groups[category])]))
             for kind, partner in choices:
@@ -215,14 +260,14 @@ def identity_families(co3d, runtime):
     return families, excluded
 
 
-def prepare(mvtec, co3d, output):
+def prepare(mvtec, co3d, output, *, references_from=None):
     if output.exists():
         raise ValueError("Use a fresh directory; never overwrite frozen datasets")
     runtime = mvtec.parent.resolve()
     if co3d.parent.resolve() != runtime or not output.resolve().is_relative_to(runtime):
         raise ValueError("Use the shared p62 runtime as the private asset root")
     output.mkdir(parents=True)
-    refs = reference_images(mvtec, output, runtime)
+    refs = reference_images(mvtec, output, runtime, references_from)
     states, excluded_states = state_families(mvtec, refs, runtime)
     identities, excluded_identities = identity_families(co3d, runtime)
     families = states + identities
@@ -242,7 +287,7 @@ def prepare(mvtec, co3d, output):
     path = output / "cases.json"
     path.write_text(json.dumps(cases, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     manifest = {
-        "protocol": "benchmark-v0.4", "stage": "unreviewed-curation-pool", "formal_evaluation_ready": False,
+        "protocol": "benchmark-v0.4", "construction_revision": "0.4.1", "stage": "unreviewed-curation-pool", "formal_evaluation_ready": False,
         "families": len(families), "cases": len(cases),
         "tasks": dict(Counter(f["task"] for f, _ in families)),
         "identity_constructions": dict(Counter(f["provenance"]["construction"] for f, _ in identities)),
@@ -250,6 +295,7 @@ def prepare(mvtec, co3d, output):
         "unique_query_images": len(states), "public_train_references": len(refs),
         "unique_co3d_sequences": len({g for f, _ in identities for g in f["group_ids"]}),
         "preflight": {"correct_request_and_unchanged_world": checked},
+        "shortcut_audit": audit_shortcuts(cases, runtime),
         "excluded_states": excluded_states, "excluded_identities": excluded_identities,
         "source_sha256": {name: hashlib.sha256((root / "cases.json").read_bytes()).hexdigest()
                           for name, root in [("mvtec", mvtec), ("co3d", co3d)]},
@@ -258,7 +304,8 @@ def prepare(mvtec, co3d, output):
         "grouping": "Share source-image and sequence groups across rewrites, pairs and availability versions.",
         "uncertainty": "Same-category pairs have unknown physical truth until visual review; no automatic negative label.",
         "licenses": ["MVTec AD: CC-BY-NC-SA-4.0", "CO3D: CC-BY-NC-4.0"],
-        "storage": "Existing query images referenced in place; only official-train normal references downloaded.",
+        "storage": "Query images referenced in place; official-train references may be reused without copying.",
+        "construction_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
     }
     (output / "dataset_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (output / "review_template.json").write_text(json.dumps({
@@ -271,6 +318,35 @@ def prepare(mvtec, co3d, output):
     return manifest
 
 
+def audit_shortcuts(cases, runtime):
+    """Construction-label audits; these do not measure visual correctness."""
+    states, identities = defaultdict(Counter), defaultdict(Counter)
+    dimension_matches = identity_count = 0
+    for case in cases:
+        if case["variant"] != "Obtainable" or not case.get("provenance_truth"):
+            continue
+        truth = case["provenance_truth"]
+        if case["task"] == "state":
+            states[(case["category"], case["provenance"]["criterion"])][truth] += 1
+        else:
+            sizes = []
+            for row in case["evidence"][:4]:
+                with Image.open(Path(runtime) / row["path"]) as image:
+                    sizes.append(image.size)
+            identities[(case["category"], tuple(sizes))][truth] += 1
+            prediction = "Supported" if sizes[0] == sizes[-1] else "Refuted"
+            dimension_matches += prediction == truth
+            identity_count += 1
+    majority = lambda groups: {"matches": sum(max(g.values()) for g in groups.values()),
+                              "cases": sum(sum(g.values()) for g in groups.values())}
+    return {"scope": "source-derived construction labels; unknown pairs unscored",
+            "state_category_condition_oracle_majority": majority(states),
+            "identity_category_resolution_oracle_majority": majority(identities),
+            "identity_equal_dimensions_rule": {"matches": dimension_matches, "cases": identity_count},
+            "all_known_label_strata_balanced": all(g["Supported"] == g["Refuted"]
+                                                 for g in [*states.values(), *identities.values()])}
+
+
 class NoOCR:
     available = False
 
@@ -280,8 +356,10 @@ def main():
     parser.add_argument("mvtec", type=Path)
     parser.add_argument("co3d", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--references-from", type=Path, help="Reuse an existing pack's normal references")
     args = parser.parse_args()
-    manifest = prepare(args.mvtec.resolve(), args.co3d.resolve(), args.output.resolve())
+    manifest = prepare(args.mvtec.resolve(), args.co3d.resolve(), args.output.resolve(),
+                       references_from=args.references_from.resolve() if args.references_from else None)
     print(json.dumps({k: v for k, v in manifest.items() if not k.startswith("excluded_")}, indent=2))
 
 

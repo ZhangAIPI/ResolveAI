@@ -54,3 +54,21 @@ proposal have not been independently checked in this implementation task.
 ## Paired capability diagnostic complete: 2026-10-05
 
 Job 24872 ran Qwen3-VL-8B, Qwen2.5-VL-7B and InternVL3.5-8B on the four A6000 GPUs in sclera, with all code/data/results on p62. All 2,160 episodes are recorded; all 120 scripted retrieval checks passed without changing world state. [Results](results/capability_diagnostic.md) separate final label agreement from receiving an original. Frozen model code was f304912; later documentation commits do not change these runs. Next: validate answer/tool adapters and review visual judgeability before using failures as training evidence.
+
+## Benchmark repair and interface diagnosis: 2026-10-05
+
+All three models completed the paired 456-episode development diagnosis in job
+24895 (50m27s); the allocation exited normally. Job 24911 completed 12 qualitative
+Qwen2.5 input-binding checks. These runs explain interface/acquisition failures;
+they are not reviewed benchmark scores. See the
+[Chinese examples and results](results/repaired_checks.zh-CN.md).
+
+The current v0.4.1 pool on sclera/p62 contains 478 combinations and 1,912 release
+configurations: 188 state queries, 32 positive and 32 resolution-matched negative
+identity controls, plus 226 unlabelled same-category identity candidates. It
+references existing photos and normal-reference files without copying them.
+All 478 retrieval/immutable-world preflights and 62 software checks passed.
+[Construction audits](results/shortcut_audit.json) show the repaired dimension and
+claim-wording rules match 50% of their balanced binary source labels. Independent
+visual truth and sufficient-evidence review remains pending; formal scoring and
+training exports reject unreviewed material.
