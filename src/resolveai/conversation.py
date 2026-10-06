@@ -18,8 +18,8 @@ shown in tool responses. Retain previous observations; finish when evidence is
 sufficient or more useful material cannot be obtained. Cite released image_id,
 source-pixel rectangles and the source time, not source_id or derived view_id.
 source_id records provenance and may name an unreleased original. A preview is
-referenced by its own image_id and cannot substitute for unseen full-resolution
-evidence. Need more evidence may use an empty citations list. For a
+referenced by its own image_id. Its visible pixels may suffice for a judgment,
+but never claim details that require an unseen original. Need more evidence may use an empty citations list. For a
 conjunction, support all subclaims; one decisive counterexample can refute it.
 For cross-image identity or time claims, provide explicit finish links between
 original source regions (same_object/different_object/earlier_than/same_time).

@@ -49,6 +49,8 @@ def main():
     parser.add_argument("--revision", required=True)
     parser.add_argument("--grounding-root", type=Path, required=True)
     parser.add_argument("--device", type=int, default=0)
+    parser.add_argument("--tool-adapter", choices=["auto", "portable"])
+    parser.add_argument("--no-assistant-prefix", action="store_true")
     parser.add_argument("--budget", type=int, default=12)
     parser.add_argument("--max-turns", type=int, default=16)
     parser.add_argument("--max-context-tokens", type=int, default=8192)
@@ -60,7 +62,16 @@ def main():
         parser.error("invalid shard bounds")
     if args.max_turns < 1 or args.budget < 0 or args.max_context_tokens < 1:
         parser.error("invalid rollout bounds")
+    dataset_manifest = json.loads((args.data / "dataset_manifest.json").read_text())
     cases = json.loads((args.data / "cases.json").read_text())
+    from .review import require_admitted
+    try:
+        require_admitted(dataset_manifest, cases)
+    except ValueError as error:
+        parser.error(str(error))
+    v04 = dataset_manifest.get("protocol") == "benchmark-v0.4"
+    adapter = args.tool_adapter or ("auto" if v04 else "portable")
+    prefix = not (args.no_assistant_prefix or v04)
     if args.limit_families:
         families = sorted({c["family_id"] for c in cases})[:args.limit_families]
         cases = [c for c in cases if c["family_id"] in families]
@@ -75,7 +86,7 @@ def main():
         "source_sha256": source_digest(), "model_id": args.model_id, "revision": args.revision,
         "grounding_manifest": json.loads((args.grounding_root / "manifest.json").read_text()),
         "budget": args.budget, "max_turns": args.max_turns, "max_context_tokens": args.max_context_tokens,
-        "policies": ["initial", "agent"], "tool_adapter": "portable-prefix-v1",
+        "policies": ["initial", "agent"], "tool_adapter": adapter, "assistant_prefix": prefix,
         "costs": asdict(Costs()), "limit_families": args.limit_families,
         "shards": args.shards, "shard_index": args.shard_index, "selected_families": len(families),
         "decoding": {"do_sample": False, "max_new_tokens": 384},
@@ -99,7 +110,7 @@ def main():
         return
     backend = FrozenGrounding(args.grounding_root, device=f"cuda:{args.device}")
     store = TrajectoryStore(args.output / "trajectories.jsonl")
-    client = ModelClient(args.model, args.device, "portable")
+    client = ModelClient(args.model, args.device, adapter, assistant_prefix=prefix)
     manifest["worker"] = client.ready
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     try:
@@ -108,7 +119,7 @@ def main():
                 for policy in config["policies"]:
                     if (case["case_id"], policy) in completed:
                         continue
-                    env = Environment(case, args.data, args.budget, grounding_backend=backend)
+                    env = Environment(case, case.get("asset_root", args.data), args.budget, grounding_backend=backend)
                     session = Conversation(env)
                     if policy == "initial":
                         session.tools = [t for t in session.tools if t["function"]["name"] == "finish"]

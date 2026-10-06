@@ -52,7 +52,12 @@ def materialize(messages):
     return messages
 
 
-def parse_tool_call(raw, allow_unclosed=False):
+def parse_tool_call(raw, allow_unclosed=False, allow_bare=False):
+    if allow_bare and raw.strip().startswith("{"):
+        # A complete plain function JSON is an alternative transport encoding.
+        # json.loads rejects trailing prose or a second call; never repair args.
+        json.loads(raw)
+        raw = "<tool_call>" + raw.strip() + "</tool_call>"
     if allow_unclosed and raw.startswith("<tool_call>") and "</tool_call>" not in raw:
         # Some portable models terminate after a complete JSON object. Delimiters
         # are transport syntax; never infer a missing function or argument.
@@ -219,7 +224,8 @@ def main():
             continue
         if tool_mode:
             try:
-                call, text = parse_tool_call(raw, allow_unclosed=request_adapter == "portable")
+                call, text = parse_tool_call(raw, allow_unclosed=request_adapter == "portable",
+                                             allow_bare=request_adapter == "portable" and not use_prefix)
                 parse_error = False
             except (ValueError, TypeError):
                 call, text, parse_error = None, raw, True

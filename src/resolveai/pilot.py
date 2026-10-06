@@ -23,7 +23,8 @@ def transport(observation):
 
 
 class ModelClient:
-    def __init__(self, model, device=0, tool_adapter="auto"):
+    def __init__(self, model, device=0, tool_adapter="auto", *, assistant_prefix=True):
+        self.assistant_prefix = assistant_prefix
         self.process = subprocess.Popen([sys.executable, "-m", "resolveai.vlm_worker", str(model),
             "--device", str(device), "--tool-adapter", tool_adapter],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
@@ -44,7 +45,8 @@ class ModelClient:
         return json.loads(line)
 
     def ask_conversation(self, payload, max_context_tokens=8192):
-        self.process.stdin.write(json.dumps({**payload, "max_context_tokens": max_context_tokens}) + "\n")
+        self.process.stdin.write(json.dumps({"assistant_prefix": self.assistant_prefix, **payload,
+                                            "max_context_tokens": max_context_tokens}) + "\n")
         self.process.stdin.flush()
         line = self.process.stdout.readline()
         if not line:

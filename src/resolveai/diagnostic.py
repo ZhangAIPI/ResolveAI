@@ -11,6 +11,7 @@ import hashlib
 from io import BytesIO
 import itertools
 import json
+import re
 from pathlib import Path
 import string
 import time
@@ -183,6 +184,44 @@ def direct(env, case, client):
             "termination": response.get("halt", "finished"), "errors": 0,
             "requests": 0, "tool_calls": 0, "generation": [response],
             "wall_latency_s": time.perf_counter() - started, "request_events": []}
+
+
+def parse_verdict(raw):
+    """Invalid text is a format failure, never an invented abstention."""
+    match = re.fullmatch(r"\s*(?:VERDICT:\s*)?(Supported|Refuted|Need more evidence)\s*[.!]?\s*", raw)
+    return match.group(1) if match else None
+
+
+def text_direct(env, case, client):
+    started = time.perf_counter()
+    system = (
+        "Verify the stated visual claim from the supplied pictures. Supported requires visible "
+        "evidence for the stated fact; Refuted requires a reliable visible contradiction. "
+        "Use Need more evidence when the pixels do not permit a reliable judgment. "
+        "Missing an original alone does not require abstention. Do not infer responsibility. "
+    )
+    if case.get("task") == "identity":
+        system += (
+            "Compare the specified foreground targets. A reliable mismatch of object geometry "
+            "or distinctive features can refute identity. Similar appearance alone does not "
+            "establish the same physical item. Submission slots do not encode identity. "
+        )
+    else:
+        system += (
+            "Judge only the named condition. A normal reference is a different specimen, "
+            "not a before photo. Other unusual features do not establish this claim. "
+        )
+    messages = [{"role": "system", "content": system},
+                {"role": "user", "content": content_for(public_observation(env, case))},
+                {"role": "user", "content": "Reply with exactly one verdict: Supported, Refuted, or Need more evidence."}]
+    response = client.ask_conversation({"mode": "text", "messages": messages, "max_new_tokens": 96})
+    verdict = parse_verdict(response.get("raw", ""))
+    messages.append({"role": "assistant", "content": response.get("raw", "")})
+    return {"messages": messages, "decision": {"verdict": verdict} if verdict else None,
+            "termination": response.get("halt", "finished" if verdict else "invalid_decision"),
+            "errors": int(verdict is None and not response.get("halt")),
+            "requests": 0, "tool_calls": 0, "generation": [response], "request_events": [],
+            "wall_latency_s": time.perf_counter() - started}
 
 
 def menu_rollout(env, case, client, max_turns):
