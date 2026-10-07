@@ -6,7 +6,9 @@ let token = decodeURIComponent(location.hash.slice(1)),
   marked = new Set(),
   imageCache = new Map(),
   busy = false,
-  invitations = [];
+  invitations = [],
+  participantResults = null,
+  resultPhotoURLs = [];
 const $ = (id) => document.getElementById(id);
 async function api(path, body) {
   const r = await fetch("/api/" + path, {
@@ -24,9 +26,15 @@ async function api(path, body) {
   return data;
 }
 function section(id) {
-  ["welcome", "intro", "task", "saved", "done", "admin"].forEach(
-    (name) => ($(name).hidden = name !== id),
-  );
+  [
+    "welcome",
+    "intro",
+    "task",
+    "saved",
+    "done",
+    "admin",
+    "participant-results",
+  ].forEach((name) => ($(name).hidden = name !== id));
   $("error").textContent = "";
   if (id !== "task") $("step-count").textContent = "";
 }
@@ -46,6 +54,229 @@ async function guarded(fn) {
     document.querySelectorAll("button").forEach((b) => (b.disabled = false));
   }
 }
+
+function resultNode(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+function clearResultPhotos() {
+  resultPhotoURLs.forEach((url) => URL.revokeObjectURL(url));
+  resultPhotoURLs = [];
+}
+function resultVerdict(task) {
+  if (!task.verdict)
+    return task.status === "submitted"
+      ? t("recordedNoDecision", task.saved_status || "unknown")
+      : t("noDecision");
+  return t(
+    task.verdict === "Need more evidence"
+      ? "uncertain"
+      : task.task === "identity"
+        ? task.verdict === "Supported"
+          ? "same"
+          : "different"
+        : task.verdict === "Supported"
+          ? "supported"
+          : "refuted",
+  );
+}
+function actionLabel(event, task) {
+  const action = event.action || {};
+  const imageNumber = (ref) => {
+    const index = task.images.findIndex((p) => p.view_id === ref);
+    return index < 0 ? ref : String(index + 1);
+  };
+  const keys = {
+    inspect: "inspectAction",
+    compare: "compareAction",
+    crop: "crop",
+    zoom: action.factor >= 1 ? "zoomIn" : "zoomOut",
+    ocr: "ocr",
+    request_photo: "requestAction",
+    finish: "finishAction",
+  };
+  let label = t(keys[action.type] || action.type || "actionDone");
+  if (action.image_id) label += " · " + imageNumber(action.image_id);
+  if (action.image_ids)
+    label += " · " + action.image_ids.map(imageNumber).join(" / ");
+  if (action.bbox) label += " · [" + action.bbox.join(", ") + "]";
+  if (action.type === "zoom") label += " × " + action.factor;
+  if (action.type === "request_photo") {
+    const query = action.query || {};
+    const object =
+      query.object === "subject-A"
+        ? t("subjectA")
+        : query.object === "subject-B"
+          ? t("subjectB")
+          : t("target");
+    const view =
+      query.view === "original"
+        ? t("raw")
+        : query.view === "overview"
+          ? t("overview")
+          : query.view?.startsWith("view-")
+            ? t("view", query.view.slice(5))
+            : query.view;
+    label += " · " + t("resultRequest", object, view || "");
+    label +=
+      " · " +
+      t(
+        event.result?.status === "provided"
+          ? "requestSucceeded"
+          : "requestUnavailable",
+      );
+  }
+  if (event.error)
+    label += " · " + t("actionFailed") + " (" + event.error.code + ")";
+  return label;
+}
+async function loadResultPhotos(container, task, actor) {
+  const images = await Promise.all(
+    task.images.map(async (picture, index) => {
+      const path = [actor, task.index, picture.view_id]
+        .map(encodeURIComponent)
+        .join("/");
+      const response = await fetch("/api/admin-image/" + path, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      if (!response.ok) throw Error(t("imageFailed"));
+      const url = URL.createObjectURL(await response.blob());
+      // A pending request may finish after the organizer leaves this page.
+      if (!container.isConnected) {
+        URL.revokeObjectURL(url);
+        return null;
+      }
+      resultPhotoURLs.push(url);
+      const figure = resultNode("figure");
+      const image = document.createElement("img");
+      image.src = url;
+      image.alt = actorText(picture) + " " + (index + 1);
+      figure.append(
+        image,
+        resultNode(
+          "figcaption",
+          actorText(picture) +
+            " · " +
+            t("resultImage", index + 1, ...picture.display_size),
+        ),
+      );
+      return figure;
+    }),
+  );
+  container.replaceChildren(...images.filter(Boolean));
+}
+function showResults(data) {
+  clearResultPhotos();
+  participantResults = data;
+  section("participant-results");
+  $("results-title").textContent = t("resultsTitle", data.actor);
+  $("results-summary").textContent = t(
+    "resultsSummary",
+    data.completed,
+    data.total,
+  );
+  const tasks = data.tasks.map((task) => {
+    const card = resultNode("details", undefined, "result-task");
+    card.open = task.index === 0;
+    card.append(
+      resultNode(
+        "summary",
+        t("resultTask", task.index + 1, t(task.mode), t(task.status)),
+      ),
+    );
+    card.append(
+      resultNode("p", language === "en" ? task.original_claim : task.claim),
+    );
+    card.append(resultNode("p", resultVerdict(task), "result-answer"));
+    if (task.status === "submitted") {
+      card.append(
+        resultNode("p", t("resultReason", task.reason || t("noReason"))),
+      );
+      if (Number.isFinite(task.duration_s))
+        card.append(
+          resultNode(
+            "p",
+            t(
+              "resultDuration",
+              t(
+                "durationValue",
+                Math.floor(Math.round(task.duration_s) / 60),
+                Math.round(task.duration_s) % 60,
+              ),
+            ),
+          ),
+        );
+      if (task.confidence)
+        card.append(
+          resultNode("p", t("confidence") + ": " + task.confidence + " / 5"),
+        );
+      if (typeof task.claim_clear === "boolean")
+        card.append(
+          resultNode("p", t("resultClear", t(task.claim_clear ? "yes" : "no"))),
+        );
+    }
+    card.append(
+      resultNode("p", t("resultMetrics", task.steps, task.requests), "muted"),
+    );
+    if (task.regions.length)
+      card.append(
+        resultNode(
+          "p",
+          t(
+            "resultRegions",
+            task.regions
+              .map(
+                (region) =>
+                  region.image_id + " [" + (region.bbox || []).join(", ") + "]",
+              )
+              .join("; "),
+          ),
+        ),
+      );
+    if (task.images.length) {
+      const photos = resultNode("details");
+      const container = resultNode("div", undefined, "grid result-images");
+      photos.append(resultNode("summary", t("viewedPhotos")), container);
+      let loaded = false;
+      photos.ontoggle = () => {
+        if (!photos.open || loaded) return;
+        loaded = true;
+        loadResultPhotos(container, task, data.actor).catch((error) => {
+          loaded = false;
+          if (container.isConnected) container.textContent = error.message;
+        });
+      };
+      card.append(photos);
+    }
+    const history = resultNode("details");
+    history.append(resultNode("summary", t("actionHistory")));
+    if (task.events.length) {
+      const list = resultNode("ol", undefined, "result-events");
+      task.events.forEach((event) =>
+        list.append(resultNode("li", actionLabel(event, task))),
+      );
+      history.append(list);
+    } else history.append(resultNode("p", t("noActions"), "muted"));
+    card.append(history);
+    return card;
+  });
+  $("result-tasks").replaceChildren(...tasks);
+}
+async function openResults(actor) {
+  showResults(await api("admin-results/" + encodeURIComponent(actor)));
+}
+$("back-admin").onclick = () =>
+  guarded(async () => {
+    clearResultPhotos();
+    participantResults = null;
+    $("result-tasks").replaceChildren();
+    await show(await api("state"));
+  });
+$("refresh-results").onclick = () =>
+  guarded(() => openResults(participantResults.actor));
+
 function clippedBox(p, box) {
   const b = p.source_bbox,
     a = box || b;
@@ -427,6 +658,12 @@ async function show(data) {
         a.rel = "noreferrer";
         td.append(a);
         tr.append(td);
+        const resultCell = document.createElement("td");
+        const button = document.createElement("button");
+        button.textContent = t("viewResults");
+        button.onclick = () => guarded(() => openResults(p.id));
+        resultCell.append(button);
+        tr.append(resultCell);
         return tr;
       }),
     );
@@ -580,7 +817,8 @@ $("language").onclick = () =>
     language = language === "zh" ? "en" : "zh";
     localStorage.setItem("resolveai-language", language);
     applyLanguage();
-    if (state?.images || state?.role === "admin") await show(state);
+    if (participantResults) showResults(participantResults);
+    else if (state?.images || state?.role === "admin") await show(state);
   });
 applyLanguage();
 if (token) guarded(async () => show(await api("state")));

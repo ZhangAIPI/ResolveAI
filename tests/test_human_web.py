@@ -447,6 +447,142 @@ class HumanWebTests(unittest.TestCase):
         self.assertEqual(result["matches"], 1)
         self.assertEqual(result["label_agreement"], 0.5)
 
+    def test_admin_results_are_read_only_and_images_follow_recorded_release(self):
+        def snapshot():
+            return [
+                list(self.study.db.execute("SELECT * FROM " + table + " ORDER BY 1,2"))
+                for table in ("consent", "starts", "events", "answers")
+            ]
+
+        server = create_server(self.root, 0)
+        Thread(target=server.serve_forever, daemon=True).start()
+        conn = HTTPConnection("127.0.0.1", server.server_port)
+
+        def get(path, token="organizer"):
+            conn.request("GET", path, headers={"Authorization": "Bearer " + token})
+            response = conn.getresponse()
+            return response.status, response.read()
+
+        def post(token, route, body):
+            body["ui_protocol"] = "human-ui-v6-optional-reason"
+            conn.request(
+                "POST",
+                "/api/" + route,
+                json.dumps(body),
+                {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+            )
+            response = conn.getresponse()
+            raw = response.read()
+            self.assertEqual(response.status, 200, raw)
+
+        try:
+            before = snapshot()
+            status, raw = get("/api/admin-results/P01")
+            self.assertEqual(status, 200)
+            task = json.loads(raw)["tasks"][0]
+            self.assertEqual(task["status"], "not_started")
+            self.assertEqual(task["images"], [])
+            self.assertEqual(snapshot(), before)
+            for path in (
+                "/api/admin-results/P01",
+                "/api/admin-image/P01/0/preview",
+            ):
+                self.assertEqual(get(path, "person")[0], 403)
+                self.assertEqual(get(path, "")[0], 403)
+            self.assertEqual(get("/api/admin-results/unknown")[0], 403)
+            self.assertEqual(get("/api/admin-image/P01/0/preview")[0], 403)
+
+            post("person", "consent", {"agree": True})
+            before = snapshot()
+            task = json.loads(get("/api/admin-results/P01")[1])["tasks"][0]
+            self.assertEqual(task["status"], "in_progress")
+            self.assertIsNone(task["verdict"])
+            self.assertEqual(
+                {p["view_id"] for p in task["images"]}, {"reference", "preview"}
+            )
+            self.assertEqual(get("/api/admin-image/P01/0/preview")[0], 200)
+            self.assertEqual(get("/api/admin-image/P01/0/original")[0], 403)
+            self.assertEqual(get("/api/admin-image/P01/1/preview")[0], 403)
+            self.assertEqual(snapshot(), before)
+
+            post(
+                "person",
+                "action",
+                {
+                    "index": 0,
+                    "action": {
+                        "type": "request_photo",
+                        "query": {
+                            "object": "item",
+                            "time": "capture",
+                            "view": "original",
+                        },
+                    },
+                },
+            )
+            post(
+                "person",
+                "answer",
+                {
+                    "index": 0,
+                    "verdict": "Supported",
+                    "confidence": 4,
+                    "reason": "",
+                },
+            )
+            post("reviewer", "consent", {"agree": True})
+            post(
+                "reviewer",
+                "review",
+                {
+                    "index": 0,
+                    "verdict": "Refuted",
+                    "confidence": 3,
+                    "clear": False,
+                },
+            )
+            before = snapshot()
+            task = json.loads(get("/api/admin-results/P01")[1])["tasks"][0]
+            self.assertEqual(task["status"], "submitted")
+            self.assertEqual(task["verdict"], "Supported")
+            self.assertEqual(task["reason"], "")
+            self.assertEqual(task["steps"], 1)
+            self.assertEqual(task["requests"], 1)
+            self.assertEqual(task["events"][0]["action"]["type"], "request_photo")
+            self.assertGreaterEqual(task["duration_s"], 0)
+            self.assertEqual(get("/api/admin-image/P01/0/original")[0], 200)
+            review = json.loads(get("/api/admin-results/P02")[1])["tasks"][0]
+            self.assertEqual(review["verdict"], "Refuted")
+            self.assertFalse(review["claim_clear"])
+            self.assertEqual(snapshot(), before)
+            for key in ("asset_root", "annotation", "path", "dataset_sha256"):
+                self.assertNotIn('"' + key + '"', json.dumps(task))
+        finally:
+            conn.close()
+            server.shutdown()
+            server.server_close()
+
+    def test_admin_legacy_timeout_is_preserved_without_fabricating_a_verdict(self):
+        payload = {
+            "status": "timeout",
+            "decision": None,
+            "task": self.study.actor("person")["tasks"][0],
+        }
+        with self.study.db:
+            self.study.db.execute(
+                "INSERT INTO answers VALUES (?,?,?)", ("P01", 0, json.dumps(payload))
+            )
+        task = self.study.participant_results("P01")["tasks"][0]
+        self.assertEqual(task["status"], "submitted")
+        self.assertEqual(task["saved_status"], "timeout")
+        self.assertIsNone(task["verdict"])
+        self.assertIsNone(task["duration_s"])
+        self.assertEqual(task["regions"], [])
+        self.assertEqual(self.study.export()[0]["decision"], None)
+
     def test_http_blocks_unreleased_images_and_private_exports(self):
         server = create_server(self.root, 0)
         thread = Thread(target=server.serve_forever, daemon=True)

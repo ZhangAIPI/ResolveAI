@@ -281,3 +281,36 @@ summary {
 .selection-status {
   color: #2563eb;
 }
+
+.result-task {
+  margin: 16px 0;
+  padding: 16px;
+  background: white;
+  border: 1px solid #dce6e9;
+  border-radius: 10px;
+}
+.result-task > summary {
+  font-weight: 600;
+}
+.result-images img {
+  max-width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+.result-images figure {
+  margin: 8px 0;
+}
+.result-images figcaption {
+  font-size: 14px;
+  color: #61737f;
+}
+.result-events {
+  padding-left: 24px;
+  overflow-wrap: anywhere;
+}
+.result-answer {
+  font-weight: 700;
+  color: #096a63;
+}

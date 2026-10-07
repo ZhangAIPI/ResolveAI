@@ -498,6 +498,96 @@ class Study:
             ],
         }
 
+    def participant(self, actor_id):
+        for actor in self.access.values():
+            if actor["role"] == "participant" and actor["id"] == actor_id:
+                return actor
+        raise PermissionError("Unknown participant")
+
+    def result_images(self, actor, index):
+        # Inspect recorded evidence without starting or advancing a task.
+        if (
+            not self.db.execute(
+                "SELECT 1 FROM starts WHERE actor=? AND idx=?",
+                (actor["id"], index),
+            ).fetchone()
+            and not self.db.execute(
+                "SELECT 1 FROM answers WHERE actor=? AND idx=?",
+                (actor["id"], index),
+            ).fetchone()
+        ):
+            return []
+        return self.visible(actor, index)
+
+    def participant_results(self, actor_id):
+        actor = self.participant(actor_id)
+        answers = {
+            i: json.loads(p)
+            for i, p in self.db.execute(
+                "SELECT idx,payload FROM answers WHERE actor=?", (actor_id,)
+            )
+        }
+        started = {
+            i
+            for (i,) in self.db.execute(
+                "SELECT idx FROM starts WHERE actor=?", (actor_id,)
+            )
+        }
+        tasks = []
+        for index, task in enumerate(actor["tasks"]):
+            case = self.case(task)
+            answer = answers.get(index, {})
+            vote = answer.get("vote") or {}
+            decision = answer.get("decision") or {}
+            events = self.events(actor, index)
+            tasks.append(
+                {
+                    "index": index,
+                    "mode": task["mode"],
+                    "condition": task.get("condition", "full_available"),
+                    "task": case["task"],
+                    "claim": chinese_claim(case),
+                    "original_claim": case["claim"],
+                    "status": "submitted"
+                    if index in answers
+                    else "in_progress"
+                    if index in started
+                    else "not_started",
+                    "saved_status": answer.get("status"),
+                    "verdict": decision.get("verdict", vote.get("verdict")),
+                    "reason": answer.get("reason", vote.get("reason", "")),
+                    "confidence": answer.get("confidence"),
+                    "claim_clear": vote.get("claim_clear"),
+                    "duration_s": answer.get("duration_s"),
+                    "steps": answer.get("steps", len(events)),
+                    "requests": answer.get(
+                        "requests",
+                        sum(
+                            e.get("action", {}).get("type") == "request_photo"
+                            for e in events
+                        ),
+                    ),
+                    "regions": decision.get("citations", vote.get("regions", [])) or [],
+                    "ui_protocol": answer.get("ui_protocol"),
+                    "events": events,
+                    "images": [
+                        {k: v for k, v in p.items() if k not in {"bytes", "image_png"}}
+                        for p in self.result_images(actor, index)
+                    ],
+                }
+            )
+        return {
+            "actor": actor_id,
+            "completed": len(answers),
+            "total": len(tasks),
+            "consented": bool(
+                self.db.execute(
+                    "SELECT 1 FROM consent WHERE actor=?", (actor_id,)
+                ).fetchone()
+            ),
+            "tasks": tasks,
+        }
+
     def export(self, votes_only=False):
         rows = [
             {"actor": a, "index": i, **json.loads(p)}
@@ -581,6 +671,37 @@ def create_server(root, port=8765):
                         if actor["role"] != "admin":
                             raise PermissionError("Private organizer route")
                         return self.respond(study.export(self.path.endswith("votes")))
+                    if self.path.startswith("/api/admin-results/"):
+                        if actor["role"] != "admin":
+                            raise PermissionError("Private organizer route")
+                        actor_id = unquote(self.path[len("/api/admin-results/") :])
+                        return self.respond(study.participant_results(actor_id))
+                    if self.path.startswith("/api/admin-image/"):
+                        if actor["role"] != "admin":
+                            raise PermissionError("Private organizer route")
+                        actor_id, index, ref = self.path[
+                            len("/api/admin-image/") :
+                        ].split("/", 2)
+                        participant = study.participant(unquote(actor_id))
+                        index = int(index)
+                        if not 0 <= index < len(participant["tasks"]):
+                            raise PermissionError("Unknown task")
+                        picture = next(
+                            (
+                                p
+                                for p in study.result_images(participant, index)
+                                if p["view_id"] == unquote(ref)
+                            ),
+                            None,
+                        )
+                        if picture is None:
+                            raise PermissionError("Image was not viewed")
+                        return self.respond(
+                            picture["bytes"],
+                            "image/png"
+                            if picture["bytes"][:8] == b"\x89PNG\r\n\x1a\n"
+                            else "image/jpeg",
+                        )
                     if self.path.startswith("/api/image/"):
                         if actor["role"] == "admin":
                             raise PermissionError("No assigned image")

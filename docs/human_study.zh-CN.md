@@ -54,6 +54,8 @@ python scripts/analyze_human_study.py /private/human-study-short-v2 \
   /private/evaluation/human-study-v2 /private/new-analysis-snapshot
 ```
 
-研究者入口可查看进度，下载匿名记录和审核JSONL。分析写入新目录，完整材料一致率和严格充分性评分分开报告；未通过独立审核时不产生正式分数。
+研究者入口点击每个编号旁的“查看结果”，可查看五道题的题目、判断、可选理由、用时、操作步数及请求次数；展开查看已释放图片、裁剪结果和逐步操作记录。未提交题标明作答状态，旧版超时记录不补造判断。结果页支持中文／English，也可返回列表或刷新。查看不会改变参与者进度，参与者无权访问结果接口。
+
+研究者入口还可下载匿名记录和审核JSONL。分析写入新目录，完整材料一致率和严格充分性评分分开报告；未通过独立审核时不产生正式分数。
 
 当前UI协议为 `human-ui-v6-optional-reason`。浏览器测试在临时库中完成。最新检查使用当前试用相同五题，验证理由全部留空仍能提交搜证与审核判断；先前检查覆盖目标框、可选画框、双语保留答案、索取原图和试用／正式数据隔离。见 [浏览器记录](results/human_web_smoke.json) 和 [上线检查](results/human_web_deployment.json)。
