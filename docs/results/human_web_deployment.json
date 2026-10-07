@@ -18,8 +18,8 @@
   "page_errors": [],
   "current_ui": {
     "verified_at_utc": "2026-10-07T01:17:22.194562+00:00",
-    "source_commit": "93c5338747fd383658920084970d4873d3c2a5ce",
-    "backend_job_id": 25145,
+    "source_commit": "2e5ebf54192d1b99e320bda008e8de9c9a15e602",
+    "backend_job_id": 25210,
     "tunnel_job_id": 24958,
     "ui_protocol": "human-ui-v5-optional-regions",
     "languages": [
@@ -69,6 +69,17 @@
       },
       "backend_restart": false,
       "participant_data_writes": 0
+    },
+    "fresh_preview": {
+      "verified_at_utc": "2026-10-07T01:34:53.952308+00:00",
+      "public_intro_passed": true,
+      "first_task_interactive_obtainable": true,
+      "first_task_original_request_passed_in_temporary_database": true,
+      "formal_schedule_unchanged": true,
+      "previous_answers_preserved": true,
+      "fresh_invite_unused": true,
+      "category_count": 5,
+      "tokens_published_to_git": false
     }
   }
 }
