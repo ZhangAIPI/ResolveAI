@@ -126,6 +126,22 @@
       "reason_not_fabricated": true,
       "real_participant_database_writes": 0,
       "page_errors": []
+    },
+    "admin_results": {
+      "verified_at_utc": "2026-10-07T02:28:08.091063+00:00",
+      "actual_p01_five_tasks_in_temporary_database": true,
+      "photos_per_task": [
+        3,
+        4,
+        5,
+        3,
+        3
+      ],
+      "read_only_records_unchanged": true,
+      "bilingual_results_passed": true,
+      "tests_passed": 80,
+      "real_participant_test_writes": 0,
+      "page_errors": []
     }
   }
 }
