@@ -59,7 +59,8 @@ function clippedBox(p, box) {
 }
 function displayImages(data) {
   const refs = new Set(data.display_views || data.images.map((p) => p.view_id));
-  const shown = data.images.filter((p) => refs.has(p.view_id));
+  const byRef = new Map(data.images.map((p) => [p.view_id, p]));
+  const shown = [...refs].map((ref) => byRef.get(ref)).filter(Boolean);
   for (const ref of [...marked]) {
     if (refs.has(ref)) continue;
     const old = data.images.find((p) => p.view_id === ref);
@@ -200,7 +201,11 @@ async function picture(p) {
     const ctx = canvas.getContext("2d"),
       b = p.source_bbox;
     function outline(box, color, dashed) {
-      const a = clippedBox(p, box);
+      const a = [
+        Math.max(box[0], b[0]), Math.max(box[1], b[1]),
+        Math.min(box[2], b[2]), Math.min(box[3], b[3]),
+      ];
+      if (a[0] >= a[2] || a[1] >= a[3]) return;
       const x = ((a[0] - b[0]) / (b[2] - b[0])) * canvas.width;
       const y = ((a[1] - b[1]) / (b[3] - b[1])) * canvas.height;
       const w = ((a[2] - a[0]) / (b[2] - b[0])) * canvas.width;

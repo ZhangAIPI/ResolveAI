@@ -17,19 +17,31 @@
   },
   "page_errors": [],
   "current_ui": {
-    "verified_at_utc": "2026-10-07T01:01:26.795868+00:00",
-    "source_commit": "529d302",
-    "backend_job_id": 25118,
+    "verified_at_utc": "2026-10-07T01:17:22.194562+00:00",
+    "source_commit": "93c5338747fd383658920084970d4873d3c2a5ce",
+    "backend_job_id": 25145,
     "tunnel_job_id": 24958,
-    "ui_protocol": "human-ui-v4-single-answer",
+    "ui_protocol": "human-ui-v5-optional-regions",
     "languages": [
       "zh",
       "en"
     ],
-    "original_p01_answers_unchanged": true,
-    "formal_row_counts_unchanged": true,
-    "preview_database": "separate; no test responses written",
-    "review_scope": "full_pool_only; no inferred availability labels",
-    "page_errors": []
+    "existing_formal_and_preview_rows_unchanged": {
+      "formal": true,
+      "preview": true
+    },
+    "formal_invites": 20,
+    "public_preview_intro_passed": true,
+    "formal_or_preview_test_responses_written": 0,
+    "pending_search_categories_unique": true,
+    "pending_category_counts": {
+      "5": 15,
+      "4": 4
+    },
+    "review_scope": "full-pool labels only; regions optional; no sufficiency inference",
+    "page_errors": [],
+    "web_app_sha256": "bdd130492a1db1a51e51bf92bcbc37eab72f5806c3f3c073e954202943c0993e",
+    "cropping_outside_target_has_no_target_outline": true,
+    "crop_keeps_photo_position": true
   }
 }
