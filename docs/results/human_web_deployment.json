@@ -15,5 +15,20 @@
     "answers": 0,
     "events": 0
   },
-  "page_errors": []
+  "page_errors": [],
+  "current_ui": {
+    "verified_at_utc": "2026-10-07T00:29:06.554005+00:00",
+    "backend_job_id": 25035,
+    "tunnel_job_id": 24958,
+    "source_commit": "59ec088",
+    "ui_protocol": "human-ui-v3-unrestricted",
+    "languages": [
+      "zh",
+      "en"
+    ],
+    "unrestricted_human_actions": true,
+    "existing_records_unchanged": true,
+    "public_bilingual_browser_passed": true,
+    "page_errors": []
+  }
 }
