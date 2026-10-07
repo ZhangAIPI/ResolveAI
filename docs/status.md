@@ -84,3 +84,7 @@ Jobs 24937–24940 run four independent workers on sclera: two Qwen3-VL-8B shard
 ## Human UI revision: 2026-10-06
 
 The human-only interface now uses direct photo selection and per-photo buttons, with derived images replacing their photo in place. All human time, points and action caps are removed; elapsed time and action counts are recorded. A Chinese/English toggle preserves selection and unsaved answers. Records are tagged `human-ui-v3-unrestricted`; older responses and fixed model evaluation budgets remain unchanged. Existing invitations and the public hostname are retained.
+
+## Single-answer human study: 2026-10-06
+
+Human UI v4 displays low-resolution photos at a usable size, provides image operations in all five tasks, replaces a preview when its matching original is released, and finishes each review with one submission. Browser zoom is a logged presentation-only action, without resampling pixels. The two reviews now provide full-pool truth/evidence votes (visual-truth-review-v2), not initial/pool availability labels. The analyzer reports two-human full-material label agreement separately and never promotes these partial reviews to the formal evidence-sufficiency benchmark. A private preview invitation uses a separate SQLite database. Existing formal assignments and answers are retained.

@@ -7,7 +7,7 @@ from pathlib import Path
 import sqlite3
 
 from resolveai.environment import Environment
-from resolveai.review import admit, reviewed_outcome
+from resolveai.review import admit, reviewed_outcome, full_truth_consensus
 
 
 class NoOCR:
@@ -65,6 +65,46 @@ def summarize(rows):
     ]
 
 
+def full_material_agreement(models, cases, consensus, dataset_hash):
+    """Only direct all-material baselines with exactly the reviewed evidence pool."""
+    if not consensus["consensus"]:
+        return []
+    by_case = {c["case_id"]: c for c in cases}
+    agreed = {r["family_id"]: r for r in consensus["consensus"]}
+    totals = defaultdict(lambda: {"episodes": 0, "submitted": 0, "matches": 0})
+    for path in sorted(models.glob("*/episodes.sqlite")):
+        metadata = json.loads((path.parent / "manifest.json").read_text())
+        if metadata["dataset_sha256"] != dataset_hash:
+            raise ValueError("Model used a different dataset")
+        db = sqlite3.connect("file:" + str(path) + "?mode=ro", uri=True)
+        for result, trace in db.execute(
+            "SELECT result,trace FROM episodes WHERE arm='full_available_text'"
+        ):
+            row = json.loads(result)
+            case = by_case[row["case_id"]]
+            human = agreed.get(case["family_id"])
+            if (
+                human is None
+                or sorted(e["id"] for e in case["evidence"] if e["available"])
+                != human["full_pool_ids"]
+            ):
+                continue
+            stats = totals[metadata["model_id"]]
+            stats["episodes"] += 1
+            verdict = (json.loads(trace).get("decision") or {}).get("verdict")
+            stats["submitted"] += verdict is not None
+            stats["matches"] += verdict == human["verdict"]
+        db.close()
+    return [
+        {
+            "model": model,
+            **counts,
+            "label_agreement": counts["matches"] / counts["episodes"],
+        }
+        for model, counts in sorted(totals.items())
+    ]
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("study", type=Path)
@@ -82,15 +122,33 @@ def main():
         for actor, index, payload in db.execute("SELECT actor,idx,payload FROM answers")
     ]
     db.close()
-    votes = [r["vote"] for r in answers if r.get("vote")]
+    all_votes = [r["vote"] for r in answers if r.get("vote")]
+    votes = [v for v in all_votes if v["protocol"] == "visual-review-v1"]
+    truth_votes = [v for v in all_votes if v["protocol"] == "visual-truth-review-v2"]
+    cases = json.loads((Path(plan["data"]) / "cases.json").read_text())
+    consensus = full_truth_consensus(truth_votes, cases, plan["dataset_sha256"])
+    truth_report = {
+        **consensus,
+        "model_full_material_label_agreement": full_material_agreement(
+            args.models, cases, consensus, plan["dataset_sha256"]
+        ),
+        "scope_note": "Single-answer reviews support full-material label agreement only. No initial/pool sufficiency, unsupported-decision, acquisition or grounded scores are inferred.",
+    }
     args.output.mkdir(parents=True)
+    (args.output / "full_truth_reviews.jsonl").write_text(
+        "".join(json.dumps(v, ensure_ascii=False) + "\n" for v in truth_votes)
+    )
+    (args.output / "full_truth_consensus.json").write_text(
+        json.dumps(truth_report, indent=2) + "\n"
+    )
     if not votes:
         (args.output / "summary.json").write_text(
             json.dumps(
                 {
                     "status": "waiting_for_independent_reviews",
                     "recorded_answers": len(answers),
-                    "review_votes": 0,
+                    "review_votes": len(truth_votes),
+                    "full_material_review": truth_report,
                     "formal_scores": None,
                 },
                 indent=2,
@@ -148,7 +206,8 @@ def main():
         "status": "reviewed_subset_only",
         "study_reviewed_families": len({c["family_id"] for c in reviewed.values()}),
         "study_target_families": len(plan["family_ids"]),
-        "review_votes": len(votes),
+        "review_votes": len(all_votes),
+        "full_material_review": truth_report,
         "search_timeouts": sum(
             r["status"] == "timeout" and r["task"]["mode"] == "search" for r in answers
         ),

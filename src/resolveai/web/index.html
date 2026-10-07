@@ -16,6 +16,9 @@
       ><span id="step-count"></span>
     </header>
     <main>
+      <div id="preview-notice" class="info" hidden>
+        试用模式：回答不计入实验统计。
+      </div>
       <section id="welcome">
         <p class="eyebrow">人工验证实验</p>
         <h1>这些照片，足以判断吗？</h1>
@@ -124,10 +127,6 @@
                 id="clear-label"
                 >声明和目标清楚</span
               ></label
-            ><label
-              ><input id="checked" type="checkbox" /><span id="checked-label"
-                >已经检查其他视角和缩略图能否构成替代证据</span
-              ></label
             >
           </div>
           <button id="submit" class="primary">提交判断</button>
@@ -151,6 +150,11 @@
         ><button id="export">下载匿名记录</button
         ><button id="votes">下载独立审核 JSONL</button
         ><button id="copy-links">复制全部邀请链接</button>
+        <p>
+          <a id="preview-link" hidden target="_blank" rel="noreferrer"
+            >试用新版流程（不计入统计）</a
+          >
+        </p>
         <p id="study-info"></p>
         <table>
           <thead>

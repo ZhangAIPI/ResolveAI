@@ -2,19 +2,16 @@
   "passed": true,
   "browser": "Chromium 141 / Playwright 1.56",
   "flows": [
-    "consent",
-    "one direct image selection mechanism",
-    "no image/operation dropdowns",
-    "actual request",
-    "bilingual switching preserves selection and unsaved reason",
-    "per-image zoom updates in place",
-    "compare selected images",
-    "per-image crop with source mapping",
-    "restore original without duplicate cards",
-    "3 search answers",
-    "10 locked review stages",
-    "final completion",
-    "organizer progress"
+    "same five P01 assignments in an isolated test database",
+    "48px photo displayed at >=300px height",
+    "zoom changes displayed size without creating detail",
+    "crop and restore retain source coordinates",
+    "operations present on all five tasks",
+    "request replaces matching preview rather than duplicating",
+    "Supported review completes immediately",
+    "exactly five submissions for five tasks",
+    "bilingual review controls",
+    "preview writes only to its separate database"
   ],
   "synthetic_responses_only": true,
   "official_response_db_untouched": true,
@@ -41,6 +38,6 @@
     "sha256": "5647763d41c628d0c574591d6f0a2cf009c72c48988f58afda372bd6d8d91003"
   },
   "page_errors": [],
-  "ui_protocol": "human-ui-v3-unrestricted",
+  "ui_protocol": "human-ui-v4-single-answer",
   "screenshot_type": "Chinese and English task UI before any tool call"
 }

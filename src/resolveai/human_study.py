@@ -13,18 +13,10 @@ from urllib.parse import unquote
 
 from PIL import Image
 from .environment import Environment
-from .review import validate_vote
+from .review import validate_truth_vote
 from .tools import ActionError, VERDICTS
 
-PHASES = ("preview", "limited_pool", "sufficient_initial", "full_pool", "annotation")
-PHASE_NAMES = {
-    "preview": "仅初始小图能判断吗？",
-    "limited_pool": "缺少指定原图时，这些可获取材料够吗？",
-    "sufficient_initial": "这组初始材料能判断吗？",
-    "full_pool": "全部可获取材料能判断吗？",
-    "annotation": "确认声明和充分证据",
-}
-UI_PROTOCOL = "human-ui-v3-unrestricted"
+UI_PROTOCOL = "human-ui-v4-single-answer"
 TOOLS = {"inspect", "crop", "zoom", "compare", "ocr", "request_photo", "finish"}
 CATEGORIES = {
     "bottle": "瓶子",
@@ -160,12 +152,12 @@ class Study:
             task = actor["tasks"][index]
             case = self.case(task)
             env = Environment(case, case["asset_root"], 0)
-            if task["condition"] == "full_available":
+            if task.get("condition", "full_available") == "full_available":
                 env._released.update(
                     e["id"] for e in case["evidence"] if e["available"]
                 )
             for event in self.events(actor, index):
-                if event.get("action"):
+                if event.get("action") and not event.get("presentation_only"):
                     try:
                         self.human_step(env, event["action"])
                     except ActionError:
@@ -190,57 +182,7 @@ class Study:
         ).fetchone()[0]
         return max(0, time.time() - started)
 
-    def review_stage(self, actor, index):
-        return len([e for e in self.events(actor, index) if e.get("phase")])
-
-    def review_ids(self, task, phase):
-        family = task["family_id"]
-        case = self.cases[family + "-Obtainable"]
-        if phase == 0:
-            return case["initial"]
-        if phase == 1:
-            return [
-                e["id"]
-                for e in self.cases[family + "-Missing"]["evidence"]
-                if e["available"]
-            ]
-        if phase == 2:
-            return self.cases[family + "-Sufficient"]["initial"]
-        return [e["id"] for e in case["evidence"]]
-
-    def review_image(self, task, image_id):
-        case = self.case(task)
-        row = next(e for e in case["evidence"] if e["id"] == image_id)
-        root = Path(case["asset_root"]).resolve()
-        path = (root / row["path"]).resolve()
-        if not path.is_relative_to(root):
-            raise ValueError("Invalid asset")
-        with Image.open(path) as image:
-            display = list(image.size)
-            source = row.get("source_size", display)
-        return {
-            "image_id": row["id"],
-            "view_id": row["id"],
-            "object": row["object"],
-            "time": row["time"],
-            "camera_view": row.get("camera_view", row["view"]),
-            "source_size": source,
-            "display_size": display,
-            "source_bbox": row.get("source_bbox", [0, 0, *source]),
-            "target_bbox": row.get("target_bbox"),
-            "bytes": path.read_bytes(),
-        }
-
     def visible(self, actor, index):
-        task = actor["tasks"][index]
-        if task["mode"] == "review":
-            pictures = []
-            for ref in self.review_ids(task, self.review_stage(actor, index)):
-                key = (actor["id"], index, ref)
-                if key not in self.pictures:
-                    self.pictures[key] = self.review_image(task, ref)
-                pictures.append(self.pictures[key])
-            return pictures
         env = self.environment(actor, index)
         ids = [i for i in env._release_order if i in env._released]
         ids.extend(i for i in env._evidence if i in env._released and i not in ids)
@@ -292,29 +234,44 @@ class Study:
             if case["task"] == "state"
             else "A、B 只是提交对象槽位。相似不等于同一实物；不要只依据背景判断。",
         }
-        if task["mode"] == "review":
-            phase = self.review_stage(actor, index)
-            result.update(phase=phase, phase_title=PHASE_NAMES[PHASES[phase]])
-        else:
-            env = self.environment(actor, index)
-            displayed = {
-                p["image_id"]: p["view_id"]
-                for p in images
-                if p["view_id"] == p["image_id"]
-            }
-            by_view = {p["view_id"]: p for p in images}
-            for event in self.events(actor, index):
+        env = self.environment(actor, index)
+        by_view = {p["view_id"]: p for p in images}
+        displayed = {}
+        scales = {}
+        for picture in images:
+            if picture["image_id"] != picture["view_id"]:
+                continue
+            key = picture["source_id"]
+            old = by_view.get(displayed.get(key))
+            if old is None or (
+                picture["display_size"][0] * picture["display_size"][1]
+                > old["display_size"][0] * old["display_size"][1]
+            ):
+                displayed[key] = picture["view_id"]
+        for event in self.events(actor, index):
+            action = event.get("action", {})
+            if event.get("presentation_only"):
+                picture = by_view[action["image_id"]]
+                key = picture["source_id"]
+                scales[key] = min(4, max(0.25, scales.get(key, 1) * action["factor"]))
+            elif action.get("type") in {"inspect", "crop"}:
                 for ref in event.get("views", []):
                     if ref in by_view:
-                        displayed[by_view[ref]["image_id"]] = ref
-            result.update(
-                display_views=list(displayed.values()),
-                condition=task["condition"],
-                turns=len(self.events(actor, index)),
-                requests=env.requests,
-                request_options=env._case.get("request_options", {}),
-                ocr_available=env._ocr.available,
-            )
+                        key = by_view[ref]["source_id"]
+                        displayed[key] = ref
+                        scales[key] = 1
+        for picture in result["images"]:
+            picture["display_scale"] = scales.get(picture["source_id"], 1)
+        result.update(
+            display_views=list(displayed.values()),
+            condition=task.get("condition", "full_available"),
+            turns=sum(bool(e.get("action")) for e in self.events(actor, index)),
+            requests=env.requests,
+            request_options=env._case.get("request_options", {}),
+            ocr_available=env._ocr.available,
+        )
+        if task["mode"] == "review":
+            result["review_scope"] = "full_pool_only"
         return result
 
     def selections(self, images, selected, verdict, task):
@@ -394,35 +351,43 @@ class Study:
                 or not 1 <= body["confidence"] <= 5
             ):
                 raise ValueError("请选择把握程度")
-        if task["mode"] == "search":
-            env = self.environment(actor, index)
-            if route == "action":
-                action = body["action"]
-                if action.get("type") not in TOOLS - {"finish"}:
-                    raise ValueError("此操作不可用")
-                if (
-                    action["type"] == "request_photo"
-                    and task["condition"] != "interactive"
-                ):
-                    raise ValueError("这组任务只查看已给出的图片")
-                result = {}
-                error = None
-                try:
+        env = self.environment(actor, index)
+        if route == "action":
+            action = body["action"]
+            if action.get("type") not in TOOLS - {"finish"}:
+                raise ValueError("此操作不可用")
+            if (
+                action["type"] == "request_photo"
+                and task.get("condition") != "interactive"
+            ):
+                raise ValueError("这组任务只查看已给出的图片")
+            result = {}
+            error = None
+            display_only = action["type"] == "zoom"
+            try:
+                if display_only:
+                    env._image(action["image_id"])
+                    factor = action.get("factor")
+                    if type(factor) not in (int, float) or not 0.125 <= factor <= 4:
+                        raise ActionError("invalid_zoom")
+                    result = {"status": "display_zoom", "presentation_only": True}
+                else:
                     result = self.human_step(env, action)
-                except ActionError as exc:
-                    error = {"code": exc.code, "details": exc.details}
-                views = [p["view_id"] for p in result.get("images", [])]
-                event = {
-                    "action": action,
-                    "error": error,
-                    "views": views,
-                    "at": time.time(),
-                    "result": {k: v for k, v in result.items() if k != "images"},
-                }
-                self.append(actor, index, event)
-                response = self.state(token)
-                response["feedback"] = error or event["result"]
-                return response
+            except ActionError as exc:
+                error = {"code": exc.code, "details": exc.details}
+            event = {
+                "action": action,
+                "error": error,
+                "presentation_only": display_only and error is None,
+                "views": [p["view_id"] for p in result.get("images", [])],
+                "at": time.time(),
+                "result": {k: v for k, v in result.items() if k != "images"},
+            }
+            self.append(actor, index, event)
+            response = self.state(token)
+            response["feedback"] = error or event["result"]
+            return response
+        if task["mode"] == "search":
             if route != "answer":
                 raise ValueError("Unknown route")
             citations, links = self.selections(
@@ -455,84 +420,48 @@ class Study:
         else:
             if route != "review":
                 raise ValueError("Unknown route")
-            phase = self.review_stage(actor, index)
-            if body.get("phase") != phase:
-                raise ValueError("审核阶段已更新")
             citations, links = self.selections(
                 self.visible(actor, index),
                 body.get("selected", []),
                 body["verdict"],
                 case["task"],
             )
-            group = links if case["task"] == "identity" else citations
-            event = {
-                "phase": PHASES[phase],
-                "verdict": body["verdict"],
-                "evidence": group,
-                "reason": body["reason"],
-                "confidence": body["confidence"],
-                "at": time.time(),
-            }
-            if phase < 4:
-                self.append(actor, index, event)
-                return self.state(token)
-            events = self.events(actor, index) + [event]
-            decisions = {e["phase"]: e["verdict"] for e in events}
             verdict = body["verdict"]
-            sets = [
-                e["evidence"]
-                for e in events
-                if e["verdict"] == verdict and e["evidence"]
-            ]
-            unique = []
-            for group in sets:
-                if group not in unique:
-                    unique.append(group)
+            group = links if case["task"] == "identity" else citations
             kind = "condition" if case["task"] == "state" else "identity"
             truth = "uncertain" if verdict == "Need more evidence" else verdict
-            annotation = {
-                "protocol": "evidence-chain-v1",
-                "verdict": verdict,
-                "subclaims": [
-                    {
-                        "id": kind,
-                        "kind": kind,
-                        "truth": truth,
-                        "minimal_evidence_sets": {}
-                        if truth == "uncertain"
-                        else {verdict: unique},
-                    }
-                ],
-            }
             vote = {
-                "protocol": "visual-review-v1",
+                "protocol": "visual-truth-review-v2",
+                "scope": "full_pool_only",
                 "reviewer_type": "human",
                 "reviewer_id": actor["id"],
                 "family_id": task["family_id"],
                 "dataset_sha256": self.plan["dataset_sha256"],
                 "claim_clear": body.get("clear") is True,
-                "alternatives_checked": body.get("checked") is True,
                 "reason": body["reason"],
-                "annotation": annotation,
-                "initial_verdicts": {
-                    v: decisions["sufficient_initial"]
-                    if v == "Sufficient"
-                    else decisions["preview"]
-                    for v in ("Sufficient", "Obtainable", "Missing", "Unavailable")
-                },
-                "pool_verdicts": {
-                    v: decisions["limited_pool"]
-                    if v in ("Missing", "Unavailable")
-                    else decisions["full_pool"]
-                    for v in ("Sufficient", "Obtainable", "Missing", "Unavailable")
+                "annotation": {
+                    "protocol": "evidence-chain-v1",
+                    "verdict": verdict,
+                    "subclaims": [
+                        {
+                            "id": kind,
+                            "kind": kind,
+                            "truth": truth,
+                            "minimal_evidence_sets": {}
+                            if truth == "uncertain"
+                            else {verdict: [group]},
+                        }
+                    ],
                 },
             }
-            validate_vote(vote)
+            validate_truth_vote(vote)
             payload = {
                 "status": "finished",
                 "task": task,
                 "vote": vote,
-                "events": events,
+                "events": self.events(actor, index),
+                "steps": sum(bool(e.get("action")) for e in self.events(actor, index)),
+                "released": sorted(env._released),
                 "duration_s": self.elapsed(actor, index),
             }
         if not isinstance(body.get("reason"), str) or len(body["reason"].strip()) < 2:
@@ -550,7 +479,14 @@ class Study:
 
     def admin(self):
         counts = Counter(r[0] for r in self.db.execute("SELECT actor FROM answers"))
+        preview_access = self.root / "preview" / "access.json"
+        preview_token = (
+            next(iter(json.loads(preview_access.read_text())))
+            if preview_access.exists()
+            else None
+        )
         return {
+            "preview_token": preview_token,
             "role": "admin",
             "ui_protocol": UI_PROTOCOL,
             "limits": {"time": None, "steps": None, "points": None},
@@ -590,7 +526,17 @@ class Study:
 
 
 def create_server(root, port=8765):
-    study = Study(root)
+    main_study = Study(root)
+    studies = [main_study]
+    if (Path(root) / "preview" / "plan.json").exists():
+        studies.append(Study(Path(root) / "preview"))
+
+    def for_token(token):
+        for study in studies:
+            if token in study.access:
+                return study
+        raise PermissionError("Invalid invitation")
+
     web = Path(__file__).parent / "web"
 
     class Handler(BaseHTTPRequestHandler):
@@ -641,10 +587,13 @@ def create_server(root, port=8765):
                 )
                 return self.respond(path.read_bytes(), "image/webp")
             try:
+                study = for_token(self.token())
                 with study.lock:
                     actor = study.actor(self.token())
                     if self.path == "/api/state":
-                        return self.respond(study.state(self.token()))
+                        state = study.state(self.token())
+                        state["preview"] = study.root.name == "preview"
+                        return self.respond(state)
                     if self.path in ("/api/export", "/api/votes"):
                         if actor["role"] != "admin":
                             raise PermissionError("Private organizer route")
@@ -694,8 +643,15 @@ def create_server(root, port=8765):
                 body = json.loads(self.rfile.read(length))
                 if not isinstance(body, dict):
                     raise ValueError("Expected an object")
+                if (
+                    self.path in {"/api/action", "/api/answer", "/api/review"}
+                    and body.get("ui_protocol") != UI_PROTOCOL
+                ):
+                    raise ValueError("页面已更新，请刷新当前题")
+                study = for_token(self.token())
                 with study.lock:
                     result = study.post(self.token(), self.path[len("/api/") :], body)
+                result["preview"] = study.root.name == "preview"
                 self.respond(result)
             except PermissionError:
                 self.respond({"error": "邀请链接无效或无权访问"}, status=403)

@@ -1,4 +1,5 @@
 """Blind visual-review UI and strict two-human-review admission for benchmark v0.4."""
+
 import argparse
 from collections import Counter, defaultdict
 from copy import deepcopy
@@ -19,17 +20,27 @@ from .tools import VERDICTS
 def validate_vote(vote):
     if not isinstance(vote, dict):
         raise ValueError("Review must be an object")
-    if (vote.get("protocol") != "visual-review-v1" or vote.get("reviewer_type") != "human"
-            or not isinstance(vote.get("reviewer_id"), str) or not vote["reviewer_id"].strip()
-            or not vote.get("family_id") or not vote.get("reason", "").strip()):
+    if (
+        vote.get("protocol") != "visual-review-v1"
+        or vote.get("reviewer_type") != "human"
+        or not isinstance(vote.get("reviewer_id"), str)
+        or not vote["reviewer_id"].strip()
+        or not vote.get("family_id")
+        or not vote.get("reason", "").strip()
+    ):
         raise ValueError("A named human review with a reason is required")
-    if not isinstance(vote.get("dataset_sha256"), str) or len(vote["dataset_sha256"]) != 64:
+    if (
+        not isinstance(vote.get("dataset_sha256"), str)
+        or len(vote["dataset_sha256"]) != 64
+    ):
         raise ValueError("Review must name the frozen dataset hash")
     for key in ["claim_clear", "alternatives_checked"]:
         if type(vote.get(key)) is not bool:
             raise ValueError("Review attestations must be boolean")
     for key in ["initial_verdicts", "pool_verdicts"]:
-        if set(vote.get(key, {})) != set(VARIANTS) or any(v not in VERDICTS for v in vote[key].values()):
+        if set(vote.get(key, {})) != set(VARIANTS) or any(
+            v not in VERDICTS for v in vote[key].values()
+        ):
             raise ValueError("Review all four initial and obtainable-pool conditions")
     if not isinstance(vote.get("annotation"), dict):
         raise ValueError("Review requires a structured evidence annotation")
@@ -38,24 +49,140 @@ def validate_vote(vote):
         raise ValueError("Review requires explicit region/time or relation evidence")
 
 
+def validate_truth_vote(vote):
+    """A single full-pool judgment supplies truth, not availability labels."""
+    if (
+        not isinstance(vote, dict)
+        or vote.get("protocol") != "visual-truth-review-v2"
+        or vote.get("scope") != "full_pool_only"
+        or vote.get("reviewer_type") != "human"
+        or not isinstance(vote.get("reviewer_id"), str)
+        or not vote["reviewer_id"].strip()
+        or not vote.get("family_id")
+        or not vote.get("reason", "").strip()
+    ):
+        raise ValueError("A full-pool human truth review is required")
+    if (
+        not isinstance(vote.get("dataset_sha256"), str)
+        or len(vote["dataset_sha256"]) != 64
+    ):
+        raise ValueError("Review must name the frozen dataset hash")
+    if type(vote.get("claim_clear")) is not bool:
+        raise ValueError("Claim clarity must be explicit")
+    if "initial_verdicts" in vote or "pool_verdicts" in vote:
+        raise ValueError("Single-answer reviews cannot claim availability judgments")
+    validate_annotation(vote.get("annotation", {}))
+    if vote["annotation"].get("protocol") != "evidence-chain-v1":
+        raise ValueError("Review requires explicit evidence regions or relations")
+
+
+def full_truth_consensus(votes, cases, dataset_hash):
+    """Report full-material consensus without admitting unreviewed release variants."""
+    families = {c["family_id"]: c for c in cases if c["variant"] == "Obtainable"}
+    groups = defaultdict(list)
+    for vote in votes:
+        validate_truth_vote(vote)
+        if vote["dataset_sha256"] != dataset_hash or vote["family_id"] not in families:
+            raise ValueError("Truth review does not belong to this dataset")
+        groups[vote["family_id"]].append(vote)
+    accepted, pending = [], []
+    for family_id, group in sorted(groups.items()):
+        if len(group) != 2 or len({v["reviewer_id"].strip() for v in group}) != 2:
+            pending.append(
+                {"family_id": family_id, "reason": "two independent reviewers required"}
+            )
+            continue
+        if not all(v["claim_clear"] for v in group):
+            pending.append(
+                {"family_id": family_id, "reason": "claim or target unclear"}
+            )
+            continue
+        verdicts = {v["annotation"]["verdict"] for v in group}
+        if len(verdicts) != 1:
+            pending.append(
+                {"family_id": family_id, "reason": "human verdict disagreement"}
+            )
+            continue
+        case = families[family_id]
+        available = {e["id"]: e for e in case["evidence"] if e["available"]}
+        for vote in group:
+            for subclaim in vote["annotation"]["subclaims"]:
+                for sets in subclaim["minimal_evidence_sets"].values():
+                    for evidence_set in sets:
+                        for requirement in evidence_set:
+                            endpoints = (
+                                [requirement["left"], requirement["right"]]
+                                if "relation" in requirement
+                                else [requirement]
+                            )
+                            for endpoint in endpoints:
+                                if endpoint["image_id"] not in available:
+                                    raise ValueError(
+                                        "Review cites unavailable evidence"
+                                    )
+                                row = available[endpoint["image_id"]]
+                                with Image.open(
+                                    Path(case["asset_root"]) / row["path"]
+                                ) as picture:
+                                    size = row.get("source_size", list(picture.size))
+                                box = endpoint["bbox"]
+                                bounds = row.get("source_bbox", [0, 0, *size])
+                                if not (
+                                    bounds[0] <= box[0] < box[2] <= bounds[2]
+                                    and bounds[1] <= box[1] < box[3] <= bounds[3]
+                                    and endpoint["time"] == row["time"]
+                                ):
+                                    raise ValueError(
+                                        "Review region or time outside visible evidence"
+                                    )
+        accepted.append(
+            {
+                "family_id": family_id,
+                "verdict": next(iter(verdicts)),
+                "reviewers": [v["reviewer_id"] for v in group],
+                "full_pool_ids": sorted(available),
+            }
+        )
+    return {
+        "scope": "full_pool_label_only",
+        "consensus": accepted,
+        "pending": pending,
+        "availability_review_complete": False,
+        "formal_evaluation_ready": False,
+    }
+
+
 def merge_votes(votes, family):
     """Agreement is necessary; source truth alone never promotes a case."""
     if len(votes) != 2 or len({v["reviewer_id"].strip() for v in votes}) != 2:
         raise ValueError("Exactly two distinct human reviewers are required")
     for vote in votes:
         validate_vote(vote)
-        if vote["family_id"] != family[0]["family_id"] or not vote["claim_clear"] or not vote["alternatives_checked"]:
-            raise ValueError("Unclear targets or unchecked alternatives cannot be admitted")
+        if (
+            vote["family_id"] != family[0]["family_id"]
+            or not vote["claim_clear"]
+            or not vote["alternatives_checked"]
+        ):
+            raise ValueError(
+                "Unclear targets or unchecked alternatives cannot be admitted"
+            )
     for key in ["initial_verdicts", "pool_verdicts"]:
         if votes[0][key] != votes[1][key]:
-            raise ValueError("Review disagreement requires adjudication, not a majority guess")
+            raise ValueError(
+                "Review disagreement requires adjudication, not a majority guess"
+            )
     annotations = [v["annotation"] for v in votes]
-    truth = lambda a: (a["verdict"], sorted((s["id"], s["kind"], s["truth"]) for s in a["subclaims"]))
+    truth = lambda a: (
+        a["verdict"],
+        sorted((s["id"], s["kind"], s["truth"]) for s in a["subclaims"]),
+    )
     if truth(annotations[0]) != truth(annotations[1]):
         raise ValueError("Subclaim truth disagreement requires adjudication")
     merged = deepcopy(annotations[0])
     for subclaim in merged["subclaims"]:
-        other = next(s for s in annotations[1]["subclaims"] if s["id"] == subclaim["id"])
+        other = next(
+            s for s in annotations[1]["subclaims"] if s["id"] == subclaim["id"]
+        )
         for verdict, groups in other["minimal_evidence_sets"].items():
             existing = subclaim["minimal_evidence_sets"].setdefault(verdict, [])
             for group in groups:
@@ -69,23 +196,42 @@ def merge_votes(votes, family):
         for groups in s["minimal_evidence_sets"].values():
             for group in groups:
                 for requirement in group:
-                    endpoints = [requirement["left"], requirement["right"]] if "relation" in requirement else [requirement]
+                    endpoints = (
+                        [requirement["left"], requirement["right"]]
+                        if "relation" in requirement
+                        else [requirement]
+                    )
                     for endpoint in endpoints:
                         if endpoint["image_id"] not in evidence:
-                            raise ValueError("Review cites an image outside the evidence library")
+                            raise ValueError(
+                                "Review cites an image outside the evidence library"
+                            )
                         row = evidence[endpoint["image_id"]]
-                        with Image.open(Path(full["asset_root"]) / row["path"]) as picture:
+                        with Image.open(
+                            Path(full["asset_root"]) / row["path"]
+                        ) as picture:
                             size = row.get("source_size", list(picture.size))
                         x0, y0, x1, y1 = endpoint["bbox"]
-                        if not 0 <= x0 < x1 <= size[0] or not 0 <= y0 < y1 <= size[1] or endpoint["time"] != row["time"]:
-                            raise ValueError("Review source coordinates or timestamp invalid")
+                        if (
+                            not 0 <= x0 < x1 <= size[0]
+                            or not 0 <= y0 < y1 <= size[1]
+                            or endpoint["time"] != row["time"]
+                        ):
+                            raise ValueError(
+                                "Review source coordinates or timestamp invalid"
+                            )
     for case in family:
         available = {e["id"] for e in case["evidence"] if e["available"]}
         initial = set(case["initial"])
         variant = case["variant"]
-        if (full_pool_verdict(merged, available) != votes[0]["pool_verdicts"][variant]
-                or full_pool_verdict(merged, initial) != votes[0]["initial_verdicts"][variant]):
-            raise ValueError("Annotated alternatives do not explain the reviewed initial/pool verdicts")
+        if (
+            full_pool_verdict(merged, available) != votes[0]["pool_verdicts"][variant]
+            or full_pool_verdict(merged, initial)
+            != votes[0]["initial_verdicts"][variant]
+        ):
+            raise ValueError(
+                "Annotated alternatives do not explain the reviewed initial/pool verdicts"
+            )
     return merged
 
 
@@ -128,24 +274,43 @@ def admit(data, votes_path, output):
             case = deepcopy(case)
             case["annotation"] = deepcopy(annotation)
             release = case["variant"]
-            case["review"] = {"protocol": "visual-review-v1", "reviewers": [v["reviewer_id"] for v in votes[family_id]],
-                             "initial_verdict": votes[family_id][0]["initial_verdicts"][release],
-                             "pool_verdict": votes[family_id][0]["pool_verdicts"][release]}
+            case["review"] = {
+                "protocol": "visual-review-v1",
+                "reviewers": [v["reviewer_id"] for v in votes[family_id]],
+                "initial_verdict": votes[family_id][0]["initial_verdicts"][release],
+                "pool_verdict": votes[family_id][0]["pool_verdicts"][release],
+            }
             case["release_configuration"] = release
-            case["variant"] = availability_class(case["review"]["initial_verdict"], case["review"]["pool_verdict"],
-                                                  annotation["verdict"], case["evidence"])
+            case["variant"] = availability_class(
+                case["review"]["initial_verdict"],
+                case["review"]["pool_verdict"],
+                annotation["verdict"],
+                case["evidence"],
+            )
             admitted.append(case)
     output.mkdir(parents=True)
     (output / "cases.json").write_text(json.dumps(admitted, indent=2) + "\n")
     (output / "pending.json").write_text(json.dumps(pending, indent=2) + "\n")
     manifest = json.loads((data / "dataset_manifest.json").read_text())
-    manifest.update(stage="reviewed" if admitted else "no-admitted-cases", formal_evaluation_ready=bool(admitted),
-                    families=len(admitted)//4, cases=len(admitted), pending_families=len(pending),
-                    parent_dataset=str(data), review_records_sha256=hashlib.sha256(votes_path.read_bytes()).hexdigest())
+    manifest.update(
+        stage="reviewed" if admitted else "no-admitted-cases",
+        formal_evaluation_ready=bool(admitted),
+        families=len(admitted) // 4,
+        cases=len(admitted),
+        pending_families=len(pending),
+        parent_dataset=str(data),
+        review_records_sha256=hashlib.sha256(votes_path.read_bytes()).hexdigest(),
+    )
     manifest["availability_classes"] = dict(Counter(c["variant"] for c in admitted))
-    manifest["release_configurations"] = dict(Counter(c["release_configuration"] for c in admitted))
-    manifest["scope"] = "Two-human-reviewed development subset; source splits and shared-family limitations retained."
-    manifest["cases_sha256"] = hashlib.sha256((output / "cases.json").read_bytes()).hexdigest()
+    manifest["release_configurations"] = dict(
+        Counter(c["release_configuration"] for c in admitted)
+    )
+    manifest["scope"] = (
+        "Two-human-reviewed development subset; source splits and shared-family limitations retained."
+    )
+    manifest["cases_sha256"] = hashlib.sha256(
+        (output / "cases.json").read_bytes()
+    ).hexdigest()
     (output / "dataset_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
 
@@ -159,11 +324,16 @@ def reviewed_outcome(environment, verdict):
     current = full_pool_verdict(annotation, environment._released)
     initial = case["review"]["initial_verdict"]
     obtainable = case["review"]["pool_verdict"]
-    return {"reviewed_initial_verdict": initial, "reviewed_pool_verdict": obtainable,
-            "current_evidence_verdict": current,
-            "decision_matches_current_evidence": verdict == current,
-            "acquisition_opportunity": initial == "Need more evidence" and obtainable != "Need more evidence",
-            "unused_obtainable_evidence": current == "Need more evidence" and obtainable != "Need more evidence"}
+    return {
+        "reviewed_initial_verdict": initial,
+        "reviewed_pool_verdict": obtainable,
+        "current_evidence_verdict": current,
+        "decision_matches_current_evidence": verdict == current,
+        "acquisition_opportunity": initial == "Need more evidence"
+        and obtainable != "Need more evidence",
+        "unused_obtainable_evidence": current == "Need more evidence"
+        and obtainable != "Need more evidence",
+    }
 
 
 def require_admitted(manifest, cases):
@@ -171,14 +341,23 @@ def require_admitted(manifest, cases):
     if manifest.get("protocol") != "benchmark-v0.4":
         return
     if not manifest.get("formal_evaluation_ready") or not cases:
-        raise ValueError("v0.4 curation pool is unreviewed; admit independent reviews before formal evaluation")
+        raise ValueError(
+            "v0.4 curation pool is unreviewed; admit independent reviews before formal evaluation"
+        )
     for case in cases:
         review = case.get("review", {})
-        if (case["annotation"].get("status") != "reviewed" or review.get("protocol") != "visual-review-v1"
-                or len(set(review.get("reviewers", []))) != 2):
-            raise ValueError("Every v0.4 case requires two independent reviewed annotations")
-        for ids, key in [(case["initial"], "initial_verdict"),
-                         ([e["id"] for e in case["evidence"] if e["available"]], "pool_verdict")]:
+        if (
+            case["annotation"].get("status") != "reviewed"
+            or review.get("protocol") != "visual-review-v1"
+            or len(set(review.get("reviewers", []))) != 2
+        ):
+            raise ValueError(
+                "Every v0.4 case requires two independent reviewed annotations"
+            )
+        for ids, key in [
+            (case["initial"], "initial_verdict"),
+            ([e["id"] for e in case["evidence"] if e["available"]], "pool_verdict"),
+        ]:
             if full_pool_verdict(case["annotation"], set(ids)) != review.get(key):
                 raise ValueError("Reviewed labels no longer match the evidence library")
 
@@ -300,7 +479,7 @@ def serve(data, votes_path, port):
     for case in json.loads((data / "cases.json").read_text()):
         families[case["family_id"]].append(case)
     entries = list(families.values())
-    dataset_hash = hashlib.sha256((data / 'cases.json').read_bytes()).hexdigest()
+    dataset_hash = hashlib.sha256((data / "cases.json").read_bytes()).hexdigest()
     votes_lock = Lock()
 
     class Handler(BaseHTTPRequestHandler):
@@ -327,28 +506,51 @@ def serve(data, votes_path, port):
                     path = (Path(case["asset_root"]) / row["path"]).resolve()
                     if not path.is_relative_to(Path(case["asset_root"]).resolve()):
                         raise ValueError("Invalid asset")
-                    return self.respond(path.read_bytes(), "image/png" if path.suffix == ".png" else "image/jpeg")
+                    return self.respond(
+                        path.read_bytes(),
+                        "image/png" if path.suffix == ".png" else "image/jpeg",
+                    )
                 if parts[1] != "case" or len(parts) != 3:
                     raise ValueError("Unknown route")
                 images = []
                 for row in rows.values():
                     with Image.open(Path(case["asset_root"]) / row["path"]) as picture:
                         size = row.get("source_size", list(picture.size))
-                    images.append({k: row[k] for k in ["id", "object", "time", "view"]} |
-                                  {"source_bbox": row.get("source_bbox", [0, 0, *size]),
-                                   "target_bbox": row.get("target_bbox")})
-                payload = {"dataset_sha256": dataset_hash, "family_id": case["family_id"], "claim": case["claim"], "task": case["task"],
-                           "context": case.get("task_instructions", "") + " " + " ".join(p["text"] for p in case.get("claim_parts", [])),
-                           "total": len(entries), "images": images,
-                           "versions": {c["variant"]: {"initial": c["initial"],
-                               "pool": [e["id"] for e in c["evidence"] if e["available"]]} for c in family}}
+                    images.append(
+                        {k: row[k] for k in ["id", "object", "time", "view"]}
+                        | {
+                            "source_bbox": row.get("source_bbox", [0, 0, *size]),
+                            "target_bbox": row.get("target_bbox"),
+                        }
+                    )
+                payload = {
+                    "dataset_sha256": dataset_hash,
+                    "family_id": case["family_id"],
+                    "claim": case["claim"],
+                    "task": case["task"],
+                    "context": case.get("task_instructions", "")
+                    + " "
+                    + " ".join(p["text"] for p in case.get("claim_parts", [])),
+                    "total": len(entries),
+                    "images": images,
+                    "versions": {
+                        c["variant"]: {
+                            "initial": c["initial"],
+                            "pool": [e["id"] for e in c["evidence"] if e["available"]],
+                        }
+                        for c in family
+                    },
+                }
                 self.respond(json.dumps(payload).encode())
             except (ValueError, KeyError, IndexError, OSError):
                 self.respond(b"Not found", "text/plain", 404)
 
         def do_POST(self):
             try:
-                if self.path != "/votes" or self.headers.get_content_type() != "application/json":
+                if (
+                    self.path != "/votes"
+                    or self.headers.get_content_type() != "application/json"
+                ):
                     raise ValueError("Expected a JSON review")
                 length = int(self.headers.get("Content-Length", "0"))
                 if not 0 < length <= 100000:
@@ -360,17 +562,36 @@ def serve(data, votes_path, port):
                 if vote["family_id"] not in families:
                     raise ValueError("Unknown family")
                 with votes_lock:
-                    previous = [json.loads(s) for s in votes_path.read_text().splitlines()] if votes_path.exists() else []
-                    if any(v["family_id"] == vote["family_id"] and v["reviewer_id"] == vote["reviewer_id"] for v in previous):
-                        raise ValueError("This reviewer already submitted this family; do not overwrite an independent review")
+                    previous = (
+                        [json.loads(s) for s in votes_path.read_text().splitlines()]
+                        if votes_path.exists()
+                        else []
+                    )
+                    if any(
+                        v["family_id"] == vote["family_id"]
+                        and v["reviewer_id"] == vote["reviewer_id"]
+                        for v in previous
+                    ):
+                        raise ValueError(
+                            "This reviewer already submitted this family; do not overwrite an independent review"
+                        )
                     votes_path.parent.mkdir(parents=True, exist_ok=True)
                     with votes_path.open("a") as stream:
                         stream.write(json.dumps(vote, ensure_ascii=False) + "\n")
-                self.respond("已保存。需要第二位独立审核者；一致并通过证据检查后才能入库。".encode(), "text/plain; charset=utf-8")
+                self.respond(
+                    "已保存。需要第二位独立审核者；一致并通过证据检查后才能入库。".encode(),
+                    "text/plain; charset=utf-8",
+                )
             except (ValueError, KeyError, TypeError):
-                self.respond("审核不完整或格式无效；请检查四个版本、理由和证据集合。".encode(), "text/plain; charset=utf-8", 400)
+                self.respond(
+                    "审核不完整或格式无效；请检查四个版本、理由和证据集合。".encode(),
+                    "text/plain; charset=utf-8",
+                    400,
+                )
 
-    print(f"Blind review: http://127.0.0.1:{port}; source answers are hidden", flush=True)
+    print(
+        f"Blind review: http://127.0.0.1:{port}; source answers are hidden", flush=True
+    )
     ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
 
 

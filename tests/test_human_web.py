@@ -179,28 +179,187 @@ class HumanWebTests(unittest.TestCase):
         self.assertEqual(exported["status"], "finished")
         self.assertEqual(exported["steps"], 41)
         self.assertGreaterEqual(exported["duration_s"], 7200)
-        self.assertEqual(exported["ui_protocol"], "human-ui-v3-unrestricted")
+        self.assertEqual(exported["ui_protocol"], "human-ui-v4-single-answer")
 
-    def test_review_cannot_skip_to_full_evidence_or_rewrite_an_initial_judgment(self):
+    def test_review_has_tools_and_finishes_with_one_truth_only_vote(self):
+        from resolveai.review import validate_truth_vote, validate_vote
+
         state = self.study.post("reviewer", "consent", {"agree": True})
-        self.assertEqual(state["phase"], 0)
-        self.assertNotIn("original", [r["image_id"] for r in state["images"]])
-        body = {
+        self.assertNotIn("phase", state)
+        self.assertEqual(state["review_scope"], "full_pool_only")
+        self.assertIn("original", [r["image_id"] for r in state["images"]])
+        state = self.study.post(
+            "reviewer",
+            "action",
+            {
+                "index": 0,
+                "action": {"type": "zoom", "image_id": "original", "factor": 2},
+            },
+        )
+        self.assertEqual(state["turns"], 1)
+        original = next(r for r in state["images"] if r["view_id"] == "original")
+        self.assertEqual(original["display_scale"], 2)
+        self.assertEqual(original["display_size"], [32, 32])
+        answer = {
             "index": 0,
-            "phase": 4,
             "verdict": "Need more evidence",
             "selected": [],
             "confidence": 3,
             "reason": "unclear",
+            "clear": True,
         }
+        self.assertTrue(self.study.post("reviewer", "review", answer)["submitted"])
+        self.assertTrue(self.study.state("reviewer")["done"])
+        vote = self.study.export()[0]["vote"]
+        validate_truth_vote(vote)
+        self.assertNotIn("initial_verdicts", vote)
+        self.assertNotIn("pool_verdicts", vote)
         with self.assertRaises(ValueError):
-            self.study.post("reviewer", "review", body)
-        body["phase"] = 0
-        state = self.study.post("reviewer", "review", body)
-        self.assertEqual(state["phase"], 1)
-        self.assertNotIn("original", [r["image_id"] for r in state["images"]])
+            validate_vote(vote)
         with self.assertRaises(ValueError):
-            self.study.post("reviewer", "review", body)
+            self.study.post("reviewer", "review", answer)
+
+    def test_truth_consensus_does_not_admit_release_sufficiency(self):
+        from copy import deepcopy
+        from resolveai.review import full_truth_consensus, validate_truth_vote
+
+        self.study.post("reviewer", "consent", {"agree": True})
+        self.study.post(
+            "reviewer",
+            "review",
+            {
+                "index": 0,
+                "verdict": "Supported",
+                "confidence": 3,
+                "reason": "visible",
+                "clear": True,
+                "selected": [{"view_id": "original", "bbox": [0, 0, 32, 32]}],
+            },
+        )
+        vote = self.study.export()[0]["vote"]
+        cases = list(self.study.cases.values())
+        one = full_truth_consensus([vote], cases, self.study.plan["dataset_sha256"])
+        self.assertEqual(one["consensus"], [])
+        other = deepcopy(vote)
+        other["reviewer_id"] = "independent"
+        two = full_truth_consensus(
+            [vote, other], cases, self.study.plan["dataset_sha256"]
+        )
+        self.assertEqual(two["consensus"][0]["verdict"], "Supported")
+        self.assertFalse(two["formal_evaluation_ready"])
+        self.assertFalse(two["availability_review_complete"])
+        other["initial_verdicts"] = {}
+        with self.assertRaises(ValueError):
+            validate_truth_vote(other)
+
+    def test_preview_writes_only_to_its_separate_database(self):
+        preview = self.root / "preview"
+        preview.mkdir()
+        (preview / "plan.json").write_text((self.root / "plan.json").read_text())
+        (preview / "access.json").write_text(
+            json.dumps(
+                {
+                    "try": {
+                        "id": "TRY",
+                        "role": "participant",
+                        "tasks": self.study.actor("person")["tasks"],
+                    }
+                }
+            )
+        )
+        server = create_server(self.root, 0)
+        Thread(target=server.serve_forever, daemon=True).start()
+        try:
+            conn = HTTPConnection("127.0.0.1", server.server_port)
+            headers = {
+                "Authorization": "Bearer try",
+                "Content-Type": "application/json",
+            }
+            for route, body in [
+                ("consent", {"agree": True}),
+                (
+                    "answer",
+                    {
+                        "index": 0,
+                        "verdict": "Need more evidence",
+                        "selected": [],
+                        "confidence": 3,
+                        "reason": "uncertain",
+                    },
+                ),
+            ]:
+                body["ui_protocol"] = "human-ui-v4-single-answer"
+                conn.request("POST", "/api/" + route, json.dumps(body), headers)
+                response = conn.getresponse()
+                response.read()
+                self.assertEqual(response.status, 200)
+            self.assertEqual(self.study.export(), [])
+            import sqlite3
+
+            db = sqlite3.connect(preview / "responses.sqlite")
+            self.assertEqual(
+                db.execute("SELECT COUNT(*) FROM answers").fetchone()[0], 1
+            )
+            db.close()
+            conn.close()
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_full_material_scores_skip_missing_pools_and_keep_parse_failures(self):
+        import importlib.util
+        import sqlite3
+
+        path = Path(__file__).resolve().parents[1] / "scripts/analyze_human_study.py"
+        spec = importlib.util.spec_from_file_location("human_analysis", path)
+        analysis = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(analysis)
+        models = self.root / "models"
+        worker = models / "toy"
+        worker.mkdir(parents=True)
+        (worker / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "model_id": "toy",
+                    "dataset_sha256": self.study.plan["dataset_sha256"],
+                }
+            )
+        )
+        db = sqlite3.connect(worker / "episodes.sqlite")
+        db.execute("CREATE TABLE episodes(arm TEXT,result TEXT,trace TEXT)")
+        for case in self.study.cases.values():
+            decision = (
+                None if case["variant"] == "Obtainable" else {"verdict": "Supported"}
+            )
+            db.execute(
+                "INSERT INTO episodes VALUES (?,?,?)",
+                (
+                    "full_available_text",
+                    json.dumps({"case_id": case["case_id"]}),
+                    json.dumps({"decision": decision}),
+                ),
+            )
+        db.commit()
+        db.close()
+        consensus = {
+            "consensus": [
+                {
+                    "family_id": "f",
+                    "verdict": "Supported",
+                    "full_pool_ids": ["original", "preview", "reference"],
+                }
+            ]
+        }
+        result = analysis.full_material_agreement(
+            models,
+            list(self.study.cases.values()),
+            consensus,
+            self.study.plan["dataset_sha256"],
+        )[0]
+        self.assertEqual(result["episodes"], 2)
+        self.assertEqual(result["submitted"], 1)
+        self.assertEqual(result["matches"], 1)
+        self.assertEqual(result["label_agreement"], 0.5)
 
     def test_http_blocks_unreleased_images_and_private_exports(self):
         server = create_server(self.root, 0)
@@ -218,11 +377,11 @@ class HumanWebTests(unittest.TestCase):
             r = conn.getresponse()
             r.read()
             self.assertEqual(r.status, 403)
-            self.study.post("reviewer", "consent", {"agree": True})
+            self.study.post("person", "consent", {"agree": True})
             conn.request(
                 "GET",
                 "/api/image/original",
-                headers={"Authorization": "Bearer reviewer"},
+                headers={"Authorization": "Bearer person"},
             )
             r = conn.getresponse()
             r.read()
@@ -231,6 +390,24 @@ class HumanWebTests(unittest.TestCase):
             r = conn.getresponse()
             self.assertIn("看图与搜证", r.read().decode())
             self.assertEqual(r.status, 200)
+            conn.request(
+                "POST",
+                "/api/answer",
+                json.dumps(
+                    {
+                        "index": 0,
+                        "verdict": "Need more evidence",
+                        "selected": [],
+                        "confidence": 3,
+                        "reason": "old page",
+                    }
+                ),
+                {"Content-Type": "application/json", "Authorization": "Bearer person"},
+            )
+            r = conn.getresponse()
+            self.assertEqual(r.status, 400)
+            self.assertIn("页面已更新", r.read().decode())
+            self.assertEqual(self.study.export(), [])
             conn.request("GET", "/i18n.js")
             r = conn.getresponse()
             self.assertEqual(r.status, 200)

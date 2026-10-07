@@ -5,7 +5,7 @@ let token = decodeURIComponent(location.hash.slice(1)),
   corners = {},
   marked = new Set(),
   selected = new Set(),
-  urls = [],
+  imageCache = new Map(),
   busy = false,
   invitations = [];
 const $ = (id) => document.getElementById(id);
@@ -16,7 +16,9 @@ async function api(path, body) {
       Authorization: "Bearer " + token,
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
-    body: body ? JSON.stringify(body) : undefined,
+    body: body
+      ? JSON.stringify({ ...body, ui_protocol: "human-ui-v4-single-answer" })
+      : undefined,
   });
   const data = await r.json();
   if (!r.ok) throw Error(localizedError(data.error) || t("requestFailed"));
@@ -57,13 +59,12 @@ function clippedBox(p, box) {
   return result[0] < result[2] && result[1] < result[3] ? result : [...b];
 }
 function displayImages(data) {
-  if (data.mode !== "search") return data.images;
   const refs = new Set(data.display_views || data.images.map((p) => p.view_id));
   const shown = data.images.filter((p) => refs.has(p.view_id));
   for (const ref of [...selected]) {
     if (refs.has(ref)) continue;
     const old = data.images.find((p) => p.view_id === ref);
-    const replacement = shown.find((p) => p.image_id === old?.image_id);
+    const replacement = shown.find((p) => p.source_id === old?.source_id);
     if (!replacement) continue;
     boxes[replacement.view_id] = clippedBox(replacement, boxes[ref]);
     if (marked.has(ref)) marked.add(replacement.view_id);
@@ -106,7 +107,7 @@ function refreshSelection() {
       ? t("selected")
       : t("selectPhoto");
   });
-  $("compare").hidden = state?.mode !== "search" || selected.size !== 2;
+  $("compare").hidden = selected.size !== 2;
   $("selection-hint").textContent = selected.size
     ? t("selectedCount", selected.size)
     : state?.task === "identity"
@@ -145,8 +146,26 @@ async function picture(p) {
   title.textContent =
     actorText(p) + (p.object === "normal-reference" ? "" : " · " + view);
   card.append(title);
+  if (
+    Math.max(...p.display_size) < 128 &&
+    ["preview", "overview"].includes(p.camera_view)
+  ) {
+    const quality = document.createElement("small");
+    quality.className = "photo-quality";
+    quality.textContent = t("lowResolution", p.display_size.join(" × "));
+    card.append(quality);
+  }
   const wrap = document.createElement("div");
   wrap.className = "picture";
+  const baseWidth = Math.min(
+    500,
+    (360 * p.display_size[0]) / p.display_size[1],
+  );
+  wrap.style.setProperty("--picture-width", baseWidth + "px");
+  wrap.style.setProperty(
+    "--content-width",
+    baseWidth * (p.display_scale || 1) + "px",
+  );
   const choose = document.createElement("button");
   choose.type = "button";
   choose.className = "picture-select";
@@ -155,12 +174,18 @@ async function picture(p) {
     canvas = document.createElement("canvas");
   img.alt = actorText(p);
   boxes[p.view_id] ??= clippedBox(p, p.target_bbox);
-  const response = await fetch("/api/image/" + encodeURIComponent(p.view_id), {
-    headers: { Authorization: "Bearer " + token },
-  });
-  if (!response.ok) throw Error(t("imageFailed"));
-  const url = URL.createObjectURL(await response.blob());
-  urls.push(url);
+  let url = imageCache.get(p.view_id);
+  if (!url) {
+    const response = await fetch(
+      "/api/image/" + encodeURIComponent(p.view_id),
+      {
+        headers: { Authorization: "Bearer " + token },
+      },
+    );
+    if (!response.ok) throw Error(t("imageFailed"));
+    url = URL.createObjectURL(await response.blob());
+    imageCache.set(p.view_id, url);
+  }
   img.src = url;
   const badge = document.createElement("span");
   badge.className = "selection-status";
@@ -168,8 +193,8 @@ async function picture(p) {
   note.className = "region-note";
   let regionMode = null;
   function draw() {
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
+    canvas.width = Math.max(1, Math.round(img.clientWidth));
+    canvas.height = Math.max(1, Math.round(img.clientHeight));
     const ctx = canvas.getContext("2d"),
       b = p.source_bbox,
       a = boxes[p.view_id];
@@ -266,7 +291,7 @@ async function picture(p) {
   card.append(wrap, badge);
   const controls = document.createElement("div");
   controls.className = "picture-controls";
-  if (state.mode === "search") {
+  {
     controls.append(
       button(t("zoomIn"), () =>
         perform({ type: "zoom", image_id: p.view_id, factor: 2 }),
@@ -284,14 +309,14 @@ async function picture(p) {
     summary,
     button(t("mark"), () => region("mark")),
   );
-  if (state.mode === "search" && p.view_id !== p.image_id) {
+  if (p.view_id !== p.image_id) {
     more.append(
       button(t("restore"), () =>
         perform({ type: "inspect", image_id: p.image_id }),
       ),
     );
   }
-  if (state.mode === "search") {
+  {
     more.append(
       button(t("inspect"), () =>
         perform({ type: "inspect", image_id: p.view_id }),
@@ -344,9 +369,13 @@ function photoRequests(data) {
 }
 async function show(data) {
   state = data;
+  $("preview-notice").hidden = !data.preview;
   if (data.role === "admin") {
     section("admin");
     invitations = data.invitations;
+    $("preview-link").hidden = !data.preview_token;
+    if (data.preview_token)
+      $("preview-link").href = location.origin + "/#" + data.preview_token;
     $("study-info").textContent = t(
       "organizerInfo",
       data.invitations.reduce((n, p) => n + p.completed, 0),
@@ -397,25 +426,16 @@ async function show(data) {
     data.task === "identity" ? "identityContext" : "stateContext",
   );
   $("original").textContent = data.original_claim;
-  $("tools").hidden = data.mode === "review";
-  $("step-count").textContent =
-    data.mode === "search" ? t("steps", data.turns) : "";
+  $("tools").hidden = false;
+  $("step-count").textContent = t("steps", data.turns);
   $("supported-label").textContent =
     data.task === "identity" ? t("same") : t("supported");
   $("refuted-label").textContent =
     data.task === "identity" ? t("different") : t("refuted");
-  $("review-checks").hidden = data.mode !== "review" || data.phase !== 4;
+  $("review-checks").hidden = data.mode !== "review";
   $("condition").textContent =
     data.mode === "review"
-      ? t(
-          [
-            "previewPhase",
-            "limitedPhase",
-            "sufficientPhase",
-            "fullPhase",
-            "annotationPhase",
-          ][data.phase],
-        )
+      ? t("singleReview")
       : t(
           {
             initial: "initial",
@@ -423,16 +443,20 @@ async function show(data) {
             full_available: "full",
           }[data.condition],
         );
-  $("submit").textContent =
-    data.mode === "review" && data.phase < 4 ? t("saveStage") : t("submit");
-  const old = urls;
-  urls = [];
+  $("submit").textContent = t("submit");
   $("pictures").replaceChildren();
-  const cards = await Promise.all(displayImages(data).map(picture));
+  const shown = displayImages(data);
+  const cards = await Promise.all(shown.map(picture));
   $("pictures").replaceChildren(...cards);
-  old.forEach(URL.revokeObjectURL);
+  const keep = new Set(shown.flatMap((p) => [p.view_id, p.image_id]));
+  for (const [ref, url] of imageCache) {
+    if (!keep.has(ref)) {
+      URL.revokeObjectURL(url);
+      imageCache.delete(ref);
+    }
+  }
   refreshSelection();
-  if (data.mode === "search") photoRequests(data);
+  photoRequests(data);
   $("feedback").textContent = "";
   if (data.feedback) {
     const f = data.feedback;
@@ -465,9 +489,7 @@ $("submit").onclick = () =>
       reason: $("reason").value,
       confidence: Number($("confidence").value),
       selected: evidence(),
-      phase: state.phase,
       clear: $("clear").checked,
-      checked: $("checked").checked,
     };
     const response = await api(
       state.mode === "review" ? "review" : "answer",
@@ -478,6 +500,8 @@ $("submit").onclick = () =>
   });
 $("next").onclick = () =>
   guarded(async () => {
+    imageCache.forEach(URL.revokeObjectURL);
+    imageCache.clear();
     boxes = {};
     corners = {};
     marked.clear();

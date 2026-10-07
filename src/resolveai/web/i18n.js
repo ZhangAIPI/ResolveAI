@@ -2,6 +2,22 @@
 let language =
   localStorage.getItem("resolveai-language") === "en" ? "en" : "zh";
 const UI_TEXT = {
+  lowResolution: [
+    "低清照片（{0} 像素）；已放大显示",
+    "Low-resolution photo ({0} px), displayed enlarged",
+  ],
+  singleReview: [
+    "全部可获取照片已显示。可放大、裁剪、比较；这道题只提交一次。",
+    "All available photos are shown. You can zoom, crop or compare; submit this task once.",
+  ],
+  previewLink: [
+    "试用新版流程（不计入统计）",
+    "Try the updated flow (excluded from study results)",
+  ],
+  previewNotice: [
+    "试用模式：回答不计入实验统计。",
+    "Preview mode: responses are excluded from study results.",
+  ],
   title: ["ResolveAI · 看图与搜证", "ResolveAI · Visual evidence study"],
   header: ["看图与搜证 · 约 5–10 分钟", "Visual evidence · about 5–10 minutes"],
   welcomeEyebrow: ["人工验证实验", "Human study"],
@@ -44,8 +60,8 @@ const UI_TEXT = {
     "Zoom changes the display; requesting photos may provide evidence you have not seen.",
   ],
   introReview: [
-    "审核先看有限材料，再看完整材料。保存后会进入下一组图片；请独立作答。",
-    "Reviews reveal photos in stages. Save each judgment to see the next set, and work independently.",
+    "每道题只提交一次，提交后进入另一道题。请独立作答。",
+    "Submit each task once, then continue to a different task. Work independently.",
   ],
   consent: [
     "我理解以上说明并自愿参与。记录包括答案、选图区域、操作与用时；可随时关闭网页退出。",
@@ -249,6 +265,8 @@ const STATIC_TEXT = {
   "#next": "next",
   "#done h1": "done",
   "#done p": "doneNote",
+  "#preview-notice": "previewNotice",
+  "#preview-link": "previewLink",
   "#admin h1": "admin",
   "#admin > p:first-of-type": "adminNote",
   "#refresh": "refresh",
