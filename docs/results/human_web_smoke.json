@@ -38,10 +38,10 @@
     "sha256": "5647763d41c628d0c574591d6f0a2cf009c72c48988f58afda372bd6d8d91003"
   },
   "page_errors": [],
-  "ui_protocol": "human-ui-v5-optional-regions",
+  "ui_protocol": "human-ui-v6-optional-reason",
   "screenshot_type": "Chinese and English task UI before any tool call",
   "current_ui": {
-    "ui_protocol": "human-ui-v5-optional-regions",
+    "ui_protocol": "human-ui-v6-optional-reason",
     "verified_at_utc": "2026-10-07T01:12:18.167769+00:00",
     "tasks_submitted": 5,
     "photo_selection_required": false,
@@ -79,8 +79,8 @@
     "formal_database_test_writes": 0,
     "page_errors": [],
     "screenshot_sha256": {
-      "human-study.png": "d3b4e0cd55c26a6410305190ecc63c4659955c8fa16b87852c6470553ed49d4d",
-      "human-study.en.png": "5a873d5a0efd335d8f72612bfc50f95bdd3a265f7f3cbdcac9dd2ba5fed5aed8"
+      "human-study.png": "01716ee77c7f0e7f405b971d7f0788257a1827961261ea44066f0e35d0ad316b",
+      "human-study.en.png": "32c5cdf543529d69eb184169df802a5fa2526bf8a450410dba051286e48cc396"
     },
     "simple_tools": {
       "verified_at_utc": "2026-10-07T01:23:18.731412+00:00",
@@ -115,6 +115,16 @@
       "original_photo_request_passed": true,
       "identity_view_request_remains_available": true,
       "participant_database_test_writes": 0,
+      "page_errors": []
+    },
+    "optional_reason": {
+      "verified_at_utc": "2026-10-07T01:47:26.029342+00:00",
+      "actual_preview_five_tasks_in_temporary_database": true,
+      "empty_reason_submissions": 5,
+      "search_and_review_passed": true,
+      "bilingual_labels_passed": true,
+      "reason_not_fabricated": true,
+      "real_participant_database_writes": 0,
       "page_errors": []
     }
   }

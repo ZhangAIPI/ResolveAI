@@ -366,7 +366,7 @@ def prepare_short(data, output):
         "search_tasks_per_participant": 3,
         "review_tasks_per_participant": 2,
         "conditions": list(ARMS),
-        "ui_protocol": "human-ui-v5-optional-regions",
+        "ui_protocol": "human-ui-v6-optional-reason",
         "estimated_minutes": [5, 10],
         "limits": {"time": None, "steps": None, "points": None},
         "source_disjoint_within_participant": True,

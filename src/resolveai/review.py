@@ -60,7 +60,11 @@ def validate_truth_vote(vote):
         or not isinstance(vote.get("reviewer_id"), str)
         or not vote["reviewer_id"].strip()
         or not vote.get("family_id")
-        or not vote.get("reason", "").strip()
+        or not isinstance(vote.get("reason", ""), str)
+        or (
+            vote.get("protocol") == "visual-truth-review-v2"
+            and not vote.get("reason", "").strip()
+        )
     ):
         raise ValueError("A full-pool human truth review is required")
     if (

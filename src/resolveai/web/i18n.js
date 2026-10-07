@@ -101,10 +101,10 @@ const UI_TEXT = {
   ],
   optional: ["可选：判断把握", "Optional: confidence"],
   confidence: ["把握程度", "Confidence"],
-  reason: ["一句话理由", "A short reason"],
+  reason: ["理由（可选）", "Reason (optional)"],
   reasonPlaceholder: [
-    "例如：瓶口左边可见缺口；或缺少能确认身份的细节",
-    "For example: a chip is visible on the left rim, or identity details are missing.",
+    "可留空；例如：瓶口有缺口，或缺少能确认身份的细节",
+    "You can leave this blank. For example: a chip is visible, or identity details are missing.",
   ],
   clear: ["声明和目标清楚", "The claim and target are clear"],
   checked: [
@@ -246,7 +246,6 @@ const UI_TEXT = {
   actionDone: ["操作完成。", "Action completed."],
   agreeError: ["请先确认自愿参与。", "Please confirm your consent first."],
   verdictError: ["请选择判断。", "Please choose a decision."],
-  reasonError: ["请简短写出理由。", "Please write a short reason."],
   copied: ["20 个个人邀请链接已复制。", "20 invitation links copied."],
   requestFailed: ["请求失败。", "Request failed."],
 };
@@ -322,7 +321,7 @@ function localizedError(text) {
     "请求无效，请刷新当前题":
       "Invalid request. Please refresh the current task.",
     请选择判断: "Please choose a decision.",
-    请简短写出判断理由: "Please write a short reason.",
+    "理由须为文字，可留空": "The optional reason must be text.",
     请选择把握程度: "Please choose a confidence level.",
     确定判断需要选择目标图片作为证据:
       "Select a target photo as evidence for a definite decision.",

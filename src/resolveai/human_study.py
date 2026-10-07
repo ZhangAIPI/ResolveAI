@@ -16,7 +16,7 @@ from .environment import Environment
 from .review import validate_truth_vote
 from .tools import ActionError, VERDICTS
 
-UI_PROTOCOL = "human-ui-v5-optional-regions"
+UI_PROTOCOL = "human-ui-v6-optional-reason"
 TOOLS = {"inspect", "crop", "zoom", "compare", "ocr", "request_photo", "finish"}
 CATEGORIES = {
     "bottle": "瓶子",
@@ -341,11 +341,11 @@ class Study:
         case = self.case(task)
         self.elapsed(actor, index)
         if route in {"answer", "review"}:
-            if (
-                not isinstance(body.get("reason"), str)
-                or len(body["reason"].strip()) < 2
-            ):
-                raise ValueError("请简短写出判断理由")
+            reason = body.get("reason", "")
+            if reason is None:
+                reason = ""
+            if not isinstance(reason, str):
+                raise ValueError("理由须为文字，可留空")
             if (
                 type(body.get("confidence")) is not int
                 or not 1 <= body["confidence"] <= 5
@@ -408,7 +408,7 @@ class Study:
                 "task": task,
                 "decision": action,
                 "confidence": body["confidence"],
-                "reason": body["reason"],
+                "reason": reason,
                 "duration_s": self.elapsed(actor, index),
                 "steps": len(self.events(actor, index)),
                 "requests": env.requests,
@@ -435,7 +435,7 @@ class Study:
                 "family_id": task["family_id"],
                 "dataset_sha256": self.plan["dataset_sha256"],
                 "claim_clear": body.get("clear") is True,
-                "reason": body["reason"],
+                "reason": reason,
                 "verdict": verdict,
                 "regions": citations,
                 "links": links,
@@ -450,10 +450,6 @@ class Study:
                 "released": sorted(env._released),
                 "duration_s": self.elapsed(actor, index),
             }
-        if not isinstance(body.get("reason"), str) or len(body["reason"].strip()) < 2:
-            raise ValueError("请简短写出判断理由")
-        if type(body.get("confidence")) is not int or not 1 <= body["confidence"] <= 5:
-            raise ValueError("请选择把握程度")
         payload["ui_protocol"] = UI_PROTOCOL
         payload["citation_scoring_available"] = False
         with self.db:

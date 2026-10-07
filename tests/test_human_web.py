@@ -179,7 +179,7 @@ class HumanWebTests(unittest.TestCase):
         self.assertEqual(exported["status"], "finished")
         self.assertEqual(exported["steps"], 41)
         self.assertGreaterEqual(exported["duration_s"], 7200)
-        self.assertEqual(exported["ui_protocol"], "human-ui-v5-optional-regions")
+        self.assertEqual(exported["ui_protocol"], "human-ui-v6-optional-reason")
 
     def test_review_has_tools_and_finishes_with_one_truth_only_vote(self):
         from resolveai.review import validate_truth_vote, validate_vote
@@ -218,6 +218,56 @@ class HumanWebTests(unittest.TestCase):
             validate_vote(vote)
         with self.assertRaises(ValueError):
             self.study.post("reviewer", "review", answer)
+
+    def test_reason_is_optional_in_search_and_review(self):
+        from copy import deepcopy
+        from resolveai.review import validate_truth_vote
+
+        for template, route in [("person", "answer"), ("reviewer", "review")]:
+            for index, reason in enumerate([None, "", "划"]):
+                with self.subTest(route=route, reason=reason):
+                    token = f"{template}-{index}"
+                    self.study.access[token] = deepcopy(self.study.access[template])
+                    self.study.access[token]["id"] = token
+                    self.study.post(token, "consent", {"agree": True})
+                    body = {
+                        "index": 0,
+                        "verdict": "Supported",
+                        "confidence": 3,
+                        "clear": True,
+                        "selected": [],
+                    }
+                    if reason is not None:
+                        body["reason"] = reason
+                    self.assertTrue(self.study.post(token, route, body)["submitted"])
+                    row = json.loads(
+                        self.study.db.execute(
+                            "SELECT payload FROM answers WHERE actor=?", (token,)
+                        ).fetchone()[0]
+                    )
+                    self.assertEqual(
+                        row.get("reason", row.get("vote", {}).get("reason")),
+                        reason or "",
+                    )
+                    if route == "review":
+                        validate_truth_vote(row["vote"])
+                        self.assertEqual(row["vote"]["reason"], reason or "")
+                        self.assertNotIn("annotation", row["vote"])
+        # Earlier evidence-annotating reviews keep their original requirements.
+        legacy = {
+            k: v
+            for k, v in row["vote"].items()
+            if k not in {"verdict", "regions", "links"}
+        }
+        legacy.update(
+            protocol="visual-truth-review-v2",
+            reason="visible",
+            annotation=deepcopy(next(iter(self.study.cases.values()))["annotation"]),
+        )
+        validate_truth_vote(legacy)
+        legacy["reason"] = ""
+        with self.assertRaises(ValueError):
+            validate_truth_vote(legacy)
 
     def test_definite_answers_need_no_photo_selection(self):
         from resolveai.review import full_truth_consensus
@@ -324,7 +374,7 @@ class HumanWebTests(unittest.TestCase):
                     },
                 ),
             ]:
-                body["ui_protocol"] = "human-ui-v5-optional-regions"
+                body["ui_protocol"] = "human-ui-v6-optional-reason"
                 conn.request("POST", "/api/" + route, json.dumps(body), headers)
                 response = conn.getresponse()
                 response.read()

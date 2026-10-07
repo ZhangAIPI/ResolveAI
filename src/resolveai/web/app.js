@@ -16,7 +16,7 @@ async function api(path, body) {
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
     body: body
-      ? JSON.stringify({ ...body, ui_protocol: "human-ui-v5-optional-regions" })
+      ? JSON.stringify({ ...body, ui_protocol: "human-ui-v6-optional-reason" })
       : undefined,
   });
   const data = await r.json();
@@ -520,7 +520,6 @@ $("submit").onclick = () =>
   guarded(async () => {
     const v = verdict();
     if (!v) throw Error(t("verdictError"));
-    if ($("reason").value.trim().length < 2) throw Error(t("reasonError"));
     const payload = {
       index: state.index,
       verdict: v,
