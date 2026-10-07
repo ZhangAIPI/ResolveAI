@@ -88,6 +88,12 @@ const UI_TEXT = {
     "All available photos are shown for this task; requesting photos is unavailable.",
   ],
   requestPhoto: ["请求{0}：{1}", "Request {0}: {1}"],
+  clearerPhoto: ["看不清？", "Need a clearer photo?"],
+  getOriginal: ["获取清晰原图", "Get full-resolution photo"],
+  originalHint: [
+    "获取当前低清照片的原始版本，用来看细节；不是另一个拍摄角度。",
+    "Get the original version of the current low-resolution photo to see details. This is the same photo, not another camera angle.",
+  ],
   photoProvided: ["新照片已显示在上方。", "The new photo is shown above."],
   photoAlreadyShown: [
     "这张照片已在上方显示，没有新增图片。",

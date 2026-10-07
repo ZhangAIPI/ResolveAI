@@ -345,9 +345,29 @@ function photoRequests(data) {
   $("request-buttons").replaceChildren();
   if (data.condition !== "interactive") return;
   const o = data.request_options;
+  if (data.task === "state" && o.views?.includes("original")) {
+    $("request-title").textContent = t("clearerPhoto");
+    $("request-note").textContent = t("originalHint");
+  } else {
+    $("request-title").textContent = t("requestPanel");
+  }
   for (const object of o.objects || []) {
     for (const time of o.times || []) {
       for (const view of o.views || []) {
+        // In single-photo state tasks, "overview" is the released preview,
+        // not an additional camera angle. Keep unknown views requestable.
+        if (
+          data.task === "state" &&
+          view === "overview" &&
+          data.images.some(
+            (p) =>
+              p.object === object &&
+              p.time === time &&
+              p.camera_view === "overview" &&
+              p.image_id === p.view_id,
+          )
+        )
+          continue;
         const b = document.createElement("button");
         b.type = "button";
         const subject =
@@ -365,8 +385,11 @@ function photoRequests(data) {
                 ? t("view", Number(view.slice(5)))
                 : view;
         b.textContent =
-          t("requestPhoto", subject, name) +
+          (view === "original"
+            ? t("getOriginal")
+            : t("requestPhoto", subject, name)) +
           ((o.times || []).length > 1 ? " · " + time : "");
+        if (view === "original") b.title = t("originalHint");
         b.onclick = () =>
           perform({ type: "request_photo", query: { object, time, view } });
         $("request-buttons").append(b);

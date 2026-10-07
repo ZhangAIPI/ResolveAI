@@ -79,8 +79,8 @@
     "formal_database_test_writes": 0,
     "page_errors": [],
     "screenshot_sha256": {
-      "human-study.png": "ad1420a51a22881e8070a7cf6e80b68f858d6c02a1bd12658b06792180a0ec64",
-      "human-study.en.png": "10fa8a18d40a4091446a46326b457735eb5bff50edecd195d075687bcd7ef156"
+      "human-study.png": "d3b4e0cd55c26a6410305190ecc63c4659955c8fa16b87852c6470553ed49d4d",
+      "human-study.en.png": "5a873d5a0efd335d8f72612bfc50f95bdd3a265f7f3cbdcac9dd2ba5fed5aed8"
     },
     "simple_tools": {
       "verified_at_utc": "2026-10-07T01:23:18.731412+00:00",
@@ -105,6 +105,16 @@
       "unavailable_photo_feedback_passed": true,
       "fixed_evidence_conditions_explained": true,
       "test_database": "temporary; no formal or preview writes",
+      "page_errors": []
+    },
+    "clear_photo_labels": {
+      "verified_at_utc": "2026-10-07T01:39:54.117236+00:00",
+      "redundant_visible_overview_request_removed": true,
+      "original_button_same_photo_explained": true,
+      "bilingual_labels_passed": true,
+      "original_photo_request_passed": true,
+      "identity_view_request_remains_available": true,
+      "participant_database_test_writes": 0,
       "page_errors": []
     }
   }

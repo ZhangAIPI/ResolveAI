@@ -40,7 +40,7 @@
     },
     "review_scope": "full-pool labels only; regions optional; no sufficiency inference",
     "page_errors": [],
-    "web_app_sha256": "29d51cd0b411eac7d576463766293d2a97c0d672c028e4b2ca25241478a6d149",
+    "web_app_sha256": "8e721e4eccc692cbaa4dd277e3496ecdde771519f0fd7f456019dbe71383918d",
     "cropping_outside_target_has_no_target_outline": true,
     "crop_keeps_photo_position": true,
     "simple_tools": {
@@ -80,6 +80,18 @@
       "fresh_invite_unused": true,
       "category_count": 5,
       "tokens_published_to_git": false
+    },
+    "clear_photo_labels": {
+      "verified_at_utc": "2026-10-07T01:40:53.286715+00:00",
+      "state_task_original_label": "获取清晰原图",
+      "same_photo_not_new_angle_explained": true,
+      "already_displayed_overview_request_removed": true,
+      "web_files_match_public_bytes": {
+        "app.js": "8e721e4eccc692cbaa4dd277e3496ecdde771519f0fd7f456019dbe71383918d",
+        "i18n.js": "863bef2912d7f2bcaa486e267831ba543a644cfa3a61961ace9590e159dd3dfc"
+      },
+      "backend_restart": false,
+      "participant_data_writes": 0
     }
   }
 }
