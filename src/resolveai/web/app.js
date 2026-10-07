@@ -97,21 +97,13 @@ function resetAnswer() {
 }
 function refreshRegions() {
   document.querySelectorAll(".card").forEach((card) => {
+    card.querySelector(".clear-mark").hidden = !marked.has(card.dataset.ref);
     card.querySelector(".selection-status").textContent = marked.has(
       card.dataset.ref,
     )
       ? t("regionDone")
       : "";
   });
-  const shown = displayImages(state);
-  const a = shown.find((p) => p.object === "subject-A") || shown[0];
-  const b =
-    shown.find((p) => p.object === "subject-B") || shown.find((p) => p !== a);
-  $("compare").hidden = !a || !b;
-  $("compare").textContent =
-    a && b ? t("comparePhotos", actorText(a), actorText(b)) : t("compare");
-  $("compare").onclick = () =>
-    perform({ type: "compare", image_ids: [a.view_id, b.view_id] });
   $("selection-hint").textContent = t("optionalRegions");
 }
 function displayBox(p, box) {
@@ -315,36 +307,27 @@ async function picture(p) {
       button(t("mark"), () => region("mark")),
     );
   }
-  const more = document.createElement("details"),
-    summary = document.createElement("summary");
-  summary.textContent = t("more");
-  more.append(summary);
-  more.append(
-    button(t("clearMark"), () => {
-      marked.delete(p.view_id);
-      draw();
-      refreshRegions();
-    }),
-  );
+  const clearMark = button(t("clearMark"), () => {
+    marked.delete(p.view_id);
+    note.textContent = "";
+    draw();
+    refreshRegions();
+  });
+  clearMark.className = "clear-mark";
+  clearMark.hidden = !marked.has(p.view_id);
+  controls.append(clearMark);
   if (p.view_id !== p.image_id) {
-    more.append(
+    controls.append(
       button(t("restore"), () =>
         perform({ type: "inspect", image_id: p.image_id }),
       ),
     );
   }
-  {
-    more.append(
-      button(t("inspect"), () =>
-        perform({ type: "inspect", image_id: p.view_id }),
-      ),
+  if (state.ocr_available) {
+    controls.append(
+      button(t("ocr"), () => perform({ type: "ocr", image_id: p.view_id })),
     );
-    if (state.ocr_available)
-      more.append(
-        button(t("ocr"), () => perform({ type: "ocr", image_id: p.view_id })),
-      );
   }
-  controls.append(more);
   card.append(controls, note);
   return card;
 }

@@ -40,8 +40,21 @@
     },
     "review_scope": "full-pool labels only; regions optional; no sufficiency inference",
     "page_errors": [],
-    "web_app_sha256": "bdd130492a1db1a51e51bf92bcbc37eab72f5806c3f3c073e954202943c0993e",
+    "web_app_sha256": "a2047a633d47c42d2faf49c4943c14427e65daeda65aaaabec6135b809c6c2eb",
     "cropping_outside_target_has_no_target_outline": true,
-    "crop_keeps_photo_position": true
+    "crop_keeps_photo_position": true,
+    "simple_tools": {
+      "verified_at_utc": "2026-10-07T01:23:54.514661+00:00",
+      "compare_and_inspect_buttons_removed": true,
+      "more_menu_removed": true,
+      "web_files_match_public_bytes": {
+        "app.js": "a2047a633d47c42d2faf49c4943c14427e65daeda65aaaabec6135b809c6c2eb",
+        "i18n.js": "80f5433984f51830d5f98d36166f51840dfd21235fe1cc0ce3a719fc7254f626",
+        "style.css": "d9c5346c57b9117b4493ddbb935de35d5a577502dda344f37a46c83a119c71c9",
+        "index.html": "0ae33c091c2497882d52567de65a5dfdfa3114518c04cf700c61d50560b2e1aa"
+      },
+      "backend_restart": false,
+      "participant_data_writes": 0
+    }
   }
 }

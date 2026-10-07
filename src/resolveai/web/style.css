@@ -234,9 +234,6 @@ footer {
   margin: 4px 0;
   font-size: 14px;
 }
-.picture-controls details {
-  font-size: 14px;
-}
 summary {
   cursor: pointer;
   color: #096a63;

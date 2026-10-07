@@ -79,8 +79,19 @@
     "formal_database_test_writes": 0,
     "page_errors": [],
     "screenshot_sha256": {
-      "human-study.png": "80d873bfc15a5d7dc6e527c437910e70778ad2cf33f85354417b2c6b5da574e0",
-      "human-study.en.png": "213ce5db7c03998aa0e21ad98763b11b5c13dafc1fbd229dc4bd53c42e1ad66b"
+      "human-study.png": "82725f61f5420ea9afaae9ee6b3674dbd5b6511a2336f45ceef6a682f5668d7c",
+      "human-study.en.png": "7f490e94edea58436f6df2a165e4936c1c20c9b20b626d3888db99385a92f61f"
+    },
+    "simple_tools": {
+      "verified_at_utc": "2026-10-07T01:23:18.731412+00:00",
+      "compare_button_removed": true,
+      "inspect_button_removed": true,
+      "more_menu_removed": true,
+      "optional_mark_and_clear_passed": true,
+      "crop_and_restore_passed": true,
+      "bilingual_submission_passed": true,
+      "test_database": "temporary; no formal or preview writes",
+      "page_errors": []
     }
   }
 }

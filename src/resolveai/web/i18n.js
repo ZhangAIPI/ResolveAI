@@ -7,8 +7,8 @@ const UI_TEXT = {
     "Low-resolution photo ({0} px), displayed enlarged",
   ],
   singleReview: [
-    "全部可获取照片已显示。可放大、裁剪、比较；这道题只提交一次。",
-    "All available photos are shown. You can zoom, crop or compare; submit this task once.",
+    "全部可获取照片已显示。可放大或裁剪；这道题只提交一次。",
+    "All available photos are shown. You can zoom or crop; submit this task once.",
   ],
   previewLink: [
     "试用新版流程（不计入统计）",
@@ -70,8 +70,6 @@ const UI_TEXT = {
   begin: ["开始", "Begin"],
   original: ["原始题目", "Original wording"],
   answer: ["你的判断", "Your decision"],
-  compare: ["比较图片", "Compare photos"],
-  comparePhotos: ["比较：{0} / {1}", "Compare: {0} / {1}"],
   optionalRegions: [
     "直接选择判断并提交即可。画框可选，用来指出你关注的细节。",
     "Choose your answer and submit. Optionally mark a region to point out a detail.",
@@ -147,11 +145,9 @@ const UI_TEXT = {
   zoomIn: ["放大", "Zoom in"],
   zoomOut: ["缩小", "Zoom out"],
   crop: ["裁剪", "Crop"],
-  more: ["更多", "More"],
   mark: ["画框（可选）", "Mark a region (optional)"],
   clearMark: ["清除我的框", "Clear my mark"],
   restore: ["恢复整图", "Restore whole photo"],
-  inspect: ["检查图片", "Inspect"],
   ocr: ["识别文字", "Read text"],
   targetRequest: ["目标", "Target"],
   overview: ["概览照片", "Overview"],
@@ -208,7 +204,7 @@ const UI_TEXT = {
   ],
   interactive: [
     "可以查看图片，或请求其他照片。",
-    "You can inspect these photos or request others.",
+    "You can view these photos or request others.",
   ],
   full: ["所有可获取照片都在这里。", "All available photos are shown here."],
   saveStage: ["保存，看下一组图片", "Save and see the next photos"],
@@ -249,7 +245,6 @@ const STATIC_TEXT = {
   "#begin": "begin",
   ".original-claim summary": "original",
   "#answer-title": "answer",
-  "#compare": "compare",
   "#request-panel summary": "requestPanel",
   ".optional summary": "optional",
   "#confidence-label": "confidence",
