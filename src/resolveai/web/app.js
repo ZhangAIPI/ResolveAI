@@ -194,8 +194,10 @@ async function picture(p) {
       b = p.source_bbox;
     function outline(box, color, dashed) {
       const a = [
-        Math.max(box[0], b[0]), Math.max(box[1], b[1]),
-        Math.min(box[2], b[2]), Math.min(box[3], b[3]),
+        Math.max(box[0], b[0]),
+        Math.max(box[1], b[1]),
+        Math.min(box[2], b[2]),
+        Math.min(box[3], b[3]),
       ];
       if (a[0] >= a[2] || a[1] >= a[3]) return;
       const x = ((a[0] - b[0]) / (b[2] - b[0])) * canvas.width;
@@ -332,7 +334,14 @@ async function picture(p) {
   return card;
 }
 function photoRequests(data) {
-  $("request-panel").hidden = data.condition !== "interactive";
+  $("request-title").hidden = data.condition !== "interactive";
+  $("request-note").textContent = t(
+    data.condition === "interactive"
+      ? "requestHint"
+      : data.condition === "initial"
+        ? "requestInitial"
+        : "requestFull",
+  );
   $("request-buttons").replaceChildren();
   if (data.condition !== "interactive") return;
   const o = data.request_options;
@@ -356,9 +365,7 @@ function photoRequests(data) {
                 ? t("view", Number(view.slice(5)))
                 : view;
         b.textContent =
-          subject +
-          " · " +
-          name +
+          t("requestPhoto", subject, name) +
           ((o.times || []).length > 1 ? " · " + time : "");
         b.onclick = () =>
           perform({ type: "request_photo", query: { object, time, view } });
@@ -368,6 +375,7 @@ function photoRequests(data) {
   }
 }
 async function show(data) {
+  const previousViews = new Set(state?.images?.map((p) => p.view_id) || []);
   state = data;
   $("preview-notice").hidden = !data.preview;
   if (data.role === "admin") {
@@ -469,9 +477,15 @@ async function show(data) {
         : t("actionError", f.code)
       : f.status === "unable_to_provide"
         ? t("unavailable")
-        : f.text_regions
-          ? t("textResult", f.text_regions.map((r) => r.text).join(" / "))
-          : t("actionDone");
+        : f.status === "provided"
+          ? t(
+              data.images.some((p) => !previousViews.has(p.view_id))
+                ? "photoProvided"
+                : "photoAlreadyShown",
+            )
+          : f.text_regions
+            ? t("textResult", f.text_regions.map((r) => r.text).join(" / "))
+            : t("actionDone");
   }
 }
 $("begin").onclick = () =>

@@ -74,7 +74,25 @@ const UI_TEXT = {
     "直接选择判断并提交即可。画框可选，用来指出你关注的细节。",
     "Choose your answer and submit. Optionally mark a region to point out a detail.",
   ],
-  requestPanel: ["需要其他照片？", "Need other photos?"],
+  requestPanel: ["请求新的图片证据", "Request more photo evidence"],
+  requestHint: [
+    "点击按钮，请求清晰原图或其他已有视角。",
+    "Use the buttons to request an original photo or another existing view.",
+  ],
+  requestInitial: [
+    "本题只判断初始照片是否足够，不提供索证操作。",
+    "This task asks whether the initial photos are enough; requesting photos is unavailable.",
+  ],
+  requestFull: [
+    "本题已显示全部可获取照片，不提供索证操作。",
+    "All available photos are shown for this task; requesting photos is unavailable.",
+  ],
+  requestPhoto: ["请求{0}：{1}", "Request {0}: {1}"],
+  photoProvided: ["新照片已显示在上方。", "The new photo is shown above."],
+  photoAlreadyShown: [
+    "这张照片已在上方显示，没有新增图片。",
+    "This photo is already shown above; no new photo was added.",
+  ],
   optional: ["可选：判断把握", "Optional: confidence"],
   confidence: ["把握程度", "Confidence"],
   reason: ["一句话理由", "A short reason"],
@@ -199,8 +217,8 @@ const UI_TEXT = {
     "Confirm your final decision and evidence",
   ],
   initial: [
-    "本题只有这些图片。",
-    "These are the photos available for this task.",
+    "本题只看初始照片，判断现有材料是否足够。",
+    "Judge whether the initial photos are enough for this task.",
   ],
   interactive: [
     "可以查看图片，或请求其他照片。",
@@ -245,7 +263,7 @@ const STATIC_TEXT = {
   "#begin": "begin",
   ".original-claim summary": "original",
   "#answer-title": "answer",
-  "#request-panel summary": "requestPanel",
+  "#request-title": "requestPanel",
   ".optional summary": "optional",
   "#confidence-label": "confidence",
   "#reason-label": "reason",

@@ -40,7 +40,7 @@
     },
     "review_scope": "full-pool labels only; regions optional; no sufficiency inference",
     "page_errors": [],
-    "web_app_sha256": "a2047a633d47c42d2faf49c4943c14427e65daeda65aaaabec6135b809c6c2eb",
+    "web_app_sha256": "29d51cd0b411eac7d576463766293d2a97c0d672c028e4b2ca25241478a6d149",
     "cropping_outside_target_has_no_target_outline": true,
     "crop_keeps_photo_position": true,
     "simple_tools": {
@@ -52,6 +52,20 @@
         "i18n.js": "80f5433984f51830d5f98d36166f51840dfd21235fe1cc0ce3a719fc7254f626",
         "style.css": "d9c5346c57b9117b4493ddbb935de35d5a577502dda344f37a46c83a119c71c9",
         "index.html": "0ae33c091c2497882d52567de65a5dfdfa3114518c04cf700c61d50560b2e1aa"
+      },
+      "backend_restart": false,
+      "participant_data_writes": 0
+    },
+    "visible_photo_requests": {
+      "verified_at_utc": "2026-10-07T01:29:50.590901+00:00",
+      "interactive_buttons_above_images": true,
+      "no_expansion_needed": true,
+      "other_conditions_explained": true,
+      "web_files_match_public_bytes": {
+        "app.js": "29d51cd0b411eac7d576463766293d2a97c0d672c028e4b2ca25241478a6d149",
+        "i18n.js": "c8c2fc2fcdc018da6386b2c3e5db1c59de6d6ba5f9f1449d0d2e6565f9e76ed9",
+        "style.css": "d9c5346c57b9117b4493ddbb935de35d5a577502dda344f37a46c83a119c71c9",
+        "index.html": "bd64e37e389e4cfd7f7ad5ce45cd9e081d6b659738d221195a99a369ee28e5a6"
       },
       "backend_restart": false,
       "participant_data_writes": 0

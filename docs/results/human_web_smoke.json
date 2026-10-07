@@ -79,8 +79,8 @@
     "formal_database_test_writes": 0,
     "page_errors": [],
     "screenshot_sha256": {
-      "human-study.png": "82725f61f5420ea9afaae9ee6b3674dbd5b6511a2336f45ceef6a682f5668d7c",
-      "human-study.en.png": "7f490e94edea58436f6df2a165e4936c1c20c9b20b626d3888db99385a92f61f"
+      "human-study.png": "ad1420a51a22881e8070a7cf6e80b68f858d6c02a1bd12658b06792180a0ec64",
+      "human-study.en.png": "10fa8a18d40a4091446a46326b457735eb5bff50edecd195d075687bcd7ef156"
     },
     "simple_tools": {
       "verified_at_utc": "2026-10-07T01:23:18.731412+00:00",
@@ -90,6 +90,20 @@
       "optional_mark_and_clear_passed": true,
       "crop_and_restore_passed": true,
       "bilingual_submission_passed": true,
+      "test_database": "temporary; no formal or preview writes",
+      "page_errors": []
+    },
+    "visible_photo_requests": {
+      "verified_at_utc": "2026-10-07T01:29:05.166544+00:00",
+      "request_buttons_above_images_without_expansion": true,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "original_replaces_preview": true,
+      "new_and_repeated_photo_feedback_distinct": true,
+      "unavailable_photo_feedback_passed": true,
+      "fixed_evidence_conditions_explained": true,
       "test_database": "temporary; no formal or preview writes",
       "page_errors": []
     }
