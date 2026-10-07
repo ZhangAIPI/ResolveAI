@@ -3,8 +3,14 @@
   "browser": "Chromium 141 / Playwright 1.56",
   "flows": [
     "consent",
-    "actual image rendering",
-    "actual photo request",
+    "one direct image selection mechanism",
+    "no image/operation dropdowns",
+    "actual request",
+    "bilingual switching preserves selection and unsaved reason",
+    "per-image zoom updates in place",
+    "compare selected images",
+    "per-image crop with source mapping",
+    "restore original without duplicate cards",
     "3 search answers",
     "10 locked review stages",
     "final completion",
@@ -34,5 +40,7 @@
     "sample_id": "6621d769324f6e05d583824f",
     "sha256": "5647763d41c628d0c574591d6f0a2cf009c72c48988f58afda372bd6d8d91003"
   },
-  "page_errors": []
+  "page_errors": [],
+  "ui_protocol": "human-ui-v3-unrestricted",
+  "screenshot_type": "Chinese and English task UI before any tool call"
 }

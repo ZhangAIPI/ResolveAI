@@ -1,6 +1,6 @@
 # ResolveAI
 
-[**20 人、每人约 8–9 分钟：中文人工实验网页与模型评测**](docs/human_study.zh-CN.md)
+[**20 人、预计 5–10 分钟：中英双语人工实验与模型评测**](docs/human_study.zh-CN.md)
 
 [**中文可视化 Demo：不同工具操作的实际结果**](docs/demo/README.zh-CN.md)
 

@@ -6,9 +6,7 @@ let token = decodeURIComponent(location.hash.slice(1)),
   marked = new Set(),
   selected = new Set(),
   urls = [],
-  timer = null,
   busy = false,
-  endAt = 0,
   invitations = [];
 const $ = (id) => document.getElementById(id);
 async function api(path, body) {
@@ -21,7 +19,7 @@ async function api(path, body) {
     body: body ? JSON.stringify(body) : undefined,
   });
   const data = await r.json();
-  if (!r.ok) throw Error(data.error || "请求失败");
+  if (!r.ok) throw Error(localizedError(data.error) || t("requestFailed"));
   return data;
 }
 function section(id) {
@@ -29,6 +27,7 @@ function section(id) {
     (name) => ($(name).hidden = name !== id),
   );
   $("error").textContent = "";
+  if (id !== "task") $("step-count").textContent = "";
 }
 function message(error) {
   $("error").textContent = error.message || String(error);
@@ -46,24 +45,41 @@ async function guarded(fn) {
     document.querySelectorAll("button").forEach((b) => (b.disabled = false));
   }
 }
-function options(id, values, labels) {
-  $(id).replaceChildren(
-    ...values.map((v, i) => {
-      const o = document.createElement("option");
-      o.value = v;
-      o.textContent = labels ? labels[i] : v;
-      return o;
-    }),
-  );
+function clippedBox(p, box) {
+  const b = p.source_bbox,
+    a = box || b;
+  const result = [
+    Math.max(a[0], b[0]),
+    Math.max(a[1], b[1]),
+    Math.min(a[2], b[2]),
+    Math.min(a[3], b[3]),
+  ];
+  return result[0] < result[2] && result[1] < result[3] ? result : [...b];
+}
+function displayImages(data) {
+  if (data.mode !== "search") return data.images;
+  const refs = new Set(data.display_views || data.images.map((p) => p.view_id));
+  const shown = data.images.filter((p) => refs.has(p.view_id));
+  for (const ref of [...selected]) {
+    if (refs.has(ref)) continue;
+    const old = data.images.find((p) => p.view_id === ref);
+    const replacement = shown.find((p) => p.image_id === old?.image_id);
+    if (!replacement) continue;
+    boxes[replacement.view_id] = clippedBox(replacement, boxes[ref]);
+    if (marked.has(ref)) marked.add(replacement.view_id);
+    selected.delete(ref);
+    selected.add(replacement.view_id);
+  }
+  return shown;
 }
 function actorText(p) {
   return p.object === "normal-reference"
-    ? "正常参考（另一个实物）"
+    ? t("reference")
     : p.object === "subject-A"
-      ? "提交对象 A"
+      ? t("subjectA")
       : p.object === "subject-B"
-        ? "提交对象 B"
-        : "目标图片";
+        ? t("subjectB")
+        : t("target");
 }
 function evidence() {
   return [...selected].map((ref) => ({ view_id: ref, bbox: boxes[ref] }));
@@ -79,77 +95,85 @@ function resetAnswer() {
   $("confidence").value = "3";
   selected.clear();
 }
-function stopClock() {
-  clearInterval(timer);
-  $("clock").textContent = "";
+function refreshSelection() {
+  document.querySelectorAll(".card").forEach((card) => {
+    const chosen = selected.has(card.dataset.ref);
+    card.classList.toggle("selected", chosen);
+    card
+      .querySelector(".picture-select")
+      .setAttribute("aria-pressed", String(chosen));
+    card.querySelector(".selection-status").textContent = chosen
+      ? t("selected")
+      : t("selectPhoto");
+  });
+  $("compare").hidden = state?.mode !== "search" || selected.size !== 2;
+  $("selection-hint").textContent = selected.size
+    ? t("selectedCount", selected.size)
+    : state?.task === "identity"
+      ? t("selectIdentity")
+      : t("selectState");
 }
-function startClock(seconds) {
-  clearInterval(timer);
-  endAt = Date.now() + seconds * 1000;
-  timer = setInterval(() => {
-    const n = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
-    $("clock").textContent = "本题剩余 " + n + " 秒";
-    $("clock").className = n < 16 ? "warning" : "";
-    if (n === 0 && !busy) {
-      clearInterval(timer);
-      guarded(async () => {
-        await show(await api("timeout", { index: state.index }));
-      });
-    }
-  }, 500);
+function displayBox(p, box) {
+  const b = p.source_bbox,
+    [w, h] = p.display_size;
+  return [
+    Math.max(0, Math.floor(((box[0] - b[0]) / (b[2] - b[0])) * w)),
+    Math.max(0, Math.floor(((box[1] - b[1]) / (b[3] - b[1])) * h)),
+    Math.min(w, Math.ceil(((box[2] - b[0]) / (b[2] - b[0])) * w)),
+    Math.min(h, Math.ceil(((box[3] - b[1]) / (b[3] - b[1])) * h)),
+  ];
+}
+function perform(action) {
+  return guarded(async () => {
+    await show(await api("action", { index: state.index, action }));
+  });
 }
 async function picture(p) {
   const card = document.createElement("div");
   card.className = "card";
-  const label = document.createElement("label"),
-    check = document.createElement("input");
-  check.type = "checkbox";
-  check.dataset.ref = p.view_id;
-  check.checked = selected.has(p.view_id);
-  check.onchange = () =>
-    check.checked ? selected.add(p.view_id) : selected.delete(p.view_id);
-  label.append(
-    check,
-    document.createTextNode(
-      " " +
-        actorText(p) +
-        " · " +
-        (p.camera_view === "preview" || p.camera_view === "overview"
-          ? "初始小图"
-          : p.camera_view === "reference"
-            ? "正常参考"
-            : p.camera_view === "original"
-              ? "原图"
-              : p.camera_view || ""),
-    ),
-  );
-  card.append(label);
+  card.dataset.ref = p.view_id;
+  const title = document.createElement("div");
+  title.className = "picture-title";
+  const view =
+    p.camera_view === "preview" || p.camera_view === "overview"
+      ? t("small")
+      : p.camera_view === "reference"
+        ? t("normal")
+        : p.camera_view === "original"
+          ? t("raw")
+          : p.camera_view || "";
+  title.textContent =
+    actorText(p) + (p.object === "normal-reference" ? "" : " · " + view);
+  card.append(title);
   const wrap = document.createElement("div");
   wrap.className = "picture";
+  const choose = document.createElement("button");
+  choose.type = "button";
+  choose.className = "picture-select";
+  choose.setAttribute("aria-label", t("selectAria", title.textContent));
   const img = document.createElement("img"),
     canvas = document.createElement("canvas");
   img.alt = actorText(p);
-  boxes[p.view_id] ??= p.target_bbox || p.source_bbox;
+  boxes[p.view_id] ??= clippedBox(p, p.target_bbox);
   const response = await fetch("/api/image/" + encodeURIComponent(p.view_id), {
     headers: { Authorization: "Bearer " + token },
   });
-  if (!response.ok) throw Error("图片加载失败，请刷新");
+  if (!response.ok) throw Error(t("imageFailed"));
   const url = URL.createObjectURL(await response.blob());
   urls.push(url);
   img.src = url;
+  const badge = document.createElement("span");
+  badge.className = "selection-status";
   const note = document.createElement("small");
-  note.textContent =
-    state.task === "identity" && !p.target_bbox
-      ? "补充视角：请点击两角标出对应目标"
-      : "点击两角标记证据；默认绿色框为目标区域";
+  note.className = "region-note";
+  let regionMode = null;
   function draw() {
     canvas.width = img.naturalWidth;
     canvas.height = img.naturalHeight;
     const ctx = canvas.getContext("2d"),
       b = p.source_bbox,
       a = boxes[p.view_id];
-    if (state.task === "identity" && !p.target_bbox && !marked.has(p.view_id))
-      return;
+    if (!p.target_bbox && !marked.has(p.view_id)) return;
     ctx.strokeStyle = "#14a06f";
     ctx.lineWidth = Math.max(2, canvas.width / 160);
     ctx.strokeRect(
@@ -160,60 +184,173 @@ async function picture(p) {
     );
   }
   img.onload = draw;
-  img.onclick = (e) => {
+  choose.onclick = (event) => {
+    if (!regionMode) {
+      selected.has(p.view_id)
+        ? selected.delete(p.view_id)
+        : selected.add(p.view_id);
+      refreshSelection();
+      return;
+    }
+    if (!event.detail) return;
     const r = img.getBoundingClientRect(),
-      b = p.source_bbox,
-      x = Math.max(
-        b[0],
-        Math.min(
-          b[2],
-          Math.round(b[0] + ((e.clientX - r.left) / r.width) * (b[2] - b[0])),
-        ),
+      b = p.source_bbox;
+    const x = Math.max(
+      b[0],
+      Math.min(
+        b[2],
+        Math.round(b[0] + ((event.clientX - r.left) / r.width) * (b[2] - b[0])),
       ),
-      y = Math.max(
-        b[1],
-        Math.min(
-          b[3],
-          Math.round(b[1] + ((e.clientY - r.top) / r.height) * (b[3] - b[1])),
-        ),
-      );
+    );
+    const y = Math.max(
+      b[1],
+      Math.min(
+        b[3],
+        Math.round(b[1] + ((event.clientY - r.top) / r.height) * (b[3] - b[1])),
+      ),
+    );
     if (!corners[p.view_id]) {
       corners[p.view_id] = [x, y];
-      note.textContent = "再点击区域对角";
-    } else {
-      const [a, c] = corners[p.view_id];
-      delete corners[p.view_id];
-      if (a === x || c === y) {
-        note.textContent = "区域太小，请重新点两角";
-        return;
-      }
-      boxes[p.view_id] = [
-        Math.min(a, x),
-        Math.min(c, y),
-        Math.max(a, x),
-        Math.max(c, y),
-      ];
-      note.textContent = "区域已标记";
-      marked.add(p.view_id);
-      draw();
-      check.checked = true;
-      selected.add(p.view_id);
+      note.textContent = t("corner");
+      return;
     }
+    const [a, c] = corners[p.view_id];
+    delete corners[p.view_id];
+    if (a === x || c === y) {
+      note.textContent = t("smallRegion");
+      return;
+    }
+    const mode = regionMode;
+    regionMode = null;
+    choose.classList.remove("marking");
+    boxes[p.view_id] = [
+      Math.min(a, x),
+      Math.min(c, y),
+      Math.max(a, x),
+      Math.max(c, y),
+    ];
+    marked.add(p.view_id);
+    selected.add(p.view_id);
+    note.textContent = t("regionDone");
+    draw();
+    refreshSelection();
+    if (mode === "crop")
+      perform({
+        type: "crop",
+        image_id: p.view_id,
+        bbox: displayBox(p, boxes[p.view_id]),
+      });
   };
-  wrap.append(img, canvas);
-  card.append(wrap, note);
+  function region(mode) {
+    if (regionMode === mode) {
+      regionMode = null;
+      delete corners[p.view_id];
+      choose.classList.remove("marking");
+      note.textContent = "";
+      return;
+    }
+    regionMode = mode;
+    delete corners[p.view_id];
+    choose.classList.add("marking");
+    note.textContent = mode === "crop" ? t("cropHint") : t("markHint");
+  }
+  function button(label, handler) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.onclick = handler;
+    return b;
+  }
+  choose.append(img, canvas);
+  wrap.append(choose);
+  card.append(wrap, badge);
+  const controls = document.createElement("div");
+  controls.className = "picture-controls";
+  if (state.mode === "search") {
+    controls.append(
+      button(t("zoomIn"), () =>
+        perform({ type: "zoom", image_id: p.view_id, factor: 2 }),
+      ),
+      button(t("zoomOut"), () =>
+        perform({ type: "zoom", image_id: p.view_id, factor: 0.5 }),
+      ),
+      button(t("crop"), () => region("crop")),
+    );
+  }
+  const more = document.createElement("details"),
+    summary = document.createElement("summary");
+  summary.textContent = t("more");
+  more.append(
+    summary,
+    button(t("mark"), () => region("mark")),
+  );
+  if (state.mode === "search" && p.view_id !== p.image_id) {
+    more.append(
+      button(t("restore"), () =>
+        perform({ type: "inspect", image_id: p.image_id }),
+      ),
+    );
+  }
+  if (state.mode === "search") {
+    more.append(
+      button(t("inspect"), () =>
+        perform({ type: "inspect", image_id: p.view_id }),
+      ),
+    );
+    if (state.ocr_available)
+      more.append(
+        button(t("ocr"), () => perform({ type: "ocr", image_id: p.view_id })),
+      );
+  }
+  controls.append(more);
+  card.append(controls, note);
   return card;
+}
+function photoRequests(data) {
+  $("request-panel").hidden = data.condition !== "interactive";
+  $("request-buttons").replaceChildren();
+  if (data.condition !== "interactive") return;
+  const o = data.request_options;
+  for (const object of o.objects || []) {
+    for (const time of o.times || []) {
+      for (const view of o.views || []) {
+        const b = document.createElement("button");
+        b.type = "button";
+        const subject =
+          object === "subject-A"
+            ? "A"
+            : object === "subject-B"
+              ? "B"
+              : t("targetRequest");
+        const name =
+          view === "original"
+            ? t("raw")
+            : view === "overview"
+              ? t("overview")
+              : view.startsWith("view-")
+                ? t("view", Number(view.slice(5)))
+                : view;
+        b.textContent =
+          subject +
+          " · " +
+          name +
+          ((o.times || []).length > 1 ? " · " + time : "");
+        b.onclick = () =>
+          perform({ type: "request_photo", query: { object, time, view } });
+        $("request-buttons").append(b);
+      }
+    }
+  }
 }
 async function show(data) {
   state = data;
-  stopClock();
   if (data.role === "admin") {
     section("admin");
     invitations = data.invitations;
-    $("study-info").textContent =
-      "20 人，每人 3 道搜证 + 2 道独立审核。记录：" +
-      data.invitations.reduce((n, p) => n + p.completed, 0) +
-      " / 100。";
+    $("study-info").textContent = t(
+      "organizerInfo",
+      data.invitations.reduce((n, p) => n + p.completed, 0),
+    );
     $("invitations").replaceChildren(
       ...data.invitations.map((p) => {
         const tr = document.createElement("tr");
@@ -225,7 +362,7 @@ async function show(data) {
         const td = document.createElement("td"),
           a = document.createElement("a");
         a.href = location.origin + "/#" + p.token;
-        a.textContent = "打开 " + p.id + " 的邀请链接";
+        a.textContent = t("invitation", p.id);
         a.target = "_blank";
         a.rel = "noreferrer";
         td.append(a);
@@ -245,170 +382,83 @@ async function show(data) {
   }
   if (data.submitted) {
     section("saved");
-    $("saved-message").textContent = data.message;
+    $("saved-message").textContent = t("saved");
     return;
   }
   section("task");
-  $("progress").textContent =
-    "第 " +
-    (data.index + 1) +
-    " / " +
-    data.total +
-    " 题 · " +
-    (data.mode === "review" ? "证据审核" : "搜证任务");
-  $("claim").textContent = data.claim;
-  $("context").textContent = data.context;
+  $("progress").textContent = t(
+    "progress",
+    data.index + 1,
+    data.total,
+    t(data.mode === "review" ? "review" : "search"),
+  );
+  $("claim").textContent = language === "en" ? data.original_claim : data.claim;
+  $("context").textContent = t(
+    data.task === "identity" ? "identityContext" : "stateContext",
+  );
   $("original").textContent = data.original_claim;
   $("tools").hidden = data.mode === "review";
+  $("step-count").textContent =
+    data.mode === "search" ? t("steps", data.turns) : "";
+  $("supported-label").textContent =
+    data.task === "identity" ? t("same") : t("supported");
+  $("refuted-label").textContent =
+    data.task === "identity" ? t("different") : t("refuted");
   $("review-checks").hidden = data.mode !== "review" || data.phase !== 4;
   $("condition").textContent =
     data.mode === "review"
-      ? data.phase_title + "（仅依据当前显示图片；前面的判断已锁定）"
-      : {
-          initial: "本题只提供初始图片，可检查、裁剪、放大，但不能索取新照片。",
-          interactive: "可以操作已有图片，也可以请求照片。",
-          full_available: "本题已提供所有可获取照片；没有额外照片可请求。",
-        }[data.condition] +
-        " 剩余预算：" +
-        data.budget +
-        "，已操作：" +
-        data.turns +
-        " / " +
-        (data.max_turns - 1);
+      ? t(
+          [
+            "previewPhase",
+            "limitedPhase",
+            "sufficientPhase",
+            "fullPhase",
+            "annotationPhase",
+          ][data.phase],
+        )
+      : t(
+          {
+            initial: "initial",
+            interactive: "interactive",
+            full_available: "full",
+          }[data.condition],
+        );
   $("submit").textContent =
-    data.mode === "review" && data.phase < 4
-      ? "保存，查看下一组材料"
-      : "提交本题";
+    data.mode === "review" && data.phase < 4 ? t("saveStage") : t("submit");
   const old = urls;
   urls = [];
   $("pictures").replaceChildren();
-  const cards = await Promise.all(data.images.map(picture));
+  const cards = await Promise.all(displayImages(data).map(picture));
   $("pictures").replaceChildren(...cards);
   old.forEach(URL.revokeObjectURL);
-  startClock(data.remaining_seconds);
-  if (data.mode === "search") {
-    options(
-      "image",
-      data.images.map((p) => p.view_id),
-      data.images.map((p, i) => actorText(p) + " · 图 " + (i + 1)),
-    );
-    options(
-      "object",
-      data.request_options.objects || [],
-      (data.request_options.objects || []).map((o) =>
-        o === "subject-A"
-          ? "对象 A"
-          : o === "subject-B"
-            ? "对象 B"
-            : "目标物品",
-      ),
-    );
-    options(
-      "time",
-      data.request_options.times || [],
-      (data.request_options.times || []).map((t) =>
-        t === "capture" ? "当前拍摄时刻" : t,
-      ),
-    );
-    options(
-      "view",
-      data.request_options.views || [],
-      (data.request_options.views || []).map((v) =>
-        v === "original"
-          ? "原图"
-          : v === "overview"
-            ? "概览照片"
-            : v.startsWith("view-")
-              ? "视角 " + Number(v.slice(5))
-              : v,
-      ),
-    );
-    if ((data.request_options.views || []).length > 1) {
-      const o = document.createElement("option");
-      o.value = "";
-      o.textContent = "选择照片视角";
-      o.selected = true;
-      $("view").prepend(o);
-    }
-    if ((data.request_options.objects || []).length > 1) {
-      const o = document.createElement("option");
-      o.value = "";
-      o.textContent = "选择对象";
-      o.selected = true;
-      $("object").prepend(o);
-    }
-    $("operation").querySelector("option[value=request_photo]").disabled =
-      data.condition !== "interactive";
-    $("operation").querySelector("option[value=ocr]").disabled =
-      !data.ocr_available;
-    toolVisibility();
-  }
+  refreshSelection();
+  if (data.mode === "search") photoRequests(data);
+  $("feedback").textContent = "";
   if (data.feedback) {
     const f = data.feedback;
     $("feedback").textContent = f.code
-      ? "操作未成功：" +
-        f.code +
-        (f.details?.suggestion ? "；先裁剪再放大" : "")
+      ? f.code === "view_too_large"
+        ? t("tooLarge")
+        : t("actionError", f.code)
       : f.status === "unable_to_provide"
-        ? "提供方无法提供符合请求的照片；这不能说明声明是真是假。"
+        ? t("unavailable")
         : f.text_regions
-          ? "识别文字：" + f.text_regions.map((r) => r.text).join(" / ")
-          : "操作已完成。";
+          ? t("textResult", f.text_regions.map((r) => r.text).join(" / "))
+          : t("actionDone");
   }
 }
-function toolVisibility() {
-  const op = $("operation").value;
-  $("image").hidden = op === "request_photo" || op === "compare";
-  $("factor").hidden = op !== "zoom";
-  $("requests").hidden = op !== "request_photo";
-}
-$("operation").onchange = toolVisibility;
 $("begin").onclick = () =>
   guarded(async () => {
-    if (!$("agree").checked) throw Error("请先确认理解并自愿参与");
+    if (!$("agree").checked) throw Error(t("agreeError"));
     await show(await api("consent", { agree: true }));
   });
-$("operate").onclick = () =>
-  guarded(async () => {
-    const type = $("operation").value,
-      ref = $("image").value,
-      p = state.images.find((p) => p.view_id === ref);
-    let action = { type };
-    if (type === "request_photo") {
-      if (!$("view").value || !$("object").value)
-        throw Error("请选择要请求的对象与照片视角");
-      action.query = {
-        object: $("object").value,
-        time: $("time").value,
-        view: $("view").value,
-      };
-    } else if (type === "compare") {
-      const refs = [...selected];
-      if (refs.length !== 2) throw Error("请勾选两张要比较的图片");
-      action.image_ids = refs;
-    } else {
-      action.image_id = ref;
-      if (type === "zoom") action.factor = Number($("factor").value);
-      if (type === "crop") {
-        const b = boxes[ref],
-          s = p.source_bbox,
-          w = p.display_size[0],
-          h = p.display_size[1];
-        action.bbox = [
-          Math.max(0, Math.floor(((b[0] - s[0]) / (s[2] - s[0])) * w)),
-          Math.max(0, Math.floor(((b[1] - s[1]) / (s[3] - s[1])) * h)),
-          Math.min(w, Math.ceil(((b[2] - s[0]) / (s[2] - s[0])) * w)),
-          Math.min(h, Math.ceil(((b[3] - s[1]) / (s[3] - s[1])) * h)),
-        ];
-      }
-    }
-    await show(await api("action", { index: state.index, action }));
-  });
+$("compare").onclick = () =>
+  perform({ type: "compare", image_ids: [...selected] });
 $("submit").onclick = () =>
   guarded(async () => {
     const v = verdict();
-    if (!v) throw Error("请选择判断");
-    if ($("reason").value.trim().length < 2) throw Error("请简短写出理由");
+    if (!v) throw Error(t("verdictError"));
+    if ($("reason").value.trim().length < 2) throw Error(t("reasonError"));
     const payload = {
       index: state.index,
       verdict: v,
@@ -462,8 +512,16 @@ $("copy-links").onclick = () =>
         .map((p) => p.id + " " + location.origin + "/#" + p.token)
         .join("\n"),
     );
-    $("study-info").textContent = "20 个个人邀请链接已复制。";
+    $("study-info").textContent = t("copied");
   });
+$("language").onclick = () =>
+  guarded(async () => {
+    language = language === "zh" ? "en" : "zh";
+    localStorage.setItem("resolveai-language", language);
+    applyLanguage();
+    if (state?.images || state?.role === "admin") await show(state);
+  });
+applyLanguage();
 if (token) guarded(async () => show(await api("state")));
 else section("welcome");
 

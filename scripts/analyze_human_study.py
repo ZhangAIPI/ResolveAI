@@ -36,11 +36,14 @@ def grade(case, decision, released):
 def summarize(rows):
     groups = defaultdict(list)
     for row in rows:
-        groups[(row["actor"], row["condition"])].append(row)
+        groups[
+            (row["actor"], row["condition"], row.get("ui_protocol", "model-frozen"))
+        ].append(row)
     return [
         {
             "actor": actor,
             "condition": condition,
+            "ui_protocol": ui_protocol,
             "reviewed_episodes": len(items),
             "submitted": sum(r["submitted"] for r in items),
             "reasonable_verdicts": sum(
@@ -58,7 +61,7 @@ def summarize(rows):
             ),
             "requests": sum(r.get("requests", 0) for r in items),
         }
-        for (actor, condition), items in sorted(groups.items())
+        for (actor, condition, ui_protocol), items in sorted(groups.items())
     ]
 
 
@@ -112,6 +115,7 @@ def main():
         graded.append(
             {
                 "actor": "human",
+                "ui_protocol": row.get("ui_protocol", "human-ui-v2-limited"),
                 "participant": row["actor"],
                 "condition": row["task"]["condition"],
                 "case_id": case["case_id"],
@@ -166,7 +170,7 @@ def main():
             ]
         ),
         "scope": "20-person feasibility pilot; text-only models have no citation score",
-        "comparison": "Human core visual tools and model extended grounding tools differ; do not directly compare their latencies",
+        "comparison": "Human UI protocols are reported separately. Humans are unrestricted; model tools and budgets remain frozen. Do not directly compare their latencies",
     }
     (args.output / "graded.jsonl").write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in graded) + "\n"

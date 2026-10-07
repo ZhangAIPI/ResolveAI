@@ -287,10 +287,9 @@ def prepare_short(data, output):
         "search_tasks_per_participant": 3,
         "review_tasks_per_participant": 2,
         "conditions": list(ARMS),
-        "budget": 12,
-        "max_turns": 8,
-        "search_seconds": 75,
-        "review_seconds": 120,
+        "ui_protocol": "human-ui-v3-unrestricted",
+        "estimated_minutes": [5, 10],
+        "limits": {"time": None, "steps": None, "points": None},
         "source_disjoint_within_participant": True,
         "scope": "20-person pilot sampled from the whole public pool; no population-level power claim",
     }

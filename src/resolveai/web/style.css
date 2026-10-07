@@ -27,7 +27,7 @@ header a {
   color: #09605a;
   text-decoration: none;
 }
-#clock {
+#step-count {
   margin-left: auto;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
@@ -82,7 +82,7 @@ footer {
   max-height: 360px;
   display: block;
   object-fit: contain;
-  cursor: crosshair;
+  cursor: pointer;
 }
 .picture canvas {
   position: absolute;
@@ -195,4 +195,87 @@ footer {
   td {
     padding: 7px;
   }
+}
+
+.card.selected {
+  border: 2px solid #096a63;
+  padding: 11px;
+  background: #f1faf7;
+}
+.picture-title {
+  font-weight: 600;
+}
+.picture-select {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+}
+.picture-select:focus-visible {
+  outline: 3px solid #258277;
+  outline-offset: 4px;
+}
+.picture-select.marking img {
+  cursor: crosshair;
+}
+.selection-status {
+  display: block;
+  text-align: center;
+  color: #61737f;
+  font-size: 14px;
+}
+.selected .selection-status {
+  color: #096a63;
+  font-weight: 700;
+}
+.picture-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.picture-controls button {
+  padding: 5px 12px;
+  margin: 4px 0;
+  font-size: 14px;
+}
+.picture-controls details {
+  font-size: 14px;
+}
+summary {
+  cursor: pointer;
+  color: #096a63;
+}
+.region-note {
+  display: block;
+  color: #096a63;
+}
+.original-claim,
+.optional {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #61737f;
+}
+#context {
+  font-size: 14px;
+  color: #61737f;
+}
+#condition {
+  padding: 8px 12px;
+  margin: 12px 0;
+}
+#tools {
+  margin: 12px 0;
+}
+#answer {
+  margin-top: 20px;
+}
+
+#language {
+  padding: 4px 10px;
+  font-size: 14px;
+  margin: 0;
 }

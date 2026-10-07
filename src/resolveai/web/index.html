@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>ResolveAI · 看图与搜证</title>
     <link rel="stylesheet" href="/style.css" />
+    <script src="/i18n.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
   <body>
     <header>
-      <a href="/">ResolveAI</a><span>看图与搜证 · 约 8 分钟</span
-      ><span id="clock"></span>
+      <a href="/">ResolveAI</a><span>看图与搜证 · 约 5–10 分钟</span
+      ><button id="language" type="button" aria-label="Switch language">
+        English</button
+      ><span id="step-count"></span>
     </header>
     <main>
       <section id="welcome">
@@ -38,92 +41,78 @@
       </section>
       <section id="intro" hidden>
         <h1>开始前，花半分钟看说明</h1>
-        <p>
-          你会做 3 道搜证题，每题最多 75 秒；再做 2 道证据审核题，每题最多 120
-          秒。无需填姓名、邮箱或上传照片。
-        </p>
+        <p>共 5 道短任务，预计 5–10 分钟。没有倒计时、点数或操作次数限制。</p>
         <ol>
           <li>
             只判断照片里的事实。正常参考是另一个正常实物，不能当作目标的“之前照片”。
           </li>
-          <li>
-            绿色框指出目标。选依据时勾选图片，点击图片两角可标记证据区域。
-          </li>
+          <li>点击图片选作判断依据。放大、缩小或裁剪，就点图片下面的按钮。</li>
           <li>放大只改变显示；索证才可能获得原有小图里看不见的材料。</li>
           <li>
             审核先看有限材料，再看完整材料。前面的判断保存后不能改，请独立作答。
           </li>
         </ol>
         <label
-          ><input
-            id="agree"
-            type="checkbox"
-          />我理解以上说明并自愿参与。记录包括答案、选图区域、操作与用时；可随时关闭网页退出，未完成记录不会当作弃答。</label
+          ><input id="agree" type="checkbox" /><span id="consent-text"
+            >我理解以上说明并自愿参与。记录包括答案、选图区域、操作与用时；可随时关闭网页退出，未完成记录不会当作弃答。</span
+          ></label
         ><button id="begin" class="primary">开始短实验</button>
       </section>
       <section id="task" hidden>
         <div class="eyebrow" id="progress"></div>
         <h1 id="claim"></h1>
         <p id="context"></p>
-        <p class="muted" id="original"></p>
+        <details class="original-claim">
+          <summary>原始题目</summary>
+          <p class="muted" id="original"></p>
+        </details>
         <div class="info" id="condition"></div>
         <div id="pictures" class="grid"></div>
         <section id="tools">
-          <h2>选择下一步</h2>
-          <div class="toolrow">
-            <select id="operation">
-              <option value="inspect">检查图片（1 点）</option>
-              <option value="crop">裁剪区域（1 点）</option>
-              <option value="zoom">放大 / 缩小（1 点）</option>
-              <option value="compare">比较两张图片（2 点）</option>
-              <option value="ocr">识别文字（2 点）</option>
-              <option value="request_photo">请求照片（3 点）</option></select
-            ><select id="image"></select
-            ><select id="factor">
-              <option value="2">放大 2 倍</option>
-              <option value="0.5">缩小一半</option></select
-            ><span id="requests"
-              ><select id="object"></select
-              ><select id="view"></select
-              ><select id="time"></select></span
-            ><button id="operate">执行操作</button>
-          </div>
-          <div id="feedback" class="muted"></div>
+          <button id="compare" hidden>并排比较所选的两张图片</button>
+          <details id="request-panel" hidden>
+            <summary>需要其他照片？</summary>
+            <div id="request-buttons" class="toolrow"></div>
+          </details>
+          <p id="feedback" class="muted" role="status"></p>
         </section>
         <section id="answer">
           <h2 id="answer-title">你的判断</h2>
-          <p>
-            确定判断请勾选依据图片。身份题选择 A、B
-            各一张；需要更多证据时可以不选。
-          </p>
+          <p id="selection-hint">点击你用来判断的图片，再选择结论。</p>
           <div class="choices">
             <label
-              ><input
-                type="radio"
-                name="verdict"
-                value="Supported"
-              />支持</label
+              ><input type="radio" name="verdict" value="Supported" /><span
+                id="supported-label"
+                >声明成立</span
+              ></label
             ><label
-              ><input type="radio" name="verdict" value="Refuted" />反驳</label
+              ><input type="radio" name="verdict" value="Refuted" /><span
+                id="refuted-label"
+                >声明不成立</span
+              ></label
             ><label
               ><input
                 type="radio"
                 name="verdict"
                 value="Need more evidence"
-              />需要更多证据</label
+              /><span id="uncertain-label">无法确定</span></label
             >
           </div>
-          <label
-            >把握程度
-            <select id="confidence">
-              <option value="3">一般</option>
-              <option value="1">很低</option>
-              <option value="2">较低</option>
-              <option value="4">较高</option>
-              <option value="5">很高</option>
-            </select></label
-          ><label class="block"
-            >一句话理由
+          <details class="optional">
+            <summary>可选：判断把握</summary>
+            <label
+              ><span id="confidence-label">把握程度</span>
+              <select id="confidence">
+                <option value="3">一般</option>
+                <option value="1">很低</option>
+                <option value="2">较低</option>
+                <option value="4">较高</option>
+                <option value="5">很高</option>
+              </select></label
+            >
+          </details>
+          <label class="block"
+            ><span id="reason-label">一句话理由</span>
             <input
               id="reason"
               placeholder="例如：瓶口左边可见缺口；或缺少能确认身份的细节"
@@ -131,12 +120,14 @@
           /></label>
           <div id="review-checks" hidden>
             <label
-              ><input id="clear" type="checkbox" checked />声明和目标清楚</label
+              ><input id="clear" type="checkbox" checked /><span
+                id="clear-label"
+                >声明和目标清楚</span
+              ></label
             ><label
-              ><input
-                id="checked"
-                type="checkbox"
-              />已经检查其他视角和缩略图能否构成替代证据</label
+              ><input id="checked" type="checkbox" /><span id="checked-label"
+                >已经检查其他视角和缩略图能否构成替代证据</span
+              ></label
             >
           </div>
           <button id="submit" class="primary">提交判断</button>

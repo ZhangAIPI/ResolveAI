@@ -124,7 +124,7 @@ class HumanWebTests(unittest.TestCase):
             )
         self.assertFalse(self.study.environment(self.study.actor("person"), 0).finished)
 
-    def test_actual_request_and_resume_preserve_evidence_without_fabricated_abstention(
+    def test_actions_resume_without_time_points_or_step_limits(
         self,
     ):
         self.study.post("person", "consent", {"agree": True})
@@ -145,13 +145,41 @@ class HumanWebTests(unittest.TestCase):
             "original", [r["image_id"] for r in reopened.state("person")["images"]]
         )
         reopened.db.close()
-        self.study.db.execute("UPDATE starts SET at=at-76")
+        self.study.db.execute("UPDATE starts SET at=at-7200")
         self.study.db.commit()
-        result = self.study.post("person", "timeout", {"index": 0})
-        self.assertTrue(result["submitted"])
+        for _ in range(40):
+            state = self.study.post(
+                "person",
+                "action",
+                {"index": 0, "action": {"type": "inspect", "image_id": "original"}},
+            )
+        self.assertEqual(state["turns"], 41)
+        self.assertGreaterEqual(state["elapsed_seconds"], 7200)
+        self.assertNotIn("budget", state)
+        self.assertNotIn("remaining_seconds", state)
+        self.assertNotIn("max_turns", state)
+        reopened = Study(self.root)
+        self.assertEqual(reopened.state("person")["turns"], 41)
+        reopened.db.close()
+        with self.assertRaises(ValueError):
+            self.study.post("person", "timeout", {"index": 0})
+        self.assertEqual(self.study.export(), [])
+        self.study.post(
+            "person",
+            "answer",
+            {
+                "index": 0,
+                "verdict": "Need more evidence",
+                "selected": [],
+                "confidence": 3,
+                "reason": "uncertain",
+            },
+        )
         exported = self.study.export()[0]
-        self.assertEqual(exported["status"], "timeout")
-        self.assertIsNone(exported["decision"])
+        self.assertEqual(exported["status"], "finished")
+        self.assertEqual(exported["steps"], 41)
+        self.assertGreaterEqual(exported["duration_s"], 7200)
+        self.assertEqual(exported["ui_protocol"], "human-ui-v3-unrestricted")
 
     def test_review_cannot_skip_to_full_evidence_or_rewrite_an_initial_judgment(self):
         state = self.study.post("reviewer", "consent", {"agree": True})
@@ -203,6 +231,10 @@ class HumanWebTests(unittest.TestCase):
             r = conn.getresponse()
             self.assertIn("看图与搜证", r.read().decode())
             self.assertEqual(r.status, 200)
+            conn.request("GET", "/i18n.js")
+            r = conn.getresponse()
+            self.assertEqual(r.status, 200)
+            self.assertIn("applyLanguage", r.read().decode())
             conn.close()
         finally:
             server.shutdown()

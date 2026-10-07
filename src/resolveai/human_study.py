@@ -24,6 +24,7 @@ PHASE_NAMES = {
     "full_pool": "全部可获取材料能判断吗？",
     "annotation": "确认声明和充分证据",
 }
+UI_PROTOCOL = "human-ui-v3-unrestricted"
 TOOLS = {"inspect", "crop", "zoom", "compare", "ocr", "request_photo", "finish"}
 CATEGORIES = {
     "bottle": "瓶子",
@@ -158,7 +159,7 @@ class Study:
         if key not in self.environments:
             task = actor["tasks"][index]
             case = self.case(task)
-            env = Environment(case, case["asset_root"], self.plan["budget"])
+            env = Environment(case, case["asset_root"], 0)
             if task["condition"] == "full_available":
                 env._released.update(
                     e["id"] for e in case["evidence"] if e["available"]
@@ -166,28 +167,28 @@ class Study:
             for event in self.events(actor, index):
                 if event.get("action"):
                     try:
-                        env.step(event["action"])
+                        self.human_step(env, event["action"])
                     except ActionError:
                         pass
             self.environments[key] = env
         return self.environments[key]
 
-    def remaining(self, actor, index, mode):
+    @staticmethod
+    def human_step(env, action):
+        """Keep real tools and counters; fund each human action without a cap."""
+        env.budget = getattr(env.costs, action.get("type", ""), 0)
+        return env.step(action)
+
+    def elapsed(self, actor, index):
+        with self.db:
+            self.db.execute(
+                "INSERT OR IGNORE INTO starts VALUES (?,?,?)",
+                (actor["id"], index, time.time()),
+            )
         started = self.db.execute(
             "SELECT at FROM starts WHERE actor=? AND idx=?", (actor["id"], index)
-        ).fetchone()
-        if not started:
-            with self.db:
-                self.db.execute(
-                    "INSERT INTO starts VALUES (?,?,?)",
-                    (actor["id"], index, time.time()),
-                )
-            return self.plan["search_seconds" if mode == "search" else "review_seconds"]
-        return max(
-            0,
-            self.plan["search_seconds" if mode == "search" else "review_seconds"]
-            - (time.time() - started[0]),
-        )
+        ).fetchone()[0]
+        return max(0, time.time() - started)
 
     def review_stage(self, actor, index):
         return len([e for e in self.events(actor, index) if e.get("phase")])
@@ -269,13 +270,7 @@ class Study:
             return {"done": True, "actor": actor["id"]}
         task = actor["tasks"][index]
         case = self.case(task)
-        remaining = self.remaining(actor, index, task["mode"])
-        if remaining == 0:
-            self.timeout(actor, index)
-            return {
-                "submitted": True,
-                "message": "本题时间已到，记录为未完成。不会当成“需要更多证据”。",
-            }
+        elapsed = self.elapsed(actor, index)
         images = self.visible(actor, index)
         for picture in images:
             self.pictures[(actor["id"], index, picture["view_id"])] = picture
@@ -287,7 +282,8 @@ class Study:
             "claim": chinese_claim(case),
             "original_claim": case["claim"],
             "task": case["task"],
-            "remaining_seconds": round(remaining, 1),
+            "elapsed_seconds": round(elapsed, 1),
+            "ui_protocol": UI_PROTOCOL,
             "images": [
                 {k: v for k, v in p.items() if k not in {"bytes", "image_png"}}
                 for p in images
@@ -301,11 +297,20 @@ class Study:
             result.update(phase=phase, phase_title=PHASE_NAMES[PHASES[phase]])
         else:
             env = self.environment(actor, index)
+            displayed = {
+                p["image_id"]: p["view_id"]
+                for p in images
+                if p["view_id"] == p["image_id"]
+            }
+            by_view = {p["view_id"]: p for p in images}
+            for event in self.events(actor, index):
+                for ref in event.get("views", []):
+                    if ref in by_view:
+                        displayed[by_view[ref]["image_id"]] = ref
             result.update(
+                display_views=list(displayed.values()),
                 condition=task["condition"],
-                budget=env.budget,
                 turns=len(self.events(actor, index)),
-                max_turns=self.plan["max_turns"],
                 requests=env.requests,
                 request_options=env._case.get("request_options", {}),
                 ocr_available=env._ocr.available,
@@ -353,21 +358,6 @@ class Study:
             ]
         return citations, links
 
-    def timeout(self, actor, index):
-        task = actor["tasks"][index]
-        result = {
-            "status": "timeout",
-            "task": task,
-            "decision": None,
-            "events": self.events(actor, index),
-        }
-        with self.db:
-            self.db.execute(
-                "INSERT OR IGNORE INTO answers VALUES (?,?,?)",
-                (actor["id"], index, json.dumps(result, ensure_ascii=False)),
-            )
-        self.environments.pop((actor["id"], index), None)
-
     def post(self, token, route, body):
         actor = self.actor(token)
         if actor["role"] == "admin":
@@ -392,11 +382,7 @@ class Study:
             raise ValueError("页面已更新，请刷新当前题")
         task = actor["tasks"][index]
         case = self.case(task)
-        if self.remaining(actor, index, task["mode"]) == 0:
-            self.timeout(actor, index)
-            return {"submitted": True, "message": "本题超时，已保留操作记录。"}
-        if route == "timeout":
-            raise ValueError("本题尚未到时限")
+        self.elapsed(actor, index)
         if route in {"answer", "review"}:
             if (
                 not isinstance(body.get("reason"), str)
@@ -419,12 +405,10 @@ class Study:
                     and task["condition"] != "interactive"
                 ):
                     raise ValueError("这组任务只查看已给出的图片")
-                if len(self.events(actor, index)) >= self.plan["max_turns"] - 1:
-                    raise ValueError("请提交判断，操作轮数已到")
                 result = {}
                 error = None
                 try:
-                    result = env.step(action)
+                    result = self.human_step(env, action)
                 except ActionError as exc:
                     error = {"code": exc.code, "details": exc.details}
                 views = [p["view_id"] for p in result.get("images", [])]
@@ -453,15 +437,15 @@ class Study:
                 "citations": citations,
                 "links": links,
             }
-            env.step(action)
+            self.human_step(env, action)
             payload = {
                 "status": "finished",
                 "task": task,
                 "decision": action,
                 "confidence": body["confidence"],
                 "reason": body["reason"],
-                "duration_s": self.plan["search_seconds"]
-                - self.remaining(actor, index, "search"),
+                "duration_s": self.elapsed(actor, index),
+                "steps": len(self.events(actor, index)),
                 "requests": env.requests,
                 "tool_cost": env.tool_cost,
                 "request_cost": env.request_cost,
@@ -549,13 +533,13 @@ class Study:
                 "task": task,
                 "vote": vote,
                 "events": events,
-                "duration_s": self.plan["review_seconds"]
-                - self.remaining(actor, index, "review"),
+                "duration_s": self.elapsed(actor, index),
             }
         if not isinstance(body.get("reason"), str) or len(body["reason"].strip()) < 2:
             raise ValueError("请简短写出判断理由")
         if type(body.get("confidence")) is not int or not 1 <= body["confidence"] <= 5:
             raise ValueError("请选择把握程度")
+        payload["ui_protocol"] = UI_PROTOCOL
         with self.db:
             self.db.execute(
                 "INSERT INTO answers VALUES (?,?,?)",
@@ -568,8 +552,20 @@ class Study:
         counts = Counter(r[0] for r in self.db.execute("SELECT actor FROM answers"))
         return {
             "role": "admin",
+            "ui_protocol": UI_PROTOCOL,
+            "limits": {"time": None, "steps": None, "points": None},
             "plan": {
-                k: v for k, v in self.plan.items() if k not in {"data", "family_ids"}
+                k: v
+                for k, v in self.plan.items()
+                if k
+                not in {
+                    "data",
+                    "family_ids",
+                    "budget",
+                    "max_turns",
+                    "search_seconds",
+                    "review_seconds",
+                }
             },
             "invitations": [
                 {
@@ -623,10 +619,11 @@ def create_server(root, port=8765):
             self.wfile.write(content)
 
         def do_GET(self):
-            if self.path in ("/", "/app.js", "/style.css"):
+            if self.path in ("/", "/app.js", "/i18n.js", "/style.css"):
                 name = {
                     "/": "index.html",
                     "/app.js": "app.js",
+                    "/i18n.js": "i18n.js",
                     "/style.css": "style.css",
                 }[self.path]
                 return self.respond(
