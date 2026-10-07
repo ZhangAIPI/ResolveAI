@@ -88,3 +88,12 @@ The human-only interface now uses direct photo selection and per-photo buttons, 
 ## Single-answer human study: 2026-10-06
 
 Human UI v4 displays low-resolution photos at a usable size, provides image operations in all five tasks, replaces a preview when its matching original is released, and finishes each review with one submission. Browser zoom is a logged presentation-only action, without resampling pixels. The two reviews now provide full-pool truth/evidence votes (visual-truth-review-v2), not initial/pool availability labels. The analyzer reports two-human full-material label agreement separately and never promotes these partial reviews to the formal evidence-sufficiency benchmark. A private preview invitation uses a separate SQLite database. Existing formal assignments and answers are retained.
+
+### 2026-10-06：人类流程简化与题目多样性
+
+- 新 UI `human-ui-v5-optional-regions`：直接提交判断，取消必选照片；画框可选。提供的目标用橙色虚线，人画的细节用蓝色实线。
+- 修复缓存图片在加入页面前加载导致的零尺寸 canvas：按真实显示尺寸绘制并跟随尺寸变化，浏览器实测书类题不再出现整图绿色。
+- 审核记录升级为 `visual-truth-review-v3`，只用于完整材料结论共识；可选区域不推导最小充分证据，不产生人的 grounded 引用分数。旧回答按原协议保留。
+- 固定题库和各条件次数，只重排未开始者：前三道搜证物品类别互不重复；19份中15份五类不同、4份四类不同。已开始者不更换案件。
+- 77项回归测试和真实五题的隔离浏览器检查通过；不向正式/试用库写入测试回答。中英文 GitHub 演示截图已更新。
+- 超分不自动用于当前人工实验；低清材料先请求原图。未来超分工具可独立消融，生成细节不作为新增事实证据。

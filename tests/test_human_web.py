@@ -179,7 +179,7 @@ class HumanWebTests(unittest.TestCase):
         self.assertEqual(exported["status"], "finished")
         self.assertEqual(exported["steps"], 41)
         self.assertGreaterEqual(exported["duration_s"], 7200)
-        self.assertEqual(exported["ui_protocol"], "human-ui-v4-single-answer")
+        self.assertEqual(exported["ui_protocol"], "human-ui-v5-optional-regions")
 
     def test_review_has_tools_and_finishes_with_one_truth_only_vote(self):
         from resolveai.review import validate_truth_vote, validate_vote
@@ -218,6 +218,42 @@ class HumanWebTests(unittest.TestCase):
             validate_vote(vote)
         with self.assertRaises(ValueError):
             self.study.post("reviewer", "review", answer)
+
+    def test_definite_answers_need_no_photo_selection(self):
+        from resolveai.review import full_truth_consensus
+        from copy import deepcopy
+
+        for actor, route in [("person", "answer"), ("reviewer", "review")]:
+            self.study.post(actor, "consent", {"agree": True})
+            result = self.study.post(
+                actor,
+                route,
+                {
+                    "index": 0,
+                    "verdict": "Supported",
+                    "confidence": 3,
+                    "reason": "visible rim",
+                    "clear": True,
+                    "selected": [],
+                },
+            )
+            self.assertTrue(result["submitted"])
+        rows = self.study.export()
+        search = next(r for r in rows if r["task"]["mode"] == "search")
+        self.assertEqual(search["decision"]["citations"], [])
+        self.assertFalse(search["citation_scoring_available"])
+        vote = next(r["vote"] for r in rows if "vote" in r)
+        self.assertEqual(vote["regions"], [])
+        self.assertNotIn("annotation", vote)
+        other = deepcopy(vote)
+        other["reviewer_id"] = "independent"
+        consensus = full_truth_consensus(
+            [vote, other],
+            list(self.study.cases.values()),
+            self.study.plan["dataset_sha256"],
+        )
+        self.assertEqual(consensus["consensus"][0]["verdict"], "Supported")
+        self.assertFalse(consensus["formal_evaluation_ready"])
 
     def test_truth_consensus_does_not_admit_release_sufficiency(self):
         from copy import deepcopy
@@ -288,7 +324,7 @@ class HumanWebTests(unittest.TestCase):
                     },
                 ),
             ]:
-                body["ui_protocol"] = "human-ui-v4-single-answer"
+                body["ui_protocol"] = "human-ui-v5-optional-regions"
                 conn.request("POST", "/api/" + route, json.dumps(body), headers)
                 response = conn.getresponse()
                 response.read()

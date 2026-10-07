@@ -49,7 +49,9 @@
           <li>
             只判断照片里的事实。正常参考是另一个正常实物，不能当作目标的“之前照片”。
           </li>
-          <li>点击图片选作判断依据。放大、缩小或裁剪，就点图片下面的按钮。</li>
+          <li>
+            直接选择判断并提交。不必选图片；想指出细节时，点“画框（可选）”。
+          </li>
           <li>放大只改变显示；索证才可能获得原有小图里看不见的材料。</li>
           <li>
             审核先看有限材料，再看完整材料。前面的判断保存后不能改，请独立作答。
@@ -72,7 +74,7 @@
         <div class="info" id="condition"></div>
         <div id="pictures" class="grid"></div>
         <section id="tools">
-          <button id="compare" hidden>并排比较所选的两张图片</button>
+          <button id="compare" hidden>比较图片</button>
           <details id="request-panel" hidden>
             <summary>需要其他照片？</summary>
             <div id="request-buttons" class="toolrow"></div>
@@ -81,7 +83,7 @@
         </section>
         <section id="answer">
           <h2 id="answer-title">你的判断</h2>
-          <p id="selection-hint">点击你用来判断的图片，再选择结论。</p>
+          <p id="selection-hint">直接选择判断并提交即可，画框可选。</p>
           <div class="choices">
             <label
               ><input type="radio" name="verdict" value="Supported" /><span

@@ -53,7 +53,8 @@ def validate_truth_vote(vote):
     """A single full-pool judgment supplies truth, not availability labels."""
     if (
         not isinstance(vote, dict)
-        or vote.get("protocol") != "visual-truth-review-v2"
+        or vote.get("protocol")
+        not in {"visual-truth-review-v2", "visual-truth-review-v3"}
         or vote.get("scope") != "full_pool_only"
         or vote.get("reviewer_type") != "human"
         or not isinstance(vote.get("reviewer_id"), str)
@@ -71,6 +72,36 @@ def validate_truth_vote(vote):
         raise ValueError("Claim clarity must be explicit")
     if "initial_verdicts" in vote or "pool_verdicts" in vote:
         raise ValueError("Single-answer reviews cannot claim availability judgments")
+    if vote["protocol"] == "visual-truth-review-v3":
+        if vote.get("verdict") not in VERDICTS:
+            raise ValueError("Review requires a valid judgment")
+        if "annotation" in vote:
+            raise ValueError(
+                "Optional-region reviews cannot claim sufficient annotations"
+            )
+        if not isinstance(vote.get("regions"), list) or not isinstance(
+            vote.get("links"), list
+        ):
+            raise ValueError("Optional regions and links must be lists")
+        for endpoint in vote["regions"]:
+            box = endpoint.get("bbox", [])
+            if (
+                not endpoint.get("image_id")
+                or not endpoint.get("time")
+                or len(box) != 4
+                or any(type(x) is not int for x in box)
+                or not 0 <= box[0] < box[2]
+                or not 0 <= box[1] < box[3]
+            ):
+                raise ValueError("Invalid optional region")
+        for link in vote["links"]:
+            if (
+                link.get("relation") not in {"same_object", "different_object"}
+                or any(link.get(k) not in vote["regions"] for k in ("left", "right"))
+                or link["left"]["image_id"] == link["right"]["image_id"]
+            ):
+                raise ValueError("Invalid optional identity link")
+        return
     validate_annotation(vote.get("annotation", {}))
     if vote["annotation"].get("protocol") != "evidence-chain-v1":
         raise ValueError("Review requires explicit evidence regions or relations")
@@ -97,7 +128,12 @@ def full_truth_consensus(votes, cases, dataset_hash):
                 {"family_id": family_id, "reason": "claim or target unclear"}
             )
             continue
-        verdicts = {v["annotation"]["verdict"] for v in group}
+        verdicts = {
+            v["verdict"]
+            if v["protocol"] == "visual-truth-review-v3"
+            else v["annotation"]["verdict"]
+            for v in group
+        }
         if len(verdicts) != 1:
             pending.append(
                 {"family_id": family_id, "reason": "human verdict disagreement"}
@@ -106,35 +142,35 @@ def full_truth_consensus(votes, cases, dataset_hash):
         case = families[family_id]
         available = {e["id"]: e for e in case["evidence"] if e["available"]}
         for vote in group:
-            for subclaim in vote["annotation"]["subclaims"]:
-                for sets in subclaim["minimal_evidence_sets"].values():
-                    for evidence_set in sets:
-                        for requirement in evidence_set:
-                            endpoints = (
-                                [requirement["left"], requirement["right"]]
-                                if "relation" in requirement
-                                else [requirement]
-                            )
-                            for endpoint in endpoints:
-                                if endpoint["image_id"] not in available:
-                                    raise ValueError(
-                                        "Review cites unavailable evidence"
-                                    )
-                                row = available[endpoint["image_id"]]
-                                with Image.open(
-                                    Path(case["asset_root"]) / row["path"]
-                                ) as picture:
-                                    size = row.get("source_size", list(picture.size))
-                                box = endpoint["bbox"]
-                                bounds = row.get("source_bbox", [0, 0, *size])
-                                if not (
-                                    bounds[0] <= box[0] < box[2] <= bounds[2]
-                                    and bounds[1] <= box[1] < box[3] <= bounds[3]
-                                    and endpoint["time"] == row["time"]
-                                ):
-                                    raise ValueError(
-                                        "Review region or time outside visible evidence"
-                                    )
+            if vote["protocol"] == "visual-truth-review-v3":
+                endpoints = vote["regions"]
+            else:
+                requirements = [
+                    r
+                    for subclaim in vote["annotation"]["subclaims"]
+                    for sets in subclaim["minimal_evidence_sets"].values()
+                    for evidence_set in sets
+                    for r in evidence_set
+                ]
+                endpoints = [
+                    e
+                    for r in requirements
+                    for e in ([r["left"], r["right"]] if "relation" in r else [r])
+                ]
+            for endpoint in endpoints:
+                if endpoint["image_id"] not in available:
+                    raise ValueError("Review cites unavailable evidence")
+                row = available[endpoint["image_id"]]
+                with Image.open(Path(case["asset_root"]) / row["path"]) as picture:
+                    size = row.get("source_size", list(picture.size))
+                box = endpoint["bbox"]
+                bounds = row.get("source_bbox", [0, 0, *size])
+                if not (
+                    bounds[0] <= box[0] < box[2] <= bounds[2]
+                    and bounds[1] <= box[1] < box[3] <= bounds[3]
+                    and endpoint["time"] == row["time"]
+                ):
+                    raise ValueError("Review region or time outside visible evidence")
         accepted.append(
             {
                 "family_id": family_id,

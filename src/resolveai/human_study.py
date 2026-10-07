@@ -16,7 +16,7 @@ from .environment import Environment
 from .review import validate_truth_vote
 from .tools import ActionError, VERDICTS
 
-UI_PROTOCOL = "human-ui-v4-single-answer"
+UI_PROTOCOL = "human-ui-v5-optional-regions"
 TOOLS = {"inspect", "crop", "zoom", "compare", "ocr", "request_photo", "finish"}
 CATEGORIES = {
     "bottle": "瓶子",
@@ -72,7 +72,7 @@ CONDITIONS = {
 
 def chinese_claim(case):
     if case["task"] == "identity":
-        return "A 与 B 中绿色框标出的目标，是同一件实物吗？"
+        return "照片中的对象 A 与对象 B，是同一件实物吗？"
     return (
         "声明：目标"
         + CATEGORIES[case["category"]]
@@ -277,7 +277,7 @@ class Study:
     def selections(self, images, selected, verdict, task):
         rows = {p["view_id"]: p for p in images}
         if not isinstance(selected, list):
-            raise ValueError("请选择证据图片")
+            raise ValueError("画框记录格式错误")
         citations = []
         objects = set()
         for item in selected:
@@ -295,15 +295,15 @@ class Study:
             objects.add(picture["object"])
         if verdict not in VERDICTS:
             raise ValueError("请选择判断")
-        if verdict != "Need more evidence":
-            if not citations or objects == {"normal-reference"}:
-                raise ValueError("确定判断需要选择目标图片作为证据")
-            if task == "identity" and (
-                len(citations) != 2 or objects != {"subject-A", "subject-B"}
-            ):
-                raise ValueError("身份判断请选择 A 和 B 各一张图片")
+        # Human answers need no citation selection. Regions are optional notes,
+        # not a claim of having annotated a minimal sufficient evidence set.
         links = []
-        if task == "identity" and verdict != "Need more evidence":
+        if (
+            task == "identity"
+            and verdict != "Need more evidence"
+            and len(citations) == 2
+            and objects == {"subject-A", "subject-B"}
+        ):
             links = [
                 {
                     "relation": "same_object"
@@ -427,11 +427,8 @@ class Study:
                 case["task"],
             )
             verdict = body["verdict"]
-            group = links if case["task"] == "identity" else citations
-            kind = "condition" if case["task"] == "state" else "identity"
-            truth = "uncertain" if verdict == "Need more evidence" else verdict
             vote = {
-                "protocol": "visual-truth-review-v2",
+                "protocol": "visual-truth-review-v3",
                 "scope": "full_pool_only",
                 "reviewer_type": "human",
                 "reviewer_id": actor["id"],
@@ -439,20 +436,9 @@ class Study:
                 "dataset_sha256": self.plan["dataset_sha256"],
                 "claim_clear": body.get("clear") is True,
                 "reason": body["reason"],
-                "annotation": {
-                    "protocol": "evidence-chain-v1",
-                    "verdict": verdict,
-                    "subclaims": [
-                        {
-                            "id": kind,
-                            "kind": kind,
-                            "truth": truth,
-                            "minimal_evidence_sets": {}
-                            if truth == "uncertain"
-                            else {verdict: [group]},
-                        }
-                    ],
-                },
+                "verdict": verdict,
+                "regions": citations,
+                "links": links,
             }
             validate_truth_vote(vote)
             payload = {
@@ -469,6 +455,7 @@ class Study:
         if type(body.get("confidence")) is not int or not 1 <= body["confidence"] <= 5:
             raise ValueError("请选择把握程度")
         payload["ui_protocol"] = UI_PROTOCOL
+        payload["citation_scoring_available"] = False
         with self.db:
             self.db.execute(
                 "INSERT INTO answers VALUES (?,?,?)",
@@ -481,7 +468,7 @@ class Study:
         counts = Counter(r[0] for r in self.db.execute("SELECT actor FROM answers"))
         preview_access = self.root / "preview" / "access.json"
         preview_token = (
-            next(iter(json.loads(preview_access.read_text())))
+            next(reversed(json.loads(preview_access.read_text())))
             if preview_access.exists()
             else None
         )

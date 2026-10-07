@@ -52,8 +52,8 @@ const UI_TEXT = {
     "Judge only what the photos show. A normal reference is another object, not a “before” photo of the target.",
   ],
   introClick: [
-    "点击图片选作依据。放大、缩小或裁剪，就点图片下面的按钮。",
-    "Click a photo to select it as evidence. Use the buttons below that photo to zoom or crop.",
+    "直接选择判断并提交。不必选图片；想指出细节时，点“画框（可选）”。",
+    "Choose your answer and submit. No photo selection is needed; use “Mark a region (optional)” to point out a detail.",
   ],
   introZoom: [
     "放大只改变显示；请求照片才可能带来尚未看到的材料。",
@@ -70,7 +70,12 @@ const UI_TEXT = {
   begin: ["开始", "Begin"],
   original: ["原始题目", "Original wording"],
   answer: ["你的判断", "Your decision"],
-  compare: ["比较所选的两张图片", "Compare the two selected photos"],
+  compare: ["比较图片", "Compare photos"],
+  comparePhotos: ["比较：{0} / {1}", "Compare: {0} / {1}"],
+  optionalRegions: [
+    "直接选择判断并提交即可。画框可选，用来指出你关注的细节。",
+    "Choose your answer and submit. Optionally mark a region to point out a detail.",
+  ],
   requestPanel: ["需要其他照片？", "Need other photos?"],
   optional: ["可选：判断把握", "Optional: confidence"],
   confidence: ["把握程度", "Confidence"],
@@ -118,21 +123,6 @@ const UI_TEXT = {
   small: ["小图", "Preview"],
   normal: ["正常参考", "Normal reference"],
   raw: ["原图", "Original"],
-  selected: ["✓ 已选作依据", "✓ Selected as evidence"],
-  selectPhoto: ["点击图片选作依据", "Click photo to select evidence"],
-  selectAria: ["选择依据：{0}", "Select evidence: {0}"],
-  selectedCount: [
-    "已选 {0} 张依据。再次点击图片可取消。",
-    "Selected photos: {0}. Click again to deselect.",
-  ],
-  selectIdentity: [
-    "确定判断时，点击 A、B 各一张作为依据；无法确定时可以不选。",
-    "For a definite decision, select one photo of A and one of B. No selection is required for “Cannot determine”.",
-  ],
-  selectState: [
-    "点击用来判断的图片作为依据；无法确定时可以不选。",
-    "Select the photos supporting your decision. No selection is required for “Cannot determine”.",
-  ],
   imageFailed: [
     "图片加载失败，请刷新。",
     "Photo failed to load. Please refresh.",
@@ -142,20 +132,24 @@ const UI_TEXT = {
     "区域太小，请重新点两角。",
     "Region too small. Click two corners again.",
   ],
-  regionDone: ["区域已标记。", "Region marked."],
+  regionDone: [
+    "蓝框：你标出的细节（可选）",
+    "Blue box: your marked detail (optional)",
+  ],
   cropHint: [
     "在图上点区域的两个对角，裁剪；再点“裁剪”可取消。",
     "Click two opposite corners to crop. Click “Crop” again to cancel.",
   ],
   markHint: [
-    "在图上点区域的两个对角，标记依据。",
-    "Click two opposite corners to mark evidence.",
+    "在图上点两个对角，标出你关注的细节；再点“画框”可取消。",
+    "Click two opposite corners to mark a detail. Click “Mark a region” again to cancel.",
   ],
   zoomIn: ["放大", "Zoom in"],
   zoomOut: ["缩小", "Zoom out"],
   crop: ["裁剪", "Crop"],
   more: ["更多", "More"],
-  mark: ["标记证据区域", "Mark evidence region"],
+  mark: ["画框（可选）", "Mark a region (optional)"],
+  clearMark: ["清除我的框", "Clear my mark"],
   restore: ["恢复整图", "Restore whole photo"],
   inspect: ["检查图片", "Inspect"],
   ocr: ["识别文字", "Read text"],
@@ -185,8 +179,8 @@ const UI_TEXT = {
     "The normal reference is a different object, not a before photo of this target.",
   ],
   identityContext: [
-    "比较 A、B 中绿色框里的物品，不要只依据背景。",
-    "Compare the objects in the green boxes in A and B, not just their backgrounds.",
+    "比较“对象 A”与“对象 B”的实物。橙色虚线框提示目标；不要只依据背景。",
+    "Compare Object A with Object B. Orange dashed boxes indicate the target where provided; do not rely on backgrounds alone.",
   ],
   previewPhase: [
     "仅看这些小图，能判断吗？",

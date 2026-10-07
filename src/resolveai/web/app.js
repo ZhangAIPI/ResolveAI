@@ -4,7 +4,6 @@ let token = decodeURIComponent(location.hash.slice(1)),
   boxes = {},
   corners = {},
   marked = new Set(),
-  selected = new Set(),
   imageCache = new Map(),
   busy = false,
   invitations = [];
@@ -17,7 +16,7 @@ async function api(path, body) {
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
     body: body
-      ? JSON.stringify({ ...body, ui_protocol: "human-ui-v4-single-answer" })
+      ? JSON.stringify({ ...body, ui_protocol: "human-ui-v5-optional-regions" })
       : undefined,
   });
   const data = await r.json();
@@ -61,15 +60,14 @@ function clippedBox(p, box) {
 function displayImages(data) {
   const refs = new Set(data.display_views || data.images.map((p) => p.view_id));
   const shown = data.images.filter((p) => refs.has(p.view_id));
-  for (const ref of [...selected]) {
+  for (const ref of [...marked]) {
     if (refs.has(ref)) continue;
     const old = data.images.find((p) => p.view_id === ref);
     const replacement = shown.find((p) => p.source_id === old?.source_id);
     if (!replacement) continue;
     boxes[replacement.view_id] = clippedBox(replacement, boxes[ref]);
-    if (marked.has(ref)) marked.add(replacement.view_id);
-    selected.delete(ref);
-    selected.add(replacement.view_id);
+    marked.delete(ref);
+    marked.add(replacement.view_id);
   }
   return shown;
 }
@@ -83,7 +81,7 @@ function actorText(p) {
         : t("target");
 }
 function evidence() {
-  return [...selected].map((ref) => ({ view_id: ref, bbox: boxes[ref] }));
+  return [...marked].map((ref) => ({ view_id: ref, bbox: boxes[ref] }));
 }
 function verdict() {
   return document.querySelector("input[name=verdict]:checked")?.value;
@@ -94,25 +92,26 @@ function resetAnswer() {
     .forEach((r) => (r.checked = false));
   $("reason").value = "";
   $("confidence").value = "3";
-  selected.clear();
+  marked.clear();
 }
-function refreshSelection() {
+function refreshRegions() {
   document.querySelectorAll(".card").forEach((card) => {
-    const chosen = selected.has(card.dataset.ref);
-    card.classList.toggle("selected", chosen);
-    card
-      .querySelector(".picture-select")
-      .setAttribute("aria-pressed", String(chosen));
-    card.querySelector(".selection-status").textContent = chosen
-      ? t("selected")
-      : t("selectPhoto");
+    card.querySelector(".selection-status").textContent = marked.has(
+      card.dataset.ref,
+    )
+      ? t("regionDone")
+      : "";
   });
-  $("compare").hidden = selected.size !== 2;
-  $("selection-hint").textContent = selected.size
-    ? t("selectedCount", selected.size)
-    : state?.task === "identity"
-      ? t("selectIdentity")
-      : t("selectState");
+  const shown = displayImages(state);
+  const a = shown.find((p) => p.object === "subject-A") || shown[0];
+  const b =
+    shown.find((p) => p.object === "subject-B") || shown.find((p) => p !== a);
+  $("compare").hidden = !a || !b;
+  $("compare").textContent =
+    a && b ? t("comparePhotos", actorText(a), actorText(b)) : t("compare");
+  $("compare").onclick = () =>
+    perform({ type: "compare", image_ids: [a.view_id, b.view_id] });
+  $("selection-hint").textContent = t("optionalRegions");
 }
 function displayBox(p, box) {
   const b = p.source_bbox,
@@ -168,8 +167,8 @@ async function picture(p) {
   );
   const choose = document.createElement("button");
   choose.type = "button";
-  choose.className = "picture-select";
-  choose.setAttribute("aria-label", t("selectAria", title.textContent));
+  choose.className = "picture-surface";
+  choose.setAttribute("aria-label", title.textContent);
   const img = document.createElement("img"),
     canvas = document.createElement("canvas");
   img.alt = actorText(p);
@@ -193,30 +192,36 @@ async function picture(p) {
   note.className = "region-note";
   let regionMode = null;
   function draw() {
-    canvas.width = Math.max(1, Math.round(img.clientWidth));
-    canvas.height = Math.max(1, Math.round(img.clientHeight));
+    // Cached images can finish loading before their card enters the document.
+    // Never stretch a 1px canvas over a photo; redraw when layout has a size.
+    if (!img.clientWidth || !img.clientHeight) return;
+    canvas.width = Math.round(img.clientWidth);
+    canvas.height = Math.round(img.clientHeight);
     const ctx = canvas.getContext("2d"),
-      b = p.source_bbox,
-      a = boxes[p.view_id];
-    if (!p.target_bbox && !marked.has(p.view_id)) return;
-    ctx.strokeStyle = "#14a06f";
-    ctx.lineWidth = Math.max(2, canvas.width / 160);
-    ctx.strokeRect(
-      ((a[0] - b[0]) / (b[2] - b[0])) * canvas.width,
-      ((a[1] - b[1]) / (b[3] - b[1])) * canvas.height,
-      ((a[2] - a[0]) / (b[2] - b[0])) * canvas.width,
-      ((a[3] - a[1]) / (b[3] - b[1])) * canvas.height,
-    );
+      b = p.source_bbox;
+    function outline(box, color, dashed) {
+      const a = clippedBox(p, box);
+      const x = ((a[0] - b[0]) / (b[2] - b[0])) * canvas.width;
+      const y = ((a[1] - b[1]) / (b[3] - b[1])) * canvas.height;
+      const w = ((a[2] - a[0]) / (b[2] - b[0])) * canvas.width;
+      const h = ((a[3] - a[1]) / (b[3] - b[1])) * canvas.height;
+      ctx.setLineDash(dashed ? [8, 4] : []);
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(x, y, w, h);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(x, y, w, h);
+    }
+    if (p.target_bbox) outline(p.target_bbox, "#d35400", true);
+    if (marked.has(p.view_id)) outline(boxes[p.view_id], "#2563eb", false);
   }
+  const observer = new ResizeObserver(draw);
+  observer.observe(img);
+  card.stopObserving = () => observer.disconnect();
   img.onload = draw;
   choose.onclick = (event) => {
-    if (!regionMode) {
-      selected.has(p.view_id)
-        ? selected.delete(p.view_id)
-        : selected.add(p.view_id);
-      refreshSelection();
-      return;
-    }
+    if (!regionMode) return;
     if (!event.detail) return;
     const r = img.getBoundingClientRect(),
       b = p.source_bbox;
@@ -248,22 +253,24 @@ async function picture(p) {
     const mode = regionMode;
     regionMode = null;
     choose.classList.remove("marking");
-    boxes[p.view_id] = [
+    const regionBox = [
       Math.min(a, x),
       Math.min(c, y),
       Math.max(a, x),
       Math.max(c, y),
     ];
-    marked.add(p.view_id);
-    selected.add(p.view_id);
+    if (mode === "mark") {
+      boxes[p.view_id] = regionBox;
+      marked.add(p.view_id);
+    }
     note.textContent = t("regionDone");
     draw();
-    refreshSelection();
+    refreshRegions();
     if (mode === "crop")
       perform({
         type: "crop",
         image_id: p.view_id,
-        bbox: displayBox(p, boxes[p.view_id]),
+        bbox: displayBox(p, regionBox),
       });
   };
   function region(mode) {
@@ -300,14 +307,19 @@ async function picture(p) {
         perform({ type: "zoom", image_id: p.view_id, factor: 0.5 }),
       ),
       button(t("crop"), () => region("crop")),
+      button(t("mark"), () => region("mark")),
     );
   }
   const more = document.createElement("details"),
     summary = document.createElement("summary");
   summary.textContent = t("more");
+  more.append(summary);
   more.append(
-    summary,
-    button(t("mark"), () => region("mark")),
+    button(t("clearMark"), () => {
+      marked.delete(p.view_id);
+      draw();
+      refreshRegions();
+    }),
   );
   if (p.view_id !== p.image_id) {
     more.append(
@@ -444,6 +456,9 @@ async function show(data) {
           }[data.condition],
         );
   $("submit").textContent = t("submit");
+  $("pictures")
+    .querySelectorAll(".card")
+    .forEach((c) => c.stopObserving?.());
   $("pictures").replaceChildren();
   const shown = displayImages(data);
   const cards = await Promise.all(shown.map(picture));
@@ -455,7 +470,7 @@ async function show(data) {
       imageCache.delete(ref);
     }
   }
-  refreshSelection();
+  refreshRegions();
   photoRequests(data);
   $("feedback").textContent = "";
   if (data.feedback) {
@@ -476,8 +491,6 @@ $("begin").onclick = () =>
     if (!$("agree").checked) throw Error(t("agreeError"));
     await show(await api("consent", { agree: true }));
   });
-$("compare").onclick = () =>
-  perform({ type: "compare", image_ids: [...selected] });
 $("submit").onclick = () =>
   guarded(async () => {
     const v = verdict();

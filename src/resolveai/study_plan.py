@@ -169,8 +169,18 @@ def prepare(data, output):
     return plan
 
 
-def short_assign(families, seed=20261005):
+def short_assign(
+    families,
+    seed=20261005,
+    *,
+    locked=None,
+    searching_families=None,
+    category_repeat_limit=1,
+    minimum_categories=5,
+):
     """20 people: one trial per acquisition arm and two blind review families."""
+    if category_repeat_limit < 1 or not 1 <= minimum_categories <= 5:
+        raise ValueError("Invalid per-participant category constraints")
     rng = random.Random(seed)
     state_pairs = defaultdict(dict)
     for case in families:
@@ -191,17 +201,61 @@ def short_assign(families, seed=20261005):
             unknown.append(case)
         else:
             controls[case["evidence"][0]["source_id"]][kind] = case
-    key = sorted(controls)[rng.randrange(len(controls))]
+    unknown_categories = {c["category"] for c in unknown}
+    candidates = [
+        key
+        for key, pair in sorted(controls.items())
+        if next(iter(pair.values()))["category"] not in unknown_categories
+    ] or sorted(controls)
+    key = candidates[rng.randrange(len(candidates))]
     searching += list(controls[key].values()) + unknown
+    if searching_families is not None:
+        searching = [c for c in families if c["family_id"] in searching_families]
     if len(searching) != 10:
         raise ValueError("Expected ten search families")
     slots = [(c, arm) for c in searching for arm in ARMS for _ in range(2)]
-    for attempt in range(2000):
+    by_family = {c["family_id"]: c for c in families}
+    locked = locked or {}
+    if any(not 0 <= p < 20 or len(rows) != 5 for p, rows in locked.items()):
+        raise ValueError(
+            "Locked participants require their unchanged five-task schedule"
+        )
+    locked_search = Counter(
+        (r["family_id"], r["condition"])
+        for queue in locked.values()
+        for r in queue
+        if r["mode"] == "search"
+    )
+    locked_review = Counter(
+        r["family_id"]
+        for queue in locked.values()
+        for r in queue
+        if r["mode"] == "review"
+    )
+    remaining_slots = []
+    for c, arm in slots:
+        key = (c["family_id"], arm)
+        if locked_search[key]:
+            locked_search[key] -= 1
+        else:
+            remaining_slots.append((c, arm))
+    if any(locked_search.values()):
+        raise ValueError("Locked search assignments do not match frozen slots")
+    for attempt in range(20000):
         rng = random.Random(seed + attempt)
-        queues = [[] for _ in range(20)]
+        queues = [[dict(r) for r in locked.get(p, [])] for p in range(20)]
         used = [set() for _ in queues]
+        categories = [Counter() for _ in queues]
         counts = [Counter() for _ in queues]
-        shuffled = list(slots)
+        for p, queue in enumerate(queues):
+            for row in queue:
+                case = by_family[row["family_id"]]
+                used[p].update(case["group_ids"])
+                categories[p][case["category"]] += 1
+                if row["mode"] == "search":
+                    counts[p][row["condition"]] += 1
+                    counts[p][case["task"]] += 1
+        shuffled = list(remaining_slots)
         rng.shuffle(shuffled)
         for case, arm in shuffled:
             eligible = [
@@ -209,6 +263,8 @@ def short_assign(families, seed=20261005):
                 for p in range(20)
                 if counts[p][arm] == 0
                 and counts[p][case["task"]] < 2
+                and p not in locked
+                and case["category"] not in categories[p]
                 and not used[p].intersection(case["group_ids"])
             ]
             if not eligible:
@@ -221,37 +277,60 @@ def short_assign(families, seed=20261005):
             counts[person][arm] += 1
             counts[person][case["task"]] += 1
             used[person].update(case["group_ids"])
+            categories[person][case["category"]] += 1
         else:
-            reviews = [c for c in families for _ in range(2)]
+            remaining_reviews = locked_review.copy()
+            reviews = []
+            for c in families:
+                for _ in range(2):
+                    if remaining_reviews[c["family_id"]]:
+                        remaining_reviews[c["family_id"]] -= 1
+                    else:
+                        reviews.append(c)
+            if any(remaining_reviews.values()):
+                raise ValueError("Locked reviews do not match frozen slots")
             rng.shuffle(reviews)
             reviews.sort(
                 key=lambda c: -sum(bool(set(c["group_ids"]) & u) for u in used)
             )
-            review_counts = [0] * 20
+            review_counts = [2 if p in locked else 0 for p in range(20)]
             for case in reviews:
                 eligible = [
                     p
                     for p in range(20)
                     if review_counts[p] < 2
+                    and categories[p][case["category"]] < category_repeat_limit
                     and not used[p].intersection(case["group_ids"])
                 ]
                 if not eligible:
                     break
                 rng.shuffle(eligible)
-                person = min(eligible, key=lambda p: review_counts[p])
+                person = min(
+                    eligible,
+                    key=lambda p: (categories[p][case["category"]], review_counts[p]),
+                )
                 queues[person].append(
                     {"mode": "review", "family_id": case["family_id"]}
                 )
                 used[person].update(case["group_ids"])
+                categories[person][case["category"]] += 1
                 review_counts[person] += 1
             else:
+                if any(
+                    len(categories[p]) < minimum_categories
+                    for p in range(20)
+                    if p not in locked
+                ):
+                    continue
                 variants = {
                     c["family_id"]: VARIANTS[i % 4]
                     for i, c in enumerate(
                         sorted(searching, key=lambda c: c["family_id"])
                     )
                 }
-                for queue in queues:
+                for person, queue in enumerate(queues):
+                    if person in locked:
+                        continue
                     searching_rows = queue[:3]
                     rng.shuffle(searching_rows)
                     queue[:3] = searching_rows
@@ -260,7 +339,7 @@ def short_assign(families, seed=20261005):
                             row["family_id"] + "-" + variants[row["family_id"]]
                         )
                 return queues, variants
-    raise ValueError("Could not assign short study without source overlap")
+    raise ValueError("Could not assign short study without source or category overlap")
 
 
 def prepare_short(data, output):
@@ -287,10 +366,11 @@ def prepare_short(data, output):
         "search_tasks_per_participant": 3,
         "review_tasks_per_participant": 2,
         "conditions": list(ARMS),
-        "ui_protocol": "human-ui-v4-single-answer",
+        "ui_protocol": "human-ui-v5-optional-regions",
         "estimated_minutes": [5, 10],
         "limits": {"time": None, "steps": None, "points": None},
         "source_disjoint_within_participant": True,
+        "category_disjoint_within_participant": True,
         "scope": "20-person pilot sampled from the whole public pool; no population-level power claim",
     }
     access = {

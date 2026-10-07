@@ -14,7 +14,7 @@ class NoOCR:
     available = False
 
 
-def grade(case, decision, released):
+def grade(case, decision, released, *, citation_scoring_available=True):
     env = Environment(case, case["asset_root"], ocr_backend=NoOCR())
     if not set(released) <= env._evidence.keys():
         raise ValueError("Trace refers to evidence outside the reviewed case")
@@ -27,7 +27,7 @@ def grade(case, decision, released):
     )
     result["grounded_correct"] = (
         env.evaluate(decision)["grounded_correct"]
-        if decision and "citations" in decision
+        if citation_scoring_available and decision and "citations" in decision
         else None
     )
     return result
@@ -124,7 +124,11 @@ def main():
     db.close()
     all_votes = [r["vote"] for r in answers if r.get("vote")]
     votes = [v for v in all_votes if v["protocol"] == "visual-review-v1"]
-    truth_votes = [v for v in all_votes if v["protocol"] == "visual-truth-review-v2"]
+    truth_votes = [
+        v
+        for v in all_votes
+        if v["protocol"] in {"visual-truth-review-v2", "visual-truth-review-v3"}
+    ]
     cases = json.loads((Path(plan["data"]) / "cases.json").read_text())
     consensus = full_truth_consensus(truth_votes, cases, plan["dataset_sha256"])
     truth_report = {
@@ -178,7 +182,14 @@ def main():
                 "condition": row["task"]["condition"],
                 "case_id": case["case_id"],
                 "requests": row["requests"],
-                **grade(case, row["decision"], row["released"]),
+                **grade(
+                    case,
+                    row["decision"],
+                    row["released"],
+                    citation_scoring_available=row.get(
+                        "citation_scoring_available", True
+                    ),
+                ),
             }
         )
     for path in sorted(args.models.glob("*/episodes.sqlite")):

@@ -82,7 +82,7 @@ footer {
   width: 100%;
   height: auto;
   display: block;
-  cursor: pointer;
+  cursor: default;
 }
 .picture canvas {
   position: absolute;
@@ -197,15 +197,10 @@ footer {
   }
 }
 
-.card.selected {
-  border: 2px solid #096a63;
-  padding: 11px;
-  background: #f1faf7;
-}
 .picture-title {
   font-weight: 600;
 }
-.picture-select {
+.picture-surface {
   position: relative;
   display: block;
   width: var(--content-width, 360px);
@@ -214,11 +209,11 @@ footer {
   margin: 0;
   background: transparent;
 }
-.picture-select:focus-visible {
+.picture-surface:focus-visible {
   outline: 3px solid #258277;
   outline-offset: 4px;
 }
-.picture-select.marking img {
+.picture-surface.marking img {
   cursor: crosshair;
 }
 .selection-status {
@@ -226,10 +221,6 @@ footer {
   text-align: center;
   color: #61737f;
   font-size: 14px;
-}
-.selected .selection-status {
-  color: #096a63;
-  font-weight: 700;
 }
 .picture-controls {
   display: flex;
@@ -285,4 +276,11 @@ summary {
   display: block;
   color: #61737f;
   margin-top: 3px;
+}
+
+.selection-status:empty {
+  display: none;
+}
+.selection-status {
+  color: #2563eb;
 }

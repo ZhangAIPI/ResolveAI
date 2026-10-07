@@ -38,6 +38,49 @@
     "sha256": "5647763d41c628d0c574591d6f0a2cf009c72c48988f58afda372bd6d8d91003"
   },
   "page_errors": [],
-  "ui_protocol": "human-ui-v4-single-answer",
-  "screenshot_type": "Chinese and English task UI before any tool call"
+  "ui_protocol": "human-ui-v5-optional-regions",
+  "screenshot_type": "Chinese and English task UI before any tool call",
+  "current_ui": {
+    "ui_protocol": "human-ui-v5-optional-regions",
+    "verified_at_utc": "2026-10-07T01:12:18.167769+00:00",
+    "tasks_submitted": 5,
+    "photo_selection_required": false,
+    "optional_regions_only": true,
+    "identity_task_definite_answer_without_citations": true,
+    "target_boxes": "orange dashed; user regions blue; sized after layout",
+    "canvas_checks": [
+      {
+        "width": 500,
+        "height": 280,
+        "painted_fraction": 0.03306428571428571,
+        "green": 0
+      },
+      {
+        "width": 270,
+        "height": 360,
+        "painted_fraction": 0.014722222222222222,
+        "green": 0
+      },
+      {
+        "width": 500,
+        "height": 280,
+        "painted_fraction": 0,
+        "green": 0
+      },
+      {
+        "width": 270,
+        "height": 360,
+        "painted_fraction": 0,
+        "green": 0
+      }
+    ],
+    "language_preserves_answer_and_regions": true,
+    "screenshot_family": "case-7d53235c8442a2971e7f",
+    "formal_database_test_writes": 0,
+    "page_errors": [],
+    "screenshot_sha256": {
+      "human-study.png": "80d873bfc15a5d7dc6e527c437910e70778ad2cf33f85354417b2c6b5da574e0",
+      "human-study.en.png": "213ce5db7c03998aa0e21ad98763b11b5c13dafc1fbd229dc4bd53c42e1ad66b"
+    }
+  }
 }
