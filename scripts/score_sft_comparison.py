@@ -46,13 +46,15 @@ def compare(cohort, base, adapted, training):
 def render(report):
     lines = [
         r"\begin{table*}[t]",
-        r"\centering\small",
+        r"\centering",
+        r"\begin{minipage}{.88\textwidth}\centering\small",
+        r"\setlength{\tabcolsep}{5pt}",
         r"\caption{\textbf{Verification before and after source-supervised acquisition SFT.}",
         f"Source-label agreement (\\%) uses the same tasks, settings and {report['common_families']}-family cohort as Table~\\ref{{tab:benchmark}}.",
         r"Training and validation source sequences are disjoint from the frozen evaluation pool.",
         r"The labels remain unreviewed for evidence sufficiency.}",
         r"\label{tab:sft}",
-        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}",
+        r"\begin{tabular}{@{}lrrrrrr@{}}",
         r"\toprule",
         " & " + " & ".join([
             rf"\multicolumn{{2}}{{c}}{{Object condition ({report['task_counts']['state']} cases)}}",
@@ -65,14 +67,14 @@ def render(report):
     for row in report["models"]:
         lines.append(row["name"] + " & " + " & ".join(f"{v:.1f}" for v in task_scores(row["arms"])) + r"\\")
     lines += [
-        r"\bottomrule", r"\end{tabular*}", r"\par\smallskip",
-        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrr@{}}",
+        r"\bottomrule", r"\end{tabular}", r"\par\smallskip",
+        r"\begin{tabular}{@{}lrrrr@{}}",
         r"\toprule", r"Agent outcomes & Correct & Wrong & Need more evidence & Did not finish\\",
         r"\midrule",
     ]
     for row in report["models"]:
         lines.append(row["name"] + " & " + " & ".join(map(str, outcomes(row["arms"]["interactive_agent"]))) + r"\\")
-    return "\n".join(lines + [r"\bottomrule", r"\end{tabular*}", r"\end{table*}"]) + "\n"
+    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{minipage}", r"\end{table*}"]) + "\n"
 
 
 if __name__ == "__main__":

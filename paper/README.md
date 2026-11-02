@@ -74,6 +74,6 @@ A subsequent prose rewrite removes reviewer-facing imperatives and checklist par
 
 ## Result presentation
 
-Table 1 now separates task performance from interaction outcomes. Its full-width first panel reports condition (153 cases), cross-view identity (56), and pooled results (209), each with Answer only and With tools. Its second panel accounts for every agent attempt as a label match, opposite label, abstention, or missing verdict. All-image direct decisions remain in the supplement. Difficulty groups are omitted because no independently established difficulty labels exist.
+Table 1 now separates task performance from interaction outcomes. Its centered first panel reports condition (153 cases), cross-view identity (56), and pooled results (209), each with Answer only and With tools. Its second panel accounts for every agent attempt as a label match, opposite label, abstention, or missing verdict. All-image direct decisions remain in the supplement. The tables use natural column widths and fixed small column gaps, without stretching their rules across the page. Difficulty groups are omitted because no independently established difficulty labels exist.
 
 This follows the task-first presentation in [MMMU Table 2](https://arxiv.org/html/2311.16502v3) and [BLINK's task results](https://arxiv.org/html/2404.12390v2): expose capability differences before an aggregate, state the sample counts, and separate diagnostic outcomes from the main score. No figures, wording, or scores are copied.

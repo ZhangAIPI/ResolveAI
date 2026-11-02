@@ -231,6 +231,8 @@ The diagram shows the comparison, without measured outcomes.}
 \label{fig:diagnosis}
 \end{figure}
 
+\input{tables/benchmark_results}
+
 \subsection{Separating acquisition from judgment}
 A returned photograph can be relevant without resolving the claim, and sufficient evidence can be acquired without producing a correct verdict.
 We follow these two stages separately.
@@ -306,8 +308,6 @@ A score is the percentage of all attempted cases whose final verdict matches the
 These are initial source-label results, preceding independent sufficiency review, rather than grounded accuracy under Equation~\ref{eq:grounded}.
 An additional direct-decision setting with all obtainable photographs is reported in the supplement.
 
-\input{tables/benchmark_results}
-
 \paragraph{Performance differs across tasks.}
 Qwen3-VL-8B has the highest agreement in both tasks: 79.1\% for condition and 91.1\% for identity when using tools.
 The task breakdown also exposes changes hidden by a pooled score.
@@ -331,7 +331,6 @@ That claim requires the reviewed access variants and matched action comparisons 
 % Do not insert estimated gains, empty runs or validation results as benchmark scores.
 \IfFileExists{tables/sft_results.tex}{\input{tables/sft_results}}{}
 
-\clearpage
 \section*{LLM Usage Statement}
 OpenAI Codex assisted with code, literature lookup, manuscript drafting and schematic figure code.
 Model outputs are not human annotations; photographic figure inputs retain their source pixels.

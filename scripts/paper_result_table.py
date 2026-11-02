@@ -48,7 +48,9 @@ def render(report):
     best = [max(column) for column in zip(*scores)]
     lines = [
         r"\begin{table*}[t]",
-        r"\centering\small",
+        r"\centering",
+        r"\begin{minipage}{.88\textwidth}\centering\small",
+        r"\setlength{\tabcolsep}{5pt}",
         r"\caption{\textbf{Object verification across tasks and interaction outcomes.}",
         r"(a) Source-label agreement (\%, higher is better), broken down by task.",
         r"(b) The same agent episodes split into four mutually exclusive outcomes (counts).",
@@ -56,7 +58,7 @@ def render(report):
         r"Source labels and initial sufficiency have not been independently reviewed; these are not grounded-accuracy scores.}",
         r"\label{tab:benchmark}",
         r"\textbf{(a) Verification scores by task (\%)}\par\smallskip",
-        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}",
+        r"\begin{tabular}{@{}lrrrrrr@{}}",
         r"\toprule",
         " & " + " & ".join([
             rf"\multicolumn{{2}}{{c}}{{Object condition ({report['task_counts']['state']} cases)}}",
@@ -79,10 +81,10 @@ def render(report):
         r"\midrule",
         "Always Refuted & " + " & ".join(f"{v:.1f}" for v in priors) + r"\\",
         r"\bottomrule",
-        r"\end{tabular*}",
+        r"\end{tabular}",
         r"\par\vspace{5pt}",
         rf"\textbf{{(b) Agent outcomes ({n} attempts per model)}}\par\smallskip",
-        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrr@{}}",
+        r"\begin{tabular}{@{}lrrrr@{}}",
         r"\toprule",
         r"Model & Correct & Wrong & Need more evidence & Did not finish\\",
         r"\midrule",
@@ -92,9 +94,9 @@ def render(report):
         lines.append(NAMES[worker["model_id"]] + " & " + " & ".join(map(str, values)) + r"\\")
     lines += [
         r"\bottomrule",
-        r"\end{tabular*}",
+        r"\end{tabular}",
         r"\par\smallskip",
-        r"\begin{minipage}{\textwidth}\footnotesize",
+        r"\begin{minipage}{\linewidth}\footnotesize",
         r"\textit{Tasks:} condition asks whether the photographed item has the stated defect;",
         r"identity asks whether the foreground objects in two submissions are the same physical item.",
         r"\textit{Settings:} Answer only judges the initial images directly; With tools starts with the same images",
@@ -102,6 +104,7 @@ def render(report):
         r"Overall pools all cases; abstentions and missing verdicts score zero.",
         r"In (b), Correct/Wrong compare definite verdicts with the source label;",
         r"Need more evidence is a terminal abstention, while Did not finish means no terminal decision was submitted.",
+        r"\end{minipage}",
         r"\end{minipage}",
         r"\end{table*}",
     ]
