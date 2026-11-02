@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-02T02:35:42.309464+00:00",
+  "as_of_utc": "2026-11-02T02:59:12.297998+00:00",
   "source": {
     "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
     "tests_passed": 80
@@ -10,7 +10,7 @@
   "formal_scores": null,
   "workers": [
     {
-      "source_commit": "268e1f8476fadb9cc8957e721d2ed521ab893672",
+      "source_commit": "9c9a99d7e3279c944f992933e47faaa62f75cb3a",
       "versions": {
         "torch": "2.4.0",
         "transformers": "5.3.0",
@@ -20,50 +20,49 @@
       "name": "qwen35",
       "model_id": "Qwen/Qwen3.5-9B",
       "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
-      "job_id": "26548",
-      "completed": 14,
+      "job_id": "26549",
+      "completed": 8,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 5,
+          "episodes": 3,
           "verdicts": {
-            "Refuted": 4,
-            "Need more evidence": 1
+            "Refuted": 3
           },
           "terminations": {
-            "finished": 5
+            "finished": 3
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 4.9
+          "wall_latency_s": 3.1
         },
         "full_available_text": {
-          "episodes": 5,
+          "episodes": 3,
           "verdicts": {
-            "Refuted": 5
+            "Refuted": 3
           },
           "terminations": {
-            "finished": 5
+            "finished": 3
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 6.7
+          "wall_latency_s": 4.1
         },
         "interactive_agent": {
-          "episodes": 4,
+          "episodes": 2,
           "verdicts": {
-            "Refuted": 4
+            "Refuted": 2
           },
           "terminations": {
-            "finished": 4
+            "finished": 2
           },
-          "errors": 8,
+          "errors": 0,
           "photo_requests": 0,
-          "tool_calls": 3,
-          "wall_latency_s": 205.6
+          "tool_calls": 6,
+          "wall_latency_s": 64.2
         }
       }
     },
@@ -79,52 +78,56 @@
       "model_id": "Qwen/Qwen3-VL-8B-Instruct",
       "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
       "job_id": "26543",
-      "completed": 91,
+      "completed": 308,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 31,
+          "episodes": 103,
           "verdicts": {
-            "Refuted": 30,
-            "Supported": 1
+            "Refuted": 85,
+            "Supported": 6,
+            "Need more evidence": 12
           },
           "terminations": {
-            "finished": 31
+            "finished": 103
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 32.3
+          "wall_latency_s": 84.2
         },
         "full_available_text": {
-          "episodes": 30,
+          "episodes": 103,
           "verdicts": {
-            "Refuted": 28,
-            "Supported": 2
+            "Refuted": 83,
+            "Supported": 11,
+            "Need more evidence": 9
           },
           "terminations": {
-            "finished": 30
+            "finished": 103
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 38.2
+          "wall_latency_s": 120.2
         },
         "interactive_agent": {
-          "episodes": 30,
+          "episodes": 102,
           "verdicts": {
-            "Refuted": 20,
-            "Need more evidence": 9,
-            "Supported": 1
+            "Refuted": 75,
+            "Need more evidence": 11,
+            "Supported": 10,
+            "No submitted verdict": 6
           },
           "terminations": {
-            "finished": 30
+            "finished": 96,
+            "max_turns": 6
           },
-          "errors": 12,
+          "errors": 71,
           "photo_requests": 6,
-          "tool_calls": 64,
-          "wall_latency_s": 567.5
+          "tool_calls": 241,
+          "wall_latency_s": 1810.3
         }
       }
     },
@@ -140,52 +143,52 @@
       "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
       "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
       "job_id": "26544",
-      "completed": 95,
+      "completed": 335,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 32,
+          "episodes": 112,
           "verdicts": {
-            "Need more evidence": 25,
-            "Refuted": 7
+            "Need more evidence": 90,
+            "Refuted": 22
           },
           "terminations": {
-            "finished": 32
+            "finished": 112
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 31.4
+          "wall_latency_s": 91.7
         },
         "full_available_text": {
-          "episodes": 32,
+          "episodes": 112,
           "verdicts": {
-            "Need more evidence": 23,
-            "Refuted": 9
+            "Need more evidence": 85,
+            "Refuted": 27
           },
           "terminations": {
-            "finished": 32
+            "finished": 112
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 44.7
+          "wall_latency_s": 139.2
         },
         "interactive_agent": {
-          "episodes": 31,
+          "episodes": 111,
           "verdicts": {
-            "Need more evidence": 24,
-            "No submitted verdict": 7
+            "Need more evidence": 91,
+            "No submitted verdict": 20
           },
           "terminations": {
-            "finished": 24,
-            "max_turns": 7
+            "finished": 91,
+            "max_turns": 20
           },
-          "errors": 26,
-          "photo_requests": 0,
-          "tool_calls": 148,
-          "wall_latency_s": 557.9
+          "errors": 100,
+          "photo_requests": 3,
+          "tool_calls": 531,
+          "wall_latency_s": 1775.7
         }
       }
     },
@@ -201,54 +204,55 @@
       "model_id": "OpenGVLab/InternVL3_5-8B-HF",
       "revision": "741a7d03020411e666c6109218ab71e08151ef86",
       "job_id": "26545",
-      "completed": 56,
+      "completed": 194,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 19,
+          "episodes": 65,
           "verdicts": {
-            "Refuted": 19
+            "Refuted": 65
           },
           "terminations": {
-            "finished": 19
+            "finished": 65
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 13.7
+          "wall_latency_s": 45.9
         },
         "full_available_text": {
-          "episodes": 19,
+          "episodes": 65,
           "verdicts": {
-            "Refuted": 19
+            "Refuted": 65
           },
           "terminations": {
-            "finished": 19
+            "finished": 65
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 18.8
+          "wall_latency_s": 74.6
         },
         "interactive_agent": {
-          "episodes": 18,
+          "episodes": 64,
           "verdicts": {
-            "No submitted verdict": 17,
-            "Refuted": 1
+            "No submitted verdict": 58,
+            "Refuted": 6
           },
           "terminations": {
-            "max_turns": 17,
-            "finished": 1
+            "max_turns": 51,
+            "finished": 6,
+            "context_limit": 7
           },
-          "errors": 39,
-          "photo_requests": 2,
-          "tool_calls": 101,
-          "wall_latency_s": 579.9
+          "errors": 164,
+          "photo_requests": 17,
+          "tool_calls": 322,
+          "wall_latency_s": 1882.6
         }
       }
     }
   ],
-  "completed": 256,
+  "completed": 845,
   "expected": 22944
 }
