@@ -1,9 +1,46 @@
 """Compare a completed adapter and its base on the fixed paper cohort."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from scripts.score_candidate_labels import ARMS, read_rows, summarize
 from scripts.paper_result_table import task_scores, outcomes
+
+
+def acquisition_behavior(rows, cases, families):
+    """Describe actions, without treating a returned photo as sufficient evidence."""
+    variants = ("Sufficient", "Obtainable", "Missing", "Unavailable")
+    selected = [row for row in rows if row["arm"] == "interactive_agent"
+                and row["family_id"] in families and row["variant"] in variants]
+    wanted = {(family, variant) for family in families for variant in variants}
+    keys = [(row["family_id"], row["variant"]) for row in selected]
+    if set(keys) != wanted or len(keys) != len(wanted):
+        raise ValueError("Matched four-version agent cohort is incomplete or duplicated")
+
+    def counts(group):
+        new_photos = [set(row["released"]) - set(cases[row["case_id"]]["initial"]) for row in group]
+        if any(images and not row["requests"] for row, images in zip(group, new_photos)):
+            raise ValueError("A new photo appeared without an actual request")
+        return {
+            "episodes": len(group),
+            "finished": sum(row["termination"] == "finished" for row in group),
+            "episodes_with_request": sum(row["requests"] > 0 for row in group),
+            "episodes_with_new_photo": sum(bool(images) for images in new_photos),
+            "new_photos": sum(len(images) for images in new_photos),
+            "requests": sum(row["requests"] for row in group),
+            "abstained": sum(row["verdict"] == "Need more evidence" for row in group),
+            "mean_tool_calls": sum(row["tool_calls"] for row in group) / len(group) if group else None,
+        }
+
+    return {
+        "scope": "Observed behavior only; new-photo release does not establish sufficiency or useful acquisition",
+        "by_variant": {variant: {
+            **counts([row for row in selected if row["variant"] == variant]),
+            "by_task": {task: counts([row for row in selected
+                                     if row["variant"] == variant and row["task"] == task])
+                        for task in sorted({row["task"] for row in selected})},
+        } for variant in variants},
+    }
 
 
 def compare(cohort, base, adapted, training):
@@ -16,10 +53,18 @@ def compare(cohort, base, adapted, training):
             raise ValueError("Unmatched evaluation configuration: " + key)
     if manifests[0]["configuration"]["dataset_sha256"] != reference["dataset_sha256"]:
         raise ValueError("Paper cohort belongs to a different dataset")
-    results = []
+    plan = json.loads((base.parent / "plan.json").read_text())
+    case_bytes = (Path(plan["data"]) / "cases.json").read_bytes()
+    if hashlib.sha256(case_bytes).hexdigest() != reference["dataset_sha256"]:
+        raise ValueError("Frozen case pool changed")
+    cases = {case["case_id"]: case for case in json.loads(case_bytes)}
+    results, behaviors = [], []
     wanted = {(family, arm) for family in reference["family_ids"] for arm in ARMS}
     for name, directory in (("Base", base), ("Acquisition SFT", adapted)):
-        rows = [r for r in read_rows(directory / "episodes.sqlite")
+        all_rows = read_rows(directory / "episodes.sqlite")
+        behaviors.append({"name": name, **acquisition_behavior(
+            all_rows, cases, set(reference["family_ids"]))})
+        rows = [r for r in all_rows
                 if r["variant"] == "Sufficient" and (r["family_id"], r["arm"]) in wanted]
         indexed = {(r["family_id"], r["arm"]): r for r in rows}
         if set(indexed) != wanted or len(indexed) != len(rows):
@@ -39,7 +84,7 @@ def compare(cohort, base, adapted, training):
         "selection": reference["selection"], "formal_grounded_accuracy": None,
         "training": json.loads((training / "training_manifest.json").read_text()),
         "checkpoint": json.loads((training / "complete.json").read_text()),
-        "evaluation_manifests": manifests, "models": results,
+        "evaluation_manifests": manifests, "models": results, "acquisition_behavior": behaviors,
     }
 
 

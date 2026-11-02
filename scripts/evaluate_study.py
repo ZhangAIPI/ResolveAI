@@ -12,6 +12,7 @@ from resolveai.diagnostic import text_direct
 from resolveai.environment import Environment
 from resolveai.grounding_tools import FrozenGrounding
 from resolveai.pilot import ModelClient
+from resolveai.model_processing import processor_options
 from resolveai.rollout import run
 
 ARMS = ("initial_text", "full_available_text", "interactive_agent")
@@ -128,6 +129,7 @@ def main():
         "decoding": {"do_sample": False, "text_max_new_tokens": 96, "tool_max_new_tokens": 384},
         "max_context_tokens": 8192,
         "image_max_pixels": 512 * 512,
+        "processor_options": processor_options(args.model),
         "grounding_manifest": json.loads((args.grounding_root / "manifest.json").read_text()),
         "scope": "Unreviewed diagnosis; actual trajectories can be regraded after human review",
     }

@@ -11,6 +11,7 @@ import sys
 import time
 
 from PIL import Image
+from .model_processing import processor_options, chat_inputs, image_settings
 
 PROMPT = """Verify the claim using only the supplied image pixels.
 Return exactly one JSON object with keys:
@@ -182,7 +183,9 @@ def main():
     torch.manual_seed(0)
     torch.set_num_threads(4)
     torch.cuda.set_device(args.device)
-    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
+    processing = processor_options(args.model)
+    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512,
+        min_pixels=48 * 48, **processing)
     template = processor.chat_template or ""
     native = isinstance(template, str) and "tool_calls" in template and "tools" in template
     adapter = "native" if native and args.tool_adapter == "auto" else "portable"
@@ -213,7 +216,8 @@ def main():
                       "native_tool_format": "qwen-xml-or-json" if model.config.model_type == "qwen3_5" else "json",
                       "max_pixels": 512 * 512, "min_pixels": 48 * 48,
                       "assistant_prefix": "<tool_call>\n{\"name\":" if adapter == "portable" else None,
-                      "processor": type(processor).__name__,
+                      "processor": type(processor).__name__, "processor_options": processing,
+                      "image_settings": image_settings(processor),
                       "image_processor": type(processor.image_processor).__name__,
                       "crop_to_patches": False if model.config.model_type == "internvl" else None}), flush=True)
     for line in sys.stdin:
@@ -244,13 +248,9 @@ def main():
                 content.extend([{"type": "text", "text": json.dumps({k: v for k, v in row.items() if k != "image_png"})},
                                 {"type": "image", "image": image}])
             messages = [{"role": "user", "content": content}]
-        # Multimodal processors require typed content blocks for every role.
-        for message in messages:
-            if isinstance(message.get("content"), str):
-                message["content"] = [{"type": "text", "text": message["content"]}]
         started = time.perf_counter()
-        inputs = processor.apply_chat_template(messages, tools=request.get("tools") if tool_mode and request_adapter == "native" else None,
-            tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt",
+        inputs = chat_inputs(processor, messages,
+            tools=request.get("tools") if tool_mode and request_adapter == "native" else None,
             **template_options,
             **({"crop_to_patches": False} if model.config.model_type == "internvl" else {}))
         prefix = '<tool_call>\n{"name":' if tool_mode and request_adapter == "portable" and use_prefix else ""

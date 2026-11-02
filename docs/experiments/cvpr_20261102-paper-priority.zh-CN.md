@@ -68,3 +68,24 @@ scripts/run_acquisition_experiment.py依次训练、用最佳验证adapter运行
 ## 第四张卡的后续工作
 
 Qwen3.5原基线完成后，保留的26565 worker接着运行Qwen3-VL-2B-Instruct，固定revision 89644892e4d85e24eaac8bacfd4f463576704203，沿用原478族三设置评测。它与已经启动的4B和已有8B组成同系列规模比较；不增加同时占用的GPU，也不停止原始基线。[官方模型](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct)。该任务尚未开始，不计入当前主表成绩。
+
+
+## 新增模型和训练状态（2026-11-02）
+
+新增三个模型已下载固定版本权重，并用真实状态题、身份题及环境的实际工具返回检查了多图编码：
+
+| 模型 | 对照目的 | 固定 revision | 状态 |
+|---|---|---|---|
+| [SmolVLM2-2.2B](https://huggingface.co/HuggingFaceTB/SmolVLM2-2.2B-Instruct) | 不同架构的小模型对照 | 482adb537c021c86670beed01cd58990d01e72e4 | 接续4B评测 |
+| [Pixtral-12B](https://huggingface.co/mistral-experimental/pixtral-12b) | 补充Mistral视觉架构 | c2756cbbb9422eba9f6c5c439a214b0392dfc998 | 接续9B评测，随后运行Qwen3-VL-2B |
+| [InternVL3.5-14B-HF](https://huggingface.co/OpenGVLab/InternVL3_5-14B-HF) | 与已有8B比较规模效应 | 226b96d5912e69159abc0384cefcbd51487fdce0 | 接续LLaVA评测 |
+
+这使本轮计划覆盖10个模型；只有完成的测量进入结果表。新三模型的GPU生成检查将在各自前序任务结束后执行，通过后再跑相同478族、5736次评测，不与当前任务争用显存。仍然最多四张卡，不取消现有任务。Pixtral优先于尚未启动的2B，以较早获得不同架构的结果。
+
+[准备记录](../results/cvpr_additional_model_preflight.json)包含版本、原生图像处理参数、真实输入token数和实际工具返回的编码检查。Pixtral使用官方的模板渲染后按顺序传入图片的调用方式；SmolVLM保留原生图像切块；InternVL保持与8B相同的不切块设置。三者的512像素设置作用于原始输入，视觉token开销仍因架构而异，不能据此声称完全相同的视觉计算量。SmolVLM的额外分词依赖单独安装，不改动正在运行的模型环境。
+
+Qwen3-VL-8B首轮SFT已超过140/200个优化步，峰值显存24.6GiB；训练后自动进入完整评测，当前尚无训练后benchmark成绩。训练只覆盖CO3D身份与索证流程，不将很低的验证动作损失解释为视觉能力提升。
+
+训练前的[实际索证记录](../results/cvpr_acquisition_baseline.json)显示：固定209族中，Obtainable有12次Agent运行请求并实际得到新照片；Missing与Unavailable各有12次请求、零张新照片。这个汇总将用于同题比较SFT前后“提出请求”和“收到新材料”的变化，不能代替证据充分性或搜证价值评分。
+
+后续状态训练另从[VisA官方2类highshot划分](https://github.com/amazon-science/spot-diff)的train部分准备数据，不使用其test图片。选择720张异常、720张正常图和12张独立正常参考，按类别分成1080张训练查询图与360张验证查询图；数据下载后还需通过原图哈希隔离和标注完整性检查。这里只准备来源，尚未启动第二轮SFT；当前训练及冻结benchmark不变。

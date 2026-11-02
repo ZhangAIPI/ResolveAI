@@ -1,0 +1,135 @@
+{
+  "scope": "Observed behavior only; new-photo release does not establish sufficiency or useful acquisition",
+  "families": 209,
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "by_variant": {
+    "Sufficient": {
+      "episodes": 209,
+      "finished": 202,
+      "episodes_with_request": 0,
+      "episodes_with_new_photo": 0,
+      "new_photos": 0,
+      "requests": 0,
+      "abstained": 2,
+      "mean_tool_calls": 2.0191387559808613,
+      "by_task": {
+        "identity": {
+          "episodes": 56,
+          "finished": 55,
+          "episodes_with_request": 0,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 0,
+          "abstained": 0,
+          "mean_tool_calls": 1.2142857142857142
+        },
+        "state": {
+          "episodes": 153,
+          "finished": 147,
+          "episodes_with_request": 0,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 0,
+          "abstained": 2,
+          "mean_tool_calls": 2.3137254901960786
+        }
+      }
+    },
+    "Obtainable": {
+      "episodes": 209,
+      "finished": 178,
+      "episodes_with_request": 12,
+      "episodes_with_new_photo": 12,
+      "new_photos": 12,
+      "requests": 12,
+      "abstained": 6,
+      "mean_tool_calls": 3.215311004784689,
+      "by_task": {
+        "identity": {
+          "episodes": 56,
+          "finished": 55,
+          "episodes_with_request": 4,
+          "episodes_with_new_photo": 4,
+          "new_photos": 4,
+          "requests": 4,
+          "abstained": 5,
+          "mean_tool_calls": 1.6428571428571428
+        },
+        "state": {
+          "episodes": 153,
+          "finished": 123,
+          "episodes_with_request": 8,
+          "episodes_with_new_photo": 8,
+          "new_photos": 8,
+          "requests": 8,
+          "abstained": 1,
+          "mean_tool_calls": 3.7908496732026142
+        }
+      }
+    },
+    "Missing": {
+      "episodes": 209,
+      "finished": 182,
+      "episodes_with_request": 12,
+      "episodes_with_new_photo": 0,
+      "new_photos": 0,
+      "requests": 12,
+      "abstained": 15,
+      "mean_tool_calls": 3.2057416267942584,
+      "by_task": {
+        "identity": {
+          "episodes": 56,
+          "finished": 55,
+          "episodes_with_request": 4,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 4,
+          "abstained": 8,
+          "mean_tool_calls": 1.6428571428571428
+        },
+        "state": {
+          "episodes": 153,
+          "finished": 127,
+          "episodes_with_request": 8,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 8,
+          "abstained": 7,
+          "mean_tool_calls": 3.7777777777777777
+        }
+      }
+    },
+    "Unavailable": {
+      "episodes": 209,
+      "finished": 182,
+      "episodes_with_request": 12,
+      "episodes_with_new_photo": 0,
+      "new_photos": 0,
+      "requests": 12,
+      "abstained": 15,
+      "mean_tool_calls": 3.2057416267942584,
+      "by_task": {
+        "identity": {
+          "episodes": 56,
+          "finished": 55,
+          "episodes_with_request": 4,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 4,
+          "abstained": 8,
+          "mean_tool_calls": 1.6428571428571428
+        },
+        "state": {
+          "episodes": 153,
+          "finished": 127,
+          "episodes_with_request": 8,
+          "episodes_with_new_photo": 0,
+          "new_photos": 0,
+          "requests": 8,
+          "abstained": 7,
+          "mean_tool_calls": 3.7777777777777777
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "smolvlm2": {
+    "processor": "SmolVLMProcessor",
+    "image_settings": {
+      "size": {
+        "longest_edge": 512
+      },
+      "max_image_size": {
+        "longest_edge": 384
+      },
+      "do_image_splitting": true
+    },
+    "tokenizer_fix": null,
+    "checks": [
+      {
+        "task": "state",
+        "phase": "initial",
+        "input_tokens": 4007,
+        "pixel_shape": [
+          1,
+          10,
+          3,
+          384,
+          384
+        ]
+      },
+      {
+        "task": "state",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 4644,
+        "pixel_shape": [
+          1,
+          15,
+          3,
+          384,
+          384
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "initial",
+        "input_tokens": 4141,
+        "pixel_shape": [
+          1,
+          10,
+          3,
+          384,
+          384
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 4856,
+        "pixel_shape": [
+          1,
+          15,
+          3,
+          384,
+          384
+        ]
+      }
+    ],
+    "status": "CPU encoding and actual tool-response transport verified; GPU generation pending",
+    "weight_download": {
+      "name": "smolvlm2",
+      "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+      "files": 2,
+      "bytes": 8987224056
+    },
+    "model": {
+      "name": "smolvlm2",
+      "model_id": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+      "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+      "processor_options": {
+        "size": {
+          "longest_edge": 512
+        },
+        "use_fast": false
+      }
+    }
+  },
+  "pixtral": {
+    "processor": "PixtralProcessor",
+    "image_settings": {
+      "size": {
+        "longest_edge": 512
+      }
+    },
+    "tokenizer_fix": true,
+    "checks": [
+      {
+        "task": "state",
+        "phase": "initial",
+        "input_tokens": 5088,
+        "pixel_shape": [
+          2,
+          3,
+          512,
+          512
+        ]
+      },
+      {
+        "task": "state",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 6340,
+        "pixel_shape": [
+          3,
+          3,
+          512,
+          512
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "initial",
+        "input_tokens": 4307,
+        "pixel_shape": [
+          2,
+          3,
+          512,
+          512
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 5176,
+        "pixel_shape": [
+          3,
+          3,
+          512,
+          512
+        ]
+      }
+    ],
+    "status": "CPU encoding and actual tool-response transport verified; GPU generation pending",
+    "weight_download": {
+      "name": "pixtral",
+      "revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+      "files": 6,
+      "bytes": 25365557240
+    },
+    "model": {
+      "name": "pixtral",
+      "model_id": "mistral-experimental/pixtral-12b",
+      "revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+      "processor_options": {
+        "size": {
+          "longest_edge": 512
+        },
+        "use_fast": false,
+        "fix_mistral_regex": true
+      }
+    }
+  },
+  "internvl14": {
+    "model_type": "internvl",
+    "processor": "InternVLProcessor",
+    "image_settings": {
+      "size": {
+        "height": 448,
+        "width": 448
+      },
+      "crop_to_patches": false
+    },
+    "checks": [
+      {
+        "task": "state",
+        "phase": "initial",
+        "input_tokens": 3461,
+        "pixel_shape": [
+          2,
+          3,
+          448,
+          448
+        ]
+      },
+      {
+        "task": "state",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 3909,
+        "pixel_shape": [
+          3,
+          3,
+          448,
+          448
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "initial",
+        "input_tokens": 3585,
+        "pixel_shape": [
+          2,
+          3,
+          448,
+          448
+        ]
+      },
+      {
+        "task": "identity",
+        "phase": "after_actual_tool_response",
+        "input_tokens": 4109,
+        "pixel_shape": [
+          3,
+          3,
+          448,
+          448
+        ]
+      }
+    ],
+    "status": "CPU encoding and actual tool-response transport verified; GPU generation pending",
+    "weight_download": {
+      "name": "internvl14",
+      "revision": "226b96d5912e69159abc0384cefcbd51487fdce0",
+      "files": 7,
+      "bytes": 30239160600
+    },
+    "model": {
+      "name": "internvl14",
+      "model_id": "OpenGVLab/InternVL3_5-14B-HF",
+      "revision": "226b96d5912e69159abc0384cefcbd51487fdce0"
+    }
+  }
+}

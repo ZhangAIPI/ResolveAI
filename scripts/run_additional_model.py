@@ -25,6 +25,8 @@ def main():
         allow_patterns=["*.safetensors", "*.json", "*.jinja", "*.model", "*.txt"],
         max_workers=4,
     )
+    if spec.get("processor_options"):
+        (local / "resolveai_processor.json").write_text(json.dumps(spec["processor_options"], indent=2) + "\n")
     (local / "resolveai_revision.json").write_text(json.dumps(spec, indent=2) + "\n")
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -48,7 +50,10 @@ def main():
                 "agent_termination": trace["metadata"]["termination"],
                 "direct_generation": direct["generation"],
                 "agent_generation": trace["generation"],
+                "agent_turns": trace["metadata"]["turns"],
             })
+            if trace["metadata"]["termination"] == "context_limit" and not trace["metadata"]["turns"]:
+                raise ValueError("Initial tool prompt does not fit the frozen context budget")
         args.output.mkdir(parents=True, exist_ok=True)
         (args.output / "inference_preflight.json").write_text(json.dumps(
             {"worker": client.ready, "checks": checks}, indent=2) + "\n")
