@@ -1,16 +1,21 @@
 \begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\footnotesize,
- cert/.style={draw=teal!65!black,fill=teal!7,rounded corners=2pt,minimum width=1.5cm,minimum height=.6cm},
- arrow/.style={-{Stealth[length=1.6mm]},thick}]
-\node[anchor=west,font=\sffamily\bfseries] at (0,2.65) {Claim: identity \(\wedge\) condition};
-\node[cert] (s1) at (.85,1.78) {\(M_1^{\Spt}\)};
-\node[cert] (s2) at (2.65,1.78) {\(M_2^{\Spt}\)};
-\node (and) at (4.2,1.78) {AND};
-\node[anchor=west] (yes) at (5.2,1.78) {Supported};
-\draw[arrow] (s1.north) -- ++(0,.25) -| (and.north);
+ cert/.style={draw=teal!65!black,fill=teal!7,rounded corners=2pt,minimum width=1.8cm,minimum height=.72cm,align=center},
+ counter/.style={cert,draw=orange!75!black,fill=orange!8},
+ arrow/.style={-{Stealth[length=1.5mm]},thick}]
+\node[anchor=west,font=\sffamily\bfseries] at (0,3.46) {Example: same chair \(\wedge\) damaged armrest};
+\node[cert] (s1) at (.95,2.13) {Identity\\\(M_1^{\Spt}\)};
+\node[cert] (s2) at (3.0,2.13) {Condition\\\(M_2^{\Spt}\)};
+\node (and) at (4.65,2.13) {AND};
+\node[anchor=west] (yes) at (5.65,2.13) {Supported};
+\draw[arrow] (s1.north) -- ++(0,.38) -| (and.north);
 \draw[arrow] (s2.east) -- (and.west);
 \draw[arrow] (and.east) -- (yes.west);
-\node[cert,draw=orange!75!black,fill=orange!8] (r1) at (.85,.55) {\(M_j^{\Rft}\)};
-\node[anchor=west,align=left] (no) at (5.2,.55) {Refuted};
-\draw[arrow,draw=orange!75!black] (r1.east) -- node[above,font=\scriptsize] {one decisive counterexample} (no.west);
-\node[anchor=west,text=black!65,font=\scriptsize] at (0,-.15) {A certificate may have multiple valid alternatives.};
+\node[counter] (r1) at (.95,.72) {Different chair\\\(M_1^{\Rft}\)};
+\node[counter] (r2) at (3.0,.72) {Armrest intact\\\(M_2^{\Rft}\)};
+\node (or) at (4.65,.72) {OR};
+\node[anchor=west] (no) at (5.65,.72) {Refuted};
+\draw[arrow,draw=orange!75!black] (r1.south) -- ++(0,-.38) -| (or.south);
+\draw[arrow,draw=orange!75!black] (r2.east) -- (or.west);
+\draw[arrow,draw=orange!75!black] (or.east) -- (no.west);
+\node[anchor=west,text=black!65,font=\scriptsize] at (0,-.28) {Each certificate can have alternative sufficient views.};
 \end{tikzpicture}

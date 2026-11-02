@@ -1,0 +1,199 @@
+\section{Formal Task and Evidence Audit}
+The main text presents the claim-family design and its evaluation questions.
+This supplement specifies the evidence audit, tool contract, execution settings and branching controls.
+It reports no model results or training gains.
+
+\subsection{Recorded, obtainable and released evidence}
+Let \(q\) be a claim, \(z\) the fixed physical state and \(\mathcal{P}\) the recorded photographic pool.
+A configuration specifies the obtainable subset \(\mathcal{A}\subseteq\mathcal{P}\) and initial release \(\mathcal{R}_0\subseteq\mathcal{A}\).
+At step \(t\), the public history contains \(q\), released images \(\mathcal{R}_t\), actual tool responses and remaining budget.
+A request can change \(\mathcal{R}_t\), but never \(z\).
+
+An evidence record contains an opaque image ID, pixels, object slot, source time and camera view.
+Private annotations specify condition, identity, visibility, availability and sufficient evidence alternatives.
+The policy receives only public observations and permitted provenance.
+Source IDs identifying unreleased originals do not authorize citing those originals.
+
+The terminal decision is \(d=(\hat y,\mathcal{C},\mathcal{L})\), where \(\hat y\in\{\Spt,\Rft,\Nme\}\), \(\mathcal{C}\) contains image/region/time citations and \(\mathcal{L}\) contains cross-image relations.
+The labels denote \emph{Supported}, \emph{Refuted} and \emph{Need more evidence}.
+
+\subsection{Alternative sufficient certificates}
+For \(q=\bigwedge_{j=1}^{m}q_j\), each subclaim has truth \(t_j\in\{\Spt,\Rft,?\}\) and alternative sufficient certificates \(\mathcal{M}_j^v\), for \(v\in\{\Spt,\Rft\}\).
+Certificates specify required source regions and relations.
+Write \(M\preceq d\) when submitted citations and relations satisfy every requirement in \(M\).
+Then
+\begin{align}
+E_{\Spt}(d)
+ &=\bigwedge_j\left[t_j=\Spt\ \land\
+ \exists M\in\mathcal{M}_j^{\Spt}:M\preceq d\right],\\
+E_{\Rft}(d)
+ &=\bigvee_j\left[t_j=\Rft\ \land\
+ \exists M\in\mathcal{M}_j^{\Rft}:M\preceq d\right].
+\end{align}
+An uncertain conjunct prevents complete support but does not invalidate a decisive refutation of another conjunct.
+Figure~\ref{fig:suppcert} illustrates this rule.
+
+\begin{figure}[t]
+\centering
+\resizebox{\linewidth}{!}{\input{figures/certificates}}
+\caption{\textbf{Evidence requirements for a conjunction.}
+Both identity and condition must be established for support; either reliable counterexample can refute the claim.
+This is a logical illustration, without assigned photographic labels.}
+\label{fig:suppcert}
+\end{figure}
+
+Citations use released image IDs and original-source integer coordinates and times.
+Crops preserve a mapping from display coordinates to source coordinates.
+The exact union of cited source regions must cover a required region; repeated or overlapping crops cannot inflate coverage.
+A full-image citation may satisfy this inclusion check, so it is distinct from localization quality.
+Relation endpoints additionally require matching images and times and the annotated IoU threshold (default \(0.5\)).
+Same-object, different-object and same-time relations are symmetric; earlier-than is directed.
+Any additional incorrect relation invalidates the submitted certificate.
+
+Let \(Y(\mathcal{A})\) be the target justified by the complete obtainable pool: \(\Spt\) when every support requirement is reachable, \(\Rft\) when a decisive counterexample is reachable, and \(\Nme\) otherwise.
+Certificate validity is checked using only released evidence.
+This separates incomplete acquisition from a genuinely unresolved case.
+
+\subsection{Semantic admission checklist}
+Two annotators independently assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives.
+They inspect both initial and obtainable material for every access configuration.
+Disagreement requires adjudication or an unresolved label.
+An intended Obtainable case must have a sufficient path within the declared action and turn budget.
+Preview resolution and a failed request cannot by themselves determine a semantic verdict.
+
+The 64 CO3D source controls comprise 32 source-positive and 32 source-negative candidates.
+Their construction balance does not establish visual sufficiency.
+The 226 unresolved identity candidates must not be assigned \(\Nme\) simply because independent identity truth is absent.
+The present candidate pool has not completed semantic admission.
+
+Related views, rewrites and release versions remain grouped.
+Families sharing an image or a CO3D sequence form connected source groups for splitting and uncertainty estimation.
+The pool is evaluation-only; future training splits must be fixed by source group before fitting a policy.
+
+The separate interface study targets up to 20 people, each completing three search trials and two full-pool judgments in approximately 5--10 minutes, without hard time or action limits.
+It checks question and interaction clarity.
+Optional region marks and simple full-pool judgments do not substitute for four-configuration sufficient-evidence annotation.
+
+\section{Environment and Tool Contract}
+\subsection{Observations, costs and provenance}
+The tool pool and default costs are shown in Table~\ref{tab:supptools}.
+Failed requests incur their ordinary request cost.
+Metadata timestamps are submitted provenance claims unless independently corroborated.
+
+\begin{table}[t]
+\centering\small
+\caption{\textbf{Default tool costs and observations.}}
+\label{tab:supptools}
+\begin{tabularx}{\linewidth}{@{}l r Y@{}}
+\toprule
+Action & Cost & Observation\\
+\midrule
+Inspect & 1 & Released image or derived view\\
+Crop / zoom & 1 & Resampled source pixels with mapping\\
+OCR & 2 & Text, polygons and confidence\\
+Compare & 2 & Two released pixel views\\
+Request photo & 3 & Matching record or failure\\
+Image quality & 1 & Pixel-derived quality statistics\\
+Metadata & 1 & Permitted provenance and file hash\\
+Text-to-image & 3 & Grounding DINO regions\\
+Image-to-image & 3 & DINOv2 matching proposals\\
+Image-to-text & 2 & CLIP candidate ranking\\
+Finish & 0 & Verdict, citations and relations\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Crop inputs use display coordinates; finish citations use original-source coordinates.
+Derived views retain source rectangle, original dimensions, display dimensions, time and operation history.
+Enlarging a downsampled view preserves its lost detail.
+A derived view is not independent evidence.
+
+Grounding DINO proposes text-conditioned regions~\cite{groundingdino}; DINOv2 features propose image correspondences~\cite{dinov2}; CLIP ranks user-supplied descriptions~\cite{clip}.
+Similarity and confidence scores are not identity truth or calibrated verdict probabilities.
+An empty grounding result does not prove absence.
+OCR outputs remain fallible measurements.
+
+Requests match the public object slot, time and view against admissible records, rather than retrieving the most informative record automatically.
+Missing and Unavailable use equivalent failure semantics when neither can return a photograph.
+Corrective errors disclose only released IDs, permitted bounds and public action constraints.
+They reveal no private sufficiency score or unreleased asset.
+
+\subsection{Isolation and simulation}
+The policy worker receives public messages and tool schemas.
+A private controller validates actions, executes them and audits terminal evidence.
+The policy-facing interface exposes no annotation, evaluation or fork endpoint.
+Policies allowed arbitrary code execution require filesystem or container isolation; process separation alone is not a filesystem barrier.
+
+The current public adapter releases recorded photographs from a closed pool.
+It cannot capture an unrecorded view.
+State-driven rendering is a separate simulation capability; its integration fixtures are not real-photo evaluation cases.
+Generated enhancement and imagined photographs cannot become supporting evidence.
+A future generative world model could propose a viewing direction while keeping its predictions separate from source observations.
+
+\section{Execution and Scoring Details}
+\subsection{Initial evaluation configuration}
+The initial local model matrix comprises Qwen2.5-VL-7B, Qwen3-VL-8B, Qwen3.5-9B and InternVL3.5-8B~\cite{qwen25,qwen3,qwen35,internvl35}.
+The configuration uses BF16 weights, greedy generation, a tool budget of 12, at most eight assistant turns and an 8,192-token context cap.
+Direct decisions permit at most 96 output tokens; interactive turns permit 384.
+Input images are capped at \(512\times512\) pixels, without additional InternVL tiling.
+Checkpoint-native preprocessing and any architecture-specific behavior remain recorded in manifests.
+
+Qwen3.5 uses a separate Transformers 5.3.0 environment with thinking disabled.
+The other three models use Transformers 4.57.6.
+Model/data revisions, source digests, providers and dependency versions are recorded per run.
+Runs with different interface diagnostics or source settings remain separate.
+
+Native JSON/XML and portable structured calls map to common tool schemas.
+Adapters do not invent arguments, repair the selected function or accept multiple calls as a single valid call.
+Checkpoint stopping tokens and the assistant-turn boundary are preserved so control returns to the real environment.
+The next observation must come from actual execution, never a model-generated tool response.
+
+\subsection{Metrics and failure accounting}
+For reviewed case \(i\), let \(Y_i=Y(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid certificate citing only released evidence.
+Grounded accuracy and unsupported decision rate are
+\begin{align}
+\mathrm{GA}
+ &=\frac{1}{n}\sum_i\ind[\hat y_i=Y_i]\,
+   \ind[\hat y_i=\Nme\ \lor\ K_i=1],\\
+\mathrm{UDR}
+ &=\frac{1}{n}\sum_i
+   \ind[\hat y_i\in\{\Spt,\Rft\}\land K_i=0].
+\end{align}
+Unsubmitted verdicts contribute zero to grounded accuracy.
+They are never converted into \(\Nme\).
+
+Coverage is the fraction of cases receiving a definite verdict.
+Its conditional risk is reported jointly with coverage; risk is undefined at zero coverage.
+A continuous coverage--risk curve requires a declared confidence score and threshold rule~\cite{selective}.
+Categorical finish labels alone do not supply calibrated confidence.
+
+Reporting separates valid decisions from parse failure, execution failure and context, turn or budget exhaustion.
+Request count, tool cost, tokens, model latency and episode latency are logged separately.
+Correspondence accuracy and damage-region IoU apply only to suitably annotated subsets.
+Until semantic admission is complete, candidate-level reports are limited to interaction behavior and explicitly labeled construction-label agreement.
+
+\section{Controlled Action Comparisons}
+A trusted evaluator forks the same public conversation, released pool, derived views and remaining budget while preserving the physical world.
+The candidate action is executed and charged before continuation.
+All branches use the same continuation policy and total remaining-turn allowance.
+Stochastic continuations additionally require matched recorded seeds.
+
+The branch audit records the material released by the first action, the complete acquired material, the terminal certificate and cost.
+Acquisition success means sufficient evidence becomes available in the released pool.
+Evidence use means the terminal verdict actually cites a valid certificate.
+Immediate stopping supplies a decision comparison.
+
+Attributing benefit to returned content requires additional controls.
+Matched random patches are relevant for crop actions~\cite{countercredit}.
+Comparisons involving recorded views must also account for source, view type, resolution and cost.
+Without a defensible content control, the analysis reports an action intervention rather than a causal attribution to returned pixels.
+
+An obtainable and unavailable configuration can share an identical public prefix.
+Before access feedback is observed, hidden knowledge of the configuration cannot justify different preferred actions.
+Action-value estimates must aggregate over matched histories or condition only on visible feedback.
+
+Reviewed trajectories may support future supervised examples and action preferences.
+Exports retain actual assistant actions and environment observations, excluding private labels from prompts.
+Sibling comparisons must share their public prefix, schemas and world state.
+Unreviewed or proxy traces are excluded by default.
+These interfaces support later training studies; no training gain or new optimization method is reported.
