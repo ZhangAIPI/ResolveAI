@@ -24,7 +24,7 @@ C(\tau),\qquad \min\varnothing=\infty.
 Here \(\mathcal{T}_v\) contains finite, publicly expressible trajectories obeying access and tool rules before resource caps; \(C\) sums charged costs. Admission additionally requires one sufficient trajectory \(\tau\) satisfying both \(C(\tau)\le B\) and \(\ell(\tau)\le T\), where \(T\) is the turn limit.
 All observations needed for a sufficient set must be jointly reachable on one trajectory.
 This annotation-side minimum is not a policy observation or a claim to have implemented an exact search solver.
-Budget comparisons keep the access target fixed and separately identify cases lacking a joint cost-and-turn-feasible path. The scalar \(c^\star\) alone does not certify turn feasibility.
+Budget comparisons keep the access target fixed and separately identify cases lacking a joint cost-and-turn-feasible path. The scalar \(c^\star\) alone does not certify turn feasibility. Targets are fixed by the uncapped obtainable pool; answerable-case capability reporting additionally restricts to jointly resource-feasible configurations.
 
 \subsection{Alternative sufficient evidence sets}
 For \(q=\bigwedge_{j=1}^{m}q_j\), each subclaim has truth \(t_j\in\{\Spt,\Rft,?\}\) and alternative sufficient evidence sets \(\mathcal{M}_j^u\), for \(u\in\{\Spt,\Rft\}\).
@@ -73,7 +73,7 @@ Report strict automatic and adjudicated outcomes separately; unresolved challeng
 The grounded-accuracy identity applies to the finalized reviewed cohort; any provisional report must disclose unresolved counts and bounds on the original denominator.
 This challenge review is a required evaluation step, not an implemented automatic adjudicator or a completed human study.
 
-\subsection{Semantic admission checklist}
+\subsection{Independent data review}
 Two annotators independently assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives.
 They inspect both initial and obtainable material for every access configuration.
 Adjudication must establish a justified target or leave the case pending. Pending annotation status is not the task label \(\Nme\). Review uses the exposed displays, registered resolution and permitted crop paths, not private high-resolution files alone.
@@ -175,7 +175,7 @@ where \(\mathcal{V}_f\) contains four admitted access versions.
 It complements average accuracy; access versions are not independent samples.
 The main paper's acquisition--conversion identity uses only reviewed answerable episodes with a jointly cost-and-turn-feasible sufficient path. Each attempted episode enters its denominator, including failed execution. Evidence exposure is audited before termination regardless of the submitted verdict; exposed pixels must satisfy the same reviewed sufficiency requirements used to check citations. Conversion includes perception, reasoning, citation and output-format failures, so it is not a pure perception score.
 
-Grounded accuracy and unsupported decision rate are
+On the finalized reviewed cohort, grounded accuracy and unsupported decision rate are
 \begin{align}
 \mathrm{GA}
  &=\frac{1}{n}\sum_i\ind[\hat y_i=Y_i]\,
@@ -195,7 +195,7 @@ Categorical finish labels alone do not supply calibrated confidence.
 Reporting separates valid decisions from parse failure, execution failure and context, turn or budget exhaustion.
 Request count, tool cost, tokens, model latency and episode latency are logged separately.
 Correspondence accuracy and damage-region IoU apply only to suitably annotated subsets.
-Until semantic admission is complete, candidate-level reports are limited to interaction behavior and explicitly labeled construction-label agreement.
+Before independent review, reports describe interaction behavior and explicitly labeled construction-label agreement.
 
 \section{Controlled Action Comparisons}
 A trusted evaluator forks the same public conversation, released pool, derived views and remaining budget while preserving the physical world.

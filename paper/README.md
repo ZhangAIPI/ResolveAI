@@ -4,12 +4,12 @@ Evidence Before Verdicts: Benchmarking Active Visual Verification. The benchmark
 
 ## Main paper and supplement
 
-The main paper ends at the benchmark design and has three sections: Introduction, Related Work, and The ResolveAI Benchmark. It follows one story: recognizing damage is different from obtaining enough evidence to verify a particular object claim. The main argument retains the access-aware target, sufficient-evidence rationale, construction/validation design and paired evaluation; implementation remains supplementary. Five numbered equations carry the central definitions; the gap indicator is inline. The same claim is tested under different evidence-access conditions.
+The main paper ends at the benchmark design and has three sections: Introduction, Related Work, and The ResolveAI Benchmark. It follows one question: can the agent obtain the observations needed to settle a particular object claim? The main argument retains the access-aware target, sufficient-evidence rationale, construction/validation design and paired evaluation; implementation remains supplementary. Five numbered equations carry the central definitions; the gap indicator is inline. The same claim is tested under different evidence-access conditions.
 
-- main.tex: question-led narrative, sufficiency logic, evidence gap, grounded outcome, strict family success and matched action benefit.
+- main.tex: question-led narrative, sufficiency logic, evidence gap, grounded outcome, acquisition–conversion decomposition and matched action benefit. Strict family success is defined in the supplement.
 - supplementary.tex: entry point for the separate technical appendix.
 - appendix.tex: formal evidence audit, annotation checklist, tool contract, execution settings, metric equations and controlled action comparisons.
-- figures/: an overview, real-image action examples and a matched-branch diagnostic; original vector code and unchanged CO3D/MVTec inputs. The detailed certificate diagram is supplementary.
+- figures/: an overview, real-image action examples and a matched-branch diagnostic; original vector code and unchanged CO3D/MVTec inputs. The detailed sufficient-evidence diagram is supplementary.
 - references.bib: primary-source references shared by both documents.
 - cvpr.sty and ieeenat_fullname.bst: unmodified official CVPR 2027 files; provenance is in template-source.json.
 
@@ -50,20 +50,22 @@ The four benchmark subsections progress from the intervention to its justificati
 3. Hard for the model, or flawed as a question?
 4. Did the next look actually help?
 
-A central distinction is that access changes can require different justified verdicts for the same physical truth. Strict family success checks this adaptation jointly; it does not reward repeating an answer across versions. The equations define the evaluation; they do not report empirical gains. Exact tool schemas and matching rules remain supplementary.
+A central distinction is that access changes can require different justified verdicts for the same physical truth. Strict family success checks this adaptation jointly (supplement); it does not reward repeating an answer across versions. The equations define the evaluation; they do not report empirical gains. Exact tool schemas and matching rules remain supplementary.
 
 Related-work comparisons additionally cover BLINK, ActiView, AVerImaTeC, AbstainEQA, visual tool benchmarks and CounterCredit. Wording and figure code are original; no prior figures are copied.
 
-## Three complete simulated reviews
+## Complete simulated reviews and revisions
 
-[Review records and author responses](reviews.zh-CN.md) cover three full manuscript reviews, including strengths, weaknesses, questions, limitations, recommendation, confidence and changes. These are author-side self-reviews, not independent conference reviews. Data validation and experimental evidence remain open requirements.
+[Review records and author responses](reviews.zh-CN.md) cover three full manuscript reviews, including strengths, weaknesses, questions, limitations, recommendation, confidence and changes. These are author-side self-reviews, not independent conference reviews. [Five follow-up rounds, rebuttals and revisions](rebuttals.zh-CN.md) cover Rounds 4–8, including reachability, trajectory diagnosis, alternative evidence, novelty and final prose/layout checks. Data validation and experimental evidence remain open requirements.
 
 ## Evidence status and attribution
 
-The 478 families and 1,912 access versions are construction counts, with source reuse tracked. Independent sufficiency admission remains required. The short interface study is separate from certificate annotation.
+The 478 families and 1,912 access versions are construction counts, with source reuse tracked. Independent sufficiency admission remains required. The short interface study is separate from evidence-sufficiency annotation.
 
 Public photographs currently support condition and identity candidates. Genuine before/after verification requires paired observations; no simulation-training or transfer gain is claimed.
 
 MVTec photographs: Paul Bergmann et al., MVTec AD, CVPR 2019, CC BY-NC-SA 4.0. The capsule preview and original are copied unchanged from the recorded candidate assets. The orange-bordered detail is a native LaTeX viewport, explicitly marked as a crop; source coordinates, hashes and the upstream revision are recorded in figures/provenance.json. The example is not a semantically admitted test label.
 
 CO3D photographs: Jeremy Reizenstein et al., Common Objects in 3D, ICCV 2021, CC BY-NC 4.0. Sequence, image IDs and unchanged-file hashes are in figures/provenance.json. AI assistance is disclosed in the manuscript.
+
+The argument also draws a writing lesson from [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385): identify a specific obstacle, motivate a controlled construction, and specify comparisons that could support or reject the explanation. No prose, equations, figures or empirical claims are copied from that paper.
