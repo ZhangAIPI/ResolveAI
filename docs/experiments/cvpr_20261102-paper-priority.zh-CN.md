@@ -64,3 +64,7 @@ scripts/run_acquisition_experiment.py依次训练、用最佳验证adapter运行
 ## 主表版面收紧
 
 任务表和交互结果表改用自然列宽与5pt列间距，取消extracolsep拉伸。两块表按各自内容宽度居中，说明文字保持适当行长。浮动位置提前，取消参考文献前的强制另起页，避免主表单占一页而下半页留空。SFT表沿用同样的紧凑排法。
+
+## 第四张卡的后续工作
+
+Qwen3.5原基线完成后，保留的26565 worker接着运行Qwen3-VL-2B-Instruct，固定revision 89644892e4d85e24eaac8bacfd4f463576704203，沿用原478族三设置评测。它与已经启动的4B和已有8B组成同系列规模比较；不增加同时占用的GPU，也不停止原始基线。[官方模型](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct)。该任务尚未开始，不计入当前主表成绩。
