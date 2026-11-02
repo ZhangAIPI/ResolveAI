@@ -71,3 +71,9 @@ CO3D photographs: Jeremy Reizenstein et al., Common Objects in 3D, ICCV 2021, CC
 The argument also draws a writing lesson from [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385): identify a specific obstacle, motivate a controlled construction, and specify comparisons that could support or reject the explanation. No prose, equations, figures or empirical claims are copied from that paper.
 
 A subsequent prose rewrite removes reviewer-facing imperatives and checklist paragraphs from the main paper. Construction requirements are explained through their scientific rationale; annotation procedures and unfinished validation work remain in the supplement and review record. The main text retains the candidate-data status and does not imply completed validation.
+
+## Result presentation
+
+Table 1 now separates task performance from interaction outcomes. Its full-width first panel reports condition (153 cases), cross-view identity (56), and pooled results (209), each with Answer only and With tools. Its second panel accounts for every agent attempt as a label match, opposite label, abstention, or missing verdict. All-image direct decisions remain in the supplement. Difficulty groups are omitted because no independently established difficulty labels exist.
+
+This follows the task-first presentation in [MMMU Table 2](https://arxiv.org/html/2311.16502v3) and [BLINK's task results](https://arxiv.org/html/2404.12390v2): expose capability differences before an aggregate, state the sample counts, and separate diagnostic outcomes from the main score. No figures, wording, or scores are copied.

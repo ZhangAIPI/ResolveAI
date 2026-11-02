@@ -672,5 +672,15 @@
         }
       }
     }
-  ]
+  ],
+  "task_label_counts": {
+    "identity": {
+      "Refuted": 27,
+      "Supported": 29
+    },
+    "state": {
+      "Supported": 74,
+      "Refuted": 79
+    }
+  }
 }

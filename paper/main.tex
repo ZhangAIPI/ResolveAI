@@ -294,32 +294,38 @@ Finally, fixed-order and random acquisition provide comparisons with the same av
 
 
 \section{Initial Benchmark Results}
-\paragraph{Evaluation setting.}
-We evaluate four open multimodal models in three settings: an initial-image decision, a full-access decision and an interactive agent with the same obtainable records.
-Direct decisions use at most 96 output tokens.
-Agents have eight turns, at most 384 output tokens per turn and an acquisition allowance of 12.
-All models use greedy decoding, BF16 weights and an 8,192-token context limit.
-The processor requests at most \(512^2\) pixels per image; native image processing and tool-call templates follow each checkpoint.
-These results therefore compare complete model--interface configurations rather than isolating visual perception.
+\paragraph{Tasks and evaluation.}
+The first comparison asks whether models can verify two kinds of claim: a stated defect on a photographed item, and the identity of objects across submissions.
+We fix the 209 source-labeled families for which all four models had completed evaluation at the analysis snapshot: 153 condition queries and 56 identity controls.
+The 226 identity candidates without established source labels are excluded.
+One constructed Sufficient version is used per family.
+Table~\ref{tab:benchmark}(a) reports each task separately before pooling their cases into an overall score.
+
+We compare answering directly from the initial images with an agent that starts from those same images and can use tools.
+A score is the percentage of all attempted cases whose final verdict matches the source label; unresolved answers and missing verdicts remain in the denominator.
+These are initial source-label results, preceding independent sufficiency review, rather than grounded accuracy under Equation~\ref{eq:grounded}.
+An additional direct-decision setting with all obtainable photographs is reported in the supplement.
 
 \input{tables/benchmark_results}
 
-\paragraph{A common, source-labeled subset.}
-Table~\ref{tab:benchmark} fixes the 209 families for which all four models had completed all three settings at the analysis snapshot.
-It contains 153 condition queries and 56 identity controls, with 103 positive and 106 negative source labels.
-The 226 identity candidates without established source labels are excluded.
-Only the constructed Sufficient version is scored, once per family.
-A match requires the submitted verdict to equal the source label; unresolved answers and missing submissions remain in the denominator.
-This analysis precedes independent sufficiency review and does not apply the grounded metric in Equation~\ref{eq:grounded}.
+\paragraph{Performance differs across tasks.}
+Qwen3-VL-8B has the highest agreement in both tasks: 79.1\% for condition and 91.1\% for identity when using tools.
+The task breakdown also exposes changes hidden by a pooled score.
+For Qwen3.5-9B, interaction raises condition agreement from 47.7\% to 65.4\%, while identity agreement falls from 85.7\% to 57.1\%.
+The pooled score therefore hides opposite changes in condition and identity.
 
-\paragraph{What the first comparison shows.}
-Qwen3-VL-8B obtains 82.3\% agreement as an agent, compared with 74.6\% from the initial images.
-Its 96.7\% submission rate contrasts with 18.2\% for InternVL3.5-8B, whose agent agreement is 14.4\%.
-For Qwen2.5-VL-7B, 173 of 209 agent decisions are unresolved and 18 are missing.
-Low agreement thus has several observable causes, including abstention and failure to submit a verdict; it cannot be read as a visual-recognition error rate.
-Nor does the Qwen3-VL increase demonstrate successful evidence search: these cases were constructed to be initially sufficient, and the interactive setting also changes the decision format and generation allowance.
-The comparison establishes an initial reference for the model--environment interface.
-Claims about acquisition require the reviewed access variants and matched action comparisons described above.
+\paragraph{A low score can have different origins.}
+Table~\ref{tab:benchmark}(b) separates correct and wrong definite answers from abstentions and unfinished episodes; correctness here refers to the source label.
+Qwen2.5-VL-7B leaves 173 of 209 claims unresolved, whereas InternVL3.5-8B submits no terminal verdict in 171 cases.
+Their low agreement consequently cannot be interpreted as the same kind of visual failure.
+Qwen3-VL-8B, by comparison, produces 172 label matches, 28 opposite labels, two unresolved answers and seven missing verdicts.
+
+The comparison evaluates the complete model--interface configuration.
+Direct answers allow 96 output tokens; agents allow eight turns of up to 384 tokens each and an acquisition allowance of 12.
+All models use greedy decoding, BF16 weights and an 8,192-token context limit; the processor requests at most \(512^2\) pixels per image.
+The interactive setting thus changes both available actions and the decision interface.
+Since these cases were constructed to be initially sufficient, an increase in Table~\ref{tab:benchmark}(a) does not by itself establish successful evidence acquisition.
+That claim requires the reviewed access variants and matched action comparisons developed above.
 
 % The next main table is reserved for measured base-versus-SFT performance.
 % Do not insert estimated gains, empty runs or validation results as benchmark scores.

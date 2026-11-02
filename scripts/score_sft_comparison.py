@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from scripts.score_candidate_labels import ARMS, read_rows, summarize
+from scripts.paper_result_table import task_scores, outcomes
 
 
 def compare(cohort, base, adapted, training):
@@ -23,13 +24,17 @@ def compare(cohort, base, adapted, training):
         indexed = {(r["family_id"], r["arm"]): r for r in rows}
         if set(indexed) != wanted or len(indexed) != len(rows):
             raise ValueError("The fixed paper cohort is incomplete or duplicated")
-        results.append({"name": name, "arms": {arm: summarize([r for r in rows if r["arm"] == arm])
-                                             for arm in ARMS}})
+        results.append({"name": name, "arms": {
+            arm: {**summarize([r for r in rows if r["arm"] == arm]),
+                  "by_task": {task: summarize([r for r in rows if r["arm"] == arm and r["task"] == task])
+                              for task in reference["task_counts"]}}
+            for arm in ARMS}})
     for arm in ARMS:
         if results[0]["arms"][arm]["label_matches"] != source["arms"][arm]["label_matches"]:
             raise ValueError("Stored base results differ from the frozen paper snapshot")
     return {
         "scope": reference["scope"], "common_families": reference["common_families"],
+        "task_counts": reference["task_counts"],
         "dataset_sha256": reference["dataset_sha256"], "family_ids": reference["family_ids"],
         "selection": reference["selection"], "formal_grounded_accuracy": None,
         "training": json.loads((training / "training_manifest.json").read_text()),
@@ -40,25 +45,34 @@ def compare(cohort, base, adapted, training):
 
 def render(report):
     lines = [
-        r"\begin{table}[t]",
+        r"\begin{table*}[t]",
         r"\centering\small",
-        r"\caption{\textbf{Source-supervised acquisition SFT.}",
-        f'Qwen3-VL-8B before and after LoRA, evaluated on the same {report["common_families"]}',
-        r"families and source-label agreement (\%) as Table~\ref{tab:benchmark}.",
-        r"Train and validation use CO3D development sequences disjoint from the frozen evaluation.",
-        r"Finish is agent submission rate; these scores do not establish reviewed evidence sufficiency.}",
+        r"\caption{\textbf{Verification before and after source-supervised acquisition SFT.}",
+        f"Source-label agreement (\\%) uses the same tasks, settings and {report['common_families']}-family cohort as Table~\\ref{{tab:benchmark}}.",
+        r"Training and validation source sequences are disjoint from the frozen evaluation pool.",
+        r"The labels remain unreviewed for evidence sufficiency.}",
         r"\label{tab:sft}",
-        r"\begin{tabular}{@{}lrrrr@{}}",
+        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}",
         r"\toprule",
-        r"Training & Initial & Full & Agent & Finish\\",
+        " & " + " & ".join([
+            rf"\multicolumn{{2}}{{c}}{{Object condition ({report['task_counts']['state']} cases)}}",
+            rf"\multicolumn{{2}}{{c}}{{Cross-view identity ({report['task_counts']['identity']} cases)}}",
+            rf"\multicolumn{{2}}{{c}}{{Overall ({report['common_families']} cases)}}"]) + r"\\",
+        r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}",
+        r"Qwen3-VL-8B & Answer only & With tools & Answer only & With tools & Answer only & With tools\\",
         r"\midrule",
     ]
     for row in report["models"]:
-        arms = row["arms"]
-        scores = [100 * arms[a]["label_agreement"] for a in ARMS]
-        scores.append(100 * arms["interactive_agent"]["submitted"] / report["common_families"])
-        lines.append(row["name"] + " & " + " & ".join(f"{value:.1f}" for value in scores) + r"\\")
-    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{table}"]) + "\n"
+        lines.append(row["name"] + " & " + " & ".join(f"{v:.1f}" for v in task_scores(row["arms"])) + r"\\")
+    lines += [
+        r"\bottomrule", r"\end{tabular*}", r"\par\smallskip",
+        r"\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrr@{}}",
+        r"\toprule", r"Agent outcomes & Correct & Wrong & Need more evidence & Did not finish\\",
+        r"\midrule",
+    ]
+    for row in report["models"]:
+        lines.append(row["name"] + " & " + " & ".join(map(str, outcomes(row["arms"]["interactive_agent"]))) + r"\\")
+    return "\n".join(lines + [r"\bottomrule", r"\end{tabular*}", r"\end{table*}"]) + "\n"
 
 
 if __name__ == "__main__":

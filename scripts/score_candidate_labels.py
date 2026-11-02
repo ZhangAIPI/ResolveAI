@@ -72,6 +72,8 @@ def score(experiment):
         "family_ids": common,
         "task_counts": dict(Counter(candidates[family]["task"] for family in common)),
         "label_counts": dict(labels),
+        "task_label_counts": {task: dict(Counter(candidates[f]["provenance_truth"] for f in common
+            if candidates[f]["task"] == task)) for task in sorted({candidates[f]["task"] for f in common})},
         "constant_majority_label_agreement": max(labels.values()) / len(common) if common else None,
         "unknown_identity_families_excluded": sum(
             case["variant"] == "Sufficient" and case["family_id"] in set(plan["family_ids"])

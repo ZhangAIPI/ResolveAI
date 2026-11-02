@@ -1,23 +1,46 @@
-\begin{table}[t]
+\begin{table*}[t]
 \centering\small
-\caption{\textbf{Initial benchmark results on a fixed common cohort.}
-Source-label agreement (\%) on 209 candidate families: 153 condition and 56 identity.
-One constructed \emph{Sufficient} version is used per family.
-All attempts count; abstentions and missing decisions are non-matches.
-Finish is the percentage submitting an agent verdict.
-These unreviewed labels do not establish evidence sufficiency or grounded accuracy.}
+\caption{\textbf{Object verification across tasks and interaction outcomes.}
+(a) Source-label agreement (\%, higher is better), broken down by task.
+(b) The same agent episodes split into four mutually exclusive outcomes (counts).
+All models use the same 209 candidate families, with one constructed Sufficient version per family.
+Source labels and initial sufficiency have not been independently reviewed; these are not grounded-accuracy scores.}
 \label{tab:benchmark}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lrrrr@{}}
+\textbf{(a) Verification scores by task (\%)}\par\smallskip
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
 \toprule
-Model & Initial & Full & Agent & Finish\\
+ & \multicolumn{2}{c}{Object condition (153 cases)} & \multicolumn{2}{c}{Cross-view identity (56 cases)} & \multicolumn{2}{c}{Overall (209 cases)}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Model & Answer only & With tools & Answer only & With tools & Answer only & With tools\\
 \midrule
-InternVL3.5-8B & 57.9 & 59.3 & 14.4 & 18.2\\
-Qwen2.5-VL-7B & 15.8 & 10.5 & 3.8 & 91.4\\
-Qwen3-VL-8B & 74.6 & 75.1 & 82.3 & 96.7\\
-Qwen3.5-9B & 57.9 & 61.7 & 63.2 & 81.3\\
+Qwen2.5-VL-7B & 20.3 & 5.2 & 3.6 & 0.0 & 15.8 & 3.8\\
+Qwen3-VL-8B & \textbf{69.9} & \textbf{79.1} & \textbf{87.5} & \textbf{91.1} & \textbf{74.6} & \textbf{82.3}\\
+Qwen3.5-9B & 47.7 & 65.4 & 85.7 & 57.1 & 57.9 & 63.2\\
+InternVL3.5-8B & 54.2 & 3.3 & 67.9 & 44.6 & 57.9 & 14.4\\
 \midrule
-Always Refuted & 50.7 & 50.7 & 50.7 & ---\\
+Always Refuted & 51.6 & 51.6 & 48.2 & 48.2 & 50.7 & 50.7\\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabular*}
+\par\vspace{5pt}
+\textbf{(b) Agent outcomes (209 attempts per model)}\par\smallskip
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrr@{}}
+\toprule
+Model & Correct & Wrong & Need more evidence & Did not finish\\
+\midrule
+Qwen2.5-VL-7B & 8 & 10 & 173 & 18\\
+Qwen3-VL-8B & 172 & 28 & 2 & 7\\
+Qwen3.5-9B & 132 & 31 & 7 & 39\\
+InternVL3.5-8B & 30 & 8 & 0 & 171\\
+\bottomrule
+\end{tabular*}
+\par\smallskip
+\begin{minipage}{\textwidth}\footnotesize
+\textit{Tasks:} condition asks whether the photographed item has the stated defect;
+identity asks whether the foreground objects in two submissions are the same physical item.
+\textit{Settings:} Answer only judges the initial images directly; With tools starts with the same images
+and permits inspection and photo requests before a terminal decision.
+Overall pools all cases; abstentions and missing verdicts score zero.
+In (b), Correct/Wrong compare definite verdicts with the source label;
+Need more evidence is a terminal abstention, while Did not finish means no terminal decision was submitted.
+\end{minipage}
+\end{table*}

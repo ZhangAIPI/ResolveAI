@@ -62,7 +62,14 @@ def main():
         return
     repo, runtime = args.repository, args.runtime
     report = json.loads((args.run / "paper/sft_results.json").read_text())
-    cohort = json.loads((repo / "docs/results/cvpr_20261102_candidate_scores.json").read_text())
+    cohort_path = repo / "docs/results/cvpr_20261102_candidate_scores.json"
+    cohort = json.loads(cohort_path.read_text())
+    from scripts.score_sft_comparison import compare, render
+    updated = compare(cohort_path, runtime / "evaluation/cvpr-20261101/qwen3",
+                      args.run / "benchmark", args.run)
+    if updated["family_ids"] != report["family_ids"]:
+        raise ValueError("Completed run and refreshed task breakdown differ")
+    report = updated
     if report["family_ids"] != cohort["family_ids"] or report["dataset_sha256"] != cohort["dataset_sha256"]:
         raise ValueError("Paper cohort changed; retain measured artifacts for reconciliation")
     if sha(repo / "paper/tables/benchmark_results.tex") != args.table1_sha256:
@@ -78,7 +85,7 @@ def main():
     cli = json.loads((runtime / "tools/olcli/invocation.json").read_text())["command"]
     project = "6ae80679a4c7a64df04ac5b8"
     command(cli + ["diff", project, str(mirror), "--name-only", "--exit-code"])
-    table = analysis(report) + (args.run / "paper/sft_results.tex").read_text()
+    table = analysis(report) + render(report)
     with tempfile.TemporaryDirectory(prefix="sft-paper-", dir=runtime / "paper-draft") as directory:
         stage = Path(directory) / "paper"
         shutil.copytree(repo / "paper", stage)
