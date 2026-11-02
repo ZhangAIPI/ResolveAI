@@ -125,6 +125,10 @@ def main():
         "max_turns": plan["max_turns"],
         "tool_adapter": "auto",
         "assistant_prefix": True,
+        "decoding": {"do_sample": False, "text_max_new_tokens": 96, "tool_max_new_tokens": 384},
+        "max_context_tokens": 8192,
+        "image_max_pixels": 512 * 512,
+        "grounding_manifest": json.loads((args.grounding_root / "manifest.json").read_text()),
         "scope": "Unreviewed diagnosis; actual trajectories can be regraded after human review",
     }
     manifest = locked_manifest(args.output / "manifest.json", config)

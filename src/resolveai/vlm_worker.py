@@ -139,9 +139,13 @@ def main():
     model = AutoModelForImageTextToText.from_pretrained(args.model,
         dtype=torch.bfloat16, device_map={"": args.device}, attn_implementation="sdpa")
     model.eval()
+    # Match the non-thinking instruction models under the same output budget.
+    template_options = {"enable_thinking": False} if model.config.model_type == "qwen3_5" else {}
     print(json.dumps({"ready": True, "model": args.model,
                       "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
                       "model_type": model.config.model_type,
+                      "thinking": False if model.config.model_type == "qwen3_5" else None,
+                      "max_pixels": 512 * 512, "min_pixels": 48 * 48,
                       "assistant_prefix": "<tool_call>\n{\"name\":" if adapter == "portable" else None,
                       "processor": type(processor).__name__,
                       "image_processor": type(processor.image_processor).__name__,
@@ -181,6 +185,7 @@ def main():
         started = time.perf_counter()
         inputs = processor.apply_chat_template(messages, tools=request.get("tools") if tool_mode and request_adapter == "native" else None,
             tokenize=True, add_generation_prompt=True, return_dict=True, return_tensors="pt",
+            **template_options,
             **({"crop_to_patches": False} if model.config.model_type == "internvl" else {}))
         prefix = '<tool_call>\n{"name":' if tool_mode and request_adapter == "portable" and use_prefix else ""
         if prefix:
