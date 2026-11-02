@@ -15,6 +15,17 @@ Source IDs identifying unreleased originals do not authorize citing those origin
 The terminal decision is \(d=(\hat y,\mathcal{C},\mathcal{L})\), where \(\hat y\in\{\Spt,\Rft,\Nme\}\), \(\mathcal{C}\) contains image/region/time citations and \(\mathcal{L}\) contains cross-image relations.
 The labels denote \emph{Supported}, \emph{Refuted} and \emph{Need more evidence}.
 
+The minimum acquisition cost is
+\begin{equation}
+c^\star(q,v)=
+\min_{\tau\in\mathcal{T}_v:\,Y_q(\mathcal{E}_{\tau})\ne\Nme}
+C(\tau),\qquad \min\varnothing=\infty.
+\end{equation}
+Here \(\mathcal{T}_v\) contains finite, publicly expressible trajectories obeying access and tool rules before resource caps; \(C\) sums charged costs. Admission additionally requires one sufficient trajectory \(\tau\) satisfying both \(C(\tau)\le B\) and \(\ell(\tau)\le T\), where \(T\) is the turn limit.
+All observations needed for a sufficient set must be jointly reachable on one trajectory.
+This annotation-side minimum is not a policy observation or a claim to have implemented an exact search solver.
+Budget comparisons keep the access target fixed and separately identify cases lacking a joint cost-and-turn-feasible path. The scalar \(c^\star\) alone does not certify turn feasibility.
+
 \subsection{Alternative sufficient evidence sets}
 For \(q=\bigwedge_{j=1}^{m}q_j\), each subclaim has truth \(t_j\in\{\Spt,\Rft,?\}\) and alternative sufficient evidence sets \(\mathcal{M}_j^u\), for \(u\in\{\Spt,\Rft\}\).
 Each sufficient set specifies required source regions and relations.

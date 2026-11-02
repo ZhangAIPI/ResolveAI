@@ -22,15 +22,15 @@
 \maketitle
 
 \begin{abstract}
-A visible crack does not establish that the claimed object is damaged: the photograph may show another item.
-Verification requires an agent to identify the missing link, obtain an informative observation and decide when the evidence is sufficient.
-We introduce \benchmark, a benchmark built around \emph{claim families}.
-Each family preserves a claim and physical state while varying whether sufficient evidence is initially visible, obtainable by request, missing, or unavailable.
-This separates whether a claim can be settled, whether the agent acquires the necessary evidence, and whether its verdict is grounded in that evidence.
-Support requires a complete evidence chain; refutation permits a decisive counterexample.
-Paired versions and matched action continuations test acquisition and stopping under controlled access.
-The public-data instantiation targets condition and identity separately, with 478 candidate families and 1,912 access configurations pending independent sufficiency review.
-The evaluation distinguishes an incomplete search from an ungrounded decision after sufficient evidence has been obtained.
+A correct answer does not show whether a visual agent found the evidence it needed.
+The agent may have guessed, overlooked an informative view, or continued searching after the claim was already settled.
+We introduce \benchmark to evaluate evidence acquisition in object verification.
+Its central comparison holds a claim and the object's physical state fixed while changing access to photographs.
+Some cases can be resolved from the initial images; others require another recorded view, and others cannot be resolved with the evidence that can be obtained.
+Agents inspect images, request photographs and submit a verdict with visual references.
+A definite verdict receives credit only when the acquired evidence supports it, while leaving a resolvable claim unanswered counts as failure.
+The current public-data construction includes 478 candidate families and 1,912 access variants covering condition and multi-view identity.
+Independent sufficiency review remains pending.
 \end{abstract}
 
 \begin{figure*}[t]
@@ -46,23 +46,24 @@ The four condition names express construction intent, subject to independent suf
 \end{figure*}
 
 \section{Introduction}
-Is the chair in a resale listing damaged?
-A close-up of a cracked armrest seems to answer the question.
-But whose chair does it show?
-A wider photograph may establish identity while making the crack invisible.
-The claim is simple; the evidence needed to verify it may be distributed across images.
-A reliable agent must connect the right object to the right detail before deciding whether the claim is supported.
+Do these two photographs show the same chair?
+They may depict one item from different angles, or two similar items.
+A distinctive mark could settle the question, but it may be too small in the supplied image or hidden from the current view.
+Recognizing a chair, or assigning the photographs a high similarity score, does not establish physical identity.
+The agent needs to obtain the observation that distinguishes these possibilities.
 
-Visual tools offer competing ways to resolve this uncertainty.
-A crop can expose a small crack but cannot reveal the chair's hidden side.
-A requested view can connect photographs, provided the view exists and can be supplied.
-The agent must choose an observation that addresses the missing link, then decide whether further search is warranted.
+The choice of observation matters.
+If a visible mark is too small, inspecting the original image may help.
+If the relevant surface is hidden, another angle is needed.
+If no recorded view exposes it, further calls may leave the claim unresolved.
+Condition verification raises a related problem: the useful detail may be lost in a preview.
+In both settings, success depends on what the agent chooses to see before it decides.
 
-\emph{How can a benchmark tell whether the agent failed to see, failed to search, or was right to remain uncertain?}
-A wrong answer alone cannot distinguish these cases.
-Nor does a correct answer establish a successful search: it may be a guess made without the decisive photograph.
-At the other extreme, an agent that always returns \emph{Need more evidence} avoids commitment while leaving solvable cases unresolved.
-Evaluation must account for both the evidence available in the environment and the evidence actually acquired.
+Final-answer accuracy leaves this choice largely unexplained.
+A wrong answer can follow an incomplete search or a misinterpretation of useful evidence.
+A correct answer can be a guess.
+An agent can also avoid definite mistakes by withholding judgment on every case, including those it could have resolved.
+To evaluate acquisition, a benchmark must establish what evidence is sufficient, whether that evidence is accessible, and whether the agent obtained it.
 
 Visual benchmarks already probe several parts of this problem.
 MMMU evaluates broad multimodal reasoning~\cite{mmmu}; MMVP, BLINK and VSI-Bench probe visual discrimination, correspondence and spatial understanding~\cite{mmvp,blink,vsibench}.
@@ -137,19 +138,17 @@ The scene stays fixed throughout the interaction.
 A family fixes the claim \(q\) and physical state \(z\).
 Each access version \(v\) specifies initial evidence \(\mathcal{E}_0^v\) and an obtainable pool \(\mathcal{A}^v\).
 Evidence \(\mathcal{E}_t^v\) consists of the pixels exposed by releases and derived views, at their displayed resolution.
-Private state and sufficiency annotations remain hidden.
+Private state and sufficiency annotations remain hidden. Let \(c^\star(q,v)\) be the least tool cost of a legally obtainable sufficient trajectory, before resource caps, with \(c^\star=\infty\) if no such trajectory exists.
 Access changes what can be established, without changing the object or the statement.
 
 In \emph{Sufficient}, the initial release is intended to settle the claim.
 In \emph{Obtainable}, an initially missing observation can be requested.
 In \emph{Missing}, the recorded pool lacks sufficient evidence.
 In \emph{Unavailable}, relevant records exist but cannot be released.
-The last two conditions distinguish the existence of a photograph from permission to obtain it.
+Sufficient has \(c^\star=0\); Obtainable requires a sufficient trajectory within both the cost budget \(B\) and turn limit. Missing and Unavailable have no permitted sufficient path. A finite path costing more than \(B\) is budget-infeasible, not evidence missing from the pool.
 Together these define three observable decision regimes: sufficient initially, resolvable after acquisition, and unresolved under all obtainable evidence. Missing and Unavailable are two mechanisms for the last regime, not separate visual competencies.
 
-For the illustrative chair conjunction, a wider view might connect the damaged armrest to the listed item.
-The view may be visible, requestable, absent, or inaccessible.
-The chair stays unchanged while the justified response changes.
+A view exposing a distinctive mark may be visible, requestable, absent, or inaccessible. The chair stays unchanged while the justified response changes.
 \emph{Consistency can require a different answer.}
 Whereas perspective-preserving perturbations can test answer invariance~\cite{mmperspective}, an access intervention can change the justified verdict for an unchanged fact.
 
