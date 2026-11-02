@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-02T07:13:22.615372+00:00",
+  "as_of_utc": "2026-11-02T19:36:57.567465+00:00",
   "source": {
     "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
     "tests_passed": 80
@@ -21,75 +21,76 @@
       "model_id": "Qwen/Qwen3.5-9B",
       "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
       "job_id": "26549",
-      "completed": 1082,
+      "completed": 4235,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 361,
+          "episodes": 1412,
           "verdicts": {
-            "Refuted": 72,
-            "Need more evidence": 173,
-            "Supported": 116
+            "Refuted": 268,
+            "Need more evidence": 720,
+            "Supported": 424
           },
           "terminations": {
-            "finished": 361
+            "finished": 1412
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 303.8
+          "wall_latency_s": 1196.3
         },
         "full_available_text": {
-          "episodes": 361,
+          "episodes": 1412,
           "verdicts": {
-            "Refuted": 190,
-            "Supported": 142,
-            "Need more evidence": 29
+            "Refuted": 752,
+            "Supported": 544,
+            "Need more evidence": 116
           },
           "terminations": {
-            "finished": 361
+            "finished": 1412
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 462.2
+          "wall_latency_s": 1898.3
         },
         "interactive_agent": {
-          "episodes": 360,
+          "episodes": 1411,
           "verdicts": {
-            "Refuted": 228,
-            "Supported": 33,
-            "No submitted verdict": 84,
-            "Need more evidence": 15
+            "Refuted": 902,
+            "Supported": 137,
+            "No submitted verdict": 295,
+            "Need more evidence": 77
           },
           "terminations": {
-            "finished": 276,
-            "max_turns": 83,
-            "context_limit": 1
+            "finished": 1116,
+            "max_turns": 291,
+            "context_limit": 4
           },
-          "errors": 200,
-          "photo_requests": 30,
-          "tool_calls": 1534,
-          "wall_latency_s": 14378.3
+          "errors": 648,
+          "photo_requests": 126,
+          "tool_calls": 5907,
+          "wall_latency_s": 55564.5
         }
       },
       "recent_latency_sample": 120,
-      "estimated_remaining_h_at_recent_rate": 17.4,
-      "tool_response_error_counts": {
-        "view_too_large": 87,
-        "invalid_bbox": 16,
-        "unreleased_citation": 24,
-        "unreleased_image": 2,
-        "insufficient_budget": 2
+      "estimated_remaining_h_at_recent_rate": 5.6,
+      "requesting_agent_episodes": 121,
+      "requesting_episodes_by_construction_variant": {
+        "Missing": 40,
+        "Obtainable": 40,
+        "Unavailable": 40,
+        "Sufficient": 1
       },
-      "tool_response_error_functions": {
-        "zoom": 87,
-        "crop": 16,
-        "finish": 24,
-        "inspect": 2,
-        "ground_image_to_text": 2
-      }
+      "tool_response_error_counts": {
+        "view_too_large": 219,
+        "invalid_bbox": 83,
+        "unreleased_citation": 92,
+        "unreleased_image": 25,
+        "insufficient_budget": 17
+      },
+      "job_state": "RUNNING"
     },
     {
       "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
@@ -103,74 +104,74 @@
       "model_id": "Qwen/Qwen3-VL-8B-Instruct",
       "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
       "job_id": "26543",
-      "completed": 2531,
+      "completed": 5736,
       "expected": 5736,
-      "complete": false,
+      "complete": true,
       "arms": {
         "initial_text": {
-          "episodes": 844,
+          "episodes": 1912,
           "verdicts": {
-            "Refuted": 697,
-            "Supported": 38,
-            "Need more evidence": 109
+            "Refuted": 1552,
+            "Supported": 106,
+            "Need more evidence": 254
           },
           "terminations": {
-            "finished": 844
+            "finished": 1912
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 541.0
+          "wall_latency_s": 1246.2
         },
         "full_available_text": {
-          "episodes": 844,
+          "episodes": 1912,
           "verdicts": {
-            "Refuted": 686,
-            "Supported": 89,
-            "Need more evidence": 69
+            "Refuted": 1535,
+            "Supported": 212,
+            "Need more evidence": 165
           },
           "terminations": {
-            "finished": 844
+            "finished": 1912
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 889.5
+          "wall_latency_s": 2108.8
         },
         "interactive_agent": {
-          "episodes": 843,
+          "episodes": 1912,
           "verdicts": {
-            "Refuted": 597,
-            "Need more evidence": 51,
-            "Supported": 133,
-            "No submitted verdict": 62
+            "Refuted": 1342,
+            "Need more evidence": 127,
+            "Supported": 316,
+            "No submitted verdict": 127
           },
           "terminations": {
-            "finished": 781,
-            "max_turns": 62
+            "finished": 1785,
+            "max_turns": 127
           },
-          "errors": 470,
-          "photo_requests": 48,
-          "tool_calls": 2127,
-          "wall_latency_s": 15449.1
+          "errors": 1102,
+          "photo_requests": 111,
+          "tool_calls": 4880,
+          "wall_latency_s": 36682.5
         }
       },
       "recent_latency_sample": 120,
-      "estimated_remaining_h_at_recent_rate": 5.4,
+      "estimated_remaining_h_at_recent_rate": 0.0,
+      "requesting_agent_episodes": 105,
+      "requesting_episodes_by_construction_variant": {
+        "Missing": 35,
+        "Obtainable": 35,
+        "Unavailable": 35
+      },
       "tool_response_error_counts": {
-        "invalid_bbox": 201,
-        "unreleased_image": 94,
-        "invalid_arguments": 45,
-        "view_too_large": 59,
+        "invalid_bbox": 434,
+        "unreleased_image": 219,
+        "invalid_arguments": 90,
+        "view_too_large": 105,
         "insufficient_budget": 2
       },
-      "tool_response_error_functions": {
-        "crop": 201,
-        "inspect": 93,
-        "zoom": 104,
-        "compare": 1,
-        "ground_image_to_image": 2
-      }
+      "job_state": "COMPLETED"
     },
     {
       "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
@@ -184,71 +185,73 @@
       "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
       "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
       "job_id": "26544",
-      "completed": 2891,
+      "completed": 5736,
       "expected": 5736,
-      "complete": false,
+      "complete": true,
       "arms": {
         "initial_text": {
-          "episodes": 964,
+          "episodes": 1912,
           "verdicts": {
-            "Need more evidence": 851,
-            "Refuted": 112,
+            "Need more evidence": 1704,
+            "Refuted": 207,
             "Supported": 1
           },
           "terminations": {
-            "finished": 964
+            "finished": 1912
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 655.9
+          "wall_latency_s": 1325.7
         },
         "full_available_text": {
-          "episodes": 964,
+          "episodes": 1912,
           "verdicts": {
-            "Need more evidence": 856,
-            "Refuted": 108
+            "Need more evidence": 1730,
+            "Refuted": 182
           },
           "terminations": {
-            "finished": 964
+            "finished": 1912
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 1109.7
+          "wall_latency_s": 2275.3
         },
         "interactive_agent": {
-          "episodes": 963,
+          "episodes": 1912,
           "verdicts": {
-            "Need more evidence": 761,
-            "No submitted verdict": 185,
-            "Refuted": 17
+            "Need more evidence": 1510,
+            "No submitted verdict": 370,
+            "Refuted": 32
           },
           "terminations": {
-            "finished": 778,
-            "max_turns": 185
+            "finished": 1542,
+            "max_turns": 368,
+            "context_limit": 2
           },
-          "errors": 982,
-          "photo_requests": 7,
-          "tool_calls": 4338,
-          "wall_latency_s": 14934.2
+          "errors": 1982,
+          "photo_requests": 30,
+          "tool_calls": 8570,
+          "wall_latency_s": 29916.9
         }
       },
       "recent_latency_sample": 120,
-      "estimated_remaining_h_at_recent_rate": 4.8,
-      "tool_response_error_counts": {
-        "invalid_arguments": 75,
-        "invalid_bbox": 48,
-        "insufficient_budget": 79,
-        "unreleased_image": 42
+      "estimated_remaining_h_at_recent_rate": 0.0,
+      "requesting_agent_episodes": 24,
+      "requesting_episodes_by_construction_variant": {
+        "Missing": 5,
+        "Obtainable": 5,
+        "Unavailable": 5,
+        "Sufficient": 9
       },
-      "tool_response_error_functions": {
-        "finish": 63,
-        "ground_image_to_image": 72,
-        "request_photo": 7,
-        "crop": 57,
-        "inspect": 45
-      }
+      "tool_response_error_counts": {
+        "invalid_arguments": 128,
+        "invalid_bbox": 66,
+        "insufficient_budget": 142,
+        "unreleased_image": 57
+      },
+      "job_state": "COMPLETED"
     },
     {
       "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
@@ -262,78 +265,79 @@
       "model_id": "OpenGVLab/InternVL3_5-8B-HF",
       "revision": "741a7d03020411e666c6109218ab71e08151ef86",
       "job_id": "26545",
-      "completed": 1607,
+      "completed": 5405,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 536,
+          "episodes": 1802,
           "verdicts": {
-            "Refuted": 519,
-            "Supported": 8,
-            "Need more evidence": 9
+            "Refuted": 1750,
+            "Supported": 22,
+            "Need more evidence": 30
           },
           "terminations": {
-            "finished": 536
+            "finished": 1802
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 343.0
+          "wall_latency_s": 1186.4
         },
         "full_available_text": {
-          "episodes": 536,
+          "episodes": 1802,
           "verdicts": {
-            "Refuted": 519,
-            "Supported": 11,
-            "Need more evidence": 6
+            "Refuted": 1754,
+            "Supported": 30,
+            "Need more evidence": 18
           },
           "terminations": {
-            "finished": 536
+            "finished": 1802
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 586.5
+          "wall_latency_s": 2043.1
         },
         "interactive_agent": {
-          "episodes": 535,
+          "episodes": 1801,
           "verdicts": {
-            "No submitted verdict": 477,
-            "Refuted": 53,
-            "Supported": 5
+            "No submitted verdict": 1620,
+            "Refuted": 172,
+            "Supported": 7,
+            "Need more evidence": 2
           },
           "terminations": {
-            "max_turns": 450,
-            "finished": 58,
-            "context_limit": 27
+            "max_turns": 1525,
+            "finished": 181,
+            "context_limit": 95
           },
-          "errors": 1710,
-          "photo_requests": 178,
-          "tool_calls": 2384,
-          "wall_latency_s": 16064.5
+          "errors": 5867,
+          "photo_requests": 572,
+          "tool_calls": 7956,
+          "wall_latency_s": 56694.5
         }
       },
       "recent_latency_sample": 120,
-      "estimated_remaining_h_at_recent_rate": 12.8,
-      "tool_response_error_counts": {
-        "invalid_bbox": 700,
-        "invalid_arguments": 25,
-        "unreleased_citation": 57,
-        "insufficient_budget": 24,
-        "view_too_large": 4
+      "estimated_remaining_h_at_recent_rate": 1.0,
+      "requesting_agent_episodes": 352,
+      "requesting_episodes_by_construction_variant": {
+        "Sufficient": 52,
+        "Missing": 100,
+        "Obtainable": 100,
+        "Unavailable": 100
       },
-      "tool_response_error_functions": {
-        "crop": 721,
-        "finish": 61,
-        "ground_image_to_image": 9,
-        "read_metadata": 1,
-        "request_photo": 6,
-        "zoom": 4,
-        "compare": 8
-      }
+      "tool_response_error_counts": {
+        "invalid_bbox": 2365,
+        "invalid_arguments": 84,
+        "unreleased_citation": 196,
+        "insufficient_budget": 80,
+        "view_too_large": 30,
+        "unreleased_image": 17
+      },
+      "job_state": "RUNNING"
     }
   ],
-  "completed": 8111,
+  "completed": 21112,
   "expected": 22944
 }
