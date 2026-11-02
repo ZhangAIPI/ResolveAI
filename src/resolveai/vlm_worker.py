@@ -183,7 +183,8 @@ def main():
     torch.set_num_threads(4)
     torch.cuda.set_device(args.device)
     processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
-    native = "tool_calls" in processor.chat_template and "tools" in processor.chat_template
+    template = processor.chat_template or ""
+    native = isinstance(template, str) and "tool_calls" in template and "tools" in template
     adapter = "native" if native and args.tool_adapter == "auto" else "portable"
     # Validate processor dependencies before loading the large checkpoint.
     # Keep library loading/progress separate from the machine-readable protocol.
