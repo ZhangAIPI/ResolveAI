@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering\small
+\caption{\textbf{Initial benchmark results on a fixed common cohort.}
+Source-label agreement (\%) on 209 candidate families: 153 condition and 56 identity.
+One constructed \emph{Sufficient} version is used per family.
+All attempts count; abstentions and missing decisions are non-matches.
+Finish is the percentage submitting an agent verdict.
+These unreviewed labels do not establish evidence sufficiency or grounded accuracy.}
+\label{tab:benchmark}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & Initial & Full & Agent & Finish\\
+\midrule
+InternVL3.5-8B & 57.9 & 59.3 & 14.4 & 18.2\\
+Qwen2.5-VL-7B & 15.8 & 10.5 & 3.8 & 91.4\\
+Qwen3-VL-8B & 74.6 & 75.1 & 82.3 & 96.7\\
+Qwen3.5-9B & 57.9 & 61.7 & 63.2 & 81.3\\
+\midrule
+Always Refuted & 50.7 & 50.7 & 50.7 & ---\\
+\bottomrule
+\end{tabular}
+\end{table}

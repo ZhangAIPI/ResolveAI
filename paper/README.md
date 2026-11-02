@@ -4,7 +4,7 @@ Evidence Before Verdicts: Benchmarking Active Visual Verification. The benchmark
 
 ## Main paper and supplement
 
-The main paper ends at the benchmark design and has three sections: Introduction, Related Work, and The ResolveAI Benchmark. It follows one question: can the agent obtain the observations needed to settle a particular object claim? The main argument retains the access-aware target, sufficient-evidence rationale, construction/validation design and paired evaluation; implementation remains supplementary. Five numbered equations carry the central definitions; the gap indicator is inline. The same claim is tested under different evidence-access conditions.
+The main paper now has four sections: Introduction, Related Work, The ResolveAI Benchmark, and Initial Benchmark Results. It follows one question: can the agent obtain the observations needed to settle a particular object claim? The main argument retains the access-aware target, sufficient-evidence rationale, construction/validation design and paired evaluation; implementation remains supplementary. Five numbered equations carry the central definitions; the gap indicator is inline. The same claim is tested under different evidence-access conditions.
 
 - main.tex: object-verification motivation, sufficiency logic, evidence gap, grounded outcome, acquisition–conversion decomposition and matched action benefit. Strict family success is defined in the supplement.
 - supplementary.tex: entry point for the separate technical appendix.
@@ -13,9 +13,9 @@ The main paper ends at the benchmark design and has three sections: Introduction
 - references.bib: primary-source references shared by both documents.
 - cvpr.sty and ieeenat_fullname.bst: unmodified official CVPR 2027 files; provenance is in template-source.json.
 
-The methods-only main text develops the argument through five pages before references/disclosure, with three main sections and four benchmark subsections. It retains three main sections; future experiments follow the benchmark section. The technical supplement remains separate.
+The benchmark argument extends through page 5; measured comparisons follow in Section 4. The technical supplement remains separate.
 
-Compile main.tex and supplementary.tex separately using pdfLaTeX + BibTeX (Overleaf) or tectonic. Keep generated files outside Git. The main paper contains no experiment/result section or training-gain claim.
+Compile main.tex and supplementary.tex separately using pdfLaTeX + BibTeX (Overleaf) or tectonic. Keep generated files outside Git. Table 1 reports the fixed 209-family measured snapshot in docs/results/cvpr_20261102_candidate_scores.json. Generate its TeX with scripts/paper_result_table.py. It measures unreviewed source-label agreement, not grounded accuracy. The next main table is reserved for measured base-versus-SFT performance; it is included only when tables/sft_results.tex exists. No training gain is claimed before evaluation.
 
 ## Page allocation checked against published CVPR PDFs
 
@@ -28,7 +28,7 @@ Page numbers below are relative to the first page of the official CVF two-column
 | [OpenEQA, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/papers/Majumdar_OpenEQA_Embodied_Question_Answering_in_the_Era_of_Foundation_Models_CVPR_2024_paper.pdf) | Benchmark/evaluation design continues into page 5; Section 3, EQA Agents, starts on page 5; Section 4, Experimental Results, starts on page 6. |
 | [MMVP, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/papers/Tong_Eyes_Wide_Shut_Exploring_the_Visual_Shortcomings_of_Multimodal_LLMs_CVPR_2024_paper.pdf) | Section 2.3, Benchmark Results, starts on page 3; a later model-improvement method starts on page 6. This hybrid structure is not a template for a single methods-before-results boundary. |
 
-These examples do not establish a mandatory page count. They show why section count and page count should not be used as substitutes for a complete argument. ResolveAI keeps three main sections and gives the core design enough space before future experiments, while leaving tool schemas, costs, exact matching and execution parameters in the supplement.
+These examples do not establish a mandatory page count. They show why section count and page count should not be used as substitutes for a complete argument. ResolveAI gives the core design enough space before the experimental comparison, while leaving tool schemas, costs, exact matching and execution parameters in the supplement.
 
 ## Reference-paper structure
 
