@@ -1,10 +1,42 @@
 """Interface failures must remain distinguishable from model abstention."""
 import unittest
 from scripts.check_model_interfaces import verdict_from_text
-from resolveai.vlm_worker import parse_tool_call, portable_tools
+from resolveai.vlm_worker import parse_tool_call, portable_tools, decode_tool_call
 
 
 class InterfaceTests(unittest.TestCase):
+    def test_qwen_xml_preserves_strings_structured_values_and_one_call_limit(self):
+        tools = [{"function": {"name": "finish", "parameters": {"properties": {
+            "verdict": {"type": "string"}, "citations": {"type": "array"},
+        }}}}]
+        raw = ('I can decide.<tool_call><function=finish>'
+               '<parameter=verdict>Refuted</parameter>'
+               '<parameter=citations>[{"image_id":"visible","bbox":[0,0,20,30]}]</parameter>'
+               '</function></tool_call>')
+        call, text = decode_tool_call(raw, tools, "native", "qwen3_5", True)
+        self.assertEqual(text, "I can decide.")
+        self.assertEqual(call, {"name": "finish", "arguments": {
+            "verdict": "Refuted", "citations": [{"image_id": "visible", "bbox": [0, 0, 20, 30]}],
+        }})
+        for invalid in [
+            raw + raw,
+            raw.replace("</function>", "<parameter=verdict>Supported</parameter></function>"),
+            raw.replace("[{", "not JSON [{"),
+            raw.replace("</function>", "unparsed text</function>"),
+            raw.replace("parameter=verdict", "parameter=unknown"),
+            raw.replace("function=finish", "function=invented"),
+            raw.replace("</tool_call>", ""),
+        ]:
+            with self.subTest(raw=invalid):
+                with self.assertRaises(ValueError):
+                    decode_tool_call(invalid, tools, "native", "qwen3_5", True)
+        with self.assertRaises(ValueError):
+            decode_tool_call(raw, tools, "native", "qwen3_vl", True)
+        json_call, _ = decode_tool_call(
+            '<tool_call>{"name":"finish","arguments":{"verdict":"Refuted"}}</tool_call>',
+            tools, "native", "qwen3_5", True)
+        self.assertEqual(json_call["arguments"], {"verdict": "Refuted"})
+
     def test_explicit_verdicts_and_invalid_answers(self):
         for answer in ["Supported", "Refuted", "Need more evidence"]:
             self.assertEqual(verdict_from_text("VERDICT: " + answer), answer)

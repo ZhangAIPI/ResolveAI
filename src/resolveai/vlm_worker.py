@@ -75,6 +75,47 @@ def parse_tool_call(raw, allow_unclosed=False, allow_bare=False):
 
 
 
+
+def parse_qwen_xml_tool_call(raw, tools):
+    """Decode Qwen3.5's native XML transport without inventing arguments."""
+    calls = list(re.finditer(r"<tool_call>\s*(.*?)\s*</tool_call>", raw, re.DOTALL))
+    if len(calls) != 1:
+        raise ValueError("exactly one native tool call required")
+    block = re.fullmatch(r"<function=([A-Za-z_][A-Za-z0-9_]*)>\s*(.*?)\s*</function>",
+                         calls[0].group(1), re.DOTALL)
+    if block is None:
+        raise ValueError("invalid native XML function")
+    name, body = block.groups()
+    schemas = {tool["function"]["name"]: tool["function"] for tool in tools}
+    if name not in schemas:
+        raise ValueError("unknown native XML function")
+    properties = schemas[name].get("parameters", {}).get("properties", {})
+    arguments = {}
+    position = 0
+    pattern = r"<parameter=([A-Za-z_][A-Za-z0-9_]*)>(.*?)</parameter>"
+    for parameter in re.finditer(pattern, body, re.DOTALL):
+        if body[position:parameter.start()].strip():
+            raise ValueError("unparsed native XML content")
+        key, value = parameter.groups()
+        if key in arguments or key not in properties:
+            raise ValueError("duplicate or unknown native XML parameter")
+        # XML strings are plain text; structured values retain their JSON types.
+        arguments[key] = value.strip() if properties[key].get("type") == "string" else json.loads(value)
+        position = parameter.end()
+    if body[position:].strip():
+        raise ValueError("unparsed native XML content")
+    text = (raw[:calls[0].start()] + raw[calls[0].end():]).strip()
+    return {"name": name, "arguments": arguments}, text
+
+
+def decode_tool_call(raw, tools, adapter, model_type, use_prefix):
+    if adapter == "native" and model_type == "qwen3_5" and "<function=" in raw:
+        return parse_qwen_xml_tool_call(raw, tools)
+    return parse_tool_call(raw, allow_unclosed=adapter == "portable",
+                           allow_bare=adapter == "portable" and not use_prefix)
+
+
+
 def portable_tools(messages, tools, *, assistant_prefix=True):
     """Preserve every call/result/image for checkpoints whose templates ignore tools."""
     from copy import deepcopy
@@ -145,6 +186,7 @@ def main():
                       "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
                       "model_type": model.config.model_type,
                       "thinking": False if model.config.model_type == "qwen3_5" else None,
+                      "native_tool_format": "qwen-xml-or-json" if model.config.model_type == "qwen3_5" else "json",
                       "max_pixels": 512 * 512, "min_pixels": 48 * 48,
                       "assistant_prefix": "<tool_call>\n{\"name\":" if adapter == "portable" else None,
                       "processor": type(processor).__name__,
@@ -229,8 +271,8 @@ def main():
             continue
         if tool_mode:
             try:
-                call, text = parse_tool_call(raw, allow_unclosed=request_adapter == "portable",
-                                             allow_bare=request_adapter == "portable" and not use_prefix)
+                call, text = decode_tool_call(raw, request["tools"], request_adapter,
+                                              model.config.model_type, use_prefix)
                 parse_error = False
             except (ValueError, TypeError):
                 call, text, parse_error = None, raw, True
