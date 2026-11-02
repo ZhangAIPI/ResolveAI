@@ -14,7 +14,7 @@
 \newcommand{\Spt}{\mathsf{S}}
 \newcommand{\Rft}{\mathsf{R}}
 \newcommand{\Nme}{\mathsf{N}}
-\newcommand{\ind}{\mathbb{1}}
+\newcommand{\ind}{\mathbf{1}}
 \title{Evidence Before Verdicts:\\Benchmarking Active Visual Verification}
 \author{Zeliang Zhang}
 \hypersetup{pdfauthor={},pdftitle={Evidence Before Verdicts: Benchmarking Active Visual Verification}}
@@ -22,98 +22,96 @@
 \maketitle
 
 \begin{abstract}
-A model can recognize damage in a photograph and still lack the evidence to verify that a particular object is damaged.
-Reliable verification requires choosing what to examine, obtaining missing observations and knowing when to withhold a conclusion.
-We introduce \benchmark, a benchmark protocol for studying these decisions.
-Its organizing principle is the \emph{claim family}: the same claim and physical object state are paired with different evidence-access conditions.
-A useful photograph may be initially visible, obtainable by request, missing, or unavailable.
-Verdicts are evaluated against the evidence actually acquired, with complete evidence for support and decisive counterexamples for refutation.
-This connects the quality of a decision to the search that produced it.
-The current public-data construction contains 478 claim families and 1,912 access configurations, with independent sufficiency review required for semantic scoring.
-The evaluation separates interpreting evidence, acquiring it and stopping, providing a basis for diagnosing existing models and studying future agent training.
+A visible crack does not establish that the claimed object is damaged: the photograph may show another item.
+Verification requires an agent to identify the missing link, obtain an informative observation and decide when the evidence is sufficient.
+We introduce \benchmark, a benchmark built around \emph{claim families}.
+Each family preserves a claim and physical state while varying whether sufficient evidence is initially visible, obtainable by request, missing, or unavailable.
+This separates whether a claim can be settled, whether the agent acquires the necessary evidence, and whether its verdict is grounded in that evidence.
+Support requires a complete evidence chain; refutation permits a decisive counterexample.
+Paired versions and matched action continuations test acquisition and stopping under controlled access.
+The public-data instantiation targets condition and identity separately, with 478 candidate families and 1,912 access configurations pending independent sufficiency review.
+The evaluation distinguishes an incomplete search from an ungrounded decision after sufficient evidence has been obtained.
 \end{abstract}
 
 \begin{figure*}[t]
 \centering
 \resizebox{\textwidth}{!}{\input{figures/overview}}
-\caption{\textbf{The same claim, different evidence.}
-An agent must decide whether to look closer, request another recorded photograph or conclude.
-The four access conditions keep the claim and physical state fixed, changing what evidence the agent can obtain.
+\caption{\textbf{What should the agent see before it decides?}
+A crop can help inspect a detail; another recorded photograph can expose a different view.
+Neither guarantees that the claim is settled.
+\benchmark holds the claim and physical state fixed while varying access, then checks the evidence behind the verdict.
 The photographs illustrate a CO3D identity candidate~\cite{co3d}; no verdict is assigned.
-Condition names indicate construction intent, with actual sufficiency established by independent review.}
+The four condition names express construction intent, subject to independent sufficiency review.}
 \label{fig:overview}
 \end{figure*}
 
 \section{Introduction}
-A close-up of a cracked armrest does not establish that the chair in a resale listing is damaged.
-It may depict another chair.
-A wider photograph may resolve identity while hiding the crack.
-To verify the claim, an agent must connect the right object to the right detail, then decide whether the available photographs are enough.
-Recognizing damage is one part of this process; choosing the evidence needed to reach a justified conclusion is another.
+Is the chair in a resale listing damaged?
+A close-up of a cracked armrest seems to answer the question.
+But whose chair does it show?
+A wider photograph may establish identity while making the crack invisible.
+The claim is simple; the evidence needed to verify it may be distributed across images.
+A reliable agent must connect the right object to the right detail before deciding whether the claim is supported.
 
-This distinction becomes consequential as multimodal models gain visual tools.
-An agent can crop a photograph, compare views or ask for another image.
-Each operation addresses a different uncertainty.
-Looking closer can expose a small detail, but cannot reveal a hidden side of an object.
-Another photograph can resolve that gap, provided the relevant view exists and can be supplied.
-When it cannot, additional calls may leave the claim just as uncertain.
-A useful agent must therefore know both how to search and when the search has reached its limit.
+Visual tools offer competing ways to resolve this uncertainty.
+A crop can expose a small crack but cannot reveal the chair's hidden side.
+A requested view can connect photographs, provided the view exists and can be supplied.
+The agent must choose an observation that addresses the missing link, then decide whether further search is warranted.
 
-Existing benchmarks establish important parts of this capability.
+\emph{How can a benchmark tell whether the agent failed to see, failed to search, or was right to remain uncertain?}
+A wrong answer alone cannot distinguish these cases.
+Nor does a correct answer establish a successful search: it may be a guess made without the decisive photograph.
+At the other extreme, an agent that always returns \emph{Need more evidence} avoids commitment while leaving solvable cases unresolved.
+Evaluation must account for both the evidence available in the environment and the evidence actually acquired.
+
+Visual benchmarks already probe several parts of this problem.
 MMMU evaluates broad multimodal reasoning~\cite{mmmu}; MMVP, BLINK and VSI-Bench probe visual discrimination, correspondence and spatial understanding~\cite{mmvp,blink,vsibench}.
 OpenEQA and ActiView make observation an active choice~\cite{openeqa,actiview}.
-Our question connects these abilities to verification: \emph{does the agent obtain evidence that justifies its verdict?}
-Answer accuracy alone leaves this unclear.
-A wrong answer may follow a poor search or a misinterpretation of informative evidence; a correct answer may be a guess unsupported by the photographs.
+We ask a specific verification question: \emph{can an agent close the evidence gap for a particular object claim?}
+An action helps verification only if it addresses what the claim still needs.
 
-The challenge for a benchmark is to make these explanations distinguishable.
-A difficult photograph can reveal a perceptual weakness, but an unresolvable question can produce the same apparent failure.
-Similarly, an agent that never commits can seem cautious while missing evidence it could have obtained.
-Judging acquisition requires knowing both what the visible material establishes and what additional material is accessible.
-That knowledge must belong to the evaluator, while the agent decides from its actual observations.
+We introduce \benchmark around a controlled comparison: \emph{hold the visual fact fixed and change the opportunity to establish it}.
+Each claim family pairs the same statement and physical object state with four access conditions (Figure~\ref{fig:overview}).
+Evidence may be sufficient initially, obtainable through a request, absent from the recorded pool, or present but unavailable.
+A model should resolve an obtainable case when it can, yet avoid treating an inaccessible photograph as evidence.
+The physical truth is unchanged; the justified decision can change with access. The current public-data instantiation evaluates condition and identity separately; combined claims follow the evidence requirements defined below.
 
-We introduce \benchmark around a simple comparison: \emph{hold the claim fixed and change access to evidence}.
-Each claim family has four versions, ranging from initially sufficient evidence to a missing or unavailable observation.
-This makes acquisition and stopping measurable within the same underlying case (Figure~\ref{fig:overview}).
-The object does not become more or less damaged across versions; what changes is the agent's opportunity to establish the fact.
-A justified policy should respond to that opportunity through its observations and request feedback.
-
-The benchmark also checks what the cited photographs establish.
-For a claim combining identity and condition, support must establish both; a reliable counterexample to either can refute the conjunction.
-This turns evidence sufficiency into an explicit evaluation criterion.
+We evaluate the evidence behind each verdict.
+For the conjunction that a close-up depicts the listed chair and shows damage, support needs both identity and condition.
+A reliable identity mismatch can refute the conjunction without inspecting every surface.
+A good search is therefore claim-dependent: it seeks a complete support chain or a decisive counterexample.
 Our contributions are:
 \begin{itemize}[leftmargin=*,itemsep=2pt,topsep=2pt]
-\item A claim-family benchmark design that varies evidence access while preserving the visual fact being verified.
-\item An evidence-based evaluation that connects verdicts to acquired observations and compares alternative search actions from the same history.
+\item A claim-family benchmark design that varies evidence access while preserving the fact being verified, enabling paired tests of acquisition and justified uncertainty.
+\item An evidence-sufficiency evaluation and controlled action comparisons that distinguish obtaining useful observations from reaching a verdict grounded in them.
 \end{itemize}
 
 \section{Related Work}
 \paragraph{Visual understanding and active observation.}
-MMVP and BLINK expose visual problems that remain difficult despite straightforward questions~\cite{mmvp,blink}, while VSI-Bench organizes spatial understanding into measurable capabilities~\cite{vsibench}.
-MMStar motivates explicit checks for visual dependence~\cite{mmstar}.
+MMVP and BLINK expose difficult visual distinctions~\cite{mmvp,blink}, while VSI-Bench organizes spatial understanding into measurable capabilities~\cite{vsibench}.
+VidComposition and MMPerspective organize fine-grained evaluation around compositional and geometric capabilities~\cite{vidcomposition,mmperspective}. MMStar motivates explicit checks for visual dependence~\cite{mmstar}.
 OpenEQA evaluates answers from memory or active exploration~\cite{openeqa}, and ActiView tests active visual field selection~\cite{actiview}.
-V*, Visual Sketchpad and visual tool benchmarks further study tool-assisted inspection and reasoning~\cite{vstar,sketchpad,visualtoolbench,vtcbench,missingbench}.
-These settings establish the value of evaluating what a model sees and how it chooses to observe.
-\benchmark focuses on whether the resulting observations are sufficient for a particular object claim, under paired changes in access.
+V*, Visual Sketchpad and visual tool benchmarks study tool-assisted inspection and reasoning~\cite{vstar,sketchpad,visualtoolbench,vtcbench,missingbench}.
+\benchmark connects observation choice to a claim-specific evidence requirement, comparing the same fact under different opportunities to establish it.
 
 \paragraph{Verification and abstention.}
 WebQA studies multimodal evidence aggregation~\cite{webqa}; AVerImaTeC links claims to web evidence and sufficiency checks~\cite{averimatec}.
-AbstainEQA makes withholding an answer an explicit evaluation target~\cite{abstaineqa}.
-Our focus is the interaction between obtaining evidence and withholding judgment when it cannot be obtained.
-The claim-family design keeps the statement fixed while changing the photographic material that can settle it.
-This permits acquisition and abstention to be studied as responses to the same visual fact.
+AbstainEQA explicitly evaluates withholding an answer~\cite{abstaineqa}.
+Our focus is how evidence acquisition changes when withholding judgment is appropriate.
+Paired access conditions distinguish an unresolved claim from an unresolved search, while evidence-chain checks connect definite verdicts to their visual basis.
 
-\paragraph{The value of a visual action.}
-CounterCredit distinguishes making a visual call from needing and using its returned pixels~\cite{countercredit}.
-We retain that distinction when comparing object-level search actions.
-The evaluator can compare a crop, another existing image, a requested photograph and stopping from a shared history, then audit which evidence was obtained and used.
+\paragraph{Visual-action credit.}
+CounterCredit distinguishes making a visual call from needing and using the returned pixels~\cite{countercredit}.
+We retain this distinction when comparing object-level search actions.
+A crop, another released image, a requested photograph and stopping can be tested from a common history.
+The audit checks acquisition and citation grounding separately; dependence on the returned pixels requires content controls.
 Table~\ref{tab:position} summarizes the related evaluation targets.
-Active observation, abstention and visual credit are existing research questions; our contribution is their controlled study through object-claim sufficiency.
+The contribution is the paired study of object-claim sufficiency; active observation, abstention and visual credit are established research questions.
 
 \begin{table}[t]
 \centering\small
-\caption{\textbf{Related evaluation targets.}
-Selected benchmark formulations motivating active visual verification.}
+\caption{\textbf{Which part of visual verification is tested?}
+Selected related formulations and their evaluation targets.}
 \label{tab:position}
 \begin{tabularx}{\linewidth}{@{}lY@{}}
 \toprule
@@ -129,81 +127,112 @@ AbstainEQA~\cite{abstaineqa} & Answering versus abstention\\
 \end{table}
 
 \section{The \benchmark Benchmark}
-\subsection{The same claim under different access}
+\subsection{Same fact, different opportunities to decide}
 An agent receives an object claim and an initial set of photographs.
-It can examine released images, compare observations and request recorded photographs of a specified object, time or view.
-The physical scene remains fixed.
-Looking closer reuses existing pixels; a request can supply an additional observation or fail.
-The agent eventually returns \emph{Supported}, \emph{Refuted} or \emph{Need more evidence}, with relevant image and region citations.
+It can inspect or crop released images, compare observations, use visual grounding tools and request recorded photographs of a specified object, time or view.
+It eventually returns \emph{Supported}, \emph{Refuted} or \emph{Need more evidence}, with relevant image and region citations.
+The scene stays fixed throughout the interaction.
 
-A claim family fixes the statement and physical content while varying access in four ways.
-\emph{Sufficient} is intended to provide enough evidence initially.
-\emph{Obtainable} withholds a potentially decisive photograph that can be requested.
-\emph{Missing} omits it from the recorded pool.
-\emph{Unavailable} retains it privately but prevents release.
-These versions preserve the visual fact while changing the acquisition problem.
+\paragraph{Change access, preserve the claim.}
+A family fixes the claim \(q\) and physical state \(z\).
+Each access version \(v\) specifies initial evidence \(\mathcal{E}_0^v\) and an obtainable pool \(\mathcal{A}^v\).
+Evidence \(\mathcal{E}_t^v\) consists of the pixels exposed by releases and derived views, at their displayed resolution.
+Private state and sufficiency annotations remain hidden.
+Access changes what can be established, without changing the object or the statement.
 
-Consider the claim that two photographs show the same chair.
-Distinctive details in the initial images may already establish identity.
-In a paired version, one view may be too distant to reveal those details, but another recorded angle may resolve the ambiguity.
-If that angle is absent or cannot be supplied, the agent may have to leave the identity claim unresolved.
-The useful action depends on the evidence gap: enlarging the existing view and acquiring another angle need not provide the same information.
+In \emph{Sufficient}, the initial release is intended to settle the claim.
+In \emph{Obtainable}, an initially missing observation can be requested.
+In \emph{Missing}, the recorded pool lacks sufficient evidence.
+In \emph{Unavailable}, relevant records exist but cannot be released.
+The last two conditions distinguish the existence of a photograph from permission to obtain it.
+Together these define three observable decision regimes: sufficient initially, resolvable after acquisition, and unresolved under all obtainable evidence. Missing and Unavailable are two mechanisms for the last regime, not separate visual competencies.
 
-The access conditions are construction hypotheses that must be checked.
-A preview may already suffice, or another photograph may substitute for the intended key view.
-Review therefore considers alternative evidence paths in both the starting and obtainable pools.
-Admission of an Obtainable case also requires a sufficient path within the evaluation budget.
+For the illustrative chair conjunction, a wider view might connect the damaged armrest to the listed item.
+The view may be visible, requestable, absent, or inaccessible.
+The chair stays unchanged while the justified response changes.
+\emph{Consistency can require a different answer.}
+Whereas perspective-preserving perturbations can test answer invariance~\cite{mmperspective}, an access intervention can change the justified verdict for an unchanged fact.
 
-The same request interface is exposed across paired versions.
-Obtainable, Missing and Unavailable cases can share their initial photographs, so hidden knowledge of the version cannot justify different early actions.
-Where Missing and Unavailable produce the same observations, the benchmark expects the same behavior.
-Their distinction lets the evaluator vary the existence of a record and permission to release it independently, without exposing that distinction as an answer cue.
+\paragraph{What can the agent know before it asks?}
+Obtainable, Missing and Unavailable versions can share the same initial photographs and request interface.
+Until different feedback arrives, they warrant the same policy distribution \(\pi(a\mid h_t)\) for a shared public history \(h_t\).
+A policy cannot know the hidden access condition in advance.
+Where Missing and Unavailable return identical observations, the benchmark expects identical behavior.
+Paired versions test adaptation to observed feedback, not knowledge of the private pool.
 
-\subsection{What evidence is sufficient?}
-A correct verdict must refer to the claimed object and establish the asserted fact.
-For the illustrative conjunction that two images show the same chair and its armrest is damaged, support requires evidence of both identity and damage.
-A clear identity mismatch is already a decisive refutation, even if the visible armrest is damaged.
-Requiring every verdict to cite the same pair of images would miss this asymmetry.
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{\input{figures/action_examples}}
+\caption{\textbf{Different gaps need different observations.}
+(a) A preview and an explicitly marked crop of the recorded MVTec original~\cite{mvtec}.
+The crop restores access to source detail; enlarging the preview alone cannot recover it.
+(b) CO3D photographs~\cite{co3d} illustrate correspondence across views.
+An additional angle changes the observation, whereas cropping reuses a source.
+These are construction candidates, not validated verdicts or model results.}
+\label{fig:actions}
+\end{figure*}
 
-Annotations therefore describe sufficient evidence alternatives at the level of subclaims, regions and cross-image relations.
-Several observations may establish the same fact; the agent need not follow one prescribed trajectory.
-A cited normal reference of another specimen can help interpret a condition, but cannot establish the target's earlier state.
-Likewise, similar appearance alone does not establish physical identity.
-The evidence requirements make these links explicit.
-
-Physical truth and answerability are separate.
-Let \(\mathcal{A}\) denote all photographs obtainable in a configuration.
-The access-aware target is
+\subsection{What makes a verdict justified?}
+A crack is evidence of damage, but not necessarily damage to the claimed item.
+We annotate what establishes each part of the claim.
+For a conjunction \(q=\bigwedge_{j=1}^{m}q_j\), let \(s_j(\mathcal{E})\) and \(r_j(\mathcal{E})\) indicate whether \(\mathcal{E}\) satisfies the reviewed evidence requirements for supporting or refuting subclaim \(j\).
+Then
 \begin{equation}
-Y(\mathcal{A})=
-\begin{cases}
-\Spt,&\text{complete support is obtainable},\\
-\Rft,&\text{decisive refutation is obtainable},\\
-\Nme,&\text{neither is obtainable}.
-\end{cases}
+S_q(\mathcal{E})=\bigwedge_{j=1}^{m}s_j(\mathcal{E}),
+\qquad
+R_q(\mathcal{E})=\bigvee_{j=1}^{m}r_j(\mathcal{E}).
+\label{eq:sufficiency}
 \end{equation}
-Here \(\Spt,\Rft,\Nme\) denote the three verdicts above.
-Decision grounding is checked against the material actually acquired.
-Thus a physically true claim can remain unresolved if the necessary photograph is inaccessible.
-Conversely, an unresolved answer can expose incomplete acquisition when sufficient evidence was obtainable.
+Support must close every required link; refutation needs one reliable counterexample.
+For identity plus damage, a damage close-up alone leaves support incomplete, whereas a clear identity mismatch can refute the conjunction.
+The logic determines what the agent should seek, rather than prescribing the same image pair for every verdict.
 
-This distinction gives the benchmark two checks.
-The first asks whether the task could be settled under its access condition.
-The second asks whether the submitted verdict is justified by the agent's own observations.
-An agent can obtain the right photograph and still misread it, or make a correct guess without acquiring it.
-These behaviors require different diagnoses.
-Formal certificate matching and region-coordinate rules are provided in the supplement.
+Several evidence sets may satisfy the same requirement.
+Annotations admit alternative source regions and cross-image relations, so a valid search need not follow a single reference trajectory.
+Crops retain their source mapping and do not become independent corroboration.
+A normal reference of another specimen may clarify appearance, but cannot establish the target's earlier state.
 
-\subsection{Constructing and validating the cases}
-The current collection uses public photographs for two complementary tasks.
-MVTec AD supplies condition queries~\cite{mvtec}; CO3D supplies multi-view identity candidates~\cite{co3d}.
-The construction pool contains 478 families and 1,912 access configurations (Table~\ref{tab:pool}).
-These are correlated releases of claims with tracked source reuse.
+\paragraph{Truth does not determine answerability.}
+For a reviewed evidence set, define its justified verdict as
+\begin{equation}
+Y_q(\mathcal{E})=
+\begin{cases}
+\Spt,& S_q(\mathcal{E})=1,\\
+\Rft,& R_q(\mathcal{E})=1,\\
+\Nme,& \text{otherwise}.
+\end{cases}
+\label{eq:verdict}
+\end{equation}
+Here \(\Spt,\Rft,\Nme\) denote the three verdicts.
+Conflicting evidence annotations require adjudication.
+The configuration target is \(Y_q(\mathcal{A})\), determined by the obtainable records and permitted viewing actions.
+A definite submission is grounded only when its actual citations establish that conclusion.
+A true claim can therefore have target \(\Nme\) when the needed observation is inaccessible.
+
+On answerable cases, \(Y_q(\mathcal{A})\ne\Nme\), the gap remains open while
+\(g_t=\ind[Y_q(\mathcal{E}_t)=\Nme]=1\).
+A search closes it by acquiring sufficient evidence; guessing a verdict does not.
+This is an evaluator-side diagnostic, never an observation supplied to the policy.
+
+\emph{Need more evidence} is appropriate when the obtainable pool cannot settle the claim.
+The same answer leaves a task unresolved when a sufficient path was available.
+Acquiring a decisive photograph also need not lead to a justified verdict: the model can still misinterpret it or cite the wrong object.
+
+\subsection{Hard for the model, or flawed as a question?}
+A preview may already reveal the defect. Another view may substitute for the photograph withheld during construction. Either would invalidate an intended Obtainable case, so review must test alternative evidence paths.
+
+\paragraph{Two sources, two kinds of missing information.}
+The public-data pool combines MVTec AD condition queries~\cite{mvtec} with CO3D multi-view identity candidates~\cite{co3d}.
+It contains 478 families and 1,912 correlated access configurations (Table~\ref{tab:pool}).
+Condition cases identify the target explicitly and, where appropriate, provide a normal reference of another specimen.
+The condition claims concern the visible defect specified in the target photograph, rather than the state of unphotographed surfaces. Their principal intervention is access to original resolution.
+Identity cases ask whether object slots A and B denote the same physical item and additionally offer recorded views.
+Figure~\ref{fig:actions} illustrates why these information gaps require different actions.
 
 \begin{table}[t]
 \centering\small
 \caption{\textbf{Construction pool before semantic admission.}
-The four access versions are correlated variants of a family.}
+Four access versions share each family's claim and physical content.}
 \label{tab:pool}
 \begin{tabularx}{\linewidth}{@{}l r Y@{}}
 \toprule
@@ -218,59 +247,100 @@ Total & 478 & 1,912 access versions\\
 \end{tabularx}
 \end{table}
 
-Condition cases identify the target explicitly and, where appropriate, provide a normal reference of another specimen.
-They primarily control access to original resolution, testing whether the agent obtains detail missing from a preview.
-Identity cases ask whether object slots A and B denote the same physical item and additionally offer recorded camera views.
-The 64 source controls are balanced between source-positive and source-negative candidates; the remaining 226 retain unresolved identity status.
-Their semantic targets remain unset until review.
-Resolution recovery and acquisition of another angle are reported separately because they address different information gaps.
+Resolution cases provide a control for obtaining readable detail; multi-view cases require selecting another recorded observation. The former alone cannot establish adaptive multi-view search.
+We report them separately: enlarging a low-resolution view cannot reveal an occluded surface.
+The closed-pool interface returns matching recorded views or failure, rather than automatically supplying whichever image is most decisive.
+Generated or imagined views cannot serve as verification evidence.
 
-Source metadata guides construction without determining semantic validity.
-Different CO3D sequences alone do not establish different physical objects.
-MVTec normal and anomalous images of different specimens cannot supply a before--after transition.
-The present collection therefore targets condition and identity.
-The broader protocol represents time and conjunctions, while genuine change verification remains conditional on suitable paired observations.
+\paragraph{Validate the gap, not just the source label.}
+The 64 CO3D controls are balanced between source-positive and source-negative candidates; the other 226 retain unresolved identity status.
+Source metadata is a construction aid.
+Different sequences alone do not establish different physical items, and missing identity truth does not establish insufficient evidence.
+MVTec normal and anomalous images of different specimens cannot constitute a before--after transition.
+The present pool targets condition and identity; temporal-change claims require suitable paired observations.
 
-Semantic admission requires two independent annotators and adjudication of disagreements.
-They assess the claim, visibility, identity or condition, and sufficient evidence alternatives in both the initial and obtainable pools.
-A case must be interpretable from its public question and images, and its access label must survive consideration of alternative views.
-Uncertain identity or condition remains uncertain.
-Model-generated observations cannot resolve an annotation disagreement about the model's own test.
+Two independent annotators and an adjudicator must validate claim meaning, visibility, identity or condition, and sufficient evidence alternatives.
+They inspect the policy-visible displays and obtainable views for every configuration.
+An admitted Obtainable case must satisfy
+\(Y_q(\mathcal{E}_0)=\Nme\) and \(Y_q(\mathcal{A})\ne\Nme\), with a sufficient path within budget using requests expressible through public object, time and view fields.
+Sufficient cases must be settled initially; Missing and Unavailable cases must remain unresolved after considering alternative accessible evidence.
+Uncertain truth or disputed sufficiency triggers review, not an automatic \(\Nme\) label.
 
-The candidate collection has not completed this review; unreviewed cases are limited to behavioral diagnostics.
-A separate brief human study checks whether the questions and interactions are understandable, rather than supplying full evidence-chain annotations.
-The validation protocol also audits wording, background, resolution and source cues, with image-free and metadata-only controls.
+A model failure on a reviewed, answerable case is a capability signal; unresolved disagreement over the question is a reason to revise the case.
+The candidate collection has not completed semantic admission, so unreviewed cases support behavioral diagnostics rather than semantic scores.
+A separate brief human study checks question and interaction clarity; it does not replace evidence-chain annotation.
+Audits include image-free and metadata-only controls; foreground-only and background-only identity tests check reliance on the target rather than its surroundings.
 Related views, rewrites and access versions remain grouped for splitting and uncertainty estimation.
-Together, these checks establish which apparent failures belong to the question before drawing conclusions about the model.
 
-\subsection{Evaluating evidence acquisition}
-Three access settings connect benchmark behavior to model capability.
-\emph{Initial-only} decisions measure what the starting photographs allow the model to establish.
-The \emph{interactive agent} must choose which observations to acquire.
-The \emph{full-access reference} reveals all obtainable photographs, removing the acquisition step.
-It is a reference under increased access, not a formal performance upper bound.
+\begin{figure}[t]
+\centering
+\resizebox{\linewidth}{!}{\input{figures/diagnosis}}
+\caption{\textbf{A better action must close an evidence gap.}
+Branches share their public prefix and total remaining allowance.
+Auditing acquired evidence separately from the verdict distinguishes an incomplete search from an ungrounded decision after acquisition.
+This diagram defines comparisons; it reports no measured outcomes.}
+\label{fig:diagnosis}
+\end{figure}
 
-On reviewed, answerable cases, failure with full access motivates an audit of perception, evidence interpretation or grounding.
-Success with full access but failure during interaction motivates an acquisition or interaction diagnosis.
-Success from the initial images indicates that further acquisition may be unnecessary.
-These paired comparisons are interpreted with execution failures reported separately, so a transport error is not silently turned into a visual mistake.
+\subsection{Did the next look actually help?}
+A request can return a photograph and still leave the claim unsettled. We assess what was acquired before evaluating the submitted verdict.
 
-The primary measure is \emph{grounded accuracy}: a correct verdict with sufficient cited evidence for a definite conclusion.
-A correct unresolved decision is evaluated against the complete obtainable pool.
-We also report unsupported definite decisions, definite-decision coverage and risk~\cite{selective}.
-Coverage matters because an agent that always withholds judgment can avoid unsupported conclusions while failing to resolve answerable claims.
-Failure to submit a verdict remains separate from an explicit \emph{Need more evidence} decision.
+\paragraph{Diagnose before attributing.}
+We compare \emph{initial-only}, \emph{interactive} and \emph{full-access} decisions on paired cases.
+Success initially suggests that acquisition may be unnecessary.
+Failure interactively but success with full access motivates an acquisition or interaction audit.
+Failure even with full access motivates an audit of perception, interpretation or grounding.
+These patterns guide diagnosis rather than prove a single cause; additional images can themselves distract a model.
+Full access removes acquisition, but is not a formal performance upper bound. Attributing a gap to acquisition also requires ruling out differences in final-output allowance and image presentation (supplement).
+Execution failures remain separate from visual mistakes.
 
-Acquisition cost is considered alongside grounded performance.
-Fixed-order and random policies test whether adaptive choice improves on simple search with the same tool pool and allowance.
-The all-evidence reference is reported separately from acquisition competitors.
-An efficient policy must spend fewer requests or calls at comparable evidence-grounded performance, rather than merely terminating early.
+Let \(d=(\hat y,\mathcal{C},\mathcal{L})\) contain the verdict, image/region/time citations and cross-image relations.
+Write \(V_q(d)=1\) when those citations and relations satisfy the annotated evidence requirements using acquired images.
+The grounded outcome is
+\begin{equation}
+G(d)=\ind[\hat y=Y_q(\mathcal{A})]\,
+\ind[\hat y=\Nme\ \lor\ V_q(d)=1].
+\label{eq:grounded}
+\end{equation}
+Grounded accuracy averages \(G\) over reviewed cases.
+A definite answer without sufficient citations receives no credit; valid citations establish evidential support, not causal reliance on the pixels.
+A correct unresolved answer is assessed against the obtainable pool; an unsubmitted verdict is a separate failure.
+Unsupported definite decisions and coverage--risk reporting~\cite{selective} expose both unjustified confidence and habitual abstention.
+Requests, tool costs, tokens and latency accompany grounded performance.
+Fewer calls count as efficiency only at comparable decision quality.
 
-To examine individual choices, the evaluator can branch a common history into looking closer, examining another released photograph, requesting a recorded view or stopping.
-The continuation policy and remaining total allowance are matched.
-The audit records both whether sufficient evidence became available and whether the final verdict used it correctly.
-Attributing gains to returned pixels additionally requires matched content controls~\cite{countercredit}; otherwise the comparison describes the effect of choosing an action.
-This connects the benchmark to future training through concrete evidence: which choices close an evidence gap, and which errors persist after the relevant material has been obtained.
+The paired design also asks whether a policy handles \emph{all} access conditions for a claim.
+For reviewed families \(f\), strict family success is
+\begin{equation}
+\mathrm{FG}=\frac{1}{|\mathcal{F}|}
+\sum_{f\in\mathcal{F}}\prod_{v\in\mathcal{V}_f}G(d_{fv}),
+\label{eq:family}
+\end{equation}
+where \(\mathcal{V}_f\) contains the four admitted access versions, each evaluated in a fresh episode.
+It complements average accuracy: always abstaining fails the answerable versions, while always asserting the physical truth fails versions without sufficient evidence.
+Success requires resolving the claim when possible and withholding judgment when appropriate.
+
+\paragraph{Compare choices from the same evidence state.}
+The evaluator branches a common public history into looking closer, examining another released image, requesting a recorded view or stopping (Figure~\ref{fig:diagnosis}).
+Each branch pays for its action and uses the same continuation policy and total remaining allowance.
+For a candidate \(a\), the benefit relative to stopping is
+\begin{equation}
+\Delta_G(h_t,a)=
+\mathbb{E}\!\left[
+G(d^{a\rightarrow\pi})-G(d^{\mathrm{stop}})
+\mid h_t\right],
+\label{eq:branch}
+\end{equation}
+where \(a\rightarrow\pi\) executes \(a\) before continuing with policy \(\pi\).
+The expectation uses matched continuations and access configurations consistent with the public history; the policy never receives the hidden version label. Costs are reported separately.
+
+The audit also checks whether an initially open evidence gap closed.
+If sufficient evidence was acquired but the verdict remains ungrounded, the failure lies after acquisition, in interpretation or citation.
+If the gap persists, the action or subsequent search did not obtain what the claim required.
+This separates \emph{finding sufficient evidence} from \emph{submitting a grounded verdict}.
+Attributing a gain specifically to returned pixels additionally requires matched content controls~\cite{countercredit}; otherwise Equation~\ref{eq:branch} describes the benefit of the action and its continuation.
+Fixed-order and random policies provide acquisition baselines with the same tool pool and allowance.
+This diagnosis identifies whether future training should improve action selection or the interpretation of acquired evidence.
 
 \clearpage
 \section*{LLM Usage Statement}

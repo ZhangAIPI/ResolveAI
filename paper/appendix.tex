@@ -1,13 +1,11 @@
 \section{Formal Task and Evidence Audit}
-The main text presents the claim-family design and its evaluation questions.
-This supplement specifies the evidence audit, tool contract, execution settings and branching controls.
-It reports no model results or training gains.
+This supplement specifies evidence matching, annotation checks, tool behavior, execution settings and action comparisons.
 
 \subsection{Recorded, obtainable and released evidence}
 Let \(q\) be a claim, \(z\) the fixed physical state and \(\mathcal{P}\) the recorded photographic pool.
 A configuration specifies the obtainable subset \(\mathcal{A}\subseteq\mathcal{P}\) and initial release \(\mathcal{R}_0\subseteq\mathcal{A}\).
 At step \(t\), the public history contains \(q\), released images \(\mathcal{R}_t\), actual tool responses and remaining budget.
-A request can change \(\mathcal{R}_t\), but never \(z\).
+A request can change \(\mathcal{R}_t\), but never \(z\). The main paper's \(\mathcal{E}_t\) denotes the displayed pixels of released records and derived views; unseen detail from a private original cannot contribute evidence.
 
 An evidence record contains an opaque image ID, pixels, object slot, source time and camera view.
 Private annotations specify condition, identity, visibility, availability and sufficient evidence alternatives.
@@ -17,9 +15,9 @@ Source IDs identifying unreleased originals do not authorize citing those origin
 The terminal decision is \(d=(\hat y,\mathcal{C},\mathcal{L})\), where \(\hat y\in\{\Spt,\Rft,\Nme\}\), \(\mathcal{C}\) contains image/region/time citations and \(\mathcal{L}\) contains cross-image relations.
 The labels denote \emph{Supported}, \emph{Refuted} and \emph{Need more evidence}.
 
-\subsection{Alternative sufficient certificates}
-For \(q=\bigwedge_{j=1}^{m}q_j\), each subclaim has truth \(t_j\in\{\Spt,\Rft,?\}\) and alternative sufficient certificates \(\mathcal{M}_j^v\), for \(v\in\{\Spt,\Rft\}\).
-Certificates specify required source regions and relations.
+\subsection{Alternative sufficient evidence sets}
+For \(q=\bigwedge_{j=1}^{m}q_j\), each subclaim has truth \(t_j\in\{\Spt,\Rft,?\}\) and alternative sufficient evidence sets \(\mathcal{M}_j^u\), for \(u\in\{\Spt,\Rft\}\).
+Each sufficient set specifies required source regions and relations.
 Write \(M\preceq d\) when submitted citations and relations satisfy every requirement in \(M\).
 Then
 \begin{align}
@@ -48,31 +46,26 @@ The exact union of cited source regions must cover a required region; repeated o
 A full-image citation may satisfy this inclusion check, so it is distinct from localization quality.
 Relation endpoints additionally require matching images and times and the annotated IoU threshold (default \(0.5\)).
 Same-object, different-object and same-time relations are symmetric; earlier-than is directed.
-Any additional incorrect relation invalidates the submitted certificate.
+Any additional incorrect relation invalidates the submitted evidence set.
 
-Let \(Y(\mathcal{A})\) be the target justified by the complete obtainable pool: \(\Spt\) when every support requirement is reachable, \(\Rft\) when a decisive counterexample is reachable, and \(\Nme\) otherwise.
-Certificate validity is checked using only released evidence.
+Let \(Y_q(\mathcal{A})\) be the target justified by the complete obtainable pool: \(\Spt\) when every support requirement is reachable, \(\Rft\) when a decisive counterexample is reachable, and \(\Nme\) otherwise.
+Evidence validity is checked using only released evidence.
 This separates incomplete acquisition from a genuinely unresolved case.
 
 \subsection{Semantic admission checklist}
 Two annotators independently assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives.
 They inspect both initial and obtainable material for every access configuration.
-Disagreement requires adjudication or an unresolved label.
-An intended Obtainable case must have a sufficient path within the declared action and turn budget.
+Adjudication must establish a justified target or leave the case pending. Pending annotation status is not the task label \(\Nme\). Review uses the exposed displays, registered resolution and permitted crop paths, not private high-resolution files alone.
+An intended Obtainable case must have a sufficient path within the declared action and turn budget, using requests expressible through public object, time and view fields. The evaluator's knowledge of a private filename cannot supply that path.
 Preview resolution and a failed request cannot by themselves determine a semantic verdict.
 
-The 64 CO3D source controls comprise 32 source-positive and 32 source-negative candidates.
-Their construction balance does not establish visual sufficiency.
-The 226 unresolved identity candidates must not be assigned \(\Nme\) simply because independent identity truth is absent.
-The present candidate pool has not completed semantic admission.
+The 64 source controls (32 per source label) and 226 identity candidates remain unreviewed; neither source labels nor missing truth determine a semantic target.
 
 Related views, rewrites and release versions remain grouped.
 Families sharing an image or a CO3D sequence form connected source groups for splitting and uncertainty estimation.
-The pool is evaluation-only; future training splits must be fixed by source group before fitting a policy.
+Each access version starts a fresh conversation, without history or memory from sibling versions. The pool is evaluation-only; future training splits must be fixed by source group before fitting a policy.
 
-The separate interface study targets up to 20 people, each completing three search trials and two full-pool judgments in approximately 5--10 minutes, without hard time or action limits.
-It checks question and interaction clarity.
-Optional region marks and simple full-pool judgments do not substitute for four-configuration sufficient-evidence annotation.
+The separate interface study targets 20 participants, each completing three search trials and two full-pool judgments in 5--10 minutes, without hard time or action limits. It checks clarity; optional region marks and full-pool judgments do not replace evidence annotation.
 
 \section{Environment and Tool Contract}
 \subsection{Observations, costs and provenance}
@@ -105,7 +98,7 @@ Finish & 0 & Verdict, citations and relations\\
 
 Crop inputs use display coordinates; finish citations use original-source coordinates.
 Derived views retain source rectangle, original dimensions, display dimensions, time and operation history.
-Enlarging a downsampled view preserves its lost detail.
+Enlarging a downsampled view cannot recover discarded detail.
 A derived view is not independent evidence.
 
 Grounding DINO proposes text-conditioned regions~\cite{groundingdino}; DINOv2 features propose image correspondences~\cite{dinov2}; CLIP ranks user-supplied descriptions~\cite{clip}.
@@ -138,6 +131,8 @@ Direct decisions permit at most 96 output tokens; interactive turns permit 384.
 Input images are capped at \(512\times512\) pixels, without additional InternVL tiling.
 Checkpoint-native preprocessing and any architecture-specific behavior remain recorded in manifests.
 
+Direct and interactive output caps differ, so their score gap cannot isolate acquisition. Capability attribution requires replaying final decisions with matched output allowance and formatting, auditing presented images and resolution, and reporting truncation separately. This control has not been run.
+
 Qwen3.5 uses a separate Transformers 5.3.0 environment with thinking disabled.
 The other three models use Transformers 4.57.6.
 Model/data revisions, source digests, providers and dependency versions are recorded per run.
@@ -149,7 +144,8 @@ Checkpoint stopping tokens and the assistant-turn boundary are preserved so cont
 The next observation must come from actual execution, never a model-generated tool response.
 
 \subsection{Metrics and failure accounting}
-For reviewed case \(i\), let \(Y_i=Y(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid certificate citing only released evidence.
+For reviewed case \(i\), let \(Y_i=Y_{q_i}(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid evidence set citing only released evidence.
+The main paper additionally defines strict family success by requiring grounded outcomes in all four admitted access versions. It is a paired diagnostic, alongside average accuracy; access variants are not independent cases for uncertainty estimation.
 Grounded accuracy and unsupported decision rate are
 \begin{align}
 \mathrm{GA}
@@ -178,10 +174,8 @@ The candidate action is executed and charged before continuation.
 All branches use the same continuation policy and total remaining-turn allowance.
 Stochastic continuations additionally require matched recorded seeds.
 
-The branch audit records the material released by the first action, the complete acquired material, the terminal certificate and cost.
-Acquisition success means sufficient evidence becomes available in the released pool.
-Evidence use means the terminal verdict actually cites a valid certificate.
-Immediate stopping supplies a decision comparison.
+The audit records evidence released by the action and continuation, final citations and cost. Acquisition succeeds when sufficient evidence becomes available; grounding requires valid terminal citations. Pixel dependence requires the content controls below.
+The stop branch asks the same policy for an immediate terminal decision from the shared history; it is never assigned a gold verdict. Final-decision formatting and output allowance are matched across branches.
 
 Attributing benefit to returned content requires additional controls.
 Matched random patches are relevant for crop actions~\cite{countercredit}.
@@ -192,8 +186,6 @@ An obtainable and unavailable configuration can share an identical public prefix
 Before access feedback is observed, hidden knowledge of the configuration cannot justify different preferred actions.
 Action-value estimates must aggregate over matched histories or condition only on visible feedback.
 
-Reviewed trajectories may support future supervised examples and action preferences.
-Exports retain actual assistant actions and environment observations, excluding private labels from prompts.
-Sibling comparisons must share their public prefix, schemas and world state.
-Unreviewed or proxy traces are excluded by default.
-These interfaces support later training studies; no training gain or new optimization method is reported.
+Future training exports retain reviewed assistant actions and actual observations, excluding private labels from prompts.
+Sibling comparisons must share the public prefix, schemas and world state.
+Unreviewed or proxy traces are excluded; no training gain or new optimizer is claimed.

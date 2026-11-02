@@ -30,5 +30,72 @@
       "sha256": "f5e67af8df141cf5950f672b47d42125cf8d4d9586a7761bfff079bc565283f4",
       "display_change": "LaTeX scales the unchanged file; no enhancement or retouching"
     }
+  ],
+  "additional_examples": [
+    {
+      "dataset": "MVTec AD",
+      "official_source": "https://www.mvtec.com/research-teaching/datasets/mvtec-ad",
+      "license": "CC-BY-NC-SA-4.0",
+      "family_id": "case-fc80ecb1fdc110472d0e",
+      "claim": "The target capsule in the submitted photo shows a crack.",
+      "role": "Illustrative unreviewed candidate; no benchmark verdict assigned",
+      "provenance": {
+        "category": "capsule",
+        "criterion": "a crack",
+        "defect_label": "crack",
+        "filepath": "data/data_8/007-15.png",
+        "official_split": "test",
+        "original_size": [
+          1000,
+          1000
+        ],
+        "reference": {
+          "filepath": "data/data_8/153-3.png",
+          "official_split": "train",
+          "sample_id": "6621d769324f6e05d5837d67",
+          "sha256": "f3a536ae54047a9907924a57b7fef987dee3a8b72cc90bc000db91e98b8ff2f4"
+        },
+        "repo": "Voxel51/mvtec-ad",
+        "revision": "30a183a3b96e3aef953f230784b123b719b09d97",
+        "sample_id": "6621d769324f6e05d5837d74",
+        "sha256": "de3bf8155e2b6e153688ef71bbb5bdcc0f390e20e48dd60aa36cedad5b37717d"
+      },
+      "images": [
+        {
+          "file": "capsule-preview.png",
+          "image_id": "preview",
+          "source_id": "6621d769324f6e05d5837d74",
+          "source_path": "benchmark-data/assets/mvtec-6621d769324f6e05d5837d74/preview.png",
+          "sha256": "f0a92eeb6dccd34689fa8e521b17c7c309b1bf810889769a80ba93bd24cb9c82",
+          "dimensions": [
+            48,
+            48
+          ],
+          "display_change": "Unchanged source file; native LaTeX scaling or explicitly marked crop"
+        },
+        {
+          "file": "capsule-original.png",
+          "image_id": "original",
+          "source_id": "6621d769324f6e05d5837d74",
+          "source_path": "benchmark-data/assets/mvtec-6621d769324f6e05d5837d74/original.png",
+          "sha256": "de3bf8155e2b6e153688ef71bbb5bdcc0f390e20e48dd60aa36cedad5b37717d",
+          "dimensions": [
+            1000,
+            1000
+          ],
+          "display_change": "Unchanged source file; native LaTeX scaling or explicitly marked crop"
+        }
+      ],
+      "crop": {
+        "source_file": "capsule-original.png",
+        "bbox_xyxy": [
+          780,
+          470,
+          960,
+          670
+        ],
+        "purpose": "Marked native LaTeX viewport; no enhancement or retouching"
+      }
+    }
   ]
 }

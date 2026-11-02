@@ -1,0 +1,36 @@
+\begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\small,
+ panel/.style={draw=black!18,rounded corners=2pt,fill=black!2},
+ arr/.style={-{Stealth[length=2mm]},thick,draw=teal!70!black}]
+\draw[panel] (0,0) rectangle (8.4,5.0);
+\draw[panel] (8.7,0) rectangle (17.1,5.0);
+\node[anchor=west,font=\sffamily\bfseries] at (.2,4.65) {(a) Missing detail: inspect the source};
+\node[align=center,text width=7.8cm,font=\sffamily\footnotesize] at (4.2,4.08)
+ {Candidate claim: the target capsule has a crack.};
+\node (preview) at (1.7,2.55) {\includegraphics[width=2.05cm]{figures/capsule-preview.png}};
+\node[font=\sffamily\scriptsize,align=center] at (1.7,1.22)
+ {Released preview\\\(48\times48\) source pixels};
+\node (detail) at (6.1,2.55)
+ {\includegraphics[width=1.85cm,trim={780bp 330bp 40bp 470bp},clip]{figures/capsule-original.png}};
+\draw[orange!80!black,thick] (5.16,1.51) rectangle (7.04,3.59);
+\node[font=\sffamily\scriptsize,align=center] at (6.1,1.12)
+ {Marked crop from the original\\\(180\times200\) source pixels};
+\draw[arr] (3.0,2.65) -- (4.83,2.65);
+\node[font=\sffamily\scriptsize,align=center,text width=1.7cm] at (3.95,3.18)
+ {Request original\\then crop};
+\node[fill=teal!7,draw=teal!40,rounded corners=2pt,text width=7.3cm,align=center,
+ font=\sffamily\footnotesize,minimum height=.53cm] at (4.2,.43)
+ {Recover recorded detail; do not invent new pixels.};
+\node[anchor=west,font=\sffamily\bfseries] at (8.9,4.65) {(b) Missing correspondence: connect views};
+\node[align=center,text width=7.8cm,font=\sffamily\footnotesize] at (12.9,4.08)
+ {Candidate claim: A and B show the same physical chair.};
+\node (va) at (10.05,2.58) {\includegraphics[height=2.25cm]{figures/chair-a.jpg}};
+\node (vb) at (12.9,2.58) {\includegraphics[height=2.25cm]{figures/chair-b-preview.jpg}};
+\node (vc) at (15.72,2.58) {\includegraphics[height=2.25cm]{figures/chair-a-new.jpg}};
+\node[font=\sffamily\scriptsize] at (10.05,1.18) {Released A};
+\node[font=\sffamily\scriptsize] at (12.9,1.18) {Released B preview};
+\node[font=\sffamily\scriptsize] at (15.72,1.18) {Requested view of A};
+\draw[arr] (13.94,2.58) -- (14.64,2.58);
+\node[fill=teal!7,draw=teal!40,rounded corners=2pt,text width=7.3cm,align=center,
+ font=\sffamily\footnotesize,minimum height=.53cm] at (12.9,.43)
+ {Acquire another recorded view; then reassess identity.};
+\end{tikzpicture}
