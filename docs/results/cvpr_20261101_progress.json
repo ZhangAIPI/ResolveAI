@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-02T02:27:12.905860+00:00",
+  "as_of_utc": "2026-11-02T02:33:09.700471+00:00",
   "source": {
     "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
     "tests_passed": 80
@@ -10,28 +10,48 @@
   "formal_scores": null,
   "workers": [
     {
+      "source_commit": "268e1f8476fadb9cc8957e721d2ed521ab893672",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "5.3.0",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
       "name": "qwen35",
       "model_id": "Qwen/Qwen3.5-9B",
       "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
-      "job_id": "26546",
-      "completed": 2,
+      "job_id": "26548",
+      "completed": 5,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 1,
+          "episodes": 2,
           "verdicts": {
-            "Refuted": 1
+            "Refuted": 2
           },
           "terminations": {
-            "finished": 1
+            "finished": 2
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 2.4
+          "wall_latency_s": 2.5
         },
         "full_available_text": {
+          "episodes": 2,
+          "verdicts": {
+            "Refuted": 2
+          },
+          "terminations": {
+            "finished": 2
+          },
+          "errors": 0,
+          "photo_requests": 0,
+          "tool_calls": 0,
+          "wall_latency_s": 2.8
+        },
+        "interactive_agent": {
           "episodes": 1,
           "verdicts": {
             "Refuted": 1
@@ -39,174 +59,195 @@
           "terminations": {
             "finished": 1
           },
-          "errors": 0,
+          "errors": 2,
           "photo_requests": 0,
-          "tool_calls": 0,
-          "wall_latency_s": 1.3
-        },
-        "interactive_agent": {
-          "episodes": 0,
-          "verdicts": {},
-          "terminations": {},
-          "errors": 0,
-          "photo_requests": 0,
-          "tool_calls": 0,
-          "wall_latency_s": 0
+          "tool_calls": 1,
+          "wall_latency_s": 52.2
         }
       }
     },
     {
+      "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
       "name": "qwen3",
       "model_id": "Qwen/Qwen3-VL-8B-Instruct",
       "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
       "job_id": "26543",
-      "completed": 17,
+      "completed": 71,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 6,
+          "episodes": 24,
           "verdicts": {
-            "Refuted": 6
+            "Refuted": 23,
+            "Supported": 1
           },
           "terminations": {
-            "finished": 6
+            "finished": 24
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 13.2
+          "wall_latency_s": 26.0
         },
         "full_available_text": {
-          "episodes": 6,
+          "episodes": 24,
           "verdicts": {
-            "Refuted": 6
+            "Refuted": 22,
+            "Supported": 2
           },
           "terminations": {
-            "finished": 6
+            "finished": 24
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 5.5
+          "wall_latency_s": 27.3
         },
         "interactive_agent": {
-          "episodes": 5,
+          "episodes": 23,
           "verdicts": {
-            "Refuted": 4,
-            "Need more evidence": 1
+            "Refuted": 18,
+            "Need more evidence": 4,
+            "Supported": 1
           },
           "terminations": {
-            "finished": 5
+            "finished": 23
           },
-          "errors": 0,
-          "photo_requests": 1,
-          "tool_calls": 13,
-          "wall_latency_s": 94.9
+          "errors": 11,
+          "photo_requests": 3,
+          "tool_calls": 50,
+          "wall_latency_s": 420.3
         }
       }
     },
     {
+      "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
       "name": "qwen25",
       "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
       "revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
       "job_id": "26544",
-      "completed": 23,
+      "completed": 74,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 8,
+          "episodes": 25,
           "verdicts": {
-            "Need more evidence": 8
+            "Need more evidence": 18,
+            "Refuted": 7
           },
           "terminations": {
-            "finished": 8
+            "finished": 25
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 11.0
+          "wall_latency_s": 24.7
         },
         "full_available_text": {
-          "episodes": 8,
+          "episodes": 25,
           "verdicts": {
-            "Need more evidence": 8
+            "Need more evidence": 18,
+            "Refuted": 7
           },
           "terminations": {
-            "finished": 8
+            "finished": 25
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 7.5
+          "wall_latency_s": 31.0
         },
         "interactive_agent": {
-          "episodes": 7,
+          "episodes": 24,
           "verdicts": {
-            "Need more evidence": 7
+            "Need more evidence": 20,
+            "No submitted verdict": 4
           },
           "terminations": {
-            "finished": 7
+            "finished": 20,
+            "max_turns": 4
           },
-          "errors": 1,
+          "errors": 17,
           "photo_requests": 0,
-          "tool_calls": 34,
-          "wall_latency_s": 115.0
+          "tool_calls": 113,
+          "wall_latency_s": 411.9
         }
       }
     },
     {
+      "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
       "name": "internvl35",
       "model_id": "OpenGVLab/InternVL3_5-8B-HF",
       "revision": "741a7d03020411e666c6109218ab71e08151ef86",
       "job_id": "26545",
-      "completed": 8,
+      "completed": 44,
       "expected": 5736,
       "complete": false,
       "arms": {
         "initial_text": {
-          "episodes": 3,
+          "episodes": 15,
           "verdicts": {
-            "Refuted": 3
+            "Refuted": 15
           },
           "terminations": {
-            "finished": 3
+            "finished": 15
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 3.5
+          "wall_latency_s": 11.2
         },
         "full_available_text": {
-          "episodes": 3,
+          "episodes": 15,
           "verdicts": {
-            "Refuted": 3
+            "Refuted": 15
           },
           "terminations": {
-            "finished": 3
+            "finished": 15
           },
           "errors": 0,
           "photo_requests": 0,
           "tool_calls": 0,
-          "wall_latency_s": 3.3
+          "wall_latency_s": 13.9
         },
         "interactive_agent": {
-          "episodes": 2,
+          "episodes": 14,
           "verdicts": {
-            "No submitted verdict": 2
+            "No submitted verdict": 13,
+            "Refuted": 1
           },
           "terminations": {
-            "max_turns": 2
+            "max_turns": 13,
+            "finished": 1
           },
-          "errors": 4,
-          "photo_requests": 0,
-          "tool_calls": 12,
-          "wall_latency_s": 78.6
+          "errors": 29,
+          "photo_requests": 2,
+          "tool_calls": 79,
+          "wall_latency_s": 417.0
         }
       }
     }
   ],
-  "completed": 50,
+  "completed": 194,
   "expected": 22944
 }

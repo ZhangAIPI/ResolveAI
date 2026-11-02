@@ -1,5 +1,7 @@
 # ResolveAI
 
+[**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
+
 [**20 人、预计 5–10 分钟：中英双语人工实验与模型评测**](docs/human_study.zh-CN.md)
 
 [**中文可视化 Demo：不同工具操作的实际结果**](docs/demo/README.zh-CN.md)

@@ -65,8 +65,12 @@ def main():
         progress = summarize_worker(
             args.experiment / model["name"], plan["expected_episodes_per_model"]
         )
+        manifest_path = args.experiment / model["name"] / "manifest.json"
+        manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
         report["workers"].append(
             {
+                "source_commit": manifest.get("source_commit", model.get("source_commit", report["source"]["source_commit"])),
+                "versions": manifest.get("versions"),
                 "name": model["name"],
                 "model_id": model["model_id"],
                 "revision": model["revision"],
