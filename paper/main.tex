@@ -91,7 +91,7 @@ Our contributions are:
 \paragraph{Visual understanding and active observation.}
 MMVP and BLINK expose difficult visual distinctions~\cite{mmvp,blink}, while VSI-Bench organizes spatial understanding into measurable capabilities~\cite{vsibench}.
 VidComposition and MMPerspective organize fine-grained evaluation around compositional and geometric capabilities~\cite{vidcomposition,mmperspective}. MMStar motivates explicit checks for visual dependence~\cite{mmstar}.
-OpenEQA evaluates answers from memory or active exploration~\cite{openeqa}, and ActiView tests active visual field selection~\cite{actiview}.
+OpenEQA compares episodic memory and active exploration~\cite{openeqa}; ActiView restricts an image's perceptual field and tests zooming or shifting it~\cite{actiview}.
 V*, Visual Sketchpad and visual tool benchmarks study tool-assisted inspection and reasoning~\cite{vstar,sketchpad,visualtoolbench,vtcbench,missingbench}.
 \benchmark connects observation choice to a claim-specific evidence requirement, comparing the same fact under different opportunities to establish it.
 
@@ -107,7 +107,7 @@ We retain this distinction when comparing object-level search actions.
 A crop, another released image, a requested photograph and stopping can be tested from a common history.
 The audit checks acquisition and citation grounding separately; dependence on the returned pixels requires content controls.
 Table~\ref{tab:position} summarizes the related evaluation targets.
-The contribution is the paired study of object-claim sufficiency; active observation, abstention and visual credit are established research questions.
+Our comparison changes the answerability of the same object claim by changing access to evidence. Active observation, sufficiency checking and visual credit are established ideas; their presence alone does not distinguish this benchmark.
 
 \begin{table}[t]
 \centering\small
@@ -258,7 +258,7 @@ Different sequences alone do not establish different physical items, and missing
 MVTec normal and anomalous images of different specimens cannot constitute a before--after transition.
 The present pool targets condition and identity; temporal-change claims require suitable paired observations.
 
-Two independent annotators and an adjudicator must validate claim meaning, visibility, identity or condition, and sufficient evidence alternatives.
+Two independent annotators and an adjudicator must validate claim meaning, visibility, identity or condition, and sufficient evidence alternatives, blinded to model outcomes. Retention and exclusion counts must be reported by source and task.
 They inspect the policy-visible displays and obtainable views for every configuration.
 An admitted Obtainable case must satisfy
 \(Y_q(\mathcal{E}_0)=\Nme\) and \(Y_q(\mathcal{A})\ne\Nme\), with a sufficient path within budget using requests expressible through public object, time and view fields.
@@ -267,7 +267,7 @@ Uncertain truth or disputed sufficiency triggers review, not an automatic \(\Nme
 
 A model failure on a reviewed, answerable case is a capability signal; unresolved disagreement over the question is a reason to revise the case.
 The candidate collection has not completed semantic admission, so unreviewed cases support behavioral diagnostics rather than semantic scores.
-A separate brief human study checks question and interaction clarity; it does not replace evidence-chain annotation.
+A brief human study checks interaction clarity separately from evidence annotation.
 Audits include image-free and metadata-only controls; foreground-only and background-only identity tests check reliance on the target rather than its surroundings.
 Related views, rewrites and access versions remain grouped for splitting and uncertainty estimation.
 
@@ -342,8 +342,12 @@ The expectation uses matched continuations and access configurations consistent 
 
 Equation~\ref{eq:decomposition} checks whether a branch found sufficient evidence and whether its continuation converted that evidence into a grounded decision.
 Attributing a gain specifically to returned pixels additionally requires matched content controls~\cite{countercredit}; otherwise Equation~\ref{eq:branch} describes the benefit of the action and its continuation.
-Fixed-order and random policies provide acquisition baselines with the same tool pool and allowance.
-This diagnosis identifies whether future training should improve action selection or the interpretation of acquired evidence.
+\paragraph{What would make this a search benchmark?}
+Reviewed Obtainable cases must remain unresolved initially and become resolvable with accessible evidence.
+Adaptive policies must then be compared with fixed-order and random acquisition under identical tools and allowances.
+If requesting the original image once solves nearly every case, the task primarily tests detail retrieval.
+Evidence for adaptive search requires cases where the useful next observation depends on the current history.
+These are validity tests for the benchmark, not findings from the candidate pool.
 
 \clearpage
 \section*{LLM Usage Statement}
