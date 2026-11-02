@@ -1,0 +1,34 @@
+{
+  "dataset": "CO3D",
+  "official_source": "https://github.com/facebookresearch/co3d",
+  "license": "CC-BY-NC-4.0",
+  "family_id": "case-4f6d9ad29d8928752244",
+  "sequence": "569_82582_162912",
+  "role": "Illustrative candidate; no validated verdict shown",
+  "images": [
+    {
+      "file": "chair-a.jpg",
+      "image_id": "photo-23a7a491990931831bc9",
+      "source_id": "photo-23a7a491990931831bc9",
+      "source_path": "co3d-candidates/assets/photo-23a7a491990931831bc9.jpg",
+      "sha256": "d891d2ce5ab1879fd380818f9a320a5fe04bd78383653e8fc05245efdcea21c1",
+      "display_change": "LaTeX scales the unchanged file; no enhancement or retouching"
+    },
+    {
+      "file": "chair-b-preview.jpg",
+      "image_id": "photo-f7bbe4d91ffed5a8a073-preview",
+      "source_id": "photo-f7bbe4d91ffed5a8a073",
+      "source_path": "co3d-candidates/assets/photo-f7bbe4d91ffed5a8a073-preview.jpg",
+      "sha256": "20a547bb2fe70de24301d1b235f452e110506d55780ec0bb06986899ac5d927a",
+      "display_change": "LaTeX scales the unchanged file; no enhancement or retouching"
+    },
+    {
+      "file": "chair-a-new.jpg",
+      "image_id": "photo-8b5de848ebdd953a6647",
+      "source_id": "photo-8b5de848ebdd953a6647",
+      "source_path": "co3d-candidates/assets/photo-8b5de848ebdd953a6647.jpg",
+      "sha256": "f5e67af8df141cf5950f672b47d42125cf8d4d9586a7761bfff079bc565283f4",
+      "display_change": "LaTeX scales the unchanged file; no enhancement or retouching"
+    }
+  ]
+}

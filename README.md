@@ -1,5 +1,7 @@
 # ResolveAI
 
+[**CVPR 英文方案初稿：ProofAgent**](paper/README.md)
+
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
 [**20 人、预计 5–10 分钟：中英双语人工实验与模型评测**](docs/human_study.zh-CN.md)

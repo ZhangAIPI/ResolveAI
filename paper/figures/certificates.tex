@@ -1,0 +1,16 @@
+\begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\footnotesize,
+ cert/.style={draw=teal!65!black,fill=teal!7,rounded corners=2pt,minimum width=1.5cm,minimum height=.6cm},
+ arrow/.style={-{Stealth[length=1.6mm]},thick}]
+\node[anchor=west,font=\sffamily\bfseries] at (0,2.65) {Claim: identity \(\wedge\) condition};
+\node[cert] (s1) at (.85,1.78) {\(M_1^{\Spt}\)};
+\node[cert] (s2) at (2.65,1.78) {\(M_2^{\Spt}\)};
+\node (and) at (4.2,1.78) {AND};
+\node[anchor=west] (yes) at (5.2,1.78) {Supported};
+\draw[arrow] (s1.north) -- ++(0,.25) -| (and.north);
+\draw[arrow] (s2.east) -- (and.west);
+\draw[arrow] (and.east) -- (yes.west);
+\node[cert,draw=orange!75!black,fill=orange!8] (r1) at (.85,.55) {\(M_j^{\Rft}\)};
+\node[anchor=west,align=left] (no) at (5.2,.55) {Refuted};
+\draw[arrow,draw=orange!75!black] (r1.east) -- node[above,font=\scriptsize] {one decisive counterexample} (no.west);
+\node[anchor=west,text=black!65,font=\scriptsize] at (0,-.15) {A certificate may have multiple valid alternatives.};
+\end{tikzpicture}
