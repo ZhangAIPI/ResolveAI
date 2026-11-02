@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from types import SimpleNamespace
 from scripts.evaluate_study import normalize_agent_record, Records
+from scripts.summarize_study import summarize_worker
 
 
 class EvaluationStorageTests(unittest.TestCase):
@@ -18,6 +19,40 @@ class EvaluationStorageTests(unittest.TestCase):
         self.assertEqual(result["termination"], "finished")
         self.assertIs(result["decision"], decision)
         self.assertEqual(result["requests"], 2)
+
+    def test_progress_keeps_parse_failures_separate_from_abstention_and_is_read_only(
+        self,
+    ):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            self.assertEqual(summarize_worker(output, 2)["completed"], 0)
+            self.assertFalse((output / "episodes.sqlite").exists())
+            records = Records(output)
+            for index, verdict in enumerate([None, "Need more evidence"]):
+                row = {
+                    "case_id": str(index),
+                    "arm": "interactive_agent",
+                    "termination": "invalid_format" if verdict is None else "finished",
+                    "verdict": verdict,
+                    "errors": int(verdict is None),
+                    "requests": 0,
+                    "source_label": None,
+                    "source_label_match": None,
+                }
+                records.save(row, {"messages": [], "decision": None})
+            before = list(records.db.execute("SELECT * FROM episodes ORDER BY case_id"))
+            progress = summarize_worker(output, 2)
+            self.assertTrue(progress["complete"])
+            arm = progress["arms"]["interactive_agent"]
+            self.assertEqual(
+                arm["verdicts"], {"No submitted verdict": 1, "Need more evidence": 1}
+            )
+            self.assertNotIn("accuracy", arm)
+            self.assertEqual(
+                list(records.db.execute("SELECT * FROM episodes ORDER BY case_id")),
+                before,
+            )
+            records.db.close()
 
     def test_resume_finds_committed_result_and_matching_trace(self):
         with tempfile.TemporaryDirectory() as directory:
