@@ -1,6 +1,6 @@
-# ProofAgent manuscript
+# Evidence Before Verdicts
 
-English CVPR 2027 working draft, limited to the abstract, introduction, related work, task, benchmark construction and evaluation methodology. No experiments/results section, completed-score table or training-gain claim is included. ProofAgent preserves the title of the supplied Overleaf project; the codebase remains ResolveAI.
+English CVPR 2027 working draft, limited to the abstract, introduction, related work, task, benchmark construction and evaluation methodology. No experiments/results section, completed-score table or training-gain claim is included. Paper title: Evidence Before Verdicts: Benchmarking Active Visual Verification. The benchmark and codebase are named ResolveAI.
 
 The story follows one question: can a model obtain enough object-specific evidence, then stop with a justified decision? The protocol distinguishes physical truth, obtainable evidence and released evidence. The four availability variants are intended construction conditions, not automatically certified semantic labels.
 

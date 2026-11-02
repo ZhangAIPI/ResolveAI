@@ -1,6 +1,6 @@
 # ResolveAI
 
-[**CVPR 英文方案初稿：ProofAgent**](paper/README.md)
+[**CVPR 英文方案初稿：Evidence Before Verdicts**](paper/README.md)
 
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
