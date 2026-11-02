@@ -188,15 +188,26 @@ def main():
     adapter = "native" if native and args.tool_adapter == "auto" else "portable"
     # Validate processor dependencies before loading the large checkpoint.
     # Keep library loading/progress separate from the machine-readable protocol.
-    model = AutoModelForImageTextToText.from_pretrained(args.model,
+    from pathlib import Path
+    adapter_config = Path(args.model) / "adapter_config.json"
+    base_path = args.model
+    if adapter_config.exists():
+        base_path = json.loads(adapter_config.read_text())["base_model_name_or_path"]
+        if not Path(base_path).is_dir():
+            raise ValueError("LoRA evaluation requires the recorded local base checkpoint")
+    model = AutoModelForImageTextToText.from_pretrained(base_path,
         dtype=torch.bfloat16, device_map={"": args.device}, attn_implementation="sdpa")
+    if adapter_config.exists():
+        from peft import PeftModel
+        model = PeftModel.from_pretrained(model, args.model)
     model.eval()
     eos_ids = generation_eos_ids(model.generation_config.eos_token_id, processor.tokenizer.eos_token_id)
     # Match the non-thinking instruction models under the same output budget.
     template_options = {"enable_thinking": False} if model.config.model_type == "qwen3_5" else {}
     print(json.dumps({"ready": True, "model": args.model,
                       "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
-                      "model_type": model.config.model_type,
+                      "model_type": model.config.model_type, "base_model": base_path,
+                      "lora_adapter": args.model if adapter_config.exists() else None,
                       "eos_token_ids": eos_ids,
                       "thinking": False if model.config.model_type == "qwen3_5" else None,
                       "native_tool_format": "qwen-xml-or-json" if model.config.model_type == "qwen3_5" else "json",
