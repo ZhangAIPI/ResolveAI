@@ -156,7 +156,15 @@ The next observation must come from actual execution, never a model-generated to
 
 \subsection{Metrics and failure accounting}
 For reviewed case \(i\), let \(Y_i=Y_{q_i}(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid evidence set citing only released evidence.
-The main paper additionally defines strict family success by requiring grounded outcomes in all four admitted access versions. It is a paired diagnostic, alongside average accuracy; access variants are not independent cases for uncertainty estimation.
+For reviewed families, strict family success is
+\begin{equation}
+\mathrm{FG}=\frac{1}{|\mathcal{F}|}
+\sum_{f\in\mathcal{F}}\prod_{v\in\mathcal{V}_f}G(d_{fv}),
+\end{equation}
+where \(\mathcal{V}_f\) contains four admitted access versions.
+It complements average accuracy; access versions are not independent samples.
+The main paper's acquisition--conversion identity uses only reviewed answerable episodes with a jointly cost-and-turn-feasible sufficient path. Each attempted episode enters its denominator, including failed execution. Evidence exposure is audited before termination regardless of the submitted verdict; exposed pixels must satisfy the same reviewed sufficiency requirements used to check citations. Conversion includes perception, reasoning, citation and output-format failures, so it is not a pure perception score.
+
 Grounded accuracy and unsupported decision rate are
 \begin{align}
 \mathrm{GA}

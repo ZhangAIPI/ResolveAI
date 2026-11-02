@@ -308,16 +308,23 @@ Unsupported definite decisions and coverage--risk reporting~\cite{selective} exp
 Requests, tool costs, tokens and latency accompany grounded performance.
 Fewer calls count as efficiency only at comparable decision quality.
 
-The paired design also asks whether a policy handles \emph{all} access conditions for a claim.
-For reviewed families \(f\), strict family success is
+On reviewed, budget-feasible answerable episodes, let \(n\) count all attempted episodes, \(n_A\) those exposing sufficient evidence, and \(n_G\) grounded correct decisions.
+Because \(n_G\le n_A\), answerable-case accuracy decomposes as
 \begin{equation}
-\mathrm{FG}=\frac{1}{|\mathcal{F}|}
-\sum_{f\in\mathcal{F}}\prod_{v\in\mathcal{V}_f}G(d_{fv}),
-\label{eq:family}
+\mathrm{GA}_{\mathrm{ans}}
+=\frac{n_G}{n}
+=\underbrace{\frac{n_A}{n}}_{\text{acquisition}}
+ \underbrace{\frac{n_G}{n_A}}_{\text{grounded conversion}}.
+\label{eq:decomposition}
 \end{equation}
-where \(\mathcal{V}_f\) contains the four admitted access versions, each evaluated in a fresh episode.
-It complements average accuracy: always abstaining fails the answerable versions, while always asserting the physical truth fails versions without sufficient evidence.
-Success requires resolving the claim when possible and withholding judgment when appropriate.
+This is an accounting identity, not an independence or causal assumption.
+When \(n_A=0\), accuracy is zero and conversion is undefined.
+Invalid or missing terminal decisions remain in \(n\).
+Low acquisition identifies an open evidence gap; low conversion identifies failures after sufficient evidence was exposed, including interpretation, citation and interface errors.
+Unanswerable cases are assessed separately for unsupported certainty.
+
+Strict family success additionally requires grounded decisions in all four admitted access versions, each evaluated in a fresh episode (supplement).
+Always abstaining fails the answerable versions; always asserting the physical truth fails those lacking sufficient evidence.
 
 \paragraph{Compare choices from the same evidence state.}
 The evaluator branches a common public history into looking closer, examining another released image, requesting a recorded view or stopping (Figure~\ref{fig:diagnosis}).
@@ -333,10 +340,7 @@ G(d^{a\rightarrow\pi})-G(d^{\mathrm{stop}})
 where \(a\rightarrow\pi\) executes \(a\) before continuing with policy \(\pi\).
 The expectation uses matched continuations and access configurations consistent with the public history; the policy never receives the hidden version label. Costs are reported separately.
 
-The audit also checks whether an initially open evidence gap closed.
-If sufficient evidence was acquired but the verdict remains ungrounded, the failure lies after acquisition, in interpretation or citation.
-If the gap persists, the action or subsequent search did not obtain what the claim required.
-This separates \emph{finding sufficient evidence} from \emph{submitting a grounded verdict}.
+Equation~\ref{eq:decomposition} checks whether a branch found sufficient evidence and whether its continuation converted that evidence into a grounded decision.
 Attributing a gain specifically to returned pixels additionally requires matched content controls~\cite{countercredit}; otherwise Equation~\ref{eq:branch} describes the benefit of the action and its continuation.
 Fixed-order and random policies provide acquisition baselines with the same tool pool and allowance.
 This diagnosis identifies whether future training should improve action selection or the interpretation of acquired evidence.
