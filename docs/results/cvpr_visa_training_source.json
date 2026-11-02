@@ -1,0 +1,52 @@
+{
+  "scope": "Auxiliary condition-training source prepared; no SFT or sufficiency result is claimed",
+  "provenance": {
+    "repo": "amazon-science/spot-diff",
+    "revision": "2a692ab575001cbde74d402d897a7286086c6199",
+    "split": "2cls_highshot/train",
+    "scope": "Candidate auxiliary condition training only; benchmark stays frozen",
+    "license": "CC-BY-4.0",
+    "archive_url": "https://amazon-visual-anomaly.s3.us-west-2.amazonaws.com/VisA_20220922.tar"
+  },
+  "official_setup": "2cls_highshot",
+  "official_split": "train",
+  "csv_sha256": "c3331eede15f2da8a75b380d4fbfb24f75ee036ec9a25147eca898da6e972f09",
+  "eval_dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "category_partitions": {
+    "train": [
+      "capsules",
+      "cashew",
+      "fryum",
+      "macaroni1",
+      "macaroni2",
+      "pcb1",
+      "pcb2",
+      "pcb3",
+      "pipe_fryum"
+    ],
+    "validation": [
+      "candle",
+      "chewinggum",
+      "pcb4"
+    ]
+  },
+  "counts": {
+    "train": {
+      "normal": 540,
+      "anomaly": 540
+    },
+    "validation": {
+      "normal": 180,
+      "anomaly": 180
+    }
+  },
+  "checks": {
+    "official_test_rows_used": 0,
+    "eval_image_hash_overlap": 0,
+    "train_validation_image_hash_overlap": 0
+  },
+  "queries": 1440,
+  "normal_references": 12,
+  "reference_note": "Different physical items; not paired before/after pictures",
+  "supervision_note": "Official condition labels; source masks stay private, no independent sufficiency judgments"
+}

@@ -88,4 +88,4 @@ Qwen3-VL-8B首轮SFT已超过140/200个优化步，峰值显存24.6GiB；训练�
 
 训练前的[实际索证记录](../results/cvpr_acquisition_baseline.json)显示：固定209族中，Obtainable有12次Agent运行请求并实际得到新照片；Missing与Unavailable各有12次请求、零张新照片。这个汇总将用于同题比较SFT前后“提出请求”和“收到新材料”的变化，不能代替证据充分性或搜证价值评分。
 
-后续状态训练另从[VisA官方2类highshot划分](https://github.com/amazon-science/spot-diff)的train部分准备数据，不使用其test图片。选择720张异常、720张正常图和12张独立正常参考，按类别分成1080张训练查询图与360张验证查询图；数据下载后还需通过原图哈希隔离和标注完整性检查。这里只准备来源，尚未启动第二轮SFT；当前训练及冻结benchmark不变。
+后续状态训练另从[VisA官方2类highshot划分](https://github.com/amazon-science/spot-diff)的train部分准备数据，不使用其test图片。选择720张异常、720张正常图和12张独立正常参考，按类别分成1080张训练查询图与360张验证查询图；数据已下载并通过图片/掩码完整性、冻结评测零重叠、训练/验证零重叠检查。[来源检查结果](../results/cvpr_visa_training_source.json)。异常区域mask不作为公开定位提示；正常参考来自不同实物，不能构造成同一物品的前后照片。这里只准备来源，尚未启动第二轮SFT；当前训练及冻结benchmark不变。
