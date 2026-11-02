@@ -75,6 +75,19 @@ class ControlTests(unittest.TestCase):
         self.assertEqual(env.requests, 0)
         self.assertEqual([x["function"]["name"] for x in client.payloads[0]["tools"]], ["finish"])
 
+    def test_terminal_prompt_does_not_advertise_unavailable_tools(self):
+        client = Client({"parse_error": False, "raw": "", "text": "",
+                         "tool_call": {"name": "finish", "arguments": {
+                             "verdict": "Need more evidence", "citations": [], "links": []}}})
+        finish_direct(self.env(), OutputBudget(client, 384))
+        payload = client.payloads[0]
+        system = payload["messages"][0]["content"]
+        available = {tool["function"]["name"] for tool in payload["tools"]}
+        self.assertEqual(available, {"finish"})
+        for name in ["inspect", "crop", "zoom", "request_photo"]:
+            self.assertNotRegex(system, r"\b" + name + r"\b")
+        self.assertNotIn("minimal_evidence_sets", json.dumps(payload))
+
     def test_terminal_control_does_not_repair_an_acquisition_call(self):
         client = Client({"parse_error": False, "raw": "", "text": "",
                          "tool_call": {"name": "inspect", "arguments": {"image_id": "photo"}}})

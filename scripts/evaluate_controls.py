@@ -26,15 +26,36 @@ class OutputBudget:
         )
 
 
+TERMINAL_SYSTEM = (
+    "Make a terminal decision about the stated visual claim using only the supplied images. "
+    "Supported requires visible evidence for the claim; Refuted requires a reliable "
+    "visible contradiction. Choose Need more evidence when the supplied pixels do not "
+    "permit a reliable judgment. A missing original alone does not require abstention. "
+    "Use the finish function exactly once, with verdict, citations and links. "
+    "Citations use released image_id, source-pixel bbox and source time from the "
+    "accompanying metadata. A source_id or derived view_id is not a citation image_id. "
+    "For cross-image identity or time claims, include the relevant same_object, "
+    "different_object, earlier_than or same_time links between cited source regions. "
+    "Need more evidence may have empty citations and links. "
+    "For a conjunction, support all parts; one decisive contradiction can refute it. "
+    "Judge visual facts, not responsibility."
+)
+
+
 def finish_direct(env, client):
     session = Conversation(env)
     session.tools = [
         tool for tool in session.tools if tool["function"]["name"] == "finish"
     ]
-    session.messages[0]["content"] += (
-        "\nThis is a terminal-only control. Use the finish tool now with the "
-        "currently supplied evidence. No acquisition action is available.\n"
+    instruction = (
+        " Compare the specified foreground targets. Similar appearance alone does not "
+        "establish physical identity; a reliable geometric or distinctive-feature "
+        "mismatch may refute it. Submission slots do not encode identity."
+        if env._case.get("task") == "identity" else
+        " Judge only the named condition. A normal reference depicts a different "
+        "specimen, not the target's earlier state."
     )
+    session.messages[0]["content"] = TERMINAL_SYSTEM + instruction
     return normalize_agent_record(run(session, client, max_turns=1), env)
 
 
@@ -68,6 +89,7 @@ def main():
     config = {
         "experiment": "output-budget-and-terminal-format-v1",
         "mode": args.mode,
+        "terminal_instructions": "standalone-v2" if args.mode == "finish" else None,
         "plan_sha256": hashlib.sha256(args.plan.read_bytes()).hexdigest(),
         "dataset_sha256": plan["dataset_sha256"],
         "source_sha256": source_digest(),
