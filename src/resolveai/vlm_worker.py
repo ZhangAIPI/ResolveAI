@@ -161,6 +161,16 @@ def portable_history(messages):
     return messages
 
 
+def generation_eos_ids(configured, tokenizer_eos):
+    """Honor the checkpoint stops and the tokenizer's assistant-turn boundary."""
+    result = list(configured) if isinstance(configured, (list, tuple)) else (
+        [configured] if configured is not None else []
+    )
+    if tokenizer_eos is not None and tokenizer_eos not in result:
+        result.append(tokenizer_eos)
+    return result or None
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("model")
@@ -180,11 +190,13 @@ def main():
     model = AutoModelForImageTextToText.from_pretrained(args.model,
         dtype=torch.bfloat16, device_map={"": args.device}, attn_implementation="sdpa")
     model.eval()
+    eos_ids = generation_eos_ids(model.generation_config.eos_token_id, processor.tokenizer.eos_token_id)
     # Match the non-thinking instruction models under the same output budget.
     template_options = {"enable_thinking": False} if model.config.model_type == "qwen3_5" else {}
     print(json.dumps({"ready": True, "model": args.model,
                       "gpu": torch.cuda.get_device_name(args.device), "device": args.device, "tool_adapter": adapter,
                       "model_type": model.config.model_type,
+                      "eos_token_ids": eos_ids,
                       "thinking": False if model.config.model_type == "qwen3_5" else None,
                       "native_tool_format": "qwen-xml-or-json" if model.config.model_type == "qwen3_5" else "json",
                       "max_pixels": 512 * 512, "min_pixels": 48 * 48,
@@ -261,7 +273,7 @@ def main():
             continue
         with torch.inference_mode():
             generated = model.generate(**inputs, max_new_tokens=request.get("max_new_tokens", 384 if tool_mode else 180), do_sample=False,
-                                       pad_token_id=processor.tokenizer.eos_token_id)
+                                       pad_token_id=processor.tokenizer.eos_token_id, eos_token_id=eos_ids)
         output = generated[:, inputs.input_ids.shape[1]:]
         raw = prefix + processor.batch_decode(output, skip_special_tokens=True)[0]
         if text_mode:

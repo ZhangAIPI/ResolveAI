@@ -1,10 +1,18 @@
 """Interface failures must remain distinguishable from model abstention."""
 import unittest
 from scripts.check_model_interfaces import verdict_from_text
-from resolveai.vlm_worker import parse_tool_call, portable_tools, decode_tool_call
+from resolveai.vlm_worker import parse_tool_call, portable_tools, decode_tool_call, generation_eos_ids
 
 
 class InterfaceTests(unittest.TestCase):
+    def test_generation_honors_tokenizer_turn_end_and_preserves_checkpoint_stops(self):
+        self.assertEqual(generation_eos_ids(248044, 248046), [248044, 248046])
+        configured = [151645, 151643]
+        self.assertEqual(generation_eos_ids(configured, 151645), configured)
+        self.assertEqual(configured, [151645, 151643])
+        self.assertEqual(generation_eos_ids(None, 151645), [151645])
+        self.assertIsNone(generation_eos_ids(None, None))
+
     def test_qwen_xml_preserves_strings_structured_values_and_one_call_limit(self):
         tools = [{"function": {"name": "finish", "parameters": {"properties": {
             "verdict": {"type": "string"}, "citations": {"type": "array"},
