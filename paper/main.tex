@@ -187,7 +187,7 @@ For identity plus damage, a damage close-up alone leaves support incomplete, whe
 The logic determines what the agent should seek, rather than prescribing the same image pair for every verdict.
 
 Several evidence sets may satisfy the same requirement.
-Annotations admit alternative source regions and cross-image relations, so a valid search need not follow a single reference trajectory.
+Annotations admit alternative source regions and cross-image relations, so a valid search need not follow a single reference trajectory. An unmatched but potentially sufficient submission requires blind adjudication; failure to match the reference is not itself proof of insufficient evidence.
 Crops retain their source mapping and do not become independent corroboration.
 A normal reference of another specimen may clarify appearance, but cannot establish the target's earlier state.
 
@@ -302,7 +302,7 @@ G(d)=\ind[\hat y=Y_q(\mathcal{A})]\,
 \label{eq:grounded}
 \end{equation}
 Grounded accuracy averages \(G\) over reviewed cases.
-A definite answer without sufficient citations receives no credit; valid citations establish evidential support, not causal reliance on the pixels.
+A definite answer with insufficient citations receives no credit. Unresolved evidence challenges remain pending until adjudication; valid citations establish evidential support, not causal reliance on the pixels.
 A correct unresolved answer is assessed against the obtainable pool; an unsubmitted verdict is a separate failure.
 Unsupported definite decisions and coverage--risk reporting~\cite{selective} expose both unjustified confidence and habitual abstention.
 Requests, tool costs, tokens and latency accompany grounded performance.

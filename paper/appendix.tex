@@ -57,11 +57,21 @@ The exact union of cited source regions must cover a required region; repeated o
 A full-image citation may satisfy this inclusion check, so it is distinct from localization quality.
 Relation endpoints additionally require matching images and times and the annotated IoU threshold (default \(0.5\)).
 Same-object, different-object and same-time relations are symmetric; earlier-than is directed.
-Any additional incorrect relation invalidates the submitted evidence set.
+The strict matcher rejects additional incorrect relations; whether a disputed relation is materially relevant must be resolved by adjudication rather than silently counted as insufficient visual evidence.
 
 Let \(Y_q(\mathcal{A})\) be the target justified by the complete obtainable pool: \(\Spt\) when every support requirement is reachable, \(\Rft\) when a decisive counterexample is reachable, and \(\Nme\) otherwise.
 Evidence validity is checked using only released evidence.
 This separates incomplete acquisition from a genuinely unresolved case.
+
+\paragraph{Unmatched evidence and adjudication.}
+The current automatic matcher checks registered alternatives; these cannot be assumed exhaustive.
+An unmatched submission may reveal a valid source region or relation absent from the reference.
+It is therefore uncertified by the matcher, not necessarily unsupported.
+Before semantic reporting, unresolved alternatives require review blinded to model identity and aggregate scores, using the claim, acquired displays, citations and original annotation rationale.
+Accepted alternatives update a versioned annotation release, followed by rescoring all compared models under the same revision.
+Report strict automatic and adjudicated outcomes separately; unresolved challenges remain pending rather than being assigned definite failures.
+The grounded-accuracy identity applies to the finalized reviewed cohort; any provisional report must disclose unresolved counts and bounds on the original denominator.
+This challenge review is a required evaluation step, not an implemented automatic adjudicator or a completed human study.
 
 \subsection{Semantic admission checklist}
 Two annotators independently assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives.
