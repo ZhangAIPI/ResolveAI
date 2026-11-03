@@ -25,6 +25,15 @@
 模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)。
 <!-- benchmark-results-end -->
 
+<!-- api-results-start -->
+**闭源对照：同一固定 209 族（来源标签，尚未独立审核）**
+
+| 模型 | 无工具 | 有工具 |
+| --- | ---: | ---: |
+| GPT-6.1 Terra | 65.1 | 70.8 |
+
+仅完整固定题组入表。Decisions 为直接分类接口；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。
+<!-- api-results-end -->
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
 [**20 人、预计 5–10 分钟：中英双语人工实验与模型评测**](docs/human_study.zh-CN.md)

@@ -283,3 +283,9 @@ Action-value estimates must aggregate over matched histories or condition only o
 Training from adjudicated action comparisons requires reviewed assistant actions and actual observations, excluding private labels from prompts.
 Sibling comparisons must share the public prefix, schemas and world state.
 The source-supervised experiment above uses weak source labels and reference actions, not adjudicated action preferences. It does not establish a gain from branch-based training.
+
+% api-settings-start
+\paragraph{API-served models.}
+Responses runs use native function calls and best-effort schemas. Direct and interactive outputs permit 96 and 384 visible tokens. GPT-6.1 Sol uses low reasoning with a 2,048-token total cap; the visible counts exclude its reported reasoning tokens, and a response exceeding the visible cap receives no credit. We retain encrypted reasoning and native call identifiers between turns. Other API models use their documented non-reasoning setting. The Decisions API returns a choice among the same three verdicts from the same pixels; it does not generate free-form action arguments, so we evaluate direct decisions only. Its tool and generated-text entries in Table 1 are inapplicable. All API times include network round trips, input counting and CPU tool execution; they are not an equal-hardware throughput comparison with local GPUs. Pilot response reuse retains original token counts and generation time rather than treating replay as fresh inference. Checkpoint aliases or pinned snapshots and returned model IDs are recorded with the run.
+\input{tables/api_settings}
+% api-settings-end

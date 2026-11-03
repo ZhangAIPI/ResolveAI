@@ -309,6 +309,9 @@ Each family contributes its constructed Sufficient version to the accuracy compa
 
 \paragraph{Models and comparison settings.}
 Table~\ref{tab:benchmark} evaluates nine open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5 at 8B and 14B~\cite{internvl35}, LLaVA-OneVision-7B~\cite{llavaonevision}, and SmolVLM2-2.2B~\cite{smolvlm2}.
+% api-models-start
+We additionally evaluate GPT-6.1 Terra through the OpenAI API on the same cases~\cite{openai_api}.
+% api-models-end
 Base checkpoints are evaluated without task demonstrations; supervised adaptation is examined separately in Section~\ref{sec:sft}.
 In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
@@ -318,13 +321,16 @@ The constant-response baseline always rejects the claim.
 A separate full-access reference supplies all obtainable photographs before a direct verdict (supplement).
 
 \paragraph{Inference settings.}
-We use greedy decoding, BF16 weights, an 8,192-token context limit and an input-image pixel cap of \(512^2\).
+For local models, we use greedy decoding, BF16 weights, an 8,192-token context limit and an input-image pixel cap of \(512^2\).
 Agents have eight assistant turns and a tool-cost allowance of 12.
 Direct responses allow 96 output tokens, compared with 384 per interactive turn.
 Direct decisions return a verdict only; interactive decisions also generate evidence citations.
-Output tokens count generated answer/action text and end markers, excluding the input prompt and image representation.
+Output tokens count all generated tokens, including end markers and any API reasoning tokens; input prompts and images are excluded.
 These settings evaluate the complete model and interaction interface: their difference does not isolate the effect of acquiring evidence.
 Image processing, output parsing and failure accounting are detailed in the supplement.
+% api-inference-start
+API runs use provider-native sampling and retain the image-size, context, action and turn limits. Their generation settings and treatment of the direct-only Decisions interface are given in the supplement.
+% api-inference-end
 We also report mean episode time, input/output tokens and model/tool calls over the same attempted cases, retaining unsuccessful runs.
 Time includes environment execution; token counts accumulate across model calls.
 
