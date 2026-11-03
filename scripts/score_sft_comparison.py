@@ -98,7 +98,7 @@ def render(report):
     lines = [
         r"\begin{table}[t]", r"\centering\small",
         r"\setlength{\tabcolsep}{5pt}",
-        r"\caption{\textbf{Effect of task-specific SFT on " + model_name + r".}",
+        r"\caption{\textbf{Supervised fine-tuning (SFT) of " + model_name + r".}",
         r"Entries are correct answers (\%) when tools are available, defined as in Table~\ref{tab:benchmark}.",
         r"The test images, tools and decision limits are unchanged.}",
         r"\label{tab:sft}",

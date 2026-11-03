@@ -56,7 +56,7 @@ def render(report):
         r"\setlength{\tabcolsep}{5pt}",
         r"\begin{minipage}{.88\textwidth}\centering",
         r"\caption{\textbf{Correct answers with and without tools (\%).}",
-        r"An answer is correct when the final Supported/Refuted verdict matches the dataset label.",
+        r"A correct answer confirms a true claim or rejects a false one, according to the dataset label.",
         r"Images only answers from the initial photographs; With tools can inspect images or request photographs before answering.",
         r"Need more evidence and failure to submit a final verdict earn no credit.",
         r"The source-derived labels have not been independently reviewed for evidence sufficiency.}",
@@ -77,7 +77,7 @@ def render(report):
         prior = 100 * counts.get("Refuted", 0) / sum(counts.values())
         priors.extend([prior, prior])
     lines += [
-        r"\midrule", "Always Refuted & " + " & ".join(f"{v:.1f}" for v in priors) + r"\\",
+        r"\midrule", "Always reject the claim & " + " & ".join(f"{v:.1f}" for v in priors) + r"\\",
         r"\bottomrule", r"\end{tabular}", r"\end{minipage}", r"\end{table*}",
     ]
     return "\n".join(lines) + "\n"
