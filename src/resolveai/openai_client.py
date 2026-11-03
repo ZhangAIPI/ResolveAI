@@ -143,6 +143,8 @@ class OpenAIClient:
         reused = ticket is None
         if not reused:
             response = self.transport(self.endpoint,payload)
+            response["_resolveai_latency_s"] = time.perf_counter()-started
+            self.ledger.record_response(ticket,response)
             usage = response.get("usage")
             if (not isinstance(usage,dict) or any(type(usage.get(k)) is not int or usage[k]<0
                                                  for k in ("input_tokens","output_tokens"))):
@@ -182,7 +184,7 @@ class OpenAIClient:
             raise ValueError("Invalid server token count")
         if count>max_context_tokens:
             return {"halt":"context_limit","input_tokens":count}
-        response,reused,replay_wall = self._request(payload,count+32,payload["max_output_tokens"])
+        response,reused,replay_wall = self._request(payload,8192,payload["max_output_tokens"]+64)
         usage = response["usage"]
         output = response.get("output",[])
         text = "".join(b.get("text","") for item in output if item.get("type")=="message"

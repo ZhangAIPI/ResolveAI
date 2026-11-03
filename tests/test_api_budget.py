@@ -119,6 +119,36 @@ class BudgetTests(unittest.TestCase):
         with self.assertRaises(BudgetStop):
             self.budget.reserve("next",.1)
 
+    def test_received_response_survives_a_usage_mismatch(self):
+        def post(route,payload):
+            if route.endswith("input_tokens"):
+                return {"input_tokens":100}
+            return {"id":"known-response","usage":{"input_tokens":9000,"output_tokens":1},"output":[]}
+        client=OpenAIClient(CONFIG,self.budget,transport=post)
+        client.begin_episode("a","initial_text")
+        with self.assertRaises(RuntimeError):
+            client.ask_conversation({"mode":"text","messages":[{"role":"user","content":"claim"}]})
+        response,charge=self.budget.db.execute("SELECT response,charge FROM calls").fetchone()
+        self.assertEqual(json.loads(response)["id"],"known-response")
+        self.assertIsNone(charge)
+        with self.assertRaises(BudgetStop):
+            client.ask_conversation({"mode":"text","messages":[{"role":"user","content":"claim"}]})
+
+    def test_usage_within_declared_context_does_not_require_a_new_generation(self):
+        count=[]
+        def post(route,payload):
+            if route.endswith("input_tokens"):
+                return {"input_tokens":100}
+            count.append(1)
+            return {"status":"completed","model":"gpt-6.1-terra",
+                    "usage":{"input_tokens":150,"output_tokens":2},
+                    "output":[{"type":"message","content":[{"type":"output_text","text":"Refuted"}]}]}
+        client=OpenAIClient(CONFIG,self.budget,transport=post)
+        client.begin_episode("a","initial_text")
+        result=client.ask_conversation({"mode":"text","messages":[{"role":"user","content":"claim"}]})
+        self.assertEqual(result["raw"],"Refuted")
+        self.assertEqual(len(count),1)
+
     def test_adapter_failure_is_not_retried(self):
         calls = []
         def post(route,payload):

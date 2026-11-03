@@ -44,9 +44,9 @@ class ApiBudget:
         with self.db:
             self.db.execute("BEGIN IMMEDIATE")
             old = self.db.execute(
-                "SELECT response FROM calls WHERE key=?", (key,)).fetchone()
+                "SELECT response,charge FROM calls WHERE key=?", (key,)).fetchone()
             if old is not None:
-                if old[0] is None:
+                if old[0] is None or old[1] is None:
                     raise BudgetStop("Prior request has unknown cost; reconcile before retrying")
                 return None, json.loads(old[0])
             if self.db.execute("SELECT 1 FROM sealed").fetchone():
@@ -66,6 +66,14 @@ class ApiBudget:
             ticket = uuid.uuid4().hex
             self.db.execute("INSERT INTO calls VALUES (?,?,?,?,NULL,NULL)", (ticket,key,stage,bound))
         return ticket, None
+
+    def record_response(self, ticket, response):
+        """Keep a received response even when its usage needs reconciliation."""
+        with self.db:
+            row=self.db.execute("SELECT charge FROM calls WHERE id=?", (ticket,)).fetchone()
+            if row is None or row[0] is not None:
+                raise ValueError("Reservation missing or already settled")
+            self.db.execute("UPDATE calls SET response=? WHERE id=?",(json.dumps(response),ticket))
 
     def settle(self, ticket, charge_usd, response):
         charge = microdollars(charge_usd)
