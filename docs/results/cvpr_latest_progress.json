@@ -1,6 +1,6 @@
 {
-  "as_of_utc": "2026-11-03T02:55:29.043366+00:00",
-  "as_of_new_york": "2026-11-02T21:55:29.043366-05:00",
+  "as_of_utc": "2026-11-03T03:32:38.296484+00:00",
+  "as_of_new_york": "2026-11-02T22:32:38.296484-05:00",
   "sft": {
     "training_complete": true,
     "optimizer_steps": 200,
@@ -12,19 +12,19 @@
       "expected": 5736
     },
     "LLaVA-OneVision-7B": {
-      "completed": 2930,
+      "completed": 3296,
       "expected": 5736
     },
     "Qwen3-VL-4B": {
-      "completed": 2411,
+      "completed": 2694,
       "expected": 5736
     },
     "Qwen3-VL-8B + SFT": {
-      "completed": 2663,
+      "completed": 3114,
       "expected": 5736
     },
     "Qwen3-VL-2B": {
-      "completed": 590,
+      "completed": 968,
       "expected": 5736
     }
   },
