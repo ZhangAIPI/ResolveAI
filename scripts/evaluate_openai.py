@@ -32,7 +32,8 @@ def select_cases(plan, cohort, stage, variants):
              if c["family_id"] in families and c["variant"] in variants]
     if len(cases) != len(families)*len(variants):
         raise ValueError("Missing or duplicate paper cases")
-    cases.sort(key=lambda c:c["case_id"])
+    order = {name:i for i,name in enumerate(("Sufficient","Obtainable","Missing","Unavailable"))}
+    cases.sort(key=lambda c:(order[c["variant"]],c["case_id"]))
     if stage == "pilot":
         # Deterministic and label-blind: equal task counts, all requested access variants.
         picked = set()

@@ -1,0 +1,100 @@
+{
+  "checked_at": "2026-11-03T16:33:07.103962-05:00",
+  "scope": "API integration pilot only; not a benchmark score",
+  "model_id": "gpt-6.1-terra",
+  "summary": {
+    "episodes": 12,
+    "arms": {
+      "initial_text": {
+        "episodes": 4,
+        "finished": 4,
+        "errors": 0,
+        "requests": 0,
+        "known_source_labels": 4,
+        "source_label_matches": 4
+      },
+      "full_available_text": {
+        "episodes": 4,
+        "finished": 4,
+        "errors": 0,
+        "requests": 0,
+        "known_source_labels": 4,
+        "source_label_matches": 4
+      },
+      "interactive_agent": {
+        "episodes": 4,
+        "finished": 4,
+        "errors": 0,
+        "requests": 0,
+        "known_source_labels": 4,
+        "source_label_matches": 4
+      }
+    },
+    "expected": 12,
+    "budget": {
+      "cap_usd": 60.0,
+      "accounted_upper_usd": 0.085282,
+      "unresolved_upper_usd": 0.0,
+      "requests": 15
+    },
+    "stop_reason": null,
+    "formal_grounded_accuracy": null,
+    "complete": true
+  },
+  "api_requests": 15,
+  "input_tokens": 33071,
+  "output_tokens": 520,
+  "returned_models": [
+    "gpt-6.1-terra"
+  ],
+  "interactive_examples": [
+    {
+      "case_id": "case-0013955d31d3d1958ae4-Sufficient",
+      "task": "identity",
+      "termination": "finished",
+      "verdict": "Refuted",
+      "errors": 0,
+      "tool_calls": 0,
+      "actions": [
+        "finish"
+      ]
+    },
+    {
+      "case_id": "case-008fddbd675adc4570ad-Sufficient",
+      "task": "state",
+      "termination": "finished",
+      "verdict": "Supported",
+      "errors": 0,
+      "tool_calls": 0,
+      "actions": [
+        "finish"
+      ]
+    },
+    {
+      "case_id": "case-00bb48fa5a6b3e55662e-Sufficient",
+      "task": "state",
+      "termination": "finished",
+      "verdict": "Refuted",
+      "errors": 0,
+      "tool_calls": 3,
+      "actions": [
+        "inspect",
+        "crop",
+        "compare",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "case-03415461c3ae41ab58f8-Sufficient",
+      "task": "identity",
+      "termination": "finished",
+      "verdict": "Refuted",
+      "errors": 0,
+      "tool_calls": 0,
+      "actions": [
+        "finish"
+      ]
+    }
+  ],
+  "formal_grounded_accuracy": null
+}
