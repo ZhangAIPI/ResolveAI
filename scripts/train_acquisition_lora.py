@@ -32,24 +32,47 @@ def materialize(messages):
 
 
 def encode(example, processor, max_context=8192):
-    prefix = materialize(example["messages"])
-    full = prefix + materialize([example["target"]])
-    options = dict(tools=example["tools"])
+    template = processor.chat_template or ""
+    native = isinstance(template, str) and "tool_calls" in template and "tools" in template
+    forced_prefix = ""
+    if native:
+        prefix = materialize(example["messages"])
+        target_message = example["target"]
+        options = {"tools": example["tools"]}
+    else:
+        from resolveai.vlm_worker import portable_tools
+        prefix = materialize(portable_tools(example["messages"], example["tools"]))
+        calls = example["target"].get("tool_calls", [])
+        if len(calls) != 1:
+            raise ValueError("Portable target requires exactly one real function call")
+        call = calls[0]["function"]
+        forced_prefix = '<tool_call>\n{"name":'
+        raw = "<tool_call>\n" + json.dumps(
+            {"name": call["name"], "arguments": call["arguments"]}) + "</tool_call>"
+        target_message = {"role": "assistant", "content": raw}
+        options = {}
+    full = prefix + materialize([target_message])
     prefix_text = processor.apply_chat_template(
         prefix, tokenize=False, add_generation_prompt=True, **options)
     full_text = processor.apply_chat_template(
         full, tokenize=False, add_generation_prompt=False, **options)
-    if not full_text.startswith(prefix_text):
-        raise ValueError("Native template changes the public prefix when appending a target")
-    # Tokenizing the whole string can merge the prompt's final newline with the
-    # assistant target. Keep the exact inference prefix and tokenize its suffix
-    # separately, as generation does. No prompt or image token receives loss.
+    if not full_text.startswith(prefix_text + forced_prefix):
+        raise ValueError("Native template changes the actual inference prefix")
     batch = processor.apply_chat_template(prefix, tokenize=True,
         add_generation_prompt=True, return_dict=True, return_tensors="pt", **options)
-    target = processor.tokenizer(full_text[len(prefix_text):],
-        add_special_tokens=False, return_tensors="pt").input_ids
-    if target.shape[-1] == 0:
-        raise ValueError("Empty assistant target")
+    if forced_prefix:
+        prefix_ids = processor.tokenizer(forced_prefix,
+            add_special_tokens=False, return_tensors="pt").input_ids
+        batch["input_ids"] = torch.cat([batch["input_ids"], prefix_ids], dim=-1)
+        batch["attention_mask"] = torch.cat(
+            [batch["attention_mask"], torch.ones_like(prefix_ids)], dim=-1)
+        for key in ("token_type_ids", "mm_token_type_ids"):
+            if key in batch:
+                batch[key] = torch.cat([batch[key], torch.zeros_like(prefix_ids)], dim=-1)
+    suffix = full_text[len(prefix_text + forced_prefix):]
+    target = processor.tokenizer(suffix, add_special_tokens=False, return_tensors="pt").input_ids
+    if target.shape[-1] < 8:
+        raise ValueError("Tool-call target disappeared from the checkpoint template")
     length = batch["input_ids"].shape[-1]
     if length + target.shape[-1] > max_context:
         raise ValueError("Context limit exceeded; never silently truncate images")
@@ -97,6 +120,9 @@ def main():
         if file_hash(args.data / (split + ".jsonl")) != expected:
             raise ValueError("Training data changed")
     args.output.mkdir(parents=True, exist_ok=True)
+    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
+    template = processor.chat_template or ""
+    native_tools = isinstance(template, str) and "tool_calls" in template and "tools" in template
     config = {
         "base_model": str(args.model.resolve()), "base_revision": args.base_revision, "data_sha256": file_hash(args.data / "manifest.json"),
         "max_steps": args.max_steps, "accumulation": args.accumulation,
@@ -105,6 +131,7 @@ def main():
         "target_modules": "language_model attention q/k/v/o projections",
         "image_max_pixels": 512 * 512, "max_context": 8192,
         "scope": data_manifest["scope"],
+        "tool_adapter": "native" if native_tools else "portable",
     }
     manifest_path = args.output / "training_manifest.json"
     if manifest_path.exists():
@@ -129,7 +156,6 @@ def main():
     random.Random(17).shuffle(train)
     random.Random(23).shuffle(validation)
     validation = validation[:args.validation_examples]
-    processor = AutoProcessor.from_pretrained(args.model, max_pixels=512 * 512, min_pixels=48 * 48)
     base = AutoModelForImageTextToText.from_pretrained(
         args.model, dtype=torch.bfloat16, device_map={"": 0}, attn_implementation="sdpa")
     base.config.use_cache = False
