@@ -11,11 +11,16 @@ NAMES = {
     "llava-hf/llava-onevision-qwen2-7b-ov-hf": "LLaVA-OneVision-7B",
     "Qwen/Qwen2.5-VL-7B-Instruct": "Qwen2.5-VL-7B",
     "OpenGVLab/InternVL3_5-8B-HF": "InternVL3.5-8B",
+    "OpenGVLab/InternVL3_5-14B-HF": "InternVL3.5-14B",
+    "HuggingFaceTB/SmolVLM2-2.2B-Instruct": "SmolVLM2-2.2B",
+    "mistral-experimental/pixtral-12b": "Pixtral-12B",
 }
 ORDER = ["Qwen/Qwen2.5-VL-7B-Instruct", "Qwen/Qwen3-VL-2B-Instruct",
          "Qwen/Qwen3-VL-4B-Instruct", "Qwen/Qwen3-VL-8B-Instruct",
          "Qwen/Qwen3.5-9B", "OpenGVLab/InternVL3_5-8B-HF",
-         "llava-hf/llava-onevision-qwen2-7b-ov-hf"]
+         "OpenGVLab/InternVL3_5-14B-HF",
+         "llava-hf/llava-onevision-qwen2-7b-ov-hf",
+         "HuggingFaceTB/SmolVLM2-2.2B-Instruct", "mistral-experimental/pixtral-12b"]
 MODES = ("initial_text", "interactive_agent")
 
 
@@ -124,6 +129,7 @@ def render(report, efficiency):
         r"No tools answers directly from the initial photographs; With tools starts from the same photographs and permits interaction.",
         r"Condition, Identity and Overall report correct answers (\%) against unreviewed source labels; abstentions and missing decisions receive zero.",
         r"Time and output tokens are means over all attempts on RTX A6000 GPUs.",
+        r"Output tokens count generated text and end markers, excluding input images and prompts.",
         r"Best accuracy results are bold; unmeasured baseline costs are marked --.}",
         r"\label{tab:benchmark}",*comparison_header("Model"),
     ]

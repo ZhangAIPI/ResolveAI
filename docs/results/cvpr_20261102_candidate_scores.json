@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-03T18:41:00.476708+00:00",
+  "as_of_utc": "2026-11-03T20:29:53.102698+00:00",
   "scope": "Literal agreement with unreviewed construction labels, not grounded accuracy",
   "selection": "Pre-frozen 209 Sufficient source-labeled families; identical cases retained for later models",
   "variant": "Sufficient",
@@ -970,6 +970,106 @@
                 "Supported": 19,
                 "Need more evidence": 47,
                 "Refuted": 87
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 0,
+          "label_agreement": 0.0,
+          "submitted": 0,
+          "verdicts": {
+            "No submitted verdict": 209
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 0,
+              "label_agreement": 0.0,
+              "submitted": 0,
+              "verdicts": {
+                "No submitted verdict": 56
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 0,
+              "label_agreement": 0.0,
+              "submitted": 0,
+              "verdicts": {
+                "No submitted verdict": 153
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "available_known_families": 233,
+      "name": "smolvlm2",
+      "model_id": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+      "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+      "source_commit": "4b93eb6df85465b40c5417d839fe52f3182c6443",
+      "paper_cohort_complete": true,
+      "full_study_complete": false,
+      "raw_episodes": 5321,
+      "expected_raw_episodes": 5736,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 106,
+          "label_agreement": 0.507177033492823,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 209
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 27,
+              "label_agreement": 0.48214285714285715,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 56
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 79,
+              "label_agreement": 0.5163398692810458,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 153
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 106,
+          "label_agreement": 0.507177033492823,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 209
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 27,
+              "label_agreement": 0.48214285714285715,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 56
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 79,
+              "label_agreement": 0.5163398692810458,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 153
               }
             }
           }

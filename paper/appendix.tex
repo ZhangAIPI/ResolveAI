@@ -146,7 +146,7 @@ A future generative world model could propose a viewing direction while keeping 
 
 \section{Execution and Scoring Details}
 \subsection{Initial evaluation configuration}
-The evaluated model matrix comprises Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B and LLaVA-OneVision-7B~\cite{qwen25,qwen3,qwen35,internvl35,llavaonevision}.
+The evaluated model matrix comprises Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B LLaVA-OneVision-7B and SmolVLM2-2.2B~\cite{qwen25,qwen3,qwen35,internvl35,llavaonevision,smolvlm2}.
 The configuration uses BF16 weights, greedy generation, a tool budget of 12, at most eight assistant turns and an 8,192-token context cap.
 Direct decisions permit at most 96 output tokens; interactive turns permit 384.
 Input images are capped at \(512\times512\) pixels, without additional InternVL tiling.
@@ -173,10 +173,10 @@ The same fixed family list is used for the base and fine-tuned models.
 This historical completion-based subset is not a random sample of the candidate pool.
 It is distinct from admission after independent evidence review.
 
-The seven completed model checkpoints are Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B and LLaVA-OneVision-7B.
+Eight model checkpoints cover the complete paper cohort: Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B, LLaVA-OneVision-7B and SmolVLM2-2.2B.
 All accuracy comparisons in the main paper use the same 209 Sufficient versions.
 Complete raw evaluation runs cover all 478 families, four access versions and three decision settings, totaling 5,736 episodes per model.
-Running or queued checkpoints are not included in the result tables.
+A checkpoint enters the result tables only when every fixed-cohort case has been evaluated in all three settings, even if the remaining raw-pool episodes are still running. Partial cohorts are excluded; cohort membership never changes when a new model arrives.
 The outcome partition uses submitted definite verdicts that match or contradict the source label, submitted Need more evidence, and absence of a valid final verdict.
 Parsing failure, repeated invalid calls, context exhaustion and turn exhaustion remain in the denominator.
 No answer is never silently converted to an abstention.
@@ -215,7 +215,8 @@ Recorded photo requests perform a closed-pool lookup; their timing does not repr
 Input tokens are the sum of native input token counts over actual model calls, including system instructions, tool schemas and repeated conversation history.
 The table's k denotes 1,000 tokens.
 Native visual tokenization differs across architectures, so these counts are not a common FLOP measure.
-Output tokens include all generated tokens, including malformed actions.
+Output tokens include all generated tokens, including malformed actions and termination markers; prompts and image representations are input, not output.
+For example, Qwen3-VL tokenizes Supported as one text token and Refuted as two; with the generated end marker these produce two and three output tokens. Direct prompts require only the verdict, whereas interactive finish calls also emit structured citations and relations. Thus the output-length and time difference includes answer-format overhead, rather than isolating the cost of tool execution.
 An overlength prompt rejected before a model forward contributes no executed input tokens, output tokens or model call; its processing time remains in the episode wall time.
 Missing token measurements cause the summary to fail rather than silently becoming zero.
 

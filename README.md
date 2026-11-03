@@ -2,6 +2,26 @@
 
 [**CVPR 英文方案初稿：Evidence Before Verdicts**](paper/README.md)
 
+[**最新模型结果、SFT 与 RL 进度**](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)
+
+<!-- benchmark-results-start -->
+当前主表已覆盖 **8 个模型**，使用同一固定题组。
+下表是来源标签下的答对率（%），并非独立审核后的证据充分性成绩。
+
+| 模型 | 无工具 | 有工具 |
+| --- | ---: | ---: |
+| Qwen2.5-VL-7B | 15.8 | 3.8 |
+| Qwen3-VL-2B | 60.3 | 40.7 |
+| Qwen3-VL-4B | 33.0 | 49.3 |
+| Qwen3-VL-8B | 74.6 | 82.3 |
+| Qwen3.5-9B | 57.9 | 63.2 |
+| InternVL3.5-8B | 57.9 | 14.4 |
+| LLaVA-OneVision-7B | 44.5 | 0.0 |
+| SmolVLM2-2.2B | 50.7 | 0.0 |
+
+模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)。
+<!-- benchmark-results-end -->
+
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
 [**20 人、预计 5–10 分钟：中英双语人工实验与模型评测**](docs/human_study.zh-CN.md)
