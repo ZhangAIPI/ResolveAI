@@ -164,3 +164,10 @@ scripts/score_efficiency.py对固定209题读取原始generation与wall_latency_
 时间包含模型、预处理和环境工具，排除episode前的策略模型加载；封闭照片池请求没有真人等待时间。各模型均报告RTX A6000，普通共享主机任务的耗时会受CPU、工具和库版本影响，不作为严格隔离的推理速度榜。完成率与准确率一起阅读，避免将提前失败或弃答视为高效率。
 
 主表生成入口用--efficiency读取cvpr_efficiency.json；--sft提供附录训练后对照，--full-reference与--efficiency-reference生成附录详情。表2由score_sft_comparison.render读取cvpr_sft_candidate_scores.json生成。未运行的训练行不填数，规则基线未测量的耗时用--，不冒充零成本。
+
+
+## 多系列闭源对照与 Decisions（2026-11-03）
+
+用户授权在 80 美元额度内自行选择不同系列，继续保留 60 美元运行上限与 20 美元余量。新增清单覆盖 6.1、5.6、4.1、两种 mini，以及 Luna Responses / Decisions。最多三个新增 API worker 使用父账本预先担保的独立额度并行，封闭后返还未用额度；现有 Terra 和四卡实验继续。先完成同一固定题组再入 Table 1，未测模型不写占位分数。
+
+Decisions 当前是 Luna 的分类／评分接口，先测相同图片下的直接三分类，不把它当成可自由生成搜证参数的 Agent。其工具列将标记不适用。细节、可复现配置和官方来源见[API 对照说明](openai-budget.zh-CN.md)。

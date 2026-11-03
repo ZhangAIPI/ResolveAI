@@ -1,0 +1,99 @@
+{
+  "shared_cap_usd": 60,
+  "selection": "Frozen 209 Sufficient families; identical cases, all failed attempts retained",
+  "profiles": [
+    {
+      "name": "gpt41_mini",
+      "label": "GPT-4.1 mini",
+      "config": {
+        "model_id": "gpt-4.1-mini-2025-04-14",
+        "reasoning_effort": null,
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 1,
+        "output_usd_per_million": 1.6,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini"
+      },
+      "allocation_usd": 3
+    },
+    {
+      "name": "luna",
+      "label": "GPT-6 Luna",
+      "config": {
+        "model_id": "gpt-6-luna",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 0.25,
+        "output_usd_per_million": 0.5,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+      },
+      "allocation_usd": 2
+    },
+    {
+      "name": "luna_decisions",
+      "label": "GPT-6 Luna (Decisions)",
+      "config": {
+        "model_id": "gpt-6-luna",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 0.25,
+        "output_usd_per_million": 0,
+        "pricing_source": "https://developers.openai.com/api/docs/guides/decisions",
+        "endpoint": "decisions"
+      },
+      "allocation_usd": 0.5
+    },
+    {
+      "name": "gpt54_mini",
+      "label": "GPT-5.4 mini",
+      "config": {
+        "model_id": "gpt-5.4-mini-2026-03-17",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 1.875,
+        "output_usd_per_million": 4.5,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5.4-mini"
+      },
+      "allocation_usd": 6
+    },
+    {
+      "name": "gpt41",
+      "label": "GPT-4.1",
+      "config": {
+        "model_id": "gpt-4.1-2025-04-14",
+        "reasoning_effort": null,
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 5,
+        "output_usd_per_million": 8,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-4.1"
+      },
+      "allocation_usd": 9
+    },
+    {
+      "name": "gpt61_sol",
+      "label": "GPT-6.1 Sol (low)",
+      "config": {
+        "model_id": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 5,
+        "output_usd_per_million": 10,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "max_total_output_tokens": 2048
+      },
+      "allocation_usd": 16
+    },
+    {
+      "name": "gpt56_sol",
+      "label": "GPT-5.6 Sol",
+      "config": {
+        "model_id": "gpt-5.6-sol",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 10,
+        "output_usd_per_million": 20,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5.6-sol"
+      },
+      "allocation_usd": 17
+    }
+  ]
+}

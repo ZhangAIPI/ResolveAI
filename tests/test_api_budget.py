@@ -44,6 +44,39 @@ class BudgetTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             configure_api_key(link)
 
+    def test_parallel_allocations_cannot_exceed_the_parent_cap(self):
+        child_path=Path(self.temp.name)/"child.sqlite"
+        child=self.budget.allocate("model-a",child_path,.6)
+        try:
+            with self.assertRaises(BudgetStop):
+                self.budget.reserve("parent-next",.41)
+            ticket,_=child.reserve("child-call",.3)
+            child.settle(ticket,.2,{})
+            self.budget.close_allocation("model-a",child_path)
+            self.assertAlmostEqual(self.budget.status()["accounted_upper_usd"],.2)
+            with self.assertRaises(BudgetStop):
+                child.reserve("after-refund",.01)
+        finally:
+            child.close()
+
+    def test_allocation_respects_inflight_parent_reservations(self):
+        self.budget.reserve("inflight",.4)
+        with self.assertRaises(BudgetStop):
+            self.budget.allocate("too-large",Path(self.temp.name)/"large.sqlite",.7)
+        child=self.budget.allocate("fits",Path(self.temp.name)/"fits.sqlite",.5)
+        child.close()
+        self.assertAlmostEqual(self.budget.status()["unresolved_upper_usd"],.4)
+
+    def test_refund_keeps_the_full_bound_for_an_unknown_child_request(self):
+        child_path=Path(self.temp.name)/"unknown.sqlite"
+        child=self.budget.allocate("unknown",child_path,.6)
+        try:
+            child.reserve("timeout",.3)
+            self.budget.close_allocation("unknown",child_path)
+            self.assertAlmostEqual(self.budget.status()["accounted_upper_usd"],.3)
+        finally:
+            child.close()
+
     def test_shared_cap_and_resume(self):
         ticket,_ = self.budget.reserve("first",.8)
         self.budget.settle(ticket,.7,{"id":"one"})
@@ -123,6 +156,72 @@ class BudgetTests(unittest.TestCase):
         self.assertTrue(second["response_reused"])
         self.assertEqual(calls.count("responses"),1)
         self.assertEqual(self.budget.status()["requests"],1)
+
+    def test_decisions_is_direct_only_and_charges_no_output(self):
+        routes=[]
+        config={**CONFIG,"model_id":"gpt-6-luna","endpoint":"decisions",
+                "input_ceiling_usd_per_million":.25,"output_usd_per_million":0}
+        def post(route,payload):
+            routes.append(route)
+            if route.endswith("input_tokens"):
+                return {"input_tokens":100}
+            return {"model":"gpt-6-luna",
+                    "usage":{"input_tokens":100,"output_tokens":0},
+                    "answers":[{"type":"choice","name":"verdict","choice":"Supported","confidence":.8}]}
+        client=OpenAIClient(config,self.budget,transport=post)
+        client.begin_episode("a","initial_text")
+        response=client.ask_conversation({"mode":"text","messages":[{"role":"user","content":"claim"}]})
+        self.assertEqual(response["raw"],"Supported")
+        self.assertEqual(response["output_tokens"],0)
+        self.assertIn("decisions",routes)
+        with self.assertRaises(ValueError):
+            client.ask_conversation({"mode":"tools","messages":[],"tools":[]})
+
+    def test_reasoning_history_and_tokens_survive_native_tool_turns(self):
+        requests=[]
+        config={**CONFIG,"model_id":"gpt-6.1-sol","reasoning_effort":"low",
+                "input_ceiling_usd_per_million":5,"output_usd_per_million":10,
+                "max_total_output_tokens":2048}
+        def post(route,payload):
+            if route.endswith("input_tokens"):
+                return {"input_tokens":100}
+            requests.append(payload)
+            return {"model":"gpt-6.1-sol","status":"completed",
+                    "usage":{"input_tokens":100,"output_tokens":60,
+                             "output_tokens_details":{"reasoning_tokens":40}},
+                    "output":[{"type":"reasoning","id":"r1","summary":[],"encrypted_content":"opaque"},
+                              {"type":"function_call","call_id":"native-call","name":"inspect",
+                               "arguments":json.dumps({"view_id":"v1"})}]}
+        client=OpenAIClient(config,self.budget,transport=post)
+        client.begin_episode("a","interactive_agent")
+        messages=[{"role":"user","content":"claim"}]
+        first=client.ask_conversation({"mode":"tools","messages":messages,"tools":[]})
+        self.assertEqual(first["reasoning_tokens"],40)
+        self.assertEqual(first["visible_output_tokens"],20)
+        messages += [{"role":"assistant","content":"","tool_calls":[
+                        {"id":"call-0000","function":first["tool_call"]}]},
+                     {"role":"tool","tool_call_id":"call-0000","content":[{"type":"text","text":"observation"}]}]
+        client.ask_conversation({"mode":"tools","messages":messages,"tools":[]})
+        self.assertTrue(any(item.get("type")=="reasoning" for item in requests[1]["input"]))
+        self.assertEqual(requests[1]["max_output_tokens"],2048)
+        tool_result=next(item for item in requests[1]["input"] if item.get("type")=="function_call_output")
+        self.assertEqual(tool_result["call_id"],"native-call")
+
+    def test_non_reasoning_legacy_models_omit_reasoning_parameter(self):
+        payloads=[]
+        config={**CONFIG,"model_id":"gpt-4.1-mini-2025-04-14","reasoning_effort":None,
+                "input_ceiling_usd_per_million":1,"output_usd_per_million":1.6}
+        def post(route,payload):
+            payloads.append(payload)
+            if route.endswith("input_tokens"):
+                return {"input_tokens":100}
+            return {"status":"completed","model":config["model_id"],
+                    "usage":{"input_tokens":100,"output_tokens":1},
+                    "output":[{"type":"message","content":[{"type":"output_text","text":"Refuted"}]}]}
+        client=OpenAIClient(config,self.budget,transport=post)
+        client.begin_episode("a","initial_text")
+        self.assertEqual(client.ask_conversation({"mode":"text","messages":[{"role":"user","content":"claim"}]})["raw"],"Refuted")
+        self.assertTrue(all("reasoning" not in payload for payload in payloads))
 
     def test_context_overflow_does_not_generate(self):
         routes=[]

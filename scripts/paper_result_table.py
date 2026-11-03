@@ -109,32 +109,62 @@ def comparison_values(arms, costs):
 def comparison_cells(values, best=None):
     cells = []
     for index,value in enumerate(values):
-        text = f"{value:.0f}" if index%5==4 else f"{value:.1f}"
-        if best is not None and index in (0,1,2,5,6,7) and value==best[index]:
+        text = "--" if value is None else (f"{value:.0f}" if index%5==4 else f"{value:.1f}")
+        if best is not None and value is not None and index in (0,1,2,5,6,7) and value==best[index]:
             text = r"\textbf{"+text+"}"
         cells.append(text)
     return cells
 
 
-def render(report, efficiency):
+def render(report, efficiency, closed=None):
     cost_rows(report, efficiency)
     costs = {row["model_id"]:row for row in efficiency["workers"]}
     workers = sorted(report["workers"],key=lambda w:ORDER.index(w["model_id"]))
     values = [comparison_values(w["arms"],costs[w["model_id"]]["arms"]) for w in workers]
     best = [max(column) for column in zip(*values)]
+    api = closed["workers"] if closed else []
+    if api and (closed["dataset_sha256"]!=report["dataset_sha256"] or closed["family_ids"]!=report["family_ids"]):
+        raise ValueError("API and local-model cohorts differ")
+    api_labels = {"terra-eval":"GPT-6.1 Terra", "gpt61_sol":"GPT-6.1 Sol (low)",
+                  "gpt56_sol":"GPT-5.6 Sol", "gpt41":"GPT-4.1", "gpt41_mini":"GPT-4.1 mini",
+                  "gpt54_mini":"GPT-5.4 mini", "luna":"GPT-6 Luna",
+                  "luna_decisions":"GPT-6 Luna (Decisions)"}
+    api_order = ["gpt61_sol","terra-eval","gpt56_sol","gpt54_mini","gpt41","gpt41_mini","luna","luna_decisions"]
+    api = sorted(api,key=lambda w:api_order.index(w["name"]))
+    api_values = []
+    for worker in api:
+        values_row = []
+        for arm in MODES:
+            if arm not in worker["arms"]:
+                values_row += [None]*5
+                continue
+            scores,cost = worker["arms"][arm],worker["costs"][arm]
+            if scores["episodes"]!=report["common_families"] or cost["correct"]!=scores["label_matches"]:
+                raise ValueError("API accuracy/cost denominator changed")
+            values_row += [100*s["label_matches"]/s["episodes"] for s in
+                           (scores["by_task"]["state"],scores["by_task"]["identity"],scores)]
+            values_row += [cost["mean_wall_s"],None if worker["endpoint"]=="decisions" else cost["mean_output_tokens"]]
+        api_values.append(values_row)
+    api_best = [max((row[i] for row in api_values if row[i] is not None),default=None) for i in range(10)]
     lines = [
         r"\begin{table*}[t]",r"\centering\small",r"\setlength{\tabcolsep}{3.5pt}",
         r"\begin{minipage}{.96\textwidth}\centering",
-        r"\caption{\textbf{Open-source models with and without tools.}",
+        (r"\caption{\textbf{Open-weight and API-served models with and without tools.}" if api else r"\caption{\textbf{Open-source models with and without tools.}"),
         r"No tools answers directly from the initial photographs; With tools starts from the same photographs and permits interaction.",
         r"Condition, Identity and Overall report correct answers (\%) against unreviewed source labels; abstentions and missing decisions receive zero.",
-        r"Time and output tokens are means over all attempts on RTX A6000 GPUs.",
-        r"Output tokens count generated text and end markers, excluding input images and prompts.",
-        r"Best accuracy results are bold; unmeasured baseline costs are marked --.}",
+        (r"Time and output tokens are means over all attempts. Local models run on RTX A6000; API time includes network round trips and CPU tools." if api else r"Time and output tokens are means over all attempts on RTX A6000 GPUs."),
+        (r"Output includes API reasoning tokens where present; input images and prompts are excluded. Decisions is a direct classifier, so its tool and generation entries are inapplicable." if api else r"Output tokens count generated text and end markers, excluding input images and prompts."),
+        (r"Best accuracy is bold within each group; -- marks inapplicable or unmeasured entries. API settings are detailed in the supplement.}" if api else r"Best accuracy results are bold; unmeasured baseline costs are marked --.}"),
         r"\label{tab:benchmark}",*comparison_header("Model"),
     ]
+    if api:
+        lines.append(r"\multicolumn{11}{l}{\emph{Open weights}}\\")
     for worker,row in zip(workers,values):
         lines.append(NAMES[worker["model_id"]]+" & "+" & ".join(comparison_cells(row,best))+r"\\")
+    if api:
+        lines += [r"\midrule",r"\multicolumn{11}{l}{\emph{API-served models}}\\"]
+        for worker,row in zip(api,api_values):
+            lines.append(api_labels[worker["name"]]+" & "+" & ".join(comparison_cells(row,api_best))+r"\\")
     prior = []
     for task in ("state","identity",None):
         counts = report["task_label_counts"][task] if task else report["label_counts"]
@@ -216,13 +246,14 @@ if __name__ == "__main__":
     parser.add_argument("--responses", type=Path)
     parser.add_argument("--efficiency", type=Path, required=True)
     parser.add_argument("--sft", type=Path)
+    parser.add_argument("--closed",type=Path,default=Path("docs/results/openai_candidate_scores.json"))
     parser.add_argument("--efficiency-reference", type=Path)
     args = parser.parse_args()
     report = json.loads(args.report.read_text())
     args.output.parent.mkdir(parents=True, exist_ok=True)
     efficiency = json.loads(args.efficiency.read_text())
     sft = json.loads(args.sft.read_text()) if args.sft else None
-    args.output.write_text(render(report, efficiency))
+    args.output.write_text(render(report, efficiency, json.loads(args.closed.read_text()) if args.closed.exists() else None))
     if args.full_reference:
         args.full_reference.write_text(render_full_reference(report, sft))
     if args.responses:

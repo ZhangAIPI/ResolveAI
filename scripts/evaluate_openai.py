@@ -71,6 +71,9 @@ def main():
     p.add_argument("--stage",choices=("pilot","paper"),default="pilot")
     p.add_argument("--all-variants",action="store_true")
     p.add_argument("--key-file",type=Path,help="Owner-only credential file outside Git; never a key value")
+    p.add_argument("--budget-usd",type=float,default=60,help="Prefunded ledger cap, never above USD 60")
+    p.add_argument("--stage-name",help="Persistent budget-stage identifier")
+    p.add_argument("--stage-budget-usd",type=float,help="A smaller stage limit within the shared USD 60 cap")
     p.add_argument("--execute",action="store_true")
     args = p.parse_args()
     configure_api_key(args.key_file)
@@ -78,9 +81,13 @@ def main():
     plan, cohort = json.loads(args.plan.read_text()), json.loads(args.cohort.read_text())
     variants = ["Sufficient","Obtainable","Missing","Unavailable"] if args.all_variants else ["Sufficient"]
     cases = select_cases(plan,cohort,args.stage,variants)
+    arms = ARMS[:2] if config.get("endpoint")=="decisions" else ARMS
+    stage_cap = args.stage_budget_usd if args.stage_budget_usd is not None else (1 if args.stage=="pilot" else 60)
+    if not 0 < stage_cap <= 60:
+        p.error("Stage budget must be within USD 60")
     preview = {"stage":args.stage,"model":config["model_id"],"cases":len(cases),
-               "episodes":len(cases)*len(ARMS),"variants":variants,"tasks":dict(Counter(c["task"] for c in cases)),
-               "shared_cap_usd":60,"stage_cap_usd":1 if args.stage=="pilot" else 60,
+               "episodes":len(cases)*len(arms),"variants":variants,"tasks":dict(Counter(c["task"] for c in cases)),
+               "shared_cap_usd":60,"ledger_cap_usd":args.budget_usd,"stage_cap_usd":stage_cap,"arms":list(arms),"budget_stage":args.stage_name or args.stage,
                "key_configured":bool(os.environ.get("OPENAI_API_KEY")),"execute":args.execute,
                "scope":"Unreviewed source-label comparison; formal_grounded_accuracy is null"}
     print(json.dumps(preview,indent=2),flush=True)
@@ -98,14 +105,14 @@ def main():
                        "ledger":str(args.ledger.resolve()),"script_sha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                        "grounding_manifest":json.loads((args.grounding_root/"manifest.json").read_text())}
     locked_manifest(args.output/"manifest.json",manifest_config)
-    ledger = ApiBudget(args.ledger)
+    ledger = ApiBudget(args.ledger,args.budget_usd)
     records = Records(args.output)
     backend = FrozenGrounding(args.grounding_root,device="cpu")
-    client = OpenAIClient(config,ledger,stage=args.stage,stage_limit_usd=preview["stage_cap_usd"])
+    client = OpenAIClient(config,ledger,stage=preview["budget_stage"],stage_limit_usd=preview["stage_cap_usd"])
     stopped = None
     try:
         for case in cases:
-            for arm in ARMS:
+            for arm in arms:
                 if records.has(case["case_id"],arm):
                     continue
                 client.begin_episode(case["case_id"],arm)
@@ -137,7 +144,7 @@ def main():
         stopped = type(error).__name__
         raise
     finally:
-        summary = {**records.summary(),"expected":len(cases)*3,"budget":ledger.status(),
+        summary = {**records.summary(),"expected":len(cases)*len(arms),"budget":ledger.status(),
                    "stop_reason":stopped,"formal_grounded_accuracy":None}
         summary["complete"] = summary["episodes"]==summary["expected"]
         (args.output/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")

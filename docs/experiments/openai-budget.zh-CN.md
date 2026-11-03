@@ -16,11 +16,11 @@
 
 ## 花费控制
 
-所有模型、阶段与重启必须使用同一个外部 SQLite 账本。每次生成前用官方输入计数接口核对完整历史、图片与工具 schema，再预留输入及最大输出的费用。只使用 Standard 服务与本地函数，不启用付费托管搜索、容器或文件存储。官方参考：[输入计数](https://developers.openai.com/api/docs/guides/token-counting)、[reasoning 与输出计费](https://developers.openai.com/api/docs/guides/reasoning)。
+所有模型受同一个外部总账本的 60 美元上限约束。为并行运行，总账先足额预留每个模型的消费额度，模型仅能在获拨款的子账本内消费；预留不等于实际支出。模型结束后先封闭子账本，再回收未用额度，防止已返还的资金再次被消费。总账预留还包含在途请求的费用上界。每次生成前用官方输入计数接口核对完整历史、图片与工具 schema，再预留输入及最大输出的费用。只使用 Standard 服务与本地函数，不启用付费托管搜索、容器或文件存储。官方参考：[输入计数](https://developers.openai.com/api/docs/guides/token-counting)、[reasoning 与输出计费](https://developers.openai.com/api/docs/guides/reasoning)。
 
 账本使用微美元整数、事务预留与持久阶段限额。输入按每百万 2.50 美元保守计入（高于 Terra 的标准输入价并覆盖当前列出的缓存写入价），输出按每百万 5 美元计入；不依赖缓存折扣。记录原始 API usage，账本金额是保守核算上界，不能当成账单实际费用。
 
-超时、缺少 usage、异常 token 用量或费用无法核对时，保留预留并阻止新付费调用，不自动重试。已完成的相同请求可复用持久响应，保留原调用时间。费用异常应先对照 API 控制台及请求 ID 核对，不删账本重跑。该限制只覆盖使用此账本的实验，账户其他程序的花费需另行扣除。
+超时、缺少 usage、异常 token 用量或费用无法核对时，保留受影响模型的费用上界并阻止它的新付费调用，不自动重试。其他模型只可消费已获总账担保的额度。已完成的相同请求可复用持久响应，保留原调用时间。费用异常应先对照 API 控制台及请求 ID 核对，不删账本重跑。该限制覆盖总账及其获拨款的全部子账本；账户其他程序的花费需另行扣除。
 
 ## 启动
 
@@ -40,3 +40,22 @@ RUNTIME=/home/cxu-serve/p62/zzh136/experiments/resolveai-poc
 ```
 
 默认是离线预览，不连接 API，不创建实验输出。只有显式加入 `--execute` 且配置了密钥才会请求 API。macula 主机存在 DNS 别名，执行位置按 Slurm 的 `SLURMD_NODENAME` 核实。试跑确认后，用 `--stage paper` 与独立输出目录评测整个固定题组；继续使用同一账本。需要所有四种版本时加入 `--all-variants`，不改变 Sufficient 主表的题目 ID。
+
+
+## 多模型与 Decisions 对照
+
+优先完成 Table 1 的同一 209 族 Sufficient 版本，各普通模型共 627 次尝试。已在运行的 Terra 保留其完整版本计划；新增模型先做主表，不先铺开额外版本。
+
+- GPT-6.1 Terra：已完成接口试跑，正式评测继续。
+- GPT-6.1 Sol：low reasoning，每次总输出最多 2048 tokens；仍核对 96/384 非推理输出限额。隐藏推理同样计费。保留原生调用 ID 和加密推理上下文。
+- GPT-5.6 Sol：none reasoning，代表另一代大模型。
+- GPT-4.1、GPT-4.1 mini：固定 2025-04-14 快照。虽已列为 deprecated，当前组织仍可访问，作为历史系列对照；不将别名替换成新模型。
+- GPT-5.4 mini：固定 2026-03-17 快照，none reasoning。
+- GPT-6 Luna：普通 Responses 接口，可生成工具动作。
+- GPT-6 Luna / Decisions：只做直接三分类，固定 209 题与全证据参考各一遍，共 418 次；不伪造工具参数，Table 1 的搜证列标记不适用。
+
+Decisions 当前仅支持 GPT-6 Luna，不是所有模型共用的另一种端点。其输出不收费，但输入、缓存写入和重发均须计入预算；本实验不自动重试。官方说明：[Decisions](https://developers.openai.com/api/docs/guides/decisions)、[模型与价格](https://developers.openai.com/api/docs/pricing)。
+
+配置见 [模型清单](openai-models.json)，每个新模型先跑最多 0.8 美元的接口试验（同时受其总拨款约束）。较小模型先启动，最多三个新增 API worker；不新增本地 GPU 申请，不释放原四卡。模型的单独拨款与父账本的直接花费合计始终受 60 美元保护，余下 20 美元不纳入本轮运行。
+
+scripts/run_openai_suite.py 执行队列，scripts/score_api_results.py 严格检查固定题组完整性。全部固定题目和所支持设置完成后，才更新公开成绩和 paper/tables/benchmark_results.tex。Decisions 的两种直接设置单独核对，缺少 native agent 设置不能记成 0 分。API 的网络时延、CPU 工具、原生采样与推理 token 会在论文中说明，不能与本地 GPU 速度作等硬件排名。
