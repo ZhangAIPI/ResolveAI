@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-03T20:29:53.102698+00:00",
+  "as_of_utc": "2026-11-03T22:13:43.090921+00:00",
   "scope": "Literal agreement with unreviewed construction labels, not grounded accuracy",
   "selection": "Pre-frozen 209 Sufficient source-labeled families; identical cases retained for later models",
   "variant": "Sufficient",
@@ -1006,14 +1006,14 @@
       }
     },
     {
-      "available_known_families": 233,
+      "available_known_families": 252,
       "name": "smolvlm2",
       "model_id": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
       "revision": "482adb537c021c86670beed01cd58990d01e72e4",
       "source_commit": "4b93eb6df85465b40c5417d839fe52f3182c6443",
       "paper_cohort_complete": true,
-      "full_study_complete": false,
-      "raw_episodes": 5321,
+      "full_study_complete": true,
+      "raw_episodes": 5736,
       "expected_raw_episodes": 5736,
       "arms": {
         "initial_text": {
@@ -1099,6 +1099,127 @@
               "submitted": 0,
               "verdicts": {
                 "No submitted verdict": 153
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "available_known_families": 218,
+      "name": "internvl14",
+      "model_id": "OpenGVLab/InternVL3_5-14B-HF",
+      "revision": "226b96d5912e69159abc0384cefcbd51487fdce0",
+      "source_commit": "4b93eb6df85465b40c5417d839fe52f3182c6443",
+      "paper_cohort_complete": true,
+      "full_study_complete": false,
+      "raw_episodes": 4948,
+      "expected_raw_episodes": 5736,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 125,
+          "label_agreement": 0.5980861244019139,
+          "submitted": 195,
+          "verdicts": {
+            "Refuted": 160,
+            "Supported": 35,
+            "No submitted verdict": 14
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 41,
+              "label_agreement": 0.7321428571428571,
+              "submitted": 54,
+              "verdicts": {
+                "Refuted": 40,
+                "No submitted verdict": 2,
+                "Supported": 14
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 84,
+              "label_agreement": 0.5490196078431373,
+              "submitted": 141,
+              "verdicts": {
+                "Refuted": 120,
+                "Supported": 21,
+                "No submitted verdict": 12
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 111,
+          "label_agreement": 0.5311004784688995,
+          "submitted": 163,
+          "verdicts": {
+            "Refuted": 137,
+            "Supported": 26,
+            "No submitted verdict": 46
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 40,
+              "label_agreement": 0.7142857142857143,
+              "submitted": 46,
+              "verdicts": {
+                "Refuted": 32,
+                "No submitted verdict": 10,
+                "Supported": 14
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 71,
+              "label_agreement": 0.46405228758169936,
+              "submitted": 117,
+              "verdicts": {
+                "Refuted": 105,
+                "Supported": 12,
+                "No submitted verdict": 36
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 84,
+          "label_agreement": 0.4019138755980861,
+          "submitted": 119,
+          "verdicts": {
+            "Refuted": 64,
+            "Supported": 50,
+            "No submitted verdict": 90,
+            "Need more evidence": 5
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 48,
+              "label_agreement": 0.8571428571428571,
+              "submitted": 52,
+              "verdicts": {
+                "Refuted": 28,
+                "Supported": 21,
+                "Need more evidence": 3,
+                "No submitted verdict": 4
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 36,
+              "label_agreement": 0.23529411764705882,
+              "submitted": 67,
+              "verdicts": {
+                "Supported": 29,
+                "No submitted verdict": 86,
+                "Need more evidence": 2,
+                "Refuted": 36
               }
             }
           }

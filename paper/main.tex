@@ -308,7 +308,7 @@ The 226 identity candidates without established source labels are excluded.
 Each family contributes its constructed Sufficient version to the accuracy comparison.
 
 \paragraph{Models and comparison settings.}
-Table~\ref{tab:benchmark} evaluates eight open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5-8B~\cite{internvl35}, LLaVA-OneVision-7B~\cite{llavaonevision}, and SmolVLM2-2.2B~\cite{smolvlm2}.
+Table~\ref{tab:benchmark} evaluates nine open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5 at 8B and 14B~\cite{internvl35}, LLaVA-OneVision-7B~\cite{llavaonevision}, and SmolVLM2-2.2B~\cite{smolvlm2}.
 Base checkpoints are evaluated without task demonstrations; supervised adaptation is examined separately in Section~\ref{sec:sft}.
 In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
@@ -341,7 +341,7 @@ The reported accuracy therefore measures agreement with those labels, rather tha
 
 \subsection{Benchmark Results}
 \paragraph{The interactive setting does not help every model.}
-Qwen3-VL-8B achieves the highest accuracy with tools, at 82.3\%, compared with 74.6\% from the initial images alone.
+Qwen3-VL-8B reaches 82.3\%, compared with 74.6\% from the initial images alone.
 The same comparison raises Qwen3-VL-4B from 33.0\% to 49.3\%, but lowers Qwen3-VL-2B from 60.3\% to 40.7\%.
 Access to the tool interface thus does not produce a uniform benefit, even within one model family.
 
