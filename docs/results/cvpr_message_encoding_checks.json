@@ -1,0 +1,94 @@
+{
+  "pixtral": {
+    "scope": "CPU encoding only; no model generation or scored answers",
+    "revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+    "processor_options": {
+      "size": {
+        "longest_edge": 512
+      },
+      "use_fast": false,
+      "fix_mistral_regex": true
+    },
+    "checks": [
+      {
+        "task": "state",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 2649
+      },
+      {
+        "task": "state",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 6333
+      },
+      {
+        "task": "identity",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 1868
+      },
+      {
+        "task": "identity",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 5169
+      }
+    ]
+  },
+  "smolvlm2": {
+    "scope": "CPU encoding only; no model generation or scored answers",
+    "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+    "processor_options": {
+      "size": {
+        "longest_edge": 512
+      },
+      "use_fast": false
+    },
+    "checks": [
+      {
+        "task": "state",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 1505
+      },
+      {
+        "task": "state",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 4635
+      },
+      {
+        "task": "identity",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 1649
+      },
+      {
+        "task": "identity",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 4847
+      }
+    ]
+  },
+  "internvl14": {
+    "scope": "CPU encoding only; no model generation or scored answers",
+    "revision": "226b96d5912e69159abc0384cefcbd51487fdce0",
+    "processor_options": {},
+    "checks": [
+      {
+        "task": "state",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 1141
+      },
+      {
+        "task": "state",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 3904
+      },
+      {
+        "task": "identity",
+        "setting": "actual_direct_prompt",
+        "input_tokens": 1274
+      },
+      {
+        "task": "identity",
+        "setting": "actual_inspect_return_full_tool_pool",
+        "input_tokens": 4104
+      }
+    ]
+  }
+}

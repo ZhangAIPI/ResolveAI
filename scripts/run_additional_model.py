@@ -33,6 +33,7 @@ def main():
     from resolveai.conversation import Conversation
     from resolveai.diagnostic import text_direct
     from resolveai.environment import Environment
+    from resolveai.grounding_tools import FrozenGrounding
     from resolveai.pilot import ModelClient
     from resolveai.rollout import run
     plan = json.loads(args.plan.read_text())
@@ -42,7 +43,8 @@ def main():
     try:
         for task in ["state", "identity"]:
             case = next(c for c in cases if c["task"] == task and c["variant"] == "Sufficient")
-            env = Environment(case, case["asset_root"], plan["budget"])
+            env = Environment(case, case["asset_root"], plan["budget"],
+                              grounding_backend=FrozenGrounding(args.grounding_root))
             direct = text_direct(env, case, client)
             trace = run(Conversation(env), client, max_turns=2)
             checks.append({

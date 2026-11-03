@@ -1,0 +1,66 @@
+{
+  "scope": "Partial same-case behavior; not final benchmark scores",
+  "matched_agent_episodes": 869,
+  "models": {
+    "base": {
+      "finished": 807,
+      "request_episodes": 51,
+      "by_variant": {
+        "Sufficient": {
+          "episodes": 217,
+          "requests": 0,
+          "new_photo_episodes": 0,
+          "abstentions": 3
+        },
+        "Obtainable": {
+          "episodes": 217,
+          "requests": 17,
+          "new_photo_episodes": 16,
+          "abstentions": 9
+        },
+        "Missing": {
+          "episodes": 218,
+          "requests": 17,
+          "new_photo_episodes": 0,
+          "abstentions": 22
+        },
+        "Unavailable": {
+          "episodes": 217,
+          "requests": 17,
+          "new_photo_episodes": 0,
+          "abstentions": 22
+        }
+      }
+    },
+    "SFT": {
+      "finished": 860,
+      "request_episodes": 259,
+      "by_variant": {
+        "Sufficient": {
+          "episodes": 217,
+          "requests": 0,
+          "new_photo_episodes": 0,
+          "abstentions": 0
+        },
+        "Obtainable": {
+          "episodes": 217,
+          "requests": 86,
+          "new_photo_episodes": 86,
+          "abstentions": 1
+        },
+        "Missing": {
+          "episodes": 218,
+          "requests": 87,
+          "new_photo_episodes": 0,
+          "abstentions": 88
+        },
+        "Unavailable": {
+          "episodes": 217,
+          "requests": 86,
+          "new_photo_episodes": 0,
+          "abstentions": 87
+        }
+      }
+    }
+  }
+}

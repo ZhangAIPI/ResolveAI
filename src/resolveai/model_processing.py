@@ -33,6 +33,20 @@ def typed_messages(messages, processor_name):
                 message["content"] = "".join(block["text"] for block in content)
         elif isinstance(content, str):
             message["content"] = [{"type": "text", "text": content}]
+    if processor_name == "PixtralProcessor":
+        # Its native template requires alternating speakers. Consecutive
+        # messages from one speaker are one turn, in their original order.
+        merged = []
+        for message in messages:
+            if merged and merged[-1]["role"] == message["role"]:
+                if message["role"] == "system":
+                    merged[-1]["content"] += "\n" + message["content"]
+                else:
+                    merged[-1]["content"].extend(
+                        [{"type": "text", "text": "\n"}] + message["content"])
+            else:
+                merged.append(message)
+        return merged
     return messages
 
 

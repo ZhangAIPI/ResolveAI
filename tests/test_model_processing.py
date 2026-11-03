@@ -29,6 +29,20 @@ class ModelProcessingTests(unittest.TestCase):
         self.assertIsNot(result[1]["content"], messages[1]["content"])
         self.assertIsInstance(typed_messages(messages, "Qwen3VLProcessor")[0]["content"], list)
 
+    def test_pixtral_adjacent_user_messages_preserve_text_pixels_and_order(self):
+        messages = [{"role": "system", "content": "System"},
+                    {"role": "user", "content": [
+                        {"type": "text", "text": "Claim"}, {"type": "image", "image": "pixels"}]},
+                    {"role": "user", "content": "Return one verdict."}]
+        result = typed_messages(messages, "PixtralProcessor")
+        self.assertEqual([row["role"] for row in result], ["system", "user"])
+        self.assertEqual(result[1]["content"], [
+            {"type": "text", "text": "Claim"}, {"type": "image", "image": "pixels"},
+            {"type": "text", "text": "\n"}, {"type": "text", "text": "Return one verdict."}])
+        self.assertEqual(len(messages), 3)
+        self.assertEqual(len(messages[1]["content"]), 2)
+        self.assertEqual(len(typed_messages(messages, "Qwen3VLProcessor")), 3)
+
     def test_pixtral_uses_render_only_and_ordered_pixels(self):
         class PixtralProcessor:
             def apply_chat_template(self, messages, *, tokenize, **kwargs):
