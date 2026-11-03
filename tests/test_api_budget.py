@@ -2,12 +2,15 @@
 import base64
 from io import BytesIO
 import json
+import os
+from unittest.mock import patch
 from pathlib import Path
 import tempfile
 import unittest
 
 from PIL import Image
 
+from scripts.evaluate_openai import configure_api_key
 from resolveai.api_budget import ApiBudget, BudgetStop
 from resolveai.openai_client import OpenAIClient, responses_input, wire_content
 
@@ -25,6 +28,21 @@ class BudgetTests(unittest.TestCase):
     def tearDown(self):
         self.budget.close()
         self.temp.cleanup()
+
+    def test_key_file_must_be_private_and_is_loaded_without_output(self):
+        path = Path(self.temp.name)/"private.env"
+        path.write_text("OPENAI_API_KEY=sk-"+"x"*45+"\n")
+        path.chmod(0o644)
+        with self.assertRaises(ValueError):
+            configure_api_key(path)
+        path.chmod(0o600)
+        with patch.dict(os.environ, clear=True):
+            configure_api_key(path)
+            self.assertTrue(os.environ["OPENAI_API_KEY"].startswith("sk-"))
+        link = path.with_suffix(".link")
+        link.symlink_to(path)
+        with self.assertRaises(ValueError):
+            configure_api_key(link)
 
     def test_shared_cap_and_resume(self):
         ticket,_ = self.budget.reserve("first",.8)

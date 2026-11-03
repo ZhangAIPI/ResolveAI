@@ -1,6 +1,6 @@
 # OpenAI 闭源对照与预算
 
-用户确认总预算为 **80 美元**。本轮实验共用 **60 美元**运行上限，保留至少 20 美元；试跑阶段合计最多 **1 美元**。这不是已花费金额。2026-11-03 准备接入时 GPU 节点尚未配置 API key，未发送付费推理请求。
+用户确认总预算为 **80 美元**。本轮实验共用 **60 美元**运行上限，保留至少 20 美元；试跑阶段合计最多 **1 美元**。这不是已花费金额。2026-11-03 已将用户授权的 API key 配置到 GPU 节点的私有文件（0600，位于 Git 仓库外）；官方模型目录认证通过，GPT-6.1 Terra 可访问。认证检查未发送生成请求。接下来先做受预算保护的试跑，未完成前不报告模型成绩。
 
 先接入 GPT-6.1 Terra，关闭 reasoning。它支持图像输入和 Responses 函数调用；保持现有 96 / 384 输出 token、8192 输入 token、8 轮与工具预算 12。价格与功能见[官方模型页](https://developers.openai.com/api/docs/models/gpt-6.1-terra)。更强模型待首轮实际费用与接口验证后再安排，不切换到用户的 ChatGPT 登录凭据。
 
@@ -12,7 +12,7 @@
 - 本地图像在发送前限制到 512² 像素；不发送标签、标注或未释放资产。保留原始区域与时点引用。
 - 复用当前环境、动作参数与冻结 grounding 权重。该入口用 CPU 执行本地工具以免干扰四张卡上的实验；API 网络延迟与 CPU 工具耗时需另列，不与本地 GPU 时间作等硬件速度排名。
 - 按源标签统计的结果仍为未审核开发结果，正式 grounded accuracy 留空。预算耗尽时保留部分进度，不用缩小分母后的分数进入主表。
-- 该入口尚未做真实 API 集成验证；离线测试不代表闭源模型性能或账户已获访问权限。
+- 真实 API 集成仍须通过试跑验证；模型目录认证通过不等于已经测得模型性能或核实账户余额。
 
 ## 花费控制
 
@@ -24,7 +24,7 @@
 
 ## 启动
 
-密钥仅通过服务器进程环境的 `OPENAI_API_KEY` 传入，不写进配置、Git、命令行参数或日志。用户需先在 API 控制台核对可用余额，确认额度关联正确组织。
+密钥通过服务器进程环境的 `OPENAI_API_KEY` 传入，或使用 `--key-file` 从仓库外的本人私有文件加载；不把密钥值写进公开配置、Git、命令行参数或日志。入口拒绝组／其他用户可读的密钥文件及符号链接。用户需先在 API 控制台核对可用余额，确认额度关联正确组织。
 
 在已分配的 macula GPU 节点，从仓库根目录执行：
 
@@ -35,7 +35,8 @@ RUNTIME=/home/cxu-serve/p62/zzh136/experiments/resolveai-poc
   docs/results/cvpr_20261102_candidate_scores.json \
   "$RUNTIME/evaluation/openai/terra-pilot" \
   --ledger "$RUNTIME/evaluation/openai/budget.sqlite" \
-  --grounding-root "$RUNTIME/grounding"
+  --grounding-root "$RUNTIME/grounding" \
+  --key-file "$RUNTIME/credentials/openai.env"
 ```
 
-默认是离线预览，不连接 API，不创建实验输出。只有显式加入 `--execute` 且配置了密钥才会请求 API。试跑确认后，用 `--stage paper` 与独立输出目录评测整个固定题组；继续使用同一账本。需要所有四种版本时加入 `--all-variants`，不改变 Sufficient 主表的题目 ID。
+默认是离线预览，不连接 API，不创建实验输出。只有显式加入 `--execute` 且配置了密钥才会请求 API。macula 主机存在 DNS 别名，执行位置按 Slurm 的 `SLURMD_NODENAME` 核实。试跑确认后，用 `--stage paper` 与独立输出目录评测整个固定题组；继续使用同一账本。需要所有四种版本时加入 `--all-variants`，不改变 Sufficient 主表的题目 ID。

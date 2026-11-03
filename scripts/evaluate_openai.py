@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import stat
 
 from resolveai.api_budget import ApiBudget, BudgetStop
 from resolveai.benchmark import locked_manifest, source_digest
@@ -43,6 +44,21 @@ def select_cases(plan, cohort, stage, variants):
     return cases
 
 
+def configure_api_key(path):
+    if path is None:
+        return
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) & 0o077:
+        raise ValueError("API key file must be a private, owner-only regular file")
+    lines = path.read_text().splitlines()
+    if len(lines) != 1 or not lines[0].startswith("OPENAI_API_KEY="):
+        raise ValueError("Expected one OPENAI_API_KEY assignment")
+    key = lines[0].split("=", 1)[1].strip()
+    if not key.startswith("sk-") or len(key) < 40 or any(c.isspace() for c in key):
+        raise ValueError("Invalid API key format")
+    os.environ["OPENAI_API_KEY"] = key
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("plan",type=Path)
@@ -53,8 +69,10 @@ def main():
     p.add_argument("--grounding-root",type=Path,required=True)
     p.add_argument("--stage",choices=("pilot","paper"),default="pilot")
     p.add_argument("--all-variants",action="store_true")
+    p.add_argument("--key-file",type=Path,help="Owner-only credential file outside Git; never a key value")
     p.add_argument("--execute",action="store_true")
     args = p.parse_args()
+    configure_api_key(args.key_file)
     config = json.loads(args.config.read_text())
     plan, cohort = json.loads(args.plan.read_text()), json.loads(args.cohort.read_text())
     variants = ["Sufficient","Obtainable","Missing","Unavailable"] if args.all_variants else ["Sufficient"]
@@ -67,7 +85,7 @@ def main():
     print(json.dumps(preview,indent=2),flush=True)
     if not args.execute:
         return
-    if not os.getenv("SLURM_JOB_ID") or socket.gethostname().split(".")[0] != "macula":
+    if not os.getenv("SLURM_JOB_ID") or os.getenv("SLURMD_NODENAME", socket.gethostname().split(".")[0]) != "macula":
         p.error("Execute on the allocated macula GPU node")
     if not os.environ.get("OPENAI_API_KEY"):
         p.error("OPENAI_API_KEY is missing; no paid request sent")
