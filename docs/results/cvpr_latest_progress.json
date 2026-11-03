@@ -1,43 +1,41 @@
 {
-  "as_of_utc": "2026-11-02T23:26:16.414569+00:00",
+  "as_of_utc": "2026-11-03T02:55:29.043366+00:00",
+  "as_of_new_york": "2026-11-02T21:55:29.043366-05:00",
   "sft": {
-    "optimizer_steps": 200,
     "training_complete": true,
-    "evaluation": {
-      "completed": 107,
-      "expected": 5736
-    },
-    "partial_agent_attempts": 35,
-    "partial_agent_finished": 32,
-    "partial_tool_errors": {
-      "unreleased_citation": 30
-    },
+    "optimizer_steps": 200,
     "benchmark_gain": null
   },
   "models": {
     "Qwen3.5-9B": {
-      "completed": 5159,
+      "completed": 5736,
       "expected": 5736
     },
     "LLaVA-OneVision-7B": {
-      "completed": 887,
+      "completed": 2930,
       "expected": 5736
     },
     "Qwen3-VL-4B": {
-      "completed": 806,
+      "completed": 2411,
       "expected": 5736
     },
     "Qwen3-VL-8B + SFT": {
-      "completed": 107,
+      "completed": 2663,
+      "expected": 5736
+    },
+    "Qwen3-VL-2B": {
+      "completed": 590,
       "expected": 5736
     }
   },
   "queued_models": [
     "InternVL3.5-14B-HF",
     "SmolVLM2-2.2B-Instruct",
-    "Pixtral-12B",
-    "Qwen3-VL-2B-Instruct"
+    "Pixtral-12B (message adapter corrected)"
   ],
-  "condition_training_pack_complete": false,
-  "scope": "Progress only; partial sorted cases do not estimate a benchmark improvement"
+  "condition_training_pack_complete": true,
+  "condition_training_examples": 1080,
+  "condition_validation_examples": 360,
+  "pixtral_startup": "Template rejected adjacent user messages; zero scored episodes. CPU fix verified; GPU retry queued after SFT publication.",
+  "scope": "Progress only; partial episodes do not estimate final benchmark gains"
 }
