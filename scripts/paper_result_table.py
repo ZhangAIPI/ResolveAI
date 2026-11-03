@@ -79,44 +79,52 @@ def cost_rows(report, efficiency, sft=None):
     return rows
 
 
-def render(report, efficiency, sft=None):
-    rows = cost_rows(report, efficiency, sft)
-    def scores(row):
-        arm = row["arms"]["interactive_agent"]
-        return [100*x["label_matches"]/x["episodes"] for x in
-                (arm["by_task"]["state"], arm["by_task"]["identity"], arm)]
-    best = [max(column) for column in zip(*(scores(row) for row in rows))]
+def render(report, efficiency):
+    # Validate checkpoint/cohort pairing before arranging the two settings.
+    cost_rows(report, efficiency)
+    costs = {row["model_id"]:row for row in efficiency["workers"]}
+    rows = []
+    for worker in sorted(report["workers"], key=lambda w: ORDER.index(w["model_id"])):
+        for arm in MODES:
+            score = worker["arms"][arm]
+            usage = costs[worker["model_id"]]["arms"][arm]
+            if usage["correct"] != score["label_matches"] or usage["episodes"] != score["episodes"]:
+                raise ValueError("Setting-specific efficiency differs from accuracy")
+            values = [100*x["label_matches"]/x["episodes"] for x in
+                      (score["by_task"]["state"],score["by_task"]["identity"],score)]
+            rows.append((worker,arm,values,usage))
+    best = [max(column) for column in zip(*(row[2] for row in rows))]
     lines = [
-        r"\begin{table*}[t]", r"\centering\small",
-        r"\setlength{\tabcolsep}{5pt}",
-        r"\begin{minipage}{.94\textwidth}\centering",
-        r"\caption{\textbf{Accuracy and cost of interactive verification.}",
-        r"All models start from the same initial photographs and may use the same tools.",
+        r"\begin{table*}[t]", r"\centering\small", r"\setlength{\tabcolsep}{4pt}",
+        r"\begin{minipage}{.96\textwidth}\centering",
+        r"\caption{\textbf{Open-source models with and without tools.}",
+        r"Tools indicates availability: No answers directly from the initial photographs; Yes starts from those same photographs and permits interaction.",
         r"Accuracy uses unreviewed source labels; abstentions and missing decisions receive zero.",
         r"Costs are means over all attempts on RTX A6000 GPUs; tokens are summed across model calls.",
-        r"The indented row adapts the preceding base model on source-disjoint training trajectories." if sft else "",
         r"Best accuracy results are bold; unmeasured baseline costs are marked --.}",
-        r"\label{tab:benchmark}",
-        r"\begin{tabular}{@{}lrrrrrrr@{}}", r"\toprule",
-        r" & \multicolumn{3}{c}{Correct answers (\%)} & \multicolumn{4}{c}{Cost per attempted case}\\",
-        r"\cmidrule(lr){2-4}\cmidrule(l){5-8}",
-        r"Model & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Input\\tokens (k)} & \shortstack{Output\\tokens} & \shortstack{Tool\\calls}\\",
+        r"\label{tab:benchmark}", r"\begin{tabular}{@{}llrrrrrrr@{}}", r"\toprule",
+        r" & & \multicolumn{3}{c}{Correct answers (\%)} & \multicolumn{4}{c}{Cost per attempted case}\\",
+        r"\cmidrule(lr){3-5}\cmidrule(l){6-9}",
+        r"Model & Tools & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Input\\tokens (k)} & \shortstack{Output\\tokens} & \shortstack{Tool\\calls}\\",
         r"\midrule",
     ]
-    for row in rows:
+    for worker,arm,values,usage in rows:
+        label = NAMES[worker["model_id"]] if arm=="initial_text" else ""
+        enabled = "No" if arm=="initial_text" else "Yes"
         cells = [rf"\textbf{{{v:.1f}}}" if v==top else f"{v:.1f}"
-                 for v,top in zip(scores(row),best)]
-        cost = row["cost"]
-        cells += [f"{cost['mean_wall_s']:.1f}", f"{cost['mean_input_tokens']/1000:.1f}",
-                  f"{cost['mean_output_tokens']:.0f}", f"{cost['mean_tool_calls']:.2f}"]
-        lines.append(row["label"]+" & "+" & ".join(cells)+r"\\")
+                 for v,top in zip(values,best)]
+        cells += [f"{usage['mean_wall_s']:.1f}", f"{usage['mean_input_tokens']/1000:.1f}",
+                  f"{usage['mean_output_tokens']:.0f}", f"{usage['mean_tool_calls']:.2f}"]
+        lines.append(label+" & "+enabled+" & "+" & ".join(cells)+r"\\")
+        if arm=="interactive_agent":
+            lines.append(r"\addlinespace[2pt]")
     prior = []
-    for task in ("state", "identity", None):
+    for task in ("state","identity",None):
         counts = report["task_label_counts"][task] if task else report["label_counts"]
         prior.append(100*counts.get("Refuted",0)/sum(counts.values()))
-    lines += [r"\midrule", "Always reject the claim & "+
+    lines += [r"\midrule", "Always reject the claim & -- & "+
               " & ".join(f"{v:.1f}" for v in prior)+r" & -- & -- & -- & --\\",
-              r"\bottomrule", r"\end{tabular}", r"\end{minipage}", r"\end{table*}"]
+              r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"]
     return "\n".join(lines)+"\n"
 
 
@@ -196,7 +204,7 @@ if __name__ == "__main__":
     args.output.parent.mkdir(parents=True, exist_ok=True)
     efficiency = json.loads(args.efficiency.read_text())
     sft = json.loads(args.sft.read_text()) if args.sft else None
-    args.output.write_text(render(report, efficiency, sft))
+    args.output.write_text(render(report, efficiency))
     if args.full_reference:
         args.full_reference.write_text(render_full_reference(report, sft))
     if args.responses:

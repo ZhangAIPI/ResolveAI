@@ -106,7 +106,7 @@ scripts/build_condition_sft.py已将上述1440张VisA查询图片整理成可直
 
 首轮8B SFT完整成绩：状态79.1%→71.2%，身份91.1%→98.2%，整体82.3%→78.5%。新增效率统计来自同一209题：平均每题16.8→11.2秒，输出283→177 tokens。较短交互未转化为整体正确率提升。
 
-按最新取舍，正文合并为一张主表：每个模型一行，同时给出状态/身份/总体答对率、平均耗时、输入/输出tokens和工具调用。首轮8B SFT紧接8B基础行，不再重复单列SFT表。初始图片/全证据/工具的详细准确率、完成率、模型调用及延迟分位数移入附录。全部尝试均在分母内；统计来自现有轨迹，没有重跑模型。详细数据见[效率记录](../results/cvpr_efficiency.json)与[SFT同题比较](../results/cvpr_sft_candidate_scores.json)。
+按用户进一步明确的结构，正文保留两张主表：表1比较基础模型，表2比较SFT前后。两表均单列Tools（No/Yes），同一模型或训练阶段各配两行；状态/身份/总体答对率与耗时、输入/输出tokens、工具调用并排。全证据参考、完成率、模型调用及延迟分位数保留在附录。全部尝试均在分母内；统计来自现有轨迹，没有重跑模型。详细数据见[效率记录](../results/cvpr_efficiency.json)与[SFT同题比较](../results/cvpr_sft_candidate_scores.json)。
 
 下文保留此前工作记录，运行状态以本快照及文末新增实验说明为准。
 <!-- live-progress-end -->
@@ -157,4 +157,4 @@ scripts/score_efficiency.py对固定209题读取原始generation与wall_latency_
 
 时间包含模型、预处理和环境工具，排除episode前的策略模型加载；封闭照片池请求没有真人等待时间。各模型均报告RTX A6000，普通共享主机任务的耗时会受CPU、工具和库版本影响，不作为严格隔离的推理速度榜。完成率与准确率一起阅读，避免将提前失败或弃答视为高效率。
 
-主表生成入口增加--efficiency和--sft，分别读取cvpr_efficiency.json与cvpr_sft_candidate_scores.json；--full-reference与--efficiency-reference生成附录详情。未运行的训练行不填数，规则基线未测量的耗时用--，不冒充零成本。
+主表生成入口用--efficiency读取cvpr_efficiency.json；--sft提供附录训练后对照，--full-reference与--efficiency-reference生成附录详情。表2由score_sft_comparison.render读取cvpr_sft_candidate_scores.json生成。未运行的训练行不填数，规则基线未测量的耗时用--，不冒充零成本。

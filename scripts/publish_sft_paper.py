@@ -1,4 +1,4 @@
-"""Publish measured SFT in the combined result table; refuse stale or edited sources."""
+"""Publish the measured SFT comparison; refuse stale or edited paper sources."""
 import argparse
 import hashlib
 import json
@@ -41,8 +41,8 @@ def main():
     report = json.loads((args.run / "paper/sft_results.json").read_text())
     cohort_path = repo / "docs/results/cvpr_20261102_candidate_scores.json"
     cohort = json.loads(cohort_path.read_text())
-    from scripts.score_sft_comparison import compare
-    from scripts.paper_result_table import render, render_full_reference, render_efficiency_reference
+    from scripts.score_sft_comparison import compare, render as render_sft
+    from scripts.paper_result_table import render_full_reference, render_efficiency_reference
     updated = compare(cohort_path, runtime / "evaluation/cvpr-20261101/qwen3",
                       args.run / "benchmark", args.run)
     if updated["family_ids"] != report["family_ids"]:
@@ -54,7 +54,7 @@ def main():
         raise ValueError("Paper Table 1 changed")
     efficiency = json.loads((repo / "docs/results/cvpr_efficiency.json").read_text())
     tables = {
-        "tables/benchmark_results.tex": render(cohort, efficiency, report),
+        "tables/sft_results.tex": render_sft(report),
         "tables/full_access_reference.tex": render_full_reference(cohort, report),
         "tables/efficiency_reference.tex": render_efficiency_reference(cohort, efficiency, report),
     }
@@ -80,7 +80,7 @@ def main():
         import fitz
         document = fitz.open(Path(directory) / "main.pdf")
         text = "\n".join(page.get_text() for page in document)
-        if "[?]" in text or "\ufffd" in text or "Table 1." not in text or document.metadata.get("author"):
+        if "[?]" in text or "\ufffd" in text or ("Table 1." not in text or "Table 2." not in text) or document.metadata.get("author"):
             raise ValueError("Compiled paper failed reference/table/anonymity checks")
         for name, table in tables.items():
             (repo / "paper" / name).write_text(table)
@@ -89,7 +89,7 @@ def main():
     command(["git", "diff", "--check"], cwd=repo)
     command(["git", "add", *("paper/"+name for name in tables),
              "docs/results/cvpr_sft_candidate_scores.json"], cwd=repo)
-    command(["git", "commit", "-m", "Update measured SFT in the combined result table"], cwd=repo)
+    command(["git", "commit", "-m", "Update paired SFT comparison and supplementary diagnostics"], cwd=repo)
     command(["git", "push", "origin", "main"], cwd=repo)
     for name in tables:
         destination = mirror / name
@@ -103,8 +103,8 @@ def main():
                  "/u/zzh136/Documents/Codex/ResolveAI_CVPR_methods.pdf")
     marker.write_text(json.dumps({
         "commit": command(["git", "rev-parse", "HEAD"], cwd=repo).stdout.strip(),
-        "combined_table_sha256": sha(mirror / "tables/benchmark_results.tex"), "families": report["common_families"],
-        "overleaf": project, "status": "published measured SFT in combined table",
+        "sft_table_sha256": sha(mirror / "tables/sft_results.tex"), "families": report["common_families"],
+        "overleaf": project, "status": "published measured paired SFT comparison",
     }, indent=2) + "\n")
 
 

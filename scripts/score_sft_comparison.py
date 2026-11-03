@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from scripts.score_candidate_labels import ARMS, read_rows, summarize
-from scripts.paper_result_table import task_scores, NAMES
+from scripts.paper_result_table import NAMES
 
 
 def acquisition_behavior(rows, cases, families):
@@ -98,31 +98,36 @@ def compare(cohort, base, adapted, training, plan_path=None):
 
 def render(report):
     model_id = report.get("base_model_id", "Qwen/Qwen3-VL-8B-Instruct")
-    model_name = NAMES[model_id]
-    costs = report.get("efficiency")
+    costs = report["efficiency"]
     lines = [
-        r"\begin{table}[t]", r"\centering\small",
-        r"\setlength{\tabcolsep}{4pt}",
-        r"\caption{\textbf{Supervised fine-tuning (SFT) of " + model_name + r".}",
-        r"Entries are correct answers (\%) when tools are available, defined as in Table~\ref{tab:benchmark}.",
-        r"The test images, tools and decision limits are unchanged."
-        + (r" Time (seconds) and output tokens are means per attempted case." if costs else "") + r"}",
-        r"\label{tab:sft}",
-        r"\begin{tabular}{@{}lrrrrr@{}}" if costs else r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
-        (r"Training & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens}\\"
-         if costs else r"Training & Condition & Identity & Overall\\"), r"\midrule",
+        r"\begin{table*}[t]", r"\centering\small", r"\setlength{\tabcolsep}{4pt}",
+        r"\begin{minipage}{.88\textwidth}\centering",
+        r"\caption{\textbf{Before and after supervised fine-tuning of "+NAMES[model_id]+r".}",
+        r"The same test cases are evaluated with tools unavailable (No) or available (Yes).",
+        r"Accuracy and mean cost use the definitions in Table~\ref{tab:benchmark}.",
+        r"Tools indicates availability, so a Yes row may still execute no tools.}",
+        r"\label{tab:sft}",r"\begin{tabular}{@{}llrrrrrrr@{}}",r"\toprule",
+        r" & & \multicolumn{3}{c}{Correct answers (\%)} & \multicolumn{4}{c}{Cost per attempted case}\\",
+        r"\cmidrule(lr){3-5}\cmidrule(l){6-9}",
+        r"Training & Tools & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Input\\tokens (k)} & \shortstack{Output\\tokens} & \shortstack{Tool\\calls}\\",
+        r"\midrule",
     ]
-    for index, row in enumerate(report["models"]):
-        label = "Before SFT" if index == 0 else "After SFT"
-        values = task_scores(row["arms"])[1::2]
-        cells = [f"{v:.1f}" for v in values]
-        if costs:
-            usage = costs[index]["arms"]["interactive_agent"]
-            if usage["correct"] != row["arms"]["interactive_agent"]["label_matches"]:
-                raise ValueError("SFT efficiency cohort differs")
-            cells += [f"{usage['mean_wall_s']:.1f}", f"{usage['mean_output_tokens']:.0f}"]
-        lines.append(label + " & " + " & ".join(cells) + r"\\")
-    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{table}"]) + "\n"
+    for index,row in enumerate(report["models"]):
+        for arm,enabled in (("initial_text","No"),("interactive_agent","Yes")):
+            score = row["arms"][arm]
+            usage = costs[index]["arms"][arm]
+            if usage["correct"] != score["label_matches"] or usage["episodes"] != score["episodes"]:
+                raise ValueError("SFT cost and accuracy cohorts differ")
+            label = ("Before SFT" if index==0 else "After SFT") if enabled=="No" else ""
+            values = [100*x["label_matches"]/x["episodes"] for x in
+                      (score["by_task"]["state"],score["by_task"]["identity"],score)]
+            cells = [f"{v:.1f}" for v in values]+[
+                f"{usage['mean_wall_s']:.1f}",f"{usage['mean_input_tokens']/1000:.1f}",
+                f"{usage['mean_output_tokens']:.0f}",f"{usage['mean_tool_calls']:.2f}"]
+            lines.append(label+" & "+enabled+" & "+" & ".join(cells)+r"\\")
+        if index==0:
+            lines.append(r"\midrule")
+    return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"])+"\n"
 
 
 if __name__ == "__main__":

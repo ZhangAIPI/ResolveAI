@@ -309,11 +309,11 @@ Each family contributes its constructed Sufficient version to the accuracy compa
 
 \paragraph{Models and comparison settings.}
 Table~\ref{tab:benchmark} evaluates seven open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5-8B~\cite{internvl35}, and LLaVA-OneVision-7B~\cite{llavaonevision}.
-Base checkpoints are evaluated without task demonstrations; the adapted row is examined in Section~\ref{sec:sft}.
+Base checkpoints are evaluated without task demonstrations; supervised adaptation is examined separately in Section~\ref{sec:sft}.
 In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
 Models share the tool definitions and costs; their native image processors and supported call formats are retained.
-The main table reports the interactive setting.
+The Tools column places the two settings next to each other for each model.
 The constant-response baseline always rejects the claim.
 A separate full-access reference supplies all obtainable photographs before a direct verdict (supplement).
 
@@ -321,6 +321,7 @@ A separate full-access reference supplies all obtainable photographs before a di
 We use greedy decoding, BF16 weights, an 8,192-token context limit and an input-image pixel cap of \(512^2\).
 Agents have eight assistant turns and a tool-cost allowance of 12.
 Direct responses allow 96 output tokens, compared with 384 per interactive turn.
+Direct decisions return a verdict only; interactive decisions also generate evidence citations.
 These settings evaluate the complete model and interaction interface: their difference does not isolate the effect of acquiring evidence.
 Image processing, output parsing and failure accounting are detailed in the supplement.
 We also report mean episode time, input/output tokens and model/tool calls over the same attempted cases, retaining unsuccessful runs.
@@ -334,6 +335,8 @@ Need more evidence, an invalid final response and failure to finish each receive
 Overall accuracy pools the two tasks by case count.
 These source labels have not been independently reviewed for evidence sufficiency.
 The reported accuracy therefore measures agreement with those labels, rather than the grounded accuracy defined in Equation~\ref{eq:grounded}.
+
+\input{tables/sft_results}
 
 \subsection{Benchmark Results}
 \paragraph{Tools help some models and hinder others.}
@@ -374,9 +377,11 @@ The supplement gives the trajectory composition and optimization details.
 This is a single training run; evaluation uses greedy decoding.
 
 \paragraph{Identity supervision does not improve both tasks.}
-The indented row in Table~\ref{tab:benchmark} compares the selected adapter with its base under the same interactive evaluation.
-Identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
+Table~\ref{tab:sft} compares the selected adapter with its base, both with and without access to tools.
+With tools, identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
 This single-run result shows a trade-off across tasks after identity-focused training, rather than an overall verification gain.
+The paired rows reveal a different effect without tools: direct accuracy rises from 74.6\% to 77.5\%.
+The difference between interactive and direct decisions therefore narrows from 7.7 to 1.0 percentage points after training.
 Mean episode time falls from 16.8 to 11.2 seconds and output length from 283 to 177 tokens.
 The shorter interaction reduces recorded cost while overall answer accuracy declines.
 
