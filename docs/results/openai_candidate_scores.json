@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-03T22:23:47.942744+00:00",
+  "as_of_utc": "2026-11-03T23:01:29.242383+00:00",
   "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
   "family_ids": [
     "case-0013955d31d3d1958ae4",
@@ -687,6 +687,285 @@
       "endpoint": "decisions",
       "paper_cohort_complete": true,
       "formal_grounded_accuracy": null
+    },
+    {
+      "name": "gpt54_mini",
+      "model_id": "gpt-5.4-mini-2026-03-17",
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 106,
+          "label_agreement": 0.507177033492823,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 43,
+            "Supported": 116,
+            "Need more evidence": 50
+          },
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "label_matches": 69,
+              "label_agreement": 0.45098039215686275,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 105,
+                "Need more evidence": 34,
+                "Refuted": 14
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "label_matches": 37,
+              "label_agreement": 0.6607142857142857,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 29,
+                "Supported": 11,
+                "Need more evidence": 16
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 103,
+          "label_agreement": 0.49282296650717705,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 52,
+            "Supported": 113,
+            "Need more evidence": 44
+          },
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "label_matches": 71,
+              "label_agreement": 0.46405228758169936,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 104,
+                "Need more evidence": 24,
+                "Refuted": 25
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "label_matches": 32,
+              "label_agreement": 0.5714285714285714,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 27,
+                "Supported": 9,
+                "Need more evidence": 20
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 157,
+          "label_agreement": 0.7511961722488039,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 79,
+            "Supported": 126,
+            "Need more evidence": 4
+          },
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "label_matches": 108,
+              "label_agreement": 0.7058823529411765,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 104,
+                "Refuted": 48,
+                "Need more evidence": 1
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "label_matches": 49,
+              "label_agreement": 0.875,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 31,
+                "Supported": 22,
+                "Need more evidence": 3
+              }
+            }
+          }
+        }
+      },
+      "costs": {
+        "initial_text": {
+          "episodes": 209,
+          "correct": 106,
+          "accuracy_pct": 50.717703349282296,
+          "finished_pct": 100,
+          "mean_wall_s": 2.231980431880624,
+          "mean_model_s": 0.9548891908879076,
+          "mean_input_tokens": 1182.2870813397128,
+          "mean_output_tokens": 5.856459330143541,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 2.1583516899263486,
+          "p90_wall_s": 3.092766080982983,
+          "mean_reasoning_tokens": 0.0,
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "correct": 69,
+              "accuracy_pct": 45.09803921568628,
+              "finished_pct": 100,
+              "mean_wall_s": 2.450131467322125,
+              "mean_model_s": 1.0341507785077042,
+              "mean_input_tokens": 1180.3725490196077,
+              "mean_output_tokens": 5.771241830065359,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 2.4505559289827943,
+              "p90_wall_s": 3.1407268040347844
+            },
+            "identity": {
+              "episodes": 56,
+              "correct": 37,
+              "accuracy_pct": 66.07142857142857,
+              "finished_pct": 100,
+              "mean_wall_s": 1.6359606386208074,
+              "mean_model_s": 0.7383352104266773,
+              "mean_input_tokens": 1187.517857142857,
+              "mean_output_tokens": 6.089285714285714,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.5624364839168265,
+              "p90_wall_s": 2.2912574240472168
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "correct": 103,
+          "accuracy_pct": 49.282296650717704,
+          "finished_pct": 100,
+          "mean_wall_s": 2.474614157296303,
+          "mean_model_s": 1.0115319678724775,
+          "mean_input_tokens": 1506.066985645933,
+          "mean_output_tokens": 5.7272727272727275,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 2.4664830149849877,
+          "p90_wall_s": 3.3854135060682893,
+          "mean_reasoning_tokens": 0.0,
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "correct": 71,
+              "accuracy_pct": 46.40522875816993,
+              "finished_pct": 100,
+              "mean_wall_s": 2.5136768915492653,
+              "mean_model_s": 1.0719250499307378,
+              "mean_input_tokens": 1284.6797385620914,
+              "mean_output_tokens": 5.555555555555555,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 2.566303374012932,
+              "p90_wall_s": 3.2079107080353424
+            },
+            "identity": {
+              "episodes": 56,
+              "correct": 32,
+              "accuracy_pct": 57.14285714285714,
+              "finished_pct": 100,
+              "mean_wall_s": 2.3678891869266017,
+              "mean_model_s": 0.8465294401061588,
+              "mean_input_tokens": 2110.9285714285716,
+              "mean_output_tokens": 6.196428571428571,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 2.005380059010349,
+              "p90_wall_s": 3.5654507681028917
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "correct": 157,
+          "accuracy_pct": 75.11961722488039,
+          "finished_pct": 100,
+          "mean_wall_s": 5.246938199669893,
+          "mean_model_s": 2.212362835153661,
+          "mean_input_tokens": 4750.564593301436,
+          "mean_output_tokens": 124.09569377990431,
+          "mean_model_calls": 1.6363636363636365,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0.507177033492823,
+          "mean_requests": 0,
+          "p50_wall_s": 5.332031229976565,
+          "p90_wall_s": 8.737030696007423,
+          "mean_reasoning_tokens": 0.0,
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "correct": 108,
+              "accuracy_pct": 70.58823529411765,
+              "finished_pct": 100,
+              "mean_wall_s": 5.413815144060661,
+              "mean_model_s": 2.186387351296349,
+              "mean_input_tokens": 4914.705882352941,
+              "mean_output_tokens": 98.27450980392157,
+              "mean_model_calls": 1.6797385620915033,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0.5555555555555556,
+              "mean_requests": 0,
+              "p50_wall_s": 5.43741278804373,
+              "p90_wall_s": 8.85822628007736
+            },
+            "identity": {
+              "episodes": 56,
+              "correct": 49,
+              "accuracy_pct": 87.5,
+              "finished_pct": 100,
+              "mean_wall_s": 4.791006548030834,
+              "mean_model_s": 2.2833315678352455,
+              "mean_input_tokens": 4302.107142857143,
+              "mean_output_tokens": 194.64285714285714,
+              "mean_model_calls": 1.5178571428571428,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0.375,
+              "mean_requests": 0,
+              "p50_wall_s": 4.2719107259763405,
+              "p90_wall_s": 8.085850525996648
+            }
+          }
+        }
+      },
+      "api_config": {
+        "model_id": "gpt-5.4-mini-2026-03-17",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 1.875,
+        "output_usd_per_million": 4.5,
+        "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5.4-mini"
+      },
+      "source_commit": "0b5f4d23774f725d7834f1dd5f423bd73ef8fd7f",
+      "manifest_sha256": "64420de6ecb9a5aa1b222c756b50bf4b270486056e32f3644523da7322a1a274",
+      "endpoint": "responses",
+      "paper_cohort_complete": true,
+      "formal_grounded_accuracy": null
     }
   ],
   "readiness": [
@@ -698,13 +977,13 @@
     },
     {
       "name": "gpt41_mini",
-      "attempts": 101,
+      "attempts": 197,
       "expected": 627,
       "ready": false
     },
     {
       "name": "luna",
-      "attempts": 119,
+      "attempts": 480,
       "expected": 627,
       "ready": false
     },
@@ -713,6 +992,18 @@
       "ready": true,
       "attempts": 418,
       "expected": 418
+    },
+    {
+      "name": "gpt54_mini",
+      "ready": true,
+      "attempts": 627,
+      "expected": 627
+    },
+    {
+      "name": "gpt41",
+      "attempts": 155,
+      "expected": 627,
+      "ready": false
     }
   ],
   "formal_grounded_accuracy": null
