@@ -1,0 +1,8 @@
+{
+  "model_id": "gpt-6.1-terra",
+  "reasoning_effort": "none",
+  "price_checked": "2026-11-03",
+  "input_ceiling_usd_per_million": 2.5,
+  "output_usd_per_million": 5,
+  "pricing_source": "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
+}

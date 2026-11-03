@@ -4,6 +4,8 @@
 
 [**最新模型结果、SFT 与 RL 进度**](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)
 
+[闭源模型接入：80 美元预算、60 美元运行上限（待配置密钥）](docs/experiments/openai-budget.zh-CN.md)
+
 <!-- benchmark-results-start -->
 当前主表已覆盖 **8 个模型**，使用同一固定题组。
 下表是来源标签下的答对率（%），并非独立审核后的证据充分性成绩。
