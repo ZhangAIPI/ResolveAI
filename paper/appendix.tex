@@ -84,7 +84,7 @@ The 64 source controls (32 per source label) and 226 identity candidates remain 
 
 Related views, rewrites and release versions remain grouped.
 Families sharing an image or a CO3D sequence form connected source groups for splitting and uncertainty estimation.
-Each access version starts a fresh conversation, without history or memory from sibling versions. The pool is evaluation-only; future training splits must be fixed by source group before fitting a policy. Public-source pretraining overlap cannot be excluded, so source-disjoint evaluation is not evidence of unseen real-world generalization.
+Each access version starts a fresh conversation, without history or memory from sibling versions. The pool is evaluation-only; training sources are separated by source group before fitting a policy. Public-source pretraining overlap cannot be excluded, so source-disjoint evaluation is not evidence of unseen real-world generalization.
 
 The separate interface study targets 20 participants, each completing three search trials and two full-pool judgments in 5--10 minutes, without hard time or action limits. It checks clarity; optional region marks and full-pool judgments do not replace evidence annotation.
 
@@ -146,7 +146,7 @@ A future generative world model could propose a viewing direction while keeping 
 
 \section{Execution and Scoring Details}
 \subsection{Initial evaluation configuration}
-The initial local model matrix comprises Qwen2.5-VL-7B, Qwen3-VL-8B, Qwen3.5-9B and InternVL3.5-8B~\cite{qwen25,qwen3,qwen35,internvl35}.
+The evaluated model matrix comprises Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B and LLaVA-OneVision-7B~\cite{qwen25,qwen3,qwen35,internvl35,llavaonevision}.
 The configuration uses BF16 weights, greedy generation, a tool budget of 12, at most eight assistant turns and an 8,192-token context cap.
 Direct decisions permit at most 96 output tokens; interactive turns permit 384.
 Input images are capped at \(512\times512\) pixels, without additional InternVL tiling.
@@ -155,7 +155,7 @@ Checkpoint-native preprocessing and any architecture-specific behavior remain re
 Direct and interactive output caps differ, so their score gap cannot isolate acquisition. Capability attribution requires replaying final decisions with matched output allowance and formatting, auditing presented images and resolution, and reporting truncation separately. This control has not been run.
 
 Qwen3.5 uses a separate Transformers 5.3.0 environment with thinking disabled.
-The other three models use Transformers 4.57.6.
+The remaining reported models use Transformers 4.57.6.
 Model/data revisions, source digests, providers and dependency versions are recorded per run.
 Runs with different interface diagnostics or source settings remain separate.
 
@@ -163,6 +163,47 @@ Native JSON/XML and portable structured calls map to common tool schemas.
 Adapters do not invent arguments, repair the selected function or accept multiple calls as a single valid call.
 Checkpoint stopping tokens and the assistant-turn boundary are preserved so control returns to the real environment.
 The next observation must come from actual execution, never a model-generated tool response.
+
+\subsection{Evaluation cohort and training details}
+The initial pool has 252 families with source-derived labels.
+The first cross-model snapshot contained complete measurements in all three settings for 209 of these families.
+We freeze that intersection for the paper comparison, including every model's failed or unanswered attempts within it.
+The remaining 43 labeled families are not added as later runs complete, and the 226 identity candidates without source labels are excluded.
+The same fixed family list is used for the base and fine-tuned models.
+This historical completion-based subset is not a random sample of the candidate pool.
+It is distinct from admission after independent evidence review.
+
+The seven completed model checkpoints are Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B and LLaVA-OneVision-7B.
+All accuracy comparisons in the main paper use the same 209 Sufficient versions.
+Complete raw evaluation runs cover all 478 families, four access versions and three decision settings, totaling 5,736 episodes per model.
+Running or queued checkpoints are not included in the result tables.
+The outcome partition uses submitted definite verdicts that match or contradict the source label, submitted Need more evidence, and absence of a valid final verdict.
+Parsing failure, repeated invalid calls, context exhaustion and turn exhaustion remain in the denominator.
+No answer is never silently converted to an abstention.
+The reported comparisons are descriptive; no statistical significance or robustness across training seeds is claimed.
+
+For the first supervised experiment, the CO3D development source contributes 1,280 training families and 320 category-disjoint validation families.
+Each family has four access versions.
+Executing the reference actions produces 5,120 training conversations with 8,960 assistant decision targets and 1,280 validation conversations with 2,240 targets.
+The source identities are weak labels: within-sequence views are positives and cross-category pairs are negatives.
+Sequences and image hashes are checked for zero overlap across training, validation and the frozen evaluation pool.
+Masks supply public target boxes, rather than identity labels.
+Only assistant actions receive language-model loss; photographs, user messages and tool observations are masked.
+
+LoRA updates the language attention query, key, value and output projections with rank 32, alpha 64 and dropout 0.05.
+The base and vision parameters remain frozen.
+Training uses BF16, a learning rate of \(10^{-4}\), microbatch one and gradient accumulation over eight decisions, for 200 optimizer updates.
+Every 25 updates, teacher-forced assistant-token loss is measured on a fixed set of 32 source-disjoint validation decisions.
+The lowest-loss checkpoint is evaluated, without selecting on benchmark scores.
+The training seed is 17; this is a single-run experiment.
+The selected adapter and base receive identical evaluation images, tools, limits and greedy decoding.
+
+Action analysis uses the same 209 families in each access version.
+In Obtainable, episodes receiving a new photograph change from 12 before training to 153 afterward.
+All 153 post-training requests occur in condition cases; no identity case requests a photograph.
+In Missing and Unavailable, the same condition cases attempt a request, receive no image, and submit Need more evidence.
+On Sufficient, the adapter terminates on all 209 cases without intermediate tools.
+These measurements describe the learned interaction pattern, not reviewed evidence acquisition or a causal benefit from the returned pixels.
 
 \subsection{Metrics and failure accounting}
 For reviewed case \(i\), let \(Y_i=Y_{q_i}(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid evidence set citing only released evidence.
@@ -215,6 +256,6 @@ An obtainable and unavailable configuration can share an identical public prefix
 Before access feedback is observed, hidden knowledge of the configuration cannot justify different preferred actions.
 Action-value estimates must aggregate over matched histories or condition only on visible feedback.
 
-Future training exports retain reviewed assistant actions and actual observations, excluding private labels from prompts.
+Training from adjudicated action comparisons requires reviewed assistant actions and actual observations, excluding private labels from prompts.
 Sibling comparisons must share the public prefix, schemas and world state.
-Unreviewed or proxy traces are excluded; no training gain or new optimizer is claimed.
+The source-supervised experiment above uses weak source labels and reference actions, not adjudicated action preferences. It does not establish a gain from branch-based training.

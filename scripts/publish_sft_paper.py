@@ -21,29 +21,6 @@ def command(args, **kwargs):
     return result
 
 
-def analysis(report):
-    config = report["training"]["configuration"]
-    data = report["training"]["data"]["counts"]
-    before, after = [m["arms"]["interactive_agent"] for m in report["models"]]
-    return (
-        r"\paragraph{Source-supervised acquisition training.}" + "\n"
-        f"We adapt Qwen3-VL-8B with rank-{config['rank']} LoRA on "
-        f"{data['train']['families']:,} CO3D development families, using "
-        f"{data['validation']['families']:,} category-disjoint families for validation. "
-        "Same-sequence views and cross-category negatives provide weak identity supervision. "
-        "Expert calls execute in the environment, so the training history contains the photographs "
-        "actually released and the failures actually returned. "
-        f"Training runs for {report['checkpoint']['state']['step']} optimizer updates; "
-        "the checkpoint is selected by held-out assistant-token loss. "
-        r"Table~\ref{tab:sft} compares this adapter with its frozen base on the same evaluation families. "
-        f"Agent label agreement changes from {100*before['label_agreement']:.1f}\\% "
-        f"to {100*after['label_agreement']:.1f}\\%. "
-        "This pilot tests learning the acquisition and decision workflow; "
-        "source-derived targets and simple request sequences do not establish a gain in "
-        "reviewed evidence sufficiency or adaptive view selection.\n\n"
-    )
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run", type=Path)
@@ -74,7 +51,7 @@ def main():
         raise ValueError("Paper cohort changed; retain measured artifacts for reconciliation")
     if sha(repo / "paper/tables/benchmark_results.tex") != args.table1_sha256:
         raise ValueError("Paper Table 1 changed")
-    expected_table = analysis(report) + render(report)
+    expected_table = render(report)
     table_path = repo / "paper/tables/sft_results.tex"
     status = command(["git", "status", "--porcelain"], cwd=repo).stdout.strip()
     recovering_table = status == "?? paper/tables/sft_results.tex" and (

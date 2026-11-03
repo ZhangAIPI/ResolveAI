@@ -231,8 +231,6 @@ The diagram shows the comparison, without measured outcomes.}
 \label{fig:diagnosis}
 \end{figure}
 
-\input{tables/benchmark_results}
-
 \subsection{Separating acquisition from judgment}
 A returned photograph can be relevant without resolving the claim, and sufficient evidence can be acquired without producing a correct verdict.
 We follow these two stages separately.
@@ -295,41 +293,86 @@ Matched content substitutions address the further question of dependence on the 
 Finally, fixed-order and random acquisition provide comparisons with the same available tools and allowance, separating access to additional images from the value of selecting them in response to the current evidence.
 
 
-\section{Initial Benchmark Results}
-We ask models two practical questions: does the photographed item have the stated defect, and do the objects in two submissions depict the same physical item?
-We evaluate seven models on a fixed cohort of 209 source-labeled families: 153 condition queries and 56 identity controls.
+\section{Experiments}
+We study whether access to tools improves visual verification, which failures account for low scores, and whether supervising tool use improves the final judgment.
+
+\subsection{Experimental Setup}
+\paragraph{Data and tasks.}
+Object-condition queries ask whether a photographed item has a stated defect.
+Object-identity queries ask whether two submissions depict the same physical item.
+We use a fixed evaluation cohort of 209 source-labeled families: 153 condition queries and 56 identity controls, with 103 supported and 106 refuted claims.
+The cohort was fixed at the first cross-model comparison and is unchanged for later models and fine-tuning.
 The 226 identity candidates without established source labels are excluded.
-One constructed Sufficient version is used per family.
-Table~\ref{tab:benchmark} reports each task separately before pooling their cases into an overall score.
+Each family contributes its constructed Sufficient version to the accuracy comparison.
 
-We compare answering directly from the initial images with an agent that starts from those same images and can use tools.
-A score is the percentage of all attempted cases whose final verdict matches the source label; unresolved answers and missing verdicts remain in the denominator.
-These are initial source-label results, preceding independent sufficiency review, rather than grounded accuracy under Equation~\ref{eq:grounded}.
-An additional direct-decision setting with all obtainable photographs is reported in the supplement.
+\paragraph{Models and comparison settings.}
+Table~\ref{tab:benchmark} evaluates seven open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5-8B~\cite{internvl35}, and LLaVA-OneVision-7B~\cite{llavaonevision}.
+All are evaluated without benchmark-specific training or demonstrations.
+In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
+In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
+Models share the tool definitions and costs; their native image processors and supported call formats are retained.
+The constant-response baseline always rejects the claim.
+A separate full-access reference supplies all obtainable photographs before a direct verdict (supplement).
 
-\paragraph{Performance differs across tasks.}
-Qwen3-VL-8B has the highest accuracy in both tasks: 79.1\% for condition and 91.1\% for identity when using tools.
-The task breakdown also exposes changes hidden by a pooled score.
-For Qwen3.5-9B, interaction raises condition accuracy from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
-The pooled score therefore hides opposite changes in condition and identity.
+\paragraph{Inference settings.}
+We use greedy decoding, BF16 weights, an 8,192-token context limit and an input-image pixel cap of \(512^2\).
+Agents have eight assistant turns and a tool-cost allowance of 12.
+Direct responses allow 96 output tokens, compared with 384 per interactive turn.
+These settings evaluate the complete model and interaction interface: their difference does not isolate the effect of acquiring evidence.
+Image processing, output parsing and failure accounting are detailed in the supplement.
 
-\paragraph{Errors and non-answers.}
-Incorrect answers, abstentions and failures to finish all reduce this accuracy, but have different causes. We report their proportions separately in the supplement.
-Qwen2.5-VL-7B answers Need more evidence in 82.8\% of cases, whereas InternVL3.5-8B submits no final verdict in 81.8\%.
-Their low accuracy consequently cannot be interpreted as the same kind of visual failure.
-LLaVA-OneVision submits no verdict on this cohort; 91.9\% of its episodes reach the context limit.
-Qwen3-VL-8B submits a valid final response in 96.7\% of cases, but answers correctly in 82.3\%: completing the interaction does not imply a correct judgment.
+\paragraph{Evaluation metric.}
+Accuracy is the percentage of attempted cases with a final verdict matching the source label:
+\(\mathrm{Acc}=100\,n_{\mathrm{correct}}/n_{\mathrm{attempted}}\).
+A correct response supports a source-positive claim or refutes a source-negative one.
+Need more evidence, an invalid final response and failure to finish each receive zero; none is removed from the denominator.
+Overall accuracy pools the two tasks by case count.
+These source labels have not been independently reviewed for evidence sufficiency.
+The reported accuracy therefore measures agreement with those labels, rather than the grounded accuracy defined in Equation~\ref{eq:grounded}.
 
-The comparison evaluates the complete model--interface configuration.
-Direct answers allow 96 output tokens; agents allow eight turns of up to 384 tokens each and an acquisition allowance of 12.
-All models use greedy decoding, BF16 weights and an 8,192-token context limit; the processor requests at most \(512^2\) pixels per image.
-The interactive setting thus changes both available actions and the decision interface.
-Since these cases were constructed to be initially sufficient, an increase in Table~\ref{tab:benchmark} does not by itself establish successful evidence acquisition.
-That claim requires the reviewed access variants and matched action comparisons developed above.
+\input{tables/benchmark_results}
 
-% The next main table is reserved for measured base-versus-SFT performance.
-% Do not insert estimated gains, empty runs or validation results as benchmark scores.
-\IfFileExists{tables/sft_results.tex}{\input{tables/sft_results}}{}
+\subsection{Benchmark Results}
+\paragraph{Tools help some models and hinder others.}
+Qwen3-VL-8B achieves the highest accuracy with tools, at 82.3\%, compared with 74.6\% from the initial images alone.
+The same comparison raises Qwen3-VL-4B from 33.0\% to 49.3\%, but lowers Qwen3-VL-2B from 60.3\% to 40.7\%.
+Access to the tool interface thus does not produce a uniform benefit, even within one model family.
+
+The task breakdown exposes a further difference.
+For Qwen3.5-9B, tools increase condition accuracy from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
+An overall gain can therefore coexist with a decline in cross-image identity judgments.
+Since this table uses initially sufficient constructions, these changes concern verification with a tool interface; they do not establish that the models can select useful missing evidence.
+
+\paragraph{Low accuracy has different causes.}
+Qwen2.5-VL-7B submits Need more evidence in 82.8\% of cases, whereas InternVL3.5-8B submits no final verdict in 81.8\%.
+LLaVA-OneVision submits none on this cohort, with 91.9\% of episodes reaching the context limit.
+These outcomes distinguish reluctance to decide from failure to complete the interaction; they cannot all be attributed to poor visual recognition.
+Even Qwen3-VL-8B completes 96.7\% of episodes but answers correctly in 82.3\%.
+The supplement reports correct answers, incorrect answers, abstentions and missing decisions as a partition of the same attempts.
+
+\subsection{Effect of Supervised Fine-Tuning}
+\paragraph{Training setup.}
+We fine-tune Qwen3-VL-8B on identity and acquisition trajectories from 1,280 CO3D development families, with 320 category-disjoint families for validation.
+Source sequences and image hashes do not overlap with the evaluation pool.
+Same-sequence views and cross-category negatives provide weak identity targets.
+The training conversations contain actual released photographs and tool feedback, including failed requests.
+We freeze the base model and vision encoder and train rank-32 attention LoRA adapters for 200 updates at a learning rate of \(10^{-4}\).
+The checkpoint is selected by held-out assistant-token loss, without benchmark feedback.
+The supplement gives the trajectory composition and optimization details.
+This is a single training run; evaluation uses greedy decoding.
+
+\input{tables/sft_results}
+
+\paragraph{Identity supervision does not improve both tasks.}
+Table~\ref{tab:sft} compares the selected adapter with its base under the same interactive evaluation.
+Identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
+This single-run result shows a trade-off across tasks after identity-focused training, rather than an overall verification gain.
+
+The action traces also change.
+The adapter completes every Sufficient episode, but makes no inspection calls before its verdict.
+On the matched Obtainable versions, it requests a photograph in every condition case and in none of the identity cases.
+This uniform behavior does not establish selection of a view based on visual ambiguity.
+More reliable termination and more frequent requests can accompany lower answer accuracy; the action sequence and the final judgment need to be evaluated separately.
 
 \section*{LLM Usage Statement}
 OpenAI Codex assisted with code, literature lookup, manuscript drafting and schematic figure code.
