@@ -29,10 +29,6 @@ def main():
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     def status(phase,**fields):
         status_path.write_text(json.dumps({"phase":phase,**fields},indent=2)+"\n")
-    status("waiting_for_main_suite",preserved_answers=197)
-    # Preserve the suite's three-worker limit and existing prepaid priorities.
-    while json.loads((root/"suite_status.json").read_text())["phase"]!="finished":
-        time.sleep(20)
     original=root/"ledgers/gpt41_mini.sqlite"
     with sqlite3.connect(original) as db:
         unknown=db.execute("SELECT COUNT(*) FROM calls WHERE charge IS NULL AND response IS NULL").fetchone()[0]
@@ -43,10 +39,31 @@ def main():
     # 4.1-mini context/output ceiling (1,047,576 input + 32,768 output tokens)
     # at the audited rates, rounded upward to USD 1.11. This is a conservative
     # accounting guard, not an asserted API bill.
+    parent=ApiBudget(root/"budget.sqlite")
+    guard_name="gpt41_mini-lost-receipt-guard"
+    guard_path=root/"ledgers"/(guard_name+".sqlite")
+    status("waiting_for_receipt_reserve",preserved_answers=197)
+    while True:
+        try:
+            guard=parent.allocate(guard_name,guard_path,1.11)
+            break
+        except BudgetStop:
+            time.sleep(10)
+    if guard is not None:
+        ticket,_=guard.reserve("audit/lost-original-receipt",1.11,
+                               stage="reconciliation",stage_limit_usd=1.11)
+        if ticket:
+            guard.settle(ticket,1.11,{"kind":"conservative_lost_receipt_guard",
+                                      "not_actual_billing":True})
+        guard.close()
+        parent.close_allocation(guard_name,guard_path)
+    status("waiting_for_main_suite",preserved_answers=197,lost_receipt_guard_usd=1.11)
+    # Preserve the suite's three-worker limit and existing prepaid priorities.
+    while json.loads((root/"suite_status.json").read_text())["phase"]!="finished":
+        time.sleep(20)
     name="gpt41_mini-client-fix"
     child_path=root/"ledgers"/(name+".sqlite")
-    cap=6.11
-    parent=ApiBudget(root/"budget.sqlite")
+    cap=5.0
     try:
         child=parent.allocate(name,child_path,cap)
     except BudgetStop:
@@ -56,9 +73,6 @@ def main():
     if child is None:
         parent.close()
         return
-    ticket,_=child.reserve("audit/lost-original-receipt",1.11,stage="reconciliation",stage_limit_usd=1.11)
-    if ticket:
-        child.settle(ticket,1.11,{"kind":"conservative_lost_receipt_guard","not_actual_billing":True})
     with child.db:
         for key,response in cached:
             # The original paid call remains charged in its sealed ledger.
