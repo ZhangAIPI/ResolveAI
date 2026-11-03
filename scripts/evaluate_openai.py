@@ -74,6 +74,7 @@ def main():
     p.add_argument("--budget-usd",type=float,default=60,help="Prefunded ledger cap, never above USD 60")
     p.add_argument("--stage-name",help="Persistent budget-stage identifier")
     p.add_argument("--stage-budget-usd",type=float,help="A smaller stage limit within the shared USD 60 cap")
+    p.add_argument("--resume-after-client-fix",action="store_true",help="Audited continuation with unchanged model/task settings")
     p.add_argument("--execute",action="store_true")
     args = p.parse_args()
     configure_api_key(args.key_file)
@@ -104,7 +105,11 @@ def main():
                        "model_id":config["model_id"],"revision":"API service alias; actual returned model retained per call",
                        "ledger":str(args.ledger.resolve()),"script_sha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                        "grounding_manifest":json.loads((args.grounding_root/"manifest.json").read_text())}
-    locked_manifest(args.output/"manifest.json",manifest_config)
+    if args.resume_after_client_fix:
+        from resolveai.api_resume import continue_manifest
+        continue_manifest(args.output/"manifest.json",manifest_config)
+    else:
+        locked_manifest(args.output/"manifest.json",manifest_config)
     ledger = ApiBudget(args.ledger,args.budget_usd)
     records = Records(args.output)
     backend = FrozenGrounding(args.grounding_root,device="cpu")
