@@ -1,0 +1,33 @@
+\paragraph{Source-supervised acquisition training.}
+We adapt Qwen3-VL-8B with rank-32 LoRA on 1,280 CO3D development families, using 320 category-disjoint families for validation. Same-sequence views and cross-category negatives provide weak identity supervision. Expert calls execute in the environment, so the training history contains the photographs actually released and the failures actually returned. Training runs for 200 optimizer updates; the checkpoint is selected by held-out assistant-token loss. Table~\ref{tab:sft} compares this adapter with its frozen base on the same evaluation families. Agent label agreement changes from 82.3\% to 78.5\%. This pilot tests learning the acquisition and decision workflow; source-derived targets and simple request sequences do not establish a gain in reviewed evidence sufficiency or adaptive view selection.
+
+\begin{table*}[t]
+\centering
+\begin{minipage}{.88\textwidth}\centering\small
+\setlength{\tabcolsep}{5pt}
+\caption{\textbf{Verification before and after source-supervised acquisition SFT.}
+Source-label agreement (\%) uses the same tasks, settings and 209-family cohort as Table~\ref{tab:benchmark}.
+Training and validation source sequences are disjoint from the frozen evaluation pool.
+The labels remain unreviewed for evidence sufficiency.}
+\label{tab:sft}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Object condition (153 cases)} & \multicolumn{2}{c}{Cross-view identity (56 cases)} & \multicolumn{2}{c}{Overall (209 cases)}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Qwen3-VL-8B & Answer only & With tools & Answer only & With tools & Answer only & With tools\\
+\midrule
+Base & 69.9 & 79.1 & 87.5 & 91.1 & 74.6 & 82.3\\
+Acquisition SFT & 71.9 & 71.2 & 92.9 & 98.2 & 77.5 & 78.5\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Agent outcomes & Correct & Wrong & Need more evidence & Did not finish\\
+\midrule
+Base & 172 & 28 & 2 & 7\\
+Acquisition SFT & 164 & 44 & 1 & 0\\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table*}
