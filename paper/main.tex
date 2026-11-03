@@ -313,7 +313,7 @@ Base checkpoints are evaluated without task demonstrations; supervised adaptatio
 In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
 Models share the tool definitions and costs; their native image processors and supported call formats are retained.
-The Tools column places the two settings next to each other for each model.
+The two column groups place decisions without and with tools side by side for each model.
 The constant-response baseline always rejects the claim.
 A separate full-access reference supplies all obtainable photographs before a direct verdict (supplement).
 
@@ -380,7 +380,7 @@ This is a single training run; evaluation uses greedy decoding.
 Table~\ref{tab:sft} compares the selected adapter with its base, both with and without access to tools.
 With tools, identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
 This single-run result shows a trade-off across tasks after identity-focused training, rather than an overall verification gain.
-The paired rows reveal a different effect without tools: direct accuracy rises from 74.6\% to 77.5\%.
+The no-tool columns reveal a different effect: direct accuracy rises from 74.6\% to 77.5\%.
 The difference between interactive and direct decisions therefore narrows from 7.7 to 1.0 percentage points after training.
 Mean episode time falls from 16.8 to 11.2 seconds and output length from 283 to 177 tokens.
 The shorter interaction reduces recorded cost while overall answer accuracy declines.

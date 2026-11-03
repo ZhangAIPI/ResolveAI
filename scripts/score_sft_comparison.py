@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from scripts.score_candidate_labels import ARMS, read_rows, summarize
-from scripts.paper_result_table import NAMES
+from scripts.paper_result_table import NAMES, comparison_header, comparison_values, comparison_cells
 
 
 def acquisition_behavior(rows, cases, families):
@@ -98,35 +98,19 @@ def compare(cohort, base, adapted, training, plan_path=None):
 
 def render(report):
     model_id = report.get("base_model_id", "Qwen/Qwen3-VL-8B-Instruct")
-    costs = report["efficiency"]
     lines = [
-        r"\begin{table*}[t]", r"\centering\small", r"\setlength{\tabcolsep}{4pt}",
+        r"\begin{table*}[t]",r"\centering\small",r"\setlength{\tabcolsep}{3.5pt}",
         r"\begin{minipage}{.88\textwidth}\centering",
         r"\caption{\textbf{Before and after supervised fine-tuning of "+NAMES[model_id]+r".}",
-        r"The same test cases are evaluated with tools unavailable (No) or available (Yes).",
-        r"Accuracy and mean cost use the definitions in Table~\ref{tab:benchmark}.",
-        r"Tools indicates availability, so a Yes row may still execute no tools.}",
-        r"\label{tab:sft}",r"\begin{tabular}{@{}llrrrrrrr@{}}",r"\toprule",
-        r" & & \multicolumn{3}{c}{Correct answers (\%)} & \multicolumn{4}{c}{Cost per attempted case}\\",
-        r"\cmidrule(lr){3-5}\cmidrule(l){6-9}",
-        r"Training & Tools & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Input\\tokens (k)} & \shortstack{Output\\tokens} & \shortstack{Tool\\calls}\\",
-        r"\midrule",
+        r"The two column groups compare the same test cases without and with access to tools.",
+        r"Accuracy (\%), time and output tokens use the definitions in Table~\ref{tab:benchmark}.",
+        r"Access to tools does not imply that the model uses them; actual calls are reported in the supplement.}",
+        r"\label{tab:sft}",*comparison_header("Training"),
     ]
     for index,row in enumerate(report["models"]):
-        for arm,enabled in (("initial_text","No"),("interactive_agent","Yes")):
-            score = row["arms"][arm]
-            usage = costs[index]["arms"][arm]
-            if usage["correct"] != score["label_matches"] or usage["episodes"] != score["episodes"]:
-                raise ValueError("SFT cost and accuracy cohorts differ")
-            label = ("Before SFT" if index==0 else "After SFT") if enabled=="No" else ""
-            values = [100*x["label_matches"]/x["episodes"] for x in
-                      (score["by_task"]["state"],score["by_task"]["identity"],score)]
-            cells = [f"{v:.1f}" for v in values]+[
-                f"{usage['mean_wall_s']:.1f}",f"{usage['mean_input_tokens']/1000:.1f}",
-                f"{usage['mean_output_tokens']:.0f}",f"{usage['mean_tool_calls']:.2f}"]
-            lines.append(label+" & "+enabled+" & "+" & ".join(cells)+r"\\")
-        if index==0:
-            lines.append(r"\midrule")
+        values = comparison_values(row["arms"],report["efficiency"][index]["arms"])
+        label = "Before SFT" if index==0 else "After SFT"
+        lines.append(label+" & "+" & ".join(comparison_cells(values))+r"\\")
     return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"])+"\n"
 
 

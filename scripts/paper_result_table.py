@@ -79,51 +79,62 @@ def cost_rows(report, efficiency, sft=None):
     return rows
 
 
-def render(report, efficiency):
-    # Validate checkpoint/cohort pairing before arranging the two settings.
-    cost_rows(report, efficiency)
-    costs = {row["model_id"]:row for row in efficiency["workers"]}
-    rows = []
-    for worker in sorted(report["workers"], key=lambda w: ORDER.index(w["model_id"])):
-        for arm in MODES:
-            score = worker["arms"][arm]
-            usage = costs[worker["model_id"]]["arms"][arm]
-            if usage["correct"] != score["label_matches"] or usage["episodes"] != score["episodes"]:
-                raise ValueError("Setting-specific efficiency differs from accuracy")
-            values = [100*x["label_matches"]/x["episodes"] for x in
-                      (score["by_task"]["state"],score["by_task"]["identity"],score)]
-            rows.append((worker,arm,values,usage))
-    best = [max(column) for column in zip(*(row[2] for row in rows))]
-    lines = [
-        r"\begin{table*}[t]", r"\centering\small", r"\setlength{\tabcolsep}{4pt}",
-        r"\begin{minipage}{.96\textwidth}\centering",
-        r"\caption{\textbf{Open-source models with and without tools.}",
-        r"Tools indicates availability: No answers directly from the initial photographs; Yes starts from those same photographs and permits interaction.",
-        r"Accuracy uses unreviewed source labels; abstentions and missing decisions receive zero.",
-        r"Costs are means over all attempts on RTX A6000 GPUs; tokens are summed across model calls.",
-        r"Best accuracy results are bold; unmeasured baseline costs are marked --.}",
-        r"\label{tab:benchmark}", r"\begin{tabular}{@{}llrrrrrrr@{}}", r"\toprule",
-        r" & & \multicolumn{3}{c}{Correct answers (\%)} & \multicolumn{4}{c}{Cost per attempted case}\\",
-        r"\cmidrule(lr){3-5}\cmidrule(l){6-9}",
-        r"Model & Tools & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Input\\tokens (k)} & \shortstack{Output\\tokens} & \shortstack{Tool\\calls}\\",
+def comparison_header(label):
+    return [
+        r"\begin{tabular}{@{}lrrrrrrrrrr@{}}", r"\toprule",
+        r" & \multicolumn{5}{c}{No tools} & \multicolumn{5}{c}{With tools}\\",
+        r"\cmidrule(lr){2-6}\cmidrule(l){7-11}",
+        label+r" & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens} & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens}\\",
         r"\midrule",
     ]
-    for worker,arm,values,usage in rows:
-        label = NAMES[worker["model_id"]] if arm=="initial_text" else ""
-        enabled = "No" if arm=="initial_text" else "Yes"
-        cells = [rf"\textbf{{{v:.1f}}}" if v==top else f"{v:.1f}"
-                 for v,top in zip(values,best)]
-        cells += [f"{usage['mean_wall_s']:.1f}", f"{usage['mean_input_tokens']/1000:.1f}",
-                  f"{usage['mean_output_tokens']:.0f}", f"{usage['mean_tool_calls']:.2f}"]
-        lines.append(label+" & "+enabled+" & "+" & ".join(cells)+r"\\")
-        if arm=="interactive_agent":
-            lines.append(r"\addlinespace[2pt]")
+
+
+def comparison_values(arms, costs):
+    values = []
+    for arm in MODES:
+        score, usage = arms[arm], costs[arm]
+        if usage["correct"] != score["label_matches"] or usage["episodes"] != score["episodes"]:
+            raise ValueError("Setting-specific cost differs from accuracy")
+        values += [100*x["label_matches"]/x["episodes"] for x in
+                   (score["by_task"]["state"],score["by_task"]["identity"],score)]
+        values += [usage["mean_wall_s"], usage["mean_output_tokens"]]
+    return values
+
+
+def comparison_cells(values, best=None):
+    cells = []
+    for index,value in enumerate(values):
+        text = f"{value:.0f}" if index%5==4 else f"{value:.1f}"
+        if best is not None and index in (0,1,2,5,6,7) and value==best[index]:
+            text = r"\textbf{"+text+"}"
+        cells.append(text)
+    return cells
+
+
+def render(report, efficiency):
+    cost_rows(report, efficiency)
+    costs = {row["model_id"]:row for row in efficiency["workers"]}
+    workers = sorted(report["workers"],key=lambda w:ORDER.index(w["model_id"]))
+    values = [comparison_values(w["arms"],costs[w["model_id"]]["arms"]) for w in workers]
+    best = [max(column) for column in zip(*values)]
+    lines = [
+        r"\begin{table*}[t]",r"\centering\small",r"\setlength{\tabcolsep}{3.5pt}",
+        r"\begin{minipage}{.96\textwidth}\centering",
+        r"\caption{\textbf{Open-source models with and without tools.}",
+        r"No tools answers directly from the initial photographs; With tools starts from the same photographs and permits interaction.",
+        r"Condition, Identity and Overall report correct answers (\%) against unreviewed source labels; abstentions and missing decisions receive zero.",
+        r"Time and output tokens are means over all attempts on RTX A6000 GPUs.",
+        r"Best accuracy results are bold; unmeasured baseline costs are marked --.}",
+        r"\label{tab:benchmark}",*comparison_header("Model"),
+    ]
+    for worker,row in zip(workers,values):
+        lines.append(NAMES[worker["model_id"]]+" & "+" & ".join(comparison_cells(row,best))+r"\\")
     prior = []
     for task in ("state","identity",None):
         counts = report["task_label_counts"][task] if task else report["label_counts"]
         prior.append(100*counts.get("Refuted",0)/sum(counts.values()))
-    lines += [r"\midrule", "Always reject the claim & -- & "+
-              " & ".join(f"{v:.1f}" for v in prior)+r" & -- & -- & -- & --\\",
+    prior_cells = [f"{v:.1f}" for v in prior]+["--","--"]
+    lines += [r"\midrule","Always reject the claim & "+" & ".join(prior_cells*2)+r"\\",
               r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"]
     return "\n".join(lines)+"\n"
 
@@ -135,12 +146,13 @@ def render_efficiency_reference(report, efficiency, sft=None):
         r"\caption{\textbf{Completion and latency diagnostics.}",
         r"The same attempts as the main table. Finished includes valid uncertain decisions.",
         r"Model calls count actual generations. Median and 90th-percentile times include unfinished episodes.}",
-        r"\label{tab:efficiency-reference}", r"\begin{tabular}{@{}lrrrr@{}}", r"\toprule",
-        r"Model & Finished (\%) & Model calls & Median time (s) & 90th percentile (s)\\", r"\midrule",
+        r"\label{tab:efficiency-reference}", r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+        r"Model & Finished (\%) & Input tokens (k) & Model calls & Tool calls & Median (s) & 90th percentile (s)\\", r"\midrule",
     ]
     for row in rows:
         cost = row["cost"]
-        cells = [f"{cost['finished_pct']:.1f}", f"{cost['mean_model_calls']:.2f}",
+        cells = [f"{cost['finished_pct']:.1f}", f"{cost['mean_input_tokens']/1000:.1f}",
+                 f"{cost['mean_model_calls']:.2f}", f"{cost['mean_tool_calls']:.2f}",
                  f"{cost['p50_wall_s']:.1f}", f"{cost['p90_wall_s']:.1f}"]
         lines.append(row["label"]+" & "+" & ".join(cells)+r"\\")
     return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{table*}"])+"\n"
