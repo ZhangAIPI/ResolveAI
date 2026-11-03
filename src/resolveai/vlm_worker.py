@@ -262,6 +262,10 @@ def main():
             print(json.dumps({"halt": "context_limit", "input_tokens": int(inputs.input_ids.shape[1])}), flush=True)
             continue
         inputs = inputs.to(model.device)
+        # Pixtral's vision convolution does not cast processor float32 pixels
+        # to the checkpoint dtype, unlike the other supported vision towers.
+        if getattr(getattr(model.config, "vision_config", None), "model_type", None) == "pixtral":
+            inputs["pixel_values"] = inputs["pixel_values"].to(dtype=model.dtype)
         if choice_mode:
             labels = request["choices"]
             if (not labels or len(set(labels)) != len(labels)

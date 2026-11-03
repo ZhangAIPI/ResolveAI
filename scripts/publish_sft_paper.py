@@ -74,19 +74,26 @@ def main():
         raise ValueError("Paper cohort changed; retain measured artifacts for reconciliation")
     if sha(repo / "paper/tables/benchmark_results.tex") != args.table1_sha256:
         raise ValueError("Paper Table 1 changed")
-    if command(["git", "status", "--porcelain"], cwd=repo).stdout.strip():
+    expected_table = analysis(report) + render(report)
+    table_path = repo / "paper/tables/sft_results.tex"
+    status = command(["git", "status", "--porcelain"], cwd=repo).stdout.strip()
+    recovering_table = status == "?? paper/tables/sft_results.tex" and (
+        table_path.read_text() == expected_table)
+    if status and not recovering_table:
         raise ValueError("Repository has edits; leave measured artifacts for review")
     mirror = runtime / "paper-overleaf"
     for path in (repo / "paper").rglob("*"):
         if path.is_file() and path.suffix in {".tex", ".bib", ".sty", ".bst", ".jpg", ".png", ".json", ".md"}:
             target = mirror / path.relative_to(repo / "paper")
+            if recovering_table and path == table_path:
+                continue
             if not target.exists() or sha(target) != sha(path):
                 raise ValueError("Local paper and Overleaf mirror differ")
     cli = json.loads((runtime / "tools/olcli/invocation.json").read_text())["command"]
     project = "6ae80679a4c7a64df04ac5b8"
     command(cli + ["diff", project, str(mirror), "--name-only", "--exit-code"])
-    table = analysis(report) + render(report)
-    with tempfile.TemporaryDirectory(prefix="sft-paper-", dir=runtime / "paper-draft") as directory:
+    table = expected_table
+    with tempfile.TemporaryDirectory(prefix="resolveai-sft-paper-") as directory:
         stage = Path(directory) / "paper"
         shutil.copytree(repo / "paper", stage)
         (stage / "tables/sft_results.tex").write_text(table)
