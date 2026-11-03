@@ -18,7 +18,10 @@ def synchronize(repository,runtime,project):
     mirror=runtime/"paper-overleaf"
     cli=json.loads((runtime/"tools/olcli/invocation.json").read_text())["command"]
     def call(arguments):
-        result=subprocess.run([*cli,*arguments],capture_output=True,text=True,timeout=240)
+        try:
+            result=subprocess.run([*cli,*arguments],capture_output=True,text=True,timeout=240)
+        except (OSError,subprocess.TimeoutExpired):
+            raise RuntimeError("Overleaf operation unavailable: "+arguments[0]) from None
         if result.returncode:
             raise RuntimeError("Overleaf operation failed: "+arguments[0])
     with (root/"paper-publish.lock").open("w") as lock:
