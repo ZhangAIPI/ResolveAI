@@ -80,7 +80,11 @@ def compare(cohort, base, adapted, training, plan_path=None):
     for arm in ARMS:
         if results[0]["arms"][arm]["label_matches"] != source["arms"][arm]["label_matches"]:
             raise ValueError("Stored base results differ from the frozen paper snapshot")
+    from scripts.score_efficiency import summarize_run
+    efficiency = [summarize_run(directory, reference["family_ids"], reference["dataset_sha256"])
+                  for directory in (base, adapted)]
     return {
+        "efficiency": efficiency,
         "base_model_id": model_id,
         "scope": reference["scope"], "common_families": reference["common_families"],
         "task_counts": reference["task_counts"],
@@ -95,20 +99,29 @@ def compare(cohort, base, adapted, training, plan_path=None):
 def render(report):
     model_id = report.get("base_model_id", "Qwen/Qwen3-VL-8B-Instruct")
     model_name = NAMES[model_id]
+    costs = report.get("efficiency")
     lines = [
         r"\begin{table}[t]", r"\centering\small",
-        r"\setlength{\tabcolsep}{5pt}",
+        r"\setlength{\tabcolsep}{4pt}",
         r"\caption{\textbf{Supervised fine-tuning (SFT) of " + model_name + r".}",
         r"Entries are correct answers (\%) when tools are available, defined as in Table~\ref{tab:benchmark}.",
-        r"The test images, tools and decision limits are unchanged.}",
+        r"The test images, tools and decision limits are unchanged."
+        + (r" Time (seconds) and output tokens are means per attempted case." if costs else "") + r"}",
         r"\label{tab:sft}",
-        r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
-        r"Training & Condition & Identity & Overall\\", r"\midrule",
+        r"\begin{tabular}{@{}lrrrrr@{}}" if costs else r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
+        (r"Training & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens}\\"
+         if costs else r"Training & Condition & Identity & Overall\\"), r"\midrule",
     ]
     for index, row in enumerate(report["models"]):
         label = "Before SFT" if index == 0 else "After SFT"
         values = task_scores(row["arms"])[1::2]
-        lines.append(label + " & " + " & ".join(f"{v:.1f}" for v in values) + r"\\")
+        cells = [f"{v:.1f}" for v in values]
+        if costs:
+            usage = costs[index]["arms"]["interactive_agent"]
+            if usage["correct"] != row["arms"]["interactive_agent"]["label_matches"]:
+                raise ValueError("SFT efficiency cohort differs")
+            cells += [f"{usage['mean_wall_s']:.1f}", f"{usage['mean_output_tokens']:.0f}"]
+        lines.append(label + " & " + " & ".join(cells) + r"\\")
     return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{table}"]) + "\n"
 
 

@@ -1,4 +1,337 @@
 {
+  "efficiency": [
+    {
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "gpu": "NVIDIA RTX A6000",
+      "manifest_sha256": "f0c6094c1d7e94018c0a4571337950ff02031c0982027a79ff4f279eef353f3d",
+      "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "correct": 156,
+          "accuracy_pct": 74.64114832535886,
+          "finished_pct": 100,
+          "mean_wall_s": 0.9730208055915547,
+          "mean_model_s": 0.32616478853533715,
+          "mean_input_tokens": 1136.8181818181818,
+          "mean_output_tokens": 2.722488038277512,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 0.8243795480229892,
+          "p90_wall_s": 1.4711420260136947,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 49,
+              "accuracy_pct": 87.5,
+              "finished_pct": 100,
+              "mean_wall_s": 0.6733804077458834,
+              "mean_model_s": 0.31510815226959366,
+              "mean_input_tokens": 1148.482142857143,
+              "mean_output_tokens": 2.607142857142857,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 0.5213642930029891,
+              "p90_wall_s": 1.2258732100017369
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 107,
+              "accuracy_pct": 69.93464052287581,
+              "finished_pct": 100,
+              "mean_wall_s": 1.082693108071016,
+              "mean_model_s": 0.3302116619397923,
+              "mean_input_tokens": 1132.549019607843,
+              "mean_output_tokens": 2.764705882352941,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.1707248690072447,
+              "p90_wall_s": 1.4801678740186617
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "correct": 157,
+          "accuracy_pct": 75.11961722488039,
+          "finished_pct": 100,
+          "mean_wall_s": 1.1315469624392207,
+          "mean_model_s": 0.390800481050556,
+          "mean_input_tokens": 1468.66985645933,
+          "mean_output_tokens": 2.736842105263158,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 0.9883415809599683,
+          "p90_wall_s": 1.514095188002102,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 51,
+              "accuracy_pct": 91.07142857142857,
+              "finished_pct": 100,
+              "mean_wall_s": 1.2293504918031561,
+              "mean_model_s": 0.5247941132017461,
+              "mean_input_tokens": 2046.0892857142858,
+              "mean_output_tokens": 2.5714285714285716,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 0.9513810219941661,
+              "p90_wall_s": 2.3991103550069965
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 106,
+              "accuracy_pct": 69.28104575163398,
+              "finished_pct": 100,
+              "mean_wall_s": 1.0957495922145124,
+              "mean_model_s": 0.34175706013247337,
+              "mean_input_tokens": 1257.326797385621,
+              "mean_output_tokens": 2.7973856209150325,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.1878658100031316,
+              "p90_wall_s": 1.4896651050075889
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "correct": 172,
+          "accuracy_pct": 82.29665071770334,
+          "finished_pct": 96.65071770334929,
+          "mean_wall_s": 16.77568586635889,
+          "mean_model_s": 14.321593014678514,
+          "mean_input_tokens": 13798.153110047846,
+          "mean_output_tokens": 283.4401913875598,
+          "mean_model_calls": 3.2392344497607657,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 2.0191387559808613,
+          "mean_requests": 0,
+          "p50_wall_s": 15.546524739998858,
+          "p90_wall_s": 23.825226484972518,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 51,
+              "accuracy_pct": 91.07142857142857,
+              "finished_pct": 98.21428571428571,
+              "mean_wall_s": 18.169045683785434,
+              "mean_model_s": 16.67832194332732,
+              "mean_input_tokens": 9585.67857142857,
+              "mean_output_tokens": 364.30357142857144,
+              "mean_model_calls": 2.3392857142857144,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 1.2142857142857142,
+              "mean_requests": 0,
+              "p50_wall_s": 14.476483356032986,
+              "p90_wall_s": 22.96490595402429
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 121,
+              "accuracy_pct": 79.08496732026144,
+              "finished_pct": 96.07843137254902,
+              "mean_wall_s": 16.265697959326953,
+              "mean_model_s": 13.458999419878952,
+              "mean_input_tokens": 15339.97385620915,
+              "mean_output_tokens": 253.84313725490196,
+              "mean_model_calls": 3.5686274509803924,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 2.3137254901960786,
+              "mean_requests": 0,
+              "p50_wall_s": 15.792811277962755,
+              "p90_wall_s": 24.56886704999488
+            }
+          }
+        }
+      }
+    },
+    {
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-acquisition-LoRA",
+      "revision": "e816edcfaa66ac5a82d1eee77b49a1d8a02767c7d0e668c725bce672b7a5f5b8",
+      "gpu": "NVIDIA RTX A6000",
+      "manifest_sha256": "58aec8be58ffbdbe3e691cbbf1c48e2628785bc5b440bc43ab9ccde677f5798e",
+      "source_commit": "1b94f5bb5e61549546f525571a7932f2481c1f5a",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "correct": 162,
+          "accuracy_pct": 77.51196172248804,
+          "finished_pct": 100,
+          "mean_wall_s": 1.0322789576965157,
+          "mean_model_s": 0.3850515362804947,
+          "mean_input_tokens": 1136.8181818181818,
+          "mean_output_tokens": 2.813397129186603,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 0.8905016569769941,
+          "p90_wall_s": 1.5322617120109499,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 52,
+              "accuracy_pct": 92.85714285714286,
+              "finished_pct": 100,
+              "mean_wall_s": 0.7426676367467735,
+              "mean_model_s": 0.38325174828579683,
+              "mean_input_tokens": 1148.482142857143,
+              "mean_output_tokens": 2.892857142857143,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 0.5879198749898933,
+              "p90_wall_s": 1.3200595770031214
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 110,
+              "accuracy_pct": 71.89542483660131,
+              "finished_pct": 100,
+              "mean_wall_s": 1.1382804869330228,
+              "mean_model_s": 0.3857102822131946,
+              "mean_input_tokens": 1132.549019607843,
+              "mean_output_tokens": 2.784313725490196,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.195557777013164,
+              "p90_wall_s": 1.537075255997479
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "correct": 162,
+          "accuracy_pct": 77.51196172248804,
+          "finished_pct": 100,
+          "mean_wall_s": 1.1966661316638982,
+          "mean_model_s": 0.4538017570686696,
+          "mean_input_tokens": 1468.66985645933,
+          "mean_output_tokens": 2.751196172248804,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 1.05548393499339,
+          "p90_wall_s": 1.5825572790345177,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 54,
+              "accuracy_pct": 96.42857142857143,
+              "finished_pct": 100,
+              "mean_wall_s": 1.301645209698888,
+              "mean_model_s": 0.5942922286048997,
+              "mean_input_tokens": 2046.0892857142858,
+              "mean_output_tokens": 2.5892857142857144,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.0279897860018536,
+              "p90_wall_s": 2.434645527973771
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 108,
+              "accuracy_pct": 70.58823529411765,
+              "finished_pct": 100,
+              "mean_wall_s": 1.158242416827562,
+              "mean_model_s": 0.40238040800965724,
+              "mean_input_tokens": 1257.326797385621,
+              "mean_output_tokens": 2.810457516339869,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.2512085019843653,
+              "p90_wall_s": 1.5550743759959005
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "correct": 164,
+          "accuracy_pct": 78.4688995215311,
+          "finished_pct": 100,
+          "mean_wall_s": 11.211129260507054,
+          "mean_model_s": 9.256965686321486,
+          "mean_input_tokens": 3444.406698564593,
+          "mean_output_tokens": 177.3444976076555,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 10.943116676004138,
+          "p90_wall_s": 14.666923635988496,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 55,
+              "accuracy_pct": 98.21428571428571,
+              "finished_pct": 100,
+              "mean_wall_s": 14.524585129235804,
+              "mean_model_s": 13.214962254447787,
+              "mean_input_tokens": 3449.4821428571427,
+              "mean_output_tokens": 259.60714285714283,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 13.732095048995689,
+              "p90_wall_s": 16.885175521019846
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 109,
+              "accuracy_pct": 71.24183006535948,
+              "finished_pct": 100,
+              "mean_wall_s": 9.99836109940372,
+              "mean_model_s": 7.808287203870029,
+              "mean_input_tokens": 3442.549019607843,
+              "mean_output_tokens": 147.23529411764707,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 10.145639543014113,
+              "p90_wall_s": 11.15842607599916
+            }
+          }
+        }
+      }
+    }
+  ],
+  "base_model_id": "Qwen/Qwen3-VL-8B-Instruct",
   "scope": "Literal agreement with unreviewed construction labels, not grounded accuracy",
   "common_families": 209,
   "task_counts": {
@@ -217,7 +550,7 @@
     "case-dc4ab08a27629d5e94df",
     "case-dc8468196b97bba4df44"
   ],
-  "selection": "Sufficient variant; known source label; all models completed all three arms",
+  "selection": "Pre-frozen 209 Sufficient source-labeled families; identical cases retained for later models",
   "formal_grounded_accuracy": null,
   "training": {
     "configuration": {

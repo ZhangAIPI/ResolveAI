@@ -1,20 +1,26 @@
-\begin{table}[t]
+\begin{table*}[t]
 \centering\small
-\caption{\textbf{Additional full-access reference.}
-Source-label accuracy (\%) on the same fixed cohort as the main task comparison.
-All images means all obtainable source records are supplied before the direct decision.}
+\setlength{\tabcolsep}{4pt}
+\begin{minipage}{.96\textwidth}\centering
+\caption{\textbf{Direct and interactive verification by task (\%).}
+Initial uses the initially supplied photographs; All images supplies every obtainable source record before a direct verdict; Tools permits interaction.
+All rows use the same fixed cohort and source-label metric.}
 \label{tab:full-reference}
-\begin{tabular}{@{}lrrr@{}}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
 \toprule
-Model & Initial & All images & With tools\\
+ & \multicolumn{3}{c}{Object condition} & \multicolumn{3}{c}{Object identity} & \multicolumn{3}{c}{Overall}\\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}
+Model & Initial & All images & Tools & Initial & All images & Tools & Initial & All images & Tools\\
 \midrule
-Qwen2.5-VL-7B & 15.8 & 10.5 & 3.8\\
-Qwen3-VL-2B & 60.3 & 60.8 & 40.7\\
-Qwen3-VL-4B & 33.0 & 39.2 & 49.3\\
-Qwen3-VL-8B & 74.6 & 75.1 & 82.3\\
-Qwen3.5-9B & 57.9 & 61.7 & 63.2\\
-InternVL3.5-8B & 57.9 & 59.3 & 14.4\\
-LLaVA-OneVision-7B & 44.5 & 38.3 & 0.0\\
+Qwen2.5-VL-7B & 20.3 & 14.4 & 5.2 & 3.6 & 0.0 & 0.0 & 15.8 & 10.5 & 3.8\\
+Qwen3-VL-2B & 46.4 & 46.4 & 24.2 & 98.2 & 100.0 & 85.7 & 60.3 & 60.8 & 40.7\\
+Qwen3-VL-4B & 20.9 & 20.9 & 34.6 & 66.1 & 89.3 & 89.3 & 33.0 & 39.2 & 49.3\\
+Qwen3-VL-8B & 69.9 & 69.3 & 79.1 & 87.5 & 91.1 & 91.1 & 74.6 & 75.1 & 82.3\\
+\quad + identity SFT & 71.9 & 70.6 & 71.2 & 92.9 & 96.4 & 98.2 & 77.5 & 77.5 & 78.5\\
+Qwen3.5-9B & 47.7 & 49.7 & 65.4 & 85.7 & 94.6 & 57.1 & 57.9 & 61.7 & 63.2\\
+InternVL3.5-8B & 54.2 & 54.9 & 3.3 & 67.9 & 71.4 & 44.6 & 57.9 & 59.3 & 14.4\\
+LLaVA-OneVision-7B & 41.2 & 32.7 & 0.0 & 53.6 & 53.6 & 0.0 & 44.5 & 38.3 & 0.0\\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{minipage}
+\end{table*}

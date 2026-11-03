@@ -205,6 +205,29 @@ In Missing and Unavailable, the same condition cases attempt a request, receive 
 On Sufficient, the adapter terminates on all 209 cases without intermediate tools.
 These measurements describe the learned interaction pattern, not reviewed evidence acquisition or a causal benefit from the returned pixels.
 
+\subsection{Measured inference cost}
+Cost statistics use the same fixed family list as the main accuracy comparison.
+Every attempted episode is retained, including abstentions, incorrect verdicts and failures to finish.
+Time is the episode's wall-clock duration, including image processing, model requests and environment tools.
+Policy-checkpoint loading before the episode is excluded.
+Recorded photo requests perform a closed-pool lookup; their timing does not represent waiting for a person to capture or submit a photograph.
+
+Input tokens are the sum of native input token counts over actual model calls, including system instructions, tool schemas and repeated conversation history.
+The table's k denotes 1,000 tokens.
+Native visual tokenization differs across architectures, so these counts are not a common FLOP measure.
+Output tokens include all generated tokens, including malformed actions.
+An overlength prompt rejected before a model forward contributes no executed input tokens, output tokens or model call; its processing time remains in the episode wall time.
+Missing token measurements cause the summary to fail rather than silently becoming zero.
+
+Model calls count actual generation requests, including calls that produce invalid actions.
+Tool calls follow the environment's nonterminal call counter; finish is excluded and parsing failures do not become fictitious tool executions.
+Finished denotes submission of a valid final verdict, including Need more evidence, and does not imply correctness.
+All compared runs report NVIDIA RTX A6000 GPUs.
+Timing comes from ordinary evaluation jobs with other workloads on the same host, rather than an isolated throughput test.
+Native processors, library versions, LoRA execution and CPU tools can affect elapsed time.
+We report observed latency without assigning a speed winner.
+The released efficiency summary retains per-task means, model time and median/90th-percentile episode time in addition to the main-table averages.
+
 \subsection{Metrics and failure accounting}
 For reviewed case \(i\), let \(Y_i=Y_{q_i}(\mathcal{A}_i)\) and \(K_i=1\) when a definite verdict has a valid evidence set citing only released evidence.
 For reviewed families, strict family success is

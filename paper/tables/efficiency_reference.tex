@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering\small
+\caption{\textbf{Completion and latency diagnostics.}
+The same attempts as the main table. Finished includes valid uncertain decisions.
+Model calls count actual generations. Median and 90th-percentile times include unfinished episodes.}
+\label{tab:efficiency-reference}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & Finished (\%) & Model calls & Median time (s) & 90th percentile (s)\\
+\midrule
+Qwen2.5-VL-7B & 91.4 & 5.58 & 11.0 & 20.9\\
+Qwen3-VL-2B & 61.7 & 6.71 & 16.6 & 23.9\\
+Qwen3-VL-4B & 63.6 & 6.81 & 18.0 & 28.1\\
+Qwen3-VL-8B & 96.7 & 3.24 & 15.5 & 23.8\\
+\quad + identity SFT & 100.0 & 1.00 & 10.9 & 14.7\\
+Qwen3.5-9B & 81.3 & 5.31 & 33.6 & 53.6\\
+InternVL3.5-8B & 18.2 & 7.54 & 37.9 & 72.6\\
+LLaVA-OneVision-7B & 0.0 & 4.99 & 12.5 & 32.0\\
+\bottomrule
+\end{tabular}
+\end{table*}

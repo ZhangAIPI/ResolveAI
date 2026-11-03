@@ -296,6 +296,8 @@ Finally, fixed-order and random acquisition provide comparisons with the same av
 \section{Experiments}
 We study whether access to tools improves visual verification, which failures account for low scores, and whether supervising tool use improves the final judgment.
 
+\input{tables/benchmark_results}
+
 \subsection{Experimental Setup}
 \paragraph{Data and tasks.}
 Object-condition queries ask whether a photographed item has a stated defect.
@@ -307,10 +309,11 @@ Each family contributes its constructed Sufficient version to the accuracy compa
 
 \paragraph{Models and comparison settings.}
 Table~\ref{tab:benchmark} evaluates seven open-source models: Qwen2.5-VL-7B~\cite{qwen25}, Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}, Qwen3.5-9B~\cite{qwen35}, InternVL3.5-8B~\cite{internvl35}, and LLaVA-OneVision-7B~\cite{llavaonevision}.
-All are evaluated without benchmark-specific training or demonstrations.
+Base checkpoints are evaluated without task demonstrations; the adapted row is examined in Section~\ref{sec:sft}.
 In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
 Models share the tool definitions and costs; their native image processors and supported call formats are retained.
+The main table reports the interactive setting.
 The constant-response baseline always rejects the claim.
 A separate full-access reference supplies all obtainable photographs before a direct verdict (supplement).
 
@@ -320,6 +323,8 @@ Agents have eight assistant turns and a tool-cost allowance of 12.
 Direct responses allow 96 output tokens, compared with 384 per interactive turn.
 These settings evaluate the complete model and interaction interface: their difference does not isolate the effect of acquiring evidence.
 Image processing, output parsing and failure accounting are detailed in the supplement.
+We also report mean episode time, input/output tokens and model/tool calls over the same attempted cases, retaining unsuccessful runs.
+Time includes environment execution; token counts accumulate across model calls.
 
 \paragraph{Evaluation metric.}
 Accuracy is the percentage of attempted cases with a final verdict matching the source label:
@@ -329,8 +334,6 @@ Need more evidence, an invalid final response and failure to finish each receive
 Overall accuracy pools the two tasks by case count.
 These source labels have not been independently reviewed for evidence sufficiency.
 The reported accuracy therefore measures agreement with those labels, rather than the grounded accuracy defined in Equation~\ref{eq:grounded}.
-
-\input{tables/benchmark_results}
 
 \subsection{Benchmark Results}
 \paragraph{Tools help some models and hinder others.}
@@ -350,7 +353,16 @@ These outcomes distinguish reluctance to decide from failure to complete the int
 Even Qwen3-VL-8B completes 96.7\% of episodes but answers correctly in 82.3\%.
 The supplement reports correct answers, incorrect answers, abstentions and missing decisions as a partition of the same attempts.
 
+\paragraph{Interaction length changes the cost.}
+Table~\ref{tab:benchmark} reports accuracy and cost together for the same attempts.
+Qwen3-VL-8B uses 3.24 model calls and 283 output tokens per case, compared with 6.71 calls and 449 tokens for the 2B model.
+Both take approximately 17 seconds per episode in these runs.
+A smaller backbone therefore need not yield a cheaper complete interaction.
+Low token use alone is also insufficient: Qwen2.5-VL-7B generates fewer tokens but answers correctly in only 3.8\% of cases.
+Completion rates and latency distributions are reported in the supplement.
+
 \subsection{Effect of Supervised Fine-Tuning}
+\label{sec:sft}
 \paragraph{Training setup.}
 We fine-tune Qwen3-VL-8B on identity and acquisition trajectories from 1,280 CO3D development families, with 320 category-disjoint families for validation.
 Source sequences and image hashes do not overlap with the evaluation pool.
@@ -361,12 +373,12 @@ The checkpoint is selected by held-out assistant-token loss, without benchmark f
 The supplement gives the trajectory composition and optimization details.
 This is a single training run; evaluation uses greedy decoding.
 
-\input{tables/sft_results}
-
 \paragraph{Identity supervision does not improve both tasks.}
-Table~\ref{tab:sft} compares the selected adapter with its base under the same interactive evaluation.
+The indented row in Table~\ref{tab:benchmark} compares the selected adapter with its base under the same interactive evaluation.
 Identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
 This single-run result shows a trade-off across tasks after identity-focused training, rather than an overall verification gain.
+Mean episode time falls from 16.8 to 11.2 seconds and output length from 283 to 177 tokens.
+The shorter interaction reduces recorded cost while overall answer accuracy declines.
 
 The action traces also change.
 The adapter completes every Sufficient episode, but makes no inspection calls before its verdict.
