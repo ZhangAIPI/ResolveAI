@@ -104,7 +104,7 @@ def main():
         "rank": 32, "alpha": 64, "learning_rate": 1e-4, "seed": 17,
         "target_modules": "language_model attention q/k/v/o projections",
         "image_max_pixels": 512 * 512, "max_context": 8192,
-        "scope": "Source-supervised identity acquisition pilot; no frozen benchmark examples",
+        "scope": data_manifest["scope"],
     }
     manifest_path = args.output / "training_manifest.json"
     if manifest_path.exists():

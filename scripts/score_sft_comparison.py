@@ -58,9 +58,11 @@ def compare(cohort, base, adapted, training):
     if hashlib.sha256(case_bytes).hexdigest() != reference["dataset_sha256"]:
         raise ValueError("Frozen case pool changed")
     cases = {case["case_id"]: case for case in json.loads(case_bytes)}
+    training_manifest = json.loads((training / "training_manifest.json").read_text())
+    adapted_name = training_manifest["data"].get("adaptation_name", "Acquisition SFT")
     results, behaviors = [], []
     wanted = {(family, arm) for family in reference["family_ids"] for arm in ARMS}
-    for name, directory in (("Base", base), ("Acquisition SFT", adapted)):
+    for name, directory in (("Base", base), (adapted_name, adapted)):
         all_rows = read_rows(directory / "episodes.sqlite")
         behaviors.append({"name": name, **acquisition_behavior(
             all_rows, cases, set(reference["family_ids"]))})
@@ -82,7 +84,7 @@ def compare(cohort, base, adapted, training):
         "task_counts": reference["task_counts"],
         "dataset_sha256": reference["dataset_sha256"], "family_ids": reference["family_ids"],
         "selection": reference["selection"], "formal_grounded_accuracy": None,
-        "training": json.loads((training / "training_manifest.json").read_text()),
+        "training": training_manifest,
         "checkpoint": json.loads((training / "complete.json").read_text()),
         "evaluation_manifests": manifests, "models": results, "acquisition_behavior": behaviors,
     }
