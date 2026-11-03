@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-03T22:20:51.003305+00:00",
+  "as_of_utc": "2026-11-03T22:23:47.942744+00:00",
   "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
   "family_ids": [
     "case-0013955d31d3d1958ae4",
@@ -493,6 +493,200 @@
       "endpoint": "responses",
       "paper_cohort_complete": true,
       "formal_grounded_accuracy": null
+    },
+    {
+      "name": "luna_decisions",
+      "model_id": "gpt-6-luna",
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 116,
+          "label_agreement": 0.5550239234449761,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 41,
+            "Supported": 110,
+            "Need more evidence": 58
+          },
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "label_matches": 85,
+              "label_agreement": 0.5555555555555556,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 104,
+                "Need more evidence": 33,
+                "Refuted": 16
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "label_matches": 31,
+              "label_agreement": 0.5535714285714286,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 25,
+                "Need more evidence": 25,
+                "Supported": 6
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 118,
+          "label_agreement": 0.5645933014354066,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 31,
+            "Supported": 127,
+            "Need more evidence": 51
+          },
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "label_matches": 72,
+              "label_agreement": 0.47058823529411764,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 106,
+                "Need more evidence": 41,
+                "Refuted": 6
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "label_matches": 46,
+              "label_agreement": 0.8214285714285714,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 25,
+                "Supported": 21,
+                "Need more evidence": 10
+              }
+            }
+          }
+        }
+      },
+      "costs": {
+        "initial_text": {
+          "episodes": 209,
+          "correct": 116,
+          "accuracy_pct": 55.50239234449761,
+          "finished_pct": 100,
+          "mean_wall_s": 1.8405882185770635,
+          "mean_model_s": 0.5517897198408949,
+          "mean_input_tokens": 1204.2392344497607,
+          "mean_output_tokens": 0,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 1.8545066779479384,
+          "p90_wall_s": 2.6697982320329174,
+          "mean_reasoning_tokens": 0.0,
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "correct": 85,
+              "accuracy_pct": 55.55555555555556,
+              "finished_pct": 100,
+              "mean_wall_s": 1.9811336291136732,
+              "mean_model_s": 0.5578524264296991,
+              "mean_input_tokens": 1198.3725490196077,
+              "mean_output_tokens": 0,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 2.007022712030448,
+              "p90_wall_s": 2.7330200009746477
+            },
+            "identity": {
+              "episodes": 56,
+              "correct": 31,
+              "accuracy_pct": 55.35714285714286,
+              "finished_pct": 100,
+              "mean_wall_s": 1.456598079075255,
+              "mean_model_s": 0.5352255393393405,
+              "mean_input_tokens": 1220.267857142857,
+              "mean_output_tokens": 0,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.3784450099337846,
+              "p90_wall_s": 2.1036948079708964
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "correct": 118,
+          "accuracy_pct": 56.45933014354066,
+          "finished_pct": 100,
+          "mean_wall_s": 2.0589563811864062,
+          "mean_model_s": 0.6361721720202251,
+          "mean_input_tokens": 1504.641148325359,
+          "mean_output_tokens": 0,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 2.0096080349758267,
+          "p90_wall_s": 2.9857228220207617,
+          "mean_reasoning_tokens": 0.0,
+          "by_task": {
+            "state": {
+              "episodes": 153,
+              "correct": 72,
+              "accuracy_pct": 47.05882352941176,
+              "finished_pct": 100,
+              "mean_wall_s": 2.005971136896299,
+              "mean_model_s": 0.5945811696758408,
+              "mean_input_tokens": 1302.6797385620914,
+              "mean_output_tokens": 0,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 2.0286339320009574,
+              "p90_wall_s": 2.783096448983997
+            },
+            "identity": {
+              "episodes": 56,
+              "correct": 46,
+              "accuracy_pct": 82.14285714285714,
+              "finished_pct": 100,
+              "mean_wall_s": 2.2037196379075925,
+              "mean_model_s": 0.7498047319968464,
+              "mean_input_tokens": 2056.4285714285716,
+              "mean_output_tokens": 0,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.9657311930786818,
+              "p90_wall_s": 3.7606190940132365
+            }
+          }
+        }
+      },
+      "api_config": {
+        "model_id": "gpt-6-luna",
+        "reasoning_effort": "none",
+        "price_checked": "2026-11-03",
+        "input_ceiling_usd_per_million": 0.25,
+        "output_usd_per_million": 0,
+        "pricing_source": "https://developers.openai.com/api/docs/guides/decisions",
+        "endpoint": "decisions"
+      },
+      "source_commit": "0b5f4d23774f725d7834f1dd5f423bd73ef8fd7f",
+      "manifest_sha256": "1bc096f06e55146d85c67858338fec5d8dedfe7863192810fc695f0491f632c6",
+      "endpoint": "decisions",
+      "paper_cohort_complete": true,
+      "formal_grounded_accuracy": null
     }
   ],
   "readiness": [
@@ -504,21 +698,21 @@
     },
     {
       "name": "gpt41_mini",
-      "attempts": 81,
+      "attempts": 101,
       "expected": 627,
       "ready": false
     },
     {
       "name": "luna",
-      "attempts": 97,
+      "attempts": 119,
       "expected": 627,
       "ready": false
     },
     {
       "name": "luna_decisions",
-      "attempts": 331,
-      "expected": 418,
-      "ready": false
+      "ready": true,
+      "attempts": 418,
+      "expected": 418
     }
   ],
   "formal_grounded_accuracy": null
