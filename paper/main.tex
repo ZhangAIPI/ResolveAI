@@ -298,7 +298,7 @@ Finally, fixed-order and random acquisition provide comparisons with the same av
 \section{Initial Benchmark Results}
 \paragraph{Tasks and evaluation.}
 The first comparison asks whether models can verify two kinds of claim: a stated defect on a photographed item, and the identity of objects across submissions.
-We fix the 209 source-labeled families for which all four models had completed evaluation at the analysis snapshot: 153 condition queries and 56 identity controls.
+We evaluate seven models on a fixed cohort of 209 source-labeled families: 153 condition queries and 56 identity controls.
 The 226 identity candidates without established source labels are excluded.
 One constructed Sufficient version is used per family.
 Table~\ref{tab:benchmark}(a) reports each task separately before pooling their cases into an overall score.
@@ -318,6 +318,7 @@ The pooled score therefore hides opposite changes in condition and identity.
 Table~\ref{tab:benchmark}(b) separates correct and wrong definite answers from abstentions and unfinished episodes; correctness here refers to the source label.
 Qwen2.5-VL-7B leaves 173 of 209 claims unresolved, whereas InternVL3.5-8B submits no terminal verdict in 171 cases.
 Their low agreement consequently cannot be interpreted as the same kind of visual failure.
+LLaVA-OneVision submits no verdict on this cohort; 192 of its 209 episodes reach the context limit.
 Qwen3-VL-8B, by comparison, produces 172 label matches, 28 opposite labels, two unresolved answers and seven missing verdicts.
 
 The comparison evaluates the complete model--interface configuration.

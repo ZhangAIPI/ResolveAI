@@ -1,7 +1,7 @@
 {
-  "as_of_utc": "2026-11-02T21:20:36.411909+00:00",
+  "as_of_utc": "2026-11-03T18:41:00.476708+00:00",
   "scope": "Literal agreement with unreviewed construction labels, not grounded accuracy",
-  "selection": "Sufficient variant; known source label; all models completed all three arms",
+  "selection": "Pre-frozen 209 Sufficient source-labeled families; identical cases retained for later models",
   "variant": "Sufficient",
   "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
   "eligible_families": 252,
@@ -666,6 +666,339 @@
                 "No submitted verdict": 145,
                 "Refuted": 6,
                 "Supported": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "qwen3_2b",
+      "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+      "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+      "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+      "available_known_families": 252,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 126,
+          "label_agreement": 0.6028708133971292,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 31,
+            "Supported": 178
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 55,
+              "label_agreement": 0.9821428571428571,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 28,
+                "Supported": 28
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 71,
+              "label_agreement": 0.46405228758169936,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 3,
+                "Supported": 150
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 127,
+          "label_agreement": 0.6076555023923444,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 30,
+            "Supported": 179
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 56,
+              "label_agreement": 1.0,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 27,
+                "Supported": 29
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 71,
+              "label_agreement": 0.46405228758169936,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 3,
+                "Supported": 150
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 85,
+          "label_agreement": 0.40669856459330145,
+          "submitted": 129,
+          "verdicts": {
+            "Refuted": 31,
+            "No submitted verdict": 80,
+            "Supported": 98
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 48,
+              "label_agreement": 0.8571428571428571,
+              "submitted": 48,
+              "verdicts": {
+                "Refuted": 24,
+                "No submitted verdict": 8,
+                "Supported": 24
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 37,
+              "label_agreement": 0.24183006535947713,
+              "submitted": 81,
+              "verdicts": {
+                "No submitted verdict": 72,
+                "Supported": 74,
+                "Refuted": 7
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "qwen3_4b",
+      "model_id": "Qwen/Qwen3-VL-4B-Instruct",
+      "revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+      "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+      "available_known_families": 252,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 69,
+          "label_agreement": 0.33014354066985646,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 59,
+            "Supported": 67,
+            "Need more evidence": 83
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 37,
+              "label_agreement": 0.6607142857142857,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 33,
+                "Supported": 10,
+                "Need more evidence": 13
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 32,
+              "label_agreement": 0.20915032679738563,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 57,
+                "Need more evidence": 70,
+                "Refuted": 26
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 82,
+          "label_agreement": 0.3923444976076555,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 51,
+            "Supported": 71,
+            "Need more evidence": 87
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 50,
+              "label_agreement": 0.8928571428571429,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 30,
+                "Supported": 23,
+                "Need more evidence": 3
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 32,
+              "label_agreement": 0.20915032679738563,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 48,
+                "Need more evidence": 84,
+                "Refuted": 21
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 103,
+          "label_agreement": 0.49282296650717705,
+          "submitted": 133,
+          "verdicts": {
+            "Refuted": 78,
+            "No submitted verdict": 76,
+            "Supported": 49,
+            "Need more evidence": 6
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 50,
+              "label_agreement": 0.8928571428571429,
+              "submitted": 55,
+              "verdicts": {
+                "Refuted": 31,
+                "Supported": 23,
+                "No submitted verdict": 1,
+                "Need more evidence": 1
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 53,
+              "label_agreement": 0.3464052287581699,
+              "submitted": 78,
+              "verdicts": {
+                "No submitted verdict": 75,
+                "Supported": 26,
+                "Refuted": 47,
+                "Need more evidence": 5
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "llava_onevision",
+      "model_id": "llava-hf/llava-onevision-qwen2-7b-ov-hf",
+      "revision": "0d50680527681998e456c7b78950205bedd8a068",
+      "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+      "available_known_families": 252,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 93,
+          "label_agreement": 0.4449760765550239,
+          "submitted": 209,
+          "verdicts": {
+            "Need more evidence": 61,
+            "Supported": 48,
+            "Refuted": 100
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 30,
+              "label_agreement": 0.5357142857142857,
+              "submitted": 56,
+              "verdicts": {
+                "Need more evidence": 26,
+                "Supported": 27,
+                "Refuted": 3
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 63,
+              "label_agreement": 0.4117647058823529,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 21,
+                "Need more evidence": 35,
+                "Refuted": 97
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 80,
+          "label_agreement": 0.3827751196172249,
+          "submitted": 209,
+          "verdicts": {
+            "Need more evidence": 73,
+            "Supported": 46,
+            "Refuted": 90
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 30,
+              "label_agreement": 0.5357142857142857,
+              "submitted": 56,
+              "verdicts": {
+                "Need more evidence": 26,
+                "Supported": 27,
+                "Refuted": 3
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 50,
+              "label_agreement": 0.32679738562091504,
+              "submitted": 153,
+              "verdicts": {
+                "Supported": 19,
+                "Need more evidence": 47,
+                "Refuted": 87
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 0,
+          "label_agreement": 0.0,
+          "submitted": 0,
+          "verdicts": {
+            "No submitted verdict": 209
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 0,
+              "label_agreement": 0.0,
+              "submitted": 0,
+              "verdicts": {
+                "No submitted verdict": 56
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 0,
+              "label_agreement": 0.0,
+              "submitted": 0,
+              "verdicts": {
+                "No submitted verdict": 153
               }
             }
           }

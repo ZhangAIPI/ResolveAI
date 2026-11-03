@@ -1,41 +1,44 @@
 {
-  "as_of_utc": "2026-11-03T03:32:38.296484+00:00",
-  "as_of_new_york": "2026-11-02T22:32:38.296484-05:00",
-  "sft": {
-    "training_complete": true,
+  "as_of_utc": "2026-11-03T18:44:10.183087+00:00",
+  "as_of_new_york": "2026-11-03T13:44:10.183087-05:00",
+  "completed_base_models": 7,
+  "episodes_per_model": 5736,
+  "first_sft": {
+    "evaluation_complete": true,
     "optimizer_steps": 200,
-    "benchmark_gain": null
+    "cohort_families": 209,
+    "initial_label_agreement_before": 0.7464114832535885,
+    "initial_label_agreement_after": 0.7751196172248804,
+    "agent_label_agreement_before": 0.8229665071770335,
+    "agent_label_agreement_after": 0.784688995215311,
+    "condition_agent_before": 0.7908496732026143,
+    "condition_agent_after": 0.7124183006535948,
+    "identity_agent_before": 0.9107142857142857,
+    "identity_agent_after": 0.9821428571428571,
+    "table2_published": true
   },
-  "models": {
-    "Qwen3.5-9B": {
-      "completed": 5736,
+  "active_models": {
+    "InternVL3.5-14B": {
+      "completed": 3707,
       "expected": 5736
     },
-    "LLaVA-OneVision-7B": {
-      "completed": 3296,
+    "SmolVLM2-2.2B": {
+      "completed": 4475,
       "expected": 5736
     },
-    "Qwen3-VL-4B": {
-      "completed": 2694,
-      "expected": 5736
-    },
-    "Qwen3-VL-8B + SFT": {
-      "completed": 3114,
-      "expected": 5736
-    },
-    "Qwen3-VL-2B": {
-      "completed": 968,
+    "Pixtral-12B": {
+      "completed": 53,
       "expected": 5736
     }
   },
-  "queued_models": [
-    "InternVL3.5-14B-HF",
-    "SmolVLM2-2.2B-Instruct",
-    "Pixtral-12B (message adapter corrected)"
-  ],
-  "condition_training_pack_complete": true,
-  "condition_training_examples": 1080,
-  "condition_validation_examples": 360,
-  "pixtral_startup": "Template rejected adjacent user messages; zero scored episodes. CPU fix verified; GPU retry queued after SFT publication.",
-  "scope": "Progress only; partial episodes do not estimate final benchmark gains"
+  "mixed_source_sft": {
+    "step": 9,
+    "max_steps": 200,
+    "training_decisions": 2160,
+    "identity_decisions": 1080,
+    "state_decisions": 1080,
+    "benchmark_performance": null
+  },
+  "resources": "Four retained GPUs: InternVL14B, SmolVLM2, Pixtral and mixed-source SFT",
+  "scope": "Unreviewed source-label agreement; no reviewed sufficiency gain is established"
 }

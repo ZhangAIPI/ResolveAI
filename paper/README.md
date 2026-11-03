@@ -13,9 +13,9 @@ The main paper now has four sections: Introduction, Related Work, The ResolveAI 
 - references.bib: primary-source references shared by both documents.
 - cvpr.sty and ieeenat_fullname.bst: unmodified official CVPR 2027 files; provenance is in template-source.json.
 
-The benchmark argument extends through page 5; measured comparisons follow in Section 4. The technical supplement remains separate.
+The benchmark discussion continues onto page 6, where Section 4 begins; floated Table 1 appears on page 5. The technical supplement remains separate.
 
-Compile main.tex and supplementary.tex separately using pdfLaTeX + BibTeX (Overleaf) or tectonic. Keep generated files outside Git. Table 1 reports the fixed 209-family measured snapshot in docs/results/cvpr_20261102_candidate_scores.json. Generate its TeX with scripts/paper_result_table.py. It measures unreviewed source-label agreement, not grounded accuracy. The next main table is reserved for measured base-versus-SFT performance; it is included only when tables/sft_results.tex exists. No training gain is claimed before evaluation.
+Compile main.tex and supplementary.tex separately using pdfLaTeX + BibTeX (Overleaf) or tectonic. Keep generated files outside Git. Table 1 reports the fixed 209-family measured snapshot in docs/results/cvpr_20261102_candidate_scores.json. Generate its TeX with scripts/paper_result_table.py. It measures unreviewed source-label agreement, not grounded accuracy. Table 1 now includes seven completed base models on the same 209 families. Table 2 reports completed identity/acquisition SFT: identity agreement improves, condition agreement decreases, and the pooled tool-agent score falls from 82.3% to 78.5%. Both gains and losses are retained. Its source data are in docs/results/cvpr_sft_candidate_scores.json; tables/sft_results.tex is included in the main paper.
 
 ## Page allocation checked against published CVPR PDFs
 
