@@ -1,19 +1,18 @@
 \begin{table*}[t]
-\centering
-\begin{minipage}{.88\textwidth}\centering\small
+\centering\small
 \setlength{\tabcolsep}{5pt}
-\caption{\textbf{Object verification across tasks and interaction outcomes.}
-(a) Source-label agreement (\%, higher is better), broken down by task.
-(b) The same agent episodes split into four mutually exclusive outcomes (counts).
-All models use the same 209 candidate families, with one constructed Sufficient version per family.
-Source labels and initial sufficiency have not been independently reviewed; these are not grounded-accuracy scores.}
+\begin{minipage}{.88\textwidth}\centering
+\caption{\textbf{Correct answers with and without tools (\%).}
+An answer is correct when the final Supported/Refuted verdict matches the dataset label.
+Images only answers from the initial photographs; With tools can inspect images or request photographs before answering.
+Need more evidence and failure to submit a final verdict earn no credit.
+The source-derived labels have not been independently reviewed for evidence sufficiency.}
 \label{tab:benchmark}
-\textbf{(a) Verification scores by task (\%)}\par\smallskip
 \begin{tabular}{@{}lrrrrrr@{}}
 \toprule
- & \multicolumn{2}{c}{Object condition (153 cases)} & \multicolumn{2}{c}{Cross-view identity (56 cases)} & \multicolumn{2}{c}{Overall (209 cases)}\\
+ & \multicolumn{2}{c}{Object condition} & \multicolumn{2}{c}{Object identity} & \multicolumn{2}{c}{Overall}\\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
-Model & Answer only & With tools & Answer only & With tools & Answer only & With tools\\
+Model & Images only & With tools & Images only & With tools & Images only & With tools\\
 \midrule
 Qwen2.5-VL-7B & 20.3 & 5.2 & 3.6 & 0.0 & 15.8 & 3.8\\
 Qwen3-VL-2B & 46.4 & 24.2 & \textbf{98.2} & 85.7 & 60.3 & 40.7\\
@@ -26,30 +25,5 @@ LLaVA-OneVision-7B & 41.2 & 0.0 & 53.6 & 0.0 & 44.5 & 0.0\\
 Always Refuted & 51.6 & 51.6 & 48.2 & 48.2 & 50.7 & 50.7\\
 \bottomrule
 \end{tabular}
-\par\vspace{5pt}
-\textbf{(b) Agent outcomes (209 attempts per model)}\par\smallskip
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Model & Correct & Wrong & Need more evidence & Did not finish\\
-\midrule
-Qwen2.5-VL-7B & 8 & 10 & 173 & 18\\
-Qwen3-VL-2B & 85 & 44 & 0 & 80\\
-Qwen3-VL-4B & 103 & 24 & 6 & 76\\
-Qwen3-VL-8B & 172 & 28 & 2 & 7\\
-Qwen3.5-9B & 132 & 31 & 7 & 39\\
-InternVL3.5-8B & 30 & 8 & 0 & 171\\
-LLaVA-OneVision-7B & 0 & 0 & 0 & 209\\
-\bottomrule
-\end{tabular}
-\par\smallskip
-\begin{minipage}{\linewidth}\footnotesize
-\textit{Tasks:} condition asks whether the photographed item has the stated defect;
-identity asks whether the foreground objects in two submissions are the same physical item.
-\textit{Settings:} Answer only judges the initial images directly; With tools starts with the same images
-and permits inspection and photo requests before a terminal decision.
-Overall pools all cases; abstentions and missing verdicts score zero.
-In (b), Correct/Wrong compare definite verdicts with the source label;
-Need more evidence is a terminal abstention, while Did not finish means no terminal decision was submitted.
-\end{minipage}
 \end{minipage}
 \end{table*}

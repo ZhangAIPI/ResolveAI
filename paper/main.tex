@@ -296,12 +296,11 @@ Finally, fixed-order and random acquisition provide comparisons with the same av
 
 
 \section{Initial Benchmark Results}
-\paragraph{Tasks and evaluation.}
-The first comparison asks whether models can verify two kinds of claim: a stated defect on a photographed item, and the identity of objects across submissions.
+We ask models two practical questions: does the photographed item have the stated defect, and do the objects in two submissions depict the same physical item?
 We evaluate seven models on a fixed cohort of 209 source-labeled families: 153 condition queries and 56 identity controls.
 The 226 identity candidates without established source labels are excluded.
 One constructed Sufficient version is used per family.
-Table~\ref{tab:benchmark}(a) reports each task separately before pooling their cases into an overall score.
+Table~\ref{tab:benchmark} reports each task separately before pooling their cases into an overall score.
 
 We compare answering directly from the initial images with an agent that starts from those same images and can use tools.
 A score is the percentage of all attempted cases whose final verdict matches the source label; unresolved answers and missing verdicts remain in the denominator.
@@ -314,8 +313,8 @@ The task breakdown also exposes changes hidden by a pooled score.
 For Qwen3.5-9B, interaction raises condition agreement from 47.7\% to 65.4\%, while identity agreement falls from 85.7\% to 57.1\%.
 The pooled score therefore hides opposite changes in condition and identity.
 
-\paragraph{A low score can have different origins.}
-Table~\ref{tab:benchmark}(b) separates correct and wrong definite answers from abstentions and unfinished episodes; correctness here refers to the source label.
+\paragraph{Errors and non-answers.}
+Incorrect answers, abstentions and failures to finish all reduce this accuracy, but have different causes. We report their proportions separately in the supplement.
 Qwen2.5-VL-7B leaves 173 of 209 claims unresolved, whereas InternVL3.5-8B submits no terminal verdict in 171 cases.
 Their low agreement consequently cannot be interpreted as the same kind of visual failure.
 LLaVA-OneVision submits no verdict on this cohort; 192 of its 209 episodes reach the context limit.
@@ -325,7 +324,7 @@ The comparison evaluates the complete model--interface configuration.
 Direct answers allow 96 output tokens; agents allow eight turns of up to 384 tokens each and an acquisition allowance of 12.
 All models use greedy decoding, BF16 weights and an 8,192-token context limit; the processor requests at most \(512^2\) pixels per image.
 The interactive setting thus changes both available actions and the decision interface.
-Since these cases were constructed to be initially sufficient, an increase in Table~\ref{tab:benchmark}(a) does not by itself establish successful evidence acquisition.
+Since these cases were constructed to be initially sufficient, an increase in Table~\ref{tab:benchmark} does not by itself establish successful evidence acquisition.
 That claim requires the reviewed access variants and matched action comparisons developed above.
 
 % The next main table is reserved for measured base-versus-SFT performance.

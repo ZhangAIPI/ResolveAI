@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from scripts.score_candidate_labels import ARMS, read_rows, summarize
-from scripts.paper_result_table import task_scores, outcomes
+from scripts.paper_result_table import task_scores, NAMES
 
 
 def acquisition_behavior(rows, cases, families):
@@ -43,17 +43,18 @@ def acquisition_behavior(rows, cases, families):
     }
 
 
-def compare(cohort, base, adapted, training):
+def compare(cohort, base, adapted, training, plan_path=None):
     reference = json.loads(cohort.read_text())
-    source = next(w for w in reference["workers"] if w["model_id"] == "Qwen/Qwen3-VL-8B-Instruct")
     manifests = [json.loads((directory / "manifest.json").read_text()) for directory in (base, adapted)]
+    model_id = manifests[0]["configuration"]["model_id"]
+    source = next(w for w in reference["workers"] if w["model_id"] == model_id)
     for key in ("dataset_sha256", "budget", "max_turns", "decoding", "image_max_pixels", "max_context_tokens",
                 "tool_adapter", "assistant_prefix", "grounding_manifest"):
         if manifests[0]["configuration"][key] != manifests[1]["configuration"][key]:
             raise ValueError("Unmatched evaluation configuration: " + key)
     if manifests[0]["configuration"]["dataset_sha256"] != reference["dataset_sha256"]:
         raise ValueError("Paper cohort belongs to a different dataset")
-    plan = json.loads((base.parent / "plan.json").read_text())
+    plan = json.loads((plan_path or base.parent / "plan.json").read_text())
     case_bytes = (Path(plan["data"]) / "cases.json").read_bytes()
     if hashlib.sha256(case_bytes).hexdigest() != reference["dataset_sha256"]:
         raise ValueError("Frozen case pool changed")
@@ -80,6 +81,7 @@ def compare(cohort, base, adapted, training):
         if results[0]["arms"][arm]["label_matches"] != source["arms"][arm]["label_matches"]:
             raise ValueError("Stored base results differ from the frozen paper snapshot")
     return {
+        "base_model_id": model_id,
         "scope": reference["scope"], "common_families": reference["common_families"],
         "task_counts": reference["task_counts"],
         "dataset_sha256": reference["dataset_sha256"], "family_ids": reference["family_ids"],
@@ -91,37 +93,23 @@ def compare(cohort, base, adapted, training):
 
 
 def render(report):
+    model_id = report.get("base_model_id", "Qwen/Qwen3-VL-8B-Instruct")
+    model_name = NAMES[model_id]
     lines = [
-        r"\begin{table*}[t]",
-        r"\centering",
-        r"\begin{minipage}{.88\textwidth}\centering\small",
+        r"\begin{table}[t]", r"\centering\small",
         r"\setlength{\tabcolsep}{5pt}",
-        r"\caption{\textbf{Verification before and after source-supervised acquisition SFT.}",
-        f"Source-label agreement (\\%) uses the same tasks, settings and {report['common_families']}-family cohort as Table~\\ref{{tab:benchmark}}.",
-        r"Training and validation source sequences are disjoint from the frozen evaluation pool.",
-        r"The labels remain unreviewed for evidence sufficiency.}",
+        r"\caption{\textbf{Effect of task-specific SFT on " + model_name + r".}",
+        r"Entries are correct answers (\%) when tools are available, defined as in Table~\ref{tab:benchmark}.",
+        r"The test images, tools and decision limits are unchanged.}",
         r"\label{tab:sft}",
-        r"\begin{tabular}{@{}lrrrrrr@{}}",
-        r"\toprule",
-        " & " + " & ".join([
-            rf"\multicolumn{{2}}{{c}}{{Object condition ({report['task_counts']['state']} cases)}}",
-            rf"\multicolumn{{2}}{{c}}{{Cross-view identity ({report['task_counts']['identity']} cases)}}",
-            rf"\multicolumn{{2}}{{c}}{{Overall ({report['common_families']} cases)}}"]) + r"\\",
-        r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}",
-        r"Qwen3-VL-8B & Answer only & With tools & Answer only & With tools & Answer only & With tools\\",
-        r"\midrule",
+        r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
+        r"Training & Condition & Identity & Overall\\", r"\midrule",
     ]
-    for row in report["models"]:
-        lines.append(row["name"] + " & " + " & ".join(f"{v:.1f}" for v in task_scores(row["arms"])) + r"\\")
-    lines += [
-        r"\bottomrule", r"\end{tabular}", r"\par\smallskip",
-        r"\begin{tabular}{@{}lrrrr@{}}",
-        r"\toprule", r"Agent outcomes & Correct & Wrong & Need more evidence & Did not finish\\",
-        r"\midrule",
-    ]
-    for row in report["models"]:
-        lines.append(row["name"] + " & " + " & ".join(map(str, outcomes(row["arms"]["interactive_agent"]))) + r"\\")
-    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{minipage}", r"\end{table*}"]) + "\n"
+    for index, row in enumerate(report["models"]):
+        label = "Before SFT" if index == 0 else "After SFT"
+        values = task_scores(row["arms"])[1::2]
+        lines.append(label + " & " + " & ".join(f"{v:.1f}" for v in values) + r"\\")
+    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}", r"\end{table}"]) + "\n"
 
 
 if __name__ == "__main__":
@@ -131,8 +119,9 @@ if __name__ == "__main__":
     parser.add_argument("adapted", type=Path)
     parser.add_argument("training", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--plan", type=Path)
     args = parser.parse_args()
-    report = compare(args.cohort, args.base, args.adapted, args.training)
+    report = compare(args.cohort, args.base, args.adapted, args.training, args.plan)
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "sft_results.json").write_text(json.dumps(report, indent=2) + "\n")
     (args.output / "sft_results.tex").write_text(render(report))

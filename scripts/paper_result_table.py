@@ -41,7 +41,7 @@ def outcomes(row):
 def render(report):
     n = report["common_families"]
     if not n or report["formal_grounded_accuracy"] is not None:
-        raise ValueError("Expected an unreviewed source-label report")
+        raise ValueError("Expected a source-label report")
     workers = sorted(report["workers"], key=lambda w: ORDER.index(w["model_id"]))
     for worker in workers:
         for arm in MODES:
@@ -52,25 +52,19 @@ def render(report):
     scores = [task_scores(worker["arms"]) for worker in workers]
     best = [max(column) for column in zip(*scores)]
     lines = [
-        r"\begin{table*}[t]",
-        r"\centering",
-        r"\begin{minipage}{.88\textwidth}\centering\small",
+        r"\begin{table*}[t]", r"\centering\small",
         r"\setlength{\tabcolsep}{5pt}",
-        r"\caption{\textbf{Object verification across tasks and interaction outcomes.}",
-        r"(a) Source-label agreement (\%, higher is better), broken down by task.",
-        r"(b) The same agent episodes split into four mutually exclusive outcomes (counts).",
-        f"All models use the same {n} candidate families, with one constructed Sufficient version per family.",
-        r"Source labels and initial sufficiency have not been independently reviewed; these are not grounded-accuracy scores.}",
+        r"\begin{minipage}{.88\textwidth}\centering",
+        r"\caption{\textbf{Correct answers with and without tools (\%).}",
+        r"An answer is correct when the final Supported/Refuted verdict matches the dataset label.",
+        r"Images only answers from the initial photographs; With tools can inspect images or request photographs before answering.",
+        r"Need more evidence and failure to submit a final verdict earn no credit.",
+        r"The source-derived labels have not been independently reviewed for evidence sufficiency.}",
         r"\label{tab:benchmark}",
-        r"\textbf{(a) Verification scores by task (\%)}\par\smallskip",
-        r"\begin{tabular}{@{}lrrrrrr@{}}",
-        r"\toprule",
-        " & " + " & ".join([
-            rf"\multicolumn{{2}}{{c}}{{Object condition ({report['task_counts']['state']} cases)}}",
-            rf"\multicolumn{{2}}{{c}}{{Cross-view identity ({report['task_counts']['identity']} cases)}}",
-            rf"\multicolumn{{2}}{{c}}{{Overall ({n} cases)}}"]) + r"\\",
+        r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+        r" & \multicolumn{2}{c}{Object condition} & \multicolumn{2}{c}{Object identity} & \multicolumn{2}{c}{Overall}\\",
         r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}",
-        r"Model & Answer only & With tools & Answer only & With tools & Answer only & With tools\\",
+        r"Model & Images only & With tools & Images only & With tools & Images only & With tools\\",
         r"\midrule",
     ]
     for worker, values in zip(workers, scores):
@@ -83,37 +77,32 @@ def render(report):
         prior = 100 * counts.get("Refuted", 0) / sum(counts.values())
         priors.extend([prior, prior])
     lines += [
-        r"\midrule",
-        "Always Refuted & " + " & ".join(f"{v:.1f}" for v in priors) + r"\\",
-        r"\bottomrule",
-        r"\end{tabular}",
-        r"\par\vspace{5pt}",
-        rf"\textbf{{(b) Agent outcomes ({n} attempts per model)}}\par\smallskip",
-        r"\begin{tabular}{@{}lrrrr@{}}",
-        r"\toprule",
-        r"Model & Correct & Wrong & Need more evidence & Did not finish\\",
-        r"\midrule",
-    ]
-    for worker in workers:
-        values = outcomes(worker["arms"]["interactive_agent"])
-        lines.append(NAMES[worker["model_id"]] + " & " + " & ".join(map(str, values)) + r"\\")
-    lines += [
-        r"\bottomrule",
-        r"\end{tabular}",
-        r"\par\smallskip",
-        r"\begin{minipage}{\linewidth}\footnotesize",
-        r"\textit{Tasks:} condition asks whether the photographed item has the stated defect;",
-        r"identity asks whether the foreground objects in two submissions are the same physical item.",
-        r"\textit{Settings:} Answer only judges the initial images directly; With tools starts with the same images",
-        r"and permits inspection and photo requests before a terminal decision.",
-        r"Overall pools all cases; abstentions and missing verdicts score zero.",
-        r"In (b), Correct/Wrong compare definite verdicts with the source label;",
-        r"Need more evidence is a terminal abstention, while Did not finish means no terminal decision was submitted.",
-        r"\end{minipage}",
-        r"\end{minipage}",
-        r"\end{table*}",
+        r"\midrule", "Always Refuted & " + " & ".join(f"{v:.1f}" for v in priors) + r"\\",
+        r"\bottomrule", r"\end{tabular}", r"\end{minipage}", r"\end{table*}",
     ]
     return "\n".join(lines) + "\n"
+
+
+def render_agent_responses(report):
+    lines = [
+        r"\begin{table*}[t]", r"\centering\small",
+        r"\begin{minipage}{.88\textwidth}\centering",
+        r"\caption{\textbf{Final responses when tools are available (\%).}",
+        r"Each row sums to 100\%, up to rounding. Correct and Incorrect are definite verdicts compared with the dataset label.",
+        r"Uncertain means the model submitted Need more evidence.",
+        r"No answer means no valid final verdict was submitted within the turn and context limits.",
+        r"This breakdown explains the missing credit in the main accuracy table.}",
+        r"\label{tab:agent-responses}",
+        r"\begin{tabular}{@{}lrrrr@{}}", r"\toprule",
+        r"Model & Correct & Incorrect & Uncertain & No answer\\", r"\midrule",
+    ]
+    for worker in sorted(report["workers"], key=lambda w: ORDER.index(w["model_id"])):
+        row = worker["arms"]["interactive_agent"]
+        values = [100 * value / row["episodes"] for value in outcomes(row)]
+        lines.append(NAMES[worker["model_id"]] + " & " +
+                     " & ".join(f"{value:.1f}" for value in values) + r"\\")
+    return "\n".join(lines + [r"\bottomrule", r"\end{tabular}",
+                               r"\end{minipage}", r"\end{table*}"]) + "\n"
 
 
 def render_full_reference(report):
@@ -143,9 +132,12 @@ if __name__ == "__main__":
     parser.add_argument("report", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--full-reference", type=Path)
+    parser.add_argument("--responses", type=Path)
     args = parser.parse_args()
     report = json.loads(args.report.read_text())
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(render(report))
     if args.full_reference:
         args.full_reference.write_text(render_full_reference(report))
+    if args.responses:
+        args.responses.write_text(render_agent_responses(report))

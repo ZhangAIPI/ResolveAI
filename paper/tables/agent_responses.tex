@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering\small
+\begin{minipage}{.88\textwidth}\centering
+\caption{\textbf{Final responses when tools are available (\%).}
+Each row sums to 100\%, up to rounding. Correct and Incorrect are definite verdicts compared with the dataset label.
+Uncertain means the model submitted Need more evidence.
+No answer means no valid final verdict was submitted within the turn and context limits.
+This breakdown explains the missing credit in the main accuracy table.}
+\label{tab:agent-responses}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & Correct & Incorrect & Uncertain & No answer\\
+\midrule
+Qwen2.5-VL-7B & 3.8 & 4.8 & 82.8 & 8.6\\
+Qwen3-VL-2B & 40.7 & 21.1 & 0.0 & 38.3\\
+Qwen3-VL-4B & 49.3 & 11.5 & 2.9 & 36.4\\
+Qwen3-VL-8B & 82.3 & 13.4 & 1.0 & 3.3\\
+Qwen3.5-9B & 63.2 & 14.8 & 3.3 & 18.7\\
+InternVL3.5-8B & 14.4 & 3.8 & 0.0 & 81.8\\
+LLaVA-OneVision-7B & 0.0 & 0.0 & 0.0 & 100.0\\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table*}
