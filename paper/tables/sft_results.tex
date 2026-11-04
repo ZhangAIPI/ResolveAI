@@ -5,7 +5,7 @@
 \caption{\textbf{Supervised and reinforcement adaptation.}
 SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data.
 Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.
-Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. The settings and measurements follow Table~\ref{tab:benchmark}.}
+Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. The settings and measurements follow Table~\ref{tab:benchmark}. $^{*}$Validation retained the initial SFT checkpoint for the 8B GRPO run; this row does not measure an updated policy.}
 \label{tab:sft}
 \begin{tabular}{@{}lrrrrrrrrrr@{}}
 \toprule
@@ -28,7 +28,7 @@ Identity SFT & 71.9 & 92.9 & 77.5 & 1.0 & 3 & 71.2 & 98.2 & 78.5 & 11.2 & 177\\
 Mixed-task SFT & 73.2 & 94.6 & 78.9 & 1.0 & 3 & 73.2 & 98.2 & 79.9 & 7.1 & 117\\
 Identity: finish only & 66.0 & 92.9 & 73.2 & 1.0 & 3 & 57.5 & 100.0 & 68.9 & 11.1 & 175\\
 Mixed-task: finish only & 71.2 & 92.9 & 77.0 & 1.0 & 3 & 75.2 & 98.2 & 81.3 & 7.4 & 120\\
-Mixed-task SFT + GRPO & 73.2 & 94.6 & 78.9 & 1.0 & 3 & 73.2 & 98.2 & 79.9 & 7.2 & 117\\
+Mixed-task SFT + GRPO$^{*}$ & 73.2 & 94.6 & 78.9 & 1.0 & 3 & 73.2 & 98.2 & 79.9 & 7.2 & 117\\
 \bottomrule
 \end{tabular}
 \end{minipage}

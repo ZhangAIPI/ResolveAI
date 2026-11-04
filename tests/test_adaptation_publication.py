@@ -5,7 +5,7 @@ import sqlite3
 import tempfile
 import unittest
 from scripts.watch_adaptation_results import complete_cohort, replace_block
-from scripts.score_sft_comparison import render_adaptations
+from scripts.score_sft_comparison import render_adaptations, initial_rl_checkpoint
 
 
 class PublicationTests(unittest.TestCase):
@@ -23,6 +23,15 @@ class PublicationTests(unittest.TestCase):
             with sqlite3.connect(root/"episodes.sqlite") as db:
                 db.execute("INSERT INTO episodes VALUES(?)",(json.dumps(rows[-1]),))
             self.assertTrue(complete_cohort(root,["a"]))
+
+    def test_final_checkpoint_is_distinct_from_a_validation_retained_initialization(self):
+        selected = {"training":{"configuration":{"groups":64}},
+                    "checkpoint":{"state":{"best_group":0}}}
+        self.assertTrue(initial_rl_checkpoint(selected))
+        final = {**selected, "checkpoint":{**selected["checkpoint"],"evaluated_group":64}}
+        self.assertFalse(initial_rl_checkpoint(final))
+        self.assertEqual(selected["checkpoint"]["state"]["best_group"],0)
+
 
     def test_result_block_preserves_surrounding_edits(self):
         text = "Author introduction\n\\section*{LLM Usage Statement}\nAuthor end"

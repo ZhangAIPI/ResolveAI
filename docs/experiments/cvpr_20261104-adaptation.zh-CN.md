@@ -2,17 +2,33 @@
 
 目标是比较底座、监督训练和监督训练后继续 RL 的效果，保留相同题目、输入、工具与失败计分方式。当前准确率仍是未独立复核的来源标签一致率，不作为证据充分性的正式结论。
 
+## 最新结果（2026-11-04 09:53 EST）
+
+所有比较沿用固定的 209 个论文案件族。以下是有工具设置的来源标签一致率；不是独立复核后的证据充分性分数。
+
+| 模型与训练 | 训练前 | SFT 后 | SFT + GRPO（验证选择） |
+|---|---:|---:|---:|
+| Qwen2.5-VL-7B | 3.8% | 73.7% | 未运行 |
+| Qwen3-VL-2B | 40.7% | 71.8% | 72.2% |
+| Qwen3-VL-8B，Mixed-task | 82.3% | 79.9% | 79.9%（选回 SFT 初始化） |
+
+- 2B 的 GRPO 比 SFT 多答对一例，不能据此声称显著提升搜证能力；两者都没有请求新照片。
+- 8B 的 RL 实际做了 24 次优化器更新，但来源验证集保留 group 0。Table 2 已明确标记该行是训练初始化，而非经过更新的策略。
+- 8B 的 Identity finish-only / 完整动作监督分别为 68.9% / 78.5%；Mixed-task finish-only / 完整动作监督分别为 81.3% / 79.9%。这些消融共享更新上限，目标 token 数与计算量不同。
+- 新增 Pixtral-12B：无工具 42.1%，有工具 8.1%。85.2% 的交互尝试没有提交最终结论；不能把低分全部归为视觉识别错误。
+- 已登记两个最终 RL 权重诊断：固定评测第 64 组的 2B、8B 权重，每个模型两个案件族分片。它们与已测权重实际不同，不增加训练，也不替换验证选择的主结果。
+
 ## 已完成与继续运行
 
 | 实验 | 训练 | 评测 |
 |---|---|---|
 | Qwen3-VL-2B Mixed-task SFT | 完成 | 完整结果已在 Table 2 |
 | Qwen3-VL-8B Identity / Mixed-task SFT | 完成 | 完整结果已在 Table 2 |
-| Qwen2.5-VL-7B Mixed-task SFT | 完成 | 继续原有断点 |
-| Qwen3-VL-8B Identity terminal-only SFT | 完成 | 继续原有断点 |
-| Qwen3-VL-8B Mixed-task terminal-only SFT | 已排队 | 用于区分回答监督与搜证轨迹监督 |
-| Qwen3-VL-2B Mixed-task SFT + GRPO | 完成 | 继续原有断点 |
-| Qwen3-VL-8B Mixed-task SFT + GRPO | 接入四卡共享队列 | 训练完成后四个案件族分片 |
+| Qwen2.5-VL-7B Mixed-task SFT | 完成 | 论文固定题组已发布 |
+| Qwen3-VL-8B Identity terminal-only SFT | 完成 | 论文固定题组已发布 |
+| Qwen3-VL-8B Mixed-task terminal-only SFT | 完成 | 论文固定题组已发布 |
+| Qwen3-VL-2B Mixed-task SFT + GRPO | 完成 | 论文固定题组已发布 |
+| Qwen3-VL-8B Mixed-task SFT + GRPO | 完成 | 四分片完整评测已发布 |
 
 terminal-only 保留相同训练来源的最终回答及其完整可见历史，但不把中间索证动作作为预测目标。它检验动作目标监督的作用；两者更新预算相同，目标 token 数和实际计算量不同。
 

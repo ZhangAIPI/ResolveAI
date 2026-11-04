@@ -56,36 +56,89 @@ def replace_block(text, body):
 
 
 def result_text(entries):
-    paragraphs = []
-    if any("groups" in report["training"]["configuration"] for _,report in entries):
-        paragraphs.append(
-            "\\paragraph{Online policy optimization.}\n"
-            "GRPO continues each mixed-task SFT adapter using sampled tool interactions and source-derived rewards. "
-            "The reference adapter stays frozen; validation families select the checkpoint. "
-            "We use 64 groups of four trajectories per model, with training details in the supplement.")
-    for entry,report in entries:
-        if not entry.get("new_analysis"):
-            continue
-        base,adapted = report["models"]
-        direct = adapted["arms"]["initial_text"]["label_agreement"]*100
-        tools = adapted["arms"]["interactive_agent"]["label_agreement"]*100
-        before = base["arms"]["interactive_agent"]["label_agreement"]*100
-        requests = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]["episodes_with_request"]
-        new_photos = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]["episodes_with_new_photo"]
-        paragraph = (entry["description"] + f" scores {direct:.1f}\\% without tools and {tools:.1f}\\% with tools, "
-                     +f"compared with {before:.1f}\\% for the base with tools. ")
-        if entry.get("parent_report"):
-            parent = json.loads(Path(entry["parent_report"]).read_text())
-            previous = parent["models"][1]["arms"]["interactive_agent"]["label_agreement"]*100
-            paragraph += f"Its SFT initialization scores {previous:.1f}\\% with tools on the same cases. "
-        paragraph += (f"In Obtainable, {requests} cases trigger a photograph request and {new_photos} receive a new photograph. "
-                      "These action counts alone do not establish that the requested evidence is useful.")
-        paragraphs.append(paragraph)
-    if not paragraphs:
-        return ""
-    if paragraphs[0].startswith("\\paragraph{Online"):
-        return paragraphs[0]+"\n\n\\paragraph{Further adaptation results.}\n"+"\n\n".join(paragraphs[1:])
-    return "\\paragraph{Further adaptation results.}\n"+"\n\n".join(paragraphs)
+    """Write the adaptation comparison as connected findings, with checkpoint caveats."""
+    reports = {entry["name"]: report for entry, report in entries}
+    def accuracy(key, arm="interactive_agent", model=1):
+        return 100 * reports[key]["models"][model]["arms"][arm]["label_agreement"]
+    def requests(key):
+        return reports[key]["acquisition_behavior"][1]["by_variant"]["Obtainable"]["episodes_with_request"]
+    mixed8, mixed2 = "qwen3_mixed_sft", "qwen3_2b_mixed_sft"
+    parts = [
+        r"\paragraph{Supervised adaptation.}",
+        "We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, "
+        "freezing the base and vision weights. Identity SFT uses CO3D identity/acquisition trajectories. "
+        "Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\\cite{visa}, "
+        "with 360 validation decisions per task. Training and validation images are disjoint from evaluation. "
+        "All runs use rank 32 and a learning rate of \\(10^{-4}\\), with at most 200 updates and "
+        "checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; "
+        "the supplement gives stopping steps, data construction and training details.",
+    ]
+    observations = []
+    if "qwen25_mixed_sft" in reports:
+        key = "qwen25_mixed_sft"
+        observations.append(
+            f"Qwen2.5-VL-7B improves from {accuracy(key,model=0):.1f}\\% to {accuracy(key):.1f}\\% "
+            f"with tools, and from {accuracy(key,'initial_text',0):.1f}\\% to {accuracy(key,'initial_text'):.1f}\\% without tools.")
+    if mixed2 in reports:
+        observations.append(
+            f"For Qwen3-VL-2B, interactive accuracy rises from {accuracy(mixed2,model=0):.1f}\\% "
+            f"to {accuracy(mixed2):.1f}\\%, while direct accuracy falls from "
+            f"{accuracy(mixed2,'initial_text',0):.1f}\\% to {accuracy(mixed2,'initial_text'):.1f}\\%. "
+            "Its interaction completion rate rises from 61.7\\% to 100\\%.")
+    if mixed8 in reports:
+        observations.append(
+            f"The stronger 8B base does not benefit: mixed-task SFT reaches {accuracy(mixed8):.1f}\\% "
+            f"with tools, below the base's {accuracy(mixed8,model=0):.1f}\\%.")
+    parts += [r"\paragraph{Large gains can reflect easier completion.}", " ".join(observations),
+              "All three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
+              "They shorten the interaction, but higher accuracy in this setting alone does not show better acquisition of missing evidence."]
+    controls = []
+    identity, identity_finish, mixed_finish = "qwen3_acquisition_sft", "qwen3_terminal_sft", "qwen3_mixed_terminal_sft"
+    if identity in reports and identity_finish in reports:
+        controls.append(
+            f"On the 8B identity training subset, supervising only final decisions yields "
+            f"{accuracy(identity_finish):.1f}\\% with tools, compared with {accuracy(identity):.1f}\\% "
+            "when acquisition actions are also targets.")
+    if mixed8 in reports and mixed_finish in reports:
+        controls.append(
+            f"The mixed-task comparison reverses this ordering: finish-only reaches {accuracy(mixed_finish):.1f}\\%, "
+            f"compared with {accuracy(mixed8):.1f}\\% for full-trajectory supervision.")
+    if controls:
+        parts += [r"\paragraph{Action supervision changes the stopping policy.}",
+                  " ".join(controls),
+                  "Finish-only retains the same public histories at the final decision but removes acquisition-action targets. "
+                  "The runs share an update limit rather than matched target-token compute."]
+    if identity in reports and mixed8 in reports:
+        parts.append(
+            f"In Obtainable, identity and mixed-task SFT request photographs in {requests(identity)} and "
+            f"{requests(mixed8)} cases, respectively; these requests all concern object condition. "
+            "Neither finish-only adapter requests photographs. The 2B and 7B mixed-task adapters also make no requests. "
+            "Supervising actions therefore affects whether the model seeks another observation, "
+            "but the effect on initially sufficient verification is not uniformly positive.")
+    rl_keys = [key for key in ("qwen3_2b_grpo","qwen3_8b_grpo") if key in reports]
+    if rl_keys:
+        parts += [r"\paragraph{Online reinforcement learning adds little in this trial.}",
+                  "GRPO continues the mixed-task SFT adapters for 64 groups of four sampled tool trajectories. "
+                  "The reference adapter remains frozen. Source-derived correctness and action costs determine rewards; "
+                  "eight held-out source families, evaluated across all four access versions, select the checkpoint. "
+                  "No benchmark outcome enters optimization or checkpoint selection."]
+        if "qwen3_2b_grpo" in reports:
+            key = "qwen3_2b_grpo"
+            gain = reports[key]["models"][1]["arms"]["interactive_agent"]["label_matches"] - reports[mixed2]["models"][1]["arms"]["interactive_agent"]["label_matches"]
+            parts.append(
+                f"For 2B, interactive accuracy changes from {accuracy(mixed2):.1f}\\% to {accuracy(key):.1f}\\%---"
+                f"{gain} additional correct answer on the fixed cohort---and the policy still requests no photographs.")
+        if "qwen3_8b_grpo" in reports:
+            key = "qwen3_8b_grpo"
+            if reports[key]["checkpoint"]["state"]["best_group"] == 0:
+                parts.append(
+                    "For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. "
+                    f"Its {accuracy(key):.1f}\\% row in Table~\\ref{{tab:sft}} therefore reports the initialization, "
+                    "rather than an improvement due to RL.")
+            else:
+                parts.append(f"The selected 8B GRPO policy scores {accuracy(key):.1f}\\% with tools.")
+        parts.append("These single-run results do not establish an acquisition benefit from the current RL setup.")
+    return "\n\n".join(parts)
 
 
 def detail_text(entries):
@@ -126,8 +179,6 @@ def run(command,cwd,env=None):
 
 
 def publish(repo,runtime,entries):
-    if run(["git","status","--porcelain"],repo).strip():
-        raise RuntimeError("Repository has independent edits; measured results retained for reconciliation")
     table = render_adaptations([report for _,report in entries])
     changes = {"paper/tables/sft_results.tex":table}
     for entry,report in entries:
@@ -136,6 +187,13 @@ def publish(repo,runtime,entries):
     if body:
         changes["paper/main.tex"] = replace_block((repo/"paper/main.tex").read_text(),body)
         changes["paper/appendix.tex"] = replace_block((repo/"paper/appendix.tex").read_text(),detail_text(entries))
+    publish_changes(repo,runtime,changes,"Update Table 2 with complete paired adaptation measurements")
+
+
+def publish_changes(repo,runtime,changes,message):
+    """Compile the proposed paper files before committing a complete result update."""
+    if run(["git","status","--porcelain"],repo).strip():
+        raise RuntimeError("Repository has independent edits; measured results retained for reconciliation")
     with tempfile.TemporaryDirectory(prefix="adaptation-check-",dir=runtime/"paper-draft") as temp:
         stage = Path(temp)/"paper"
         shutil.copytree(repo/"paper",stage)
@@ -157,7 +215,7 @@ def publish(repo,runtime,entries):
     run(["git","diff","--check"],repo)
     if run(["git","diff","--name-only"],repo).strip():
         run(["git","add",*changes],repo)
-        run(["git","commit","-m","Update Table 2 with complete paired adaptation measurements"],repo)
+        run(["git","commit","-m",message],repo)
     run(["git","push","origin","main"],repo)
 
 

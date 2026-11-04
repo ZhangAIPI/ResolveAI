@@ -370,6 +370,7 @@ Qwen2.5-VL-7B submits Need more evidence in 82.8\% of cases, whereas InternVL3.5
 LLaVA-OneVision submits none on this cohort, with 91.9\% of episodes reaching the context limit.
 SmolVLM2 returns Refuted for every direct query, matching the 50.7\% constant baseline; none of its interactive episodes submits a verdict, with 79.4\% reaching the context limit and the rest the turn limit.
 These outcomes distinguish reluctance to decide from failure to complete the interaction; they cannot all be attributed to poor visual recognition.
+Pixtral-12B scores 42.1\% directly and 8.1\% with tools; it submits no final verdict in 85.2\% of interactive attempts.
 Even Qwen3-VL-8B completes 96.7\% of episodes but answers correctly in 82.3\%.
 The supplement reports correct answers, incorrect answers, abstentions and missing decisions as a partition of the same attempts.
 
@@ -381,53 +382,36 @@ A smaller backbone therefore need not yield a cheaper complete interaction.
 Low token use alone is also insufficient: Qwen2.5-VL-7B generates fewer tokens but answers correctly in only 3.8\% of cases.
 Completion rates and latency distributions are reported in the supplement.
 
-\subsection{Effect of Supervised Fine-Tuning}
+\subsection{Learning Verification and Acquisition}
 \label{sec:sft}
-\paragraph{Training setup.}
-We train independent adapters for Qwen3-VL-8B, Qwen3-VL-2B and Qwen2.5-VL-7B from their respective base checkpoints.
-Identity SFT uses CO3D identity/acquisition trajectories.
-Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task.
-Training and validation images are disjoint from evaluation.
-All runs freeze the base and vision weights and use rank-32 attention LoRA at \(10^{-4}\), with at most 200 updates; the 2B run stops at 150.
-Checkpoints are selected by held-out assistant-token loss.
-Each adaptation is a single run with source-derived labels; construction details are in the supplement.
-
-\paragraph{Better direct answers do not ensure better interaction.}
-For the 8B model, direct accuracy rises from 74.6\% to 77.5\% after identity SFT and 78.9\% after mixed-task SFT (Table~\ref{tab:sft}).
-With tools, both adapters improve identity accuracy from 91.1\% to 98.2\%, but condition accuracy declines.
-Neither exceeds the base's 82.3\% overall accuracy: identity SFT reaches 78.5\%, and mixed-task SFT reaches 79.9\%.
-
-Both 8B adapters finish all initially sufficient cases without intermediate tools.
-Mean episode time falls from 16.8 seconds to 11.2 and 7.1 seconds, respectively; output length falls from 283 to 177 and 117 tokens.
-The faster completion accompanies lower answer accuracy.
-
-The 2B model improves with the tool interface: accuracy rises from 40.7\% to 71.8\%, and completion from 61.7\% to 100\%.
-It also finishes every initially sufficient case immediately, reducing mean time from 17.1 to 5.5 seconds.
-Direct accuracy falls from 60.3\% to 48.3\%.
-The improvement is therefore specific to the interaction setting, and includes recovery from failed completion.
-
-\paragraph{Requests change more than the final accuracy.}
-For the 8B model, the base requests and receives a photograph in 12 matched Obtainable cases, compared with 153 after identity SFT and 82 after mixed-task SFT.
-All post-training requests occur in condition cases; neither adapter requests photographs for identity cases.
-In Missing and Unavailable, the requested key material cannot be supplied and both adapters abstain on the corresponding cases.
-The 2B mixed-task adapter makes no photograph requests in any of the four access versions.
-Training thus changes requests and stopping decisions.
-Selecting the most useful observation still requires comparison with available alternatives.
-
 % adaptation-results-start
-\paragraph{Online policy optimization.}
-GRPO continues each mixed-task SFT adapter using sampled tool interactions and source-derived rewards. The reference adapter stays frozen; validation families select the checkpoint. We use 64 groups of four trajectories per model, with training details in the supplement.
+\paragraph{Supervised adaptation.}
 
-\paragraph{Further adaptation results.}
-Qwen3-VL-2B after mixed-task SFT and online GRPO scores 48.8\% without tools and 72.2\% with tools, compared with 40.7\% for the base with tools. Its SFT initialization scores 71.8\% with tools on the same cases. In Obtainable, 0 cases trigger a photograph request and 0 receive a new photograph. These action counts alone do not establish that the requested evidence is useful.
+We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, freezing the base and vision weights. Identity SFT uses CO3D identity/acquisition trajectories. Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task. Training and validation images are disjoint from evaluation. All runs use rank 32 and a learning rate of \(10^{-4}\), with at most 200 updates and checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; the supplement gives stopping steps, data construction and training details.
 
-Qwen2.5-VL-7B with mixed-task SFT scores 69.9\% without tools and 73.7\% with tools, compared with 3.8\% for the base with tools. In Obtainable, 0 cases trigger a photograph request and 0 receive a new photograph. These action counts alone do not establish that the requested evidence is useful.
+\paragraph{Large gains can reflect easier completion.}
 
-Qwen3-VL-8B with identity terminal-only SFT scores 73.2\% without tools and 68.9\% with tools, compared with 82.3\% for the base with tools. In Obtainable, 0 cases trigger a photograph request and 0 receive a new photograph. These action counts alone do not establish that the requested evidence is useful.
+Qwen2.5-VL-7B improves from 3.8\% to 73.7\% with tools, and from 15.8\% to 69.9\% without tools. For Qwen3-VL-2B, interactive accuracy rises from 40.7\% to 71.8\%, while direct accuracy falls from 60.3\% to 48.3\%. Its interaction completion rate rises from 61.7\% to 100\%. The stronger 8B base does not benefit: mixed-task SFT reaches 79.9\% with tools, below the base's 82.3\%.
 
-Qwen3-VL-8B with mixed-task terminal-only SFT scores 77.0\% without tools and 81.3\% with tools, compared with 82.3\% for the base with tools. In Obtainable, 0 cases trigger a photograph request and 0 receive a new photograph. These action counts alone do not establish that the requested evidence is useful.
+All three mixed-task adapters finish the initially sufficient cases without intermediate tools. They shorten the interaction, but higher accuracy in this setting alone does not show better acquisition of missing evidence.
 
-Qwen3-VL-8B after mixed-task SFT and online GRPO scores 78.9\% without tools and 79.9\% with tools, compared with 82.3\% for the base with tools. Its SFT initialization scores 79.9\% with tools on the same cases. In Obtainable, 82 cases trigger a photograph request and 82 receive a new photograph. These action counts alone do not establish that the requested evidence is useful.
+\paragraph{Action supervision changes the stopping policy.}
+
+On the 8B identity training subset, supervising only final decisions yields 68.9\% with tools, compared with 78.5\% when acquisition actions are also targets. The mixed-task comparison reverses this ordering: finish-only reaches 81.3\%, compared with 79.9\% for full-trajectory supervision.
+
+Finish-only retains the same public histories at the final decision but removes acquisition-action targets. The runs share an update limit rather than matched target-token compute.
+
+In Obtainable, identity and mixed-task SFT request photographs in 153 and 82 cases, respectively; these requests all concern object condition. Neither finish-only adapter requests photographs. The 2B and 7B mixed-task adapters also make no requests. Supervising actions therefore affects whether the model seeks another observation, but the effect on initially sufficient verification is not uniformly positive.
+
+\paragraph{Online reinforcement learning adds little in this trial.}
+
+GRPO continues the mixed-task SFT adapters for 64 groups of four sampled tool trajectories. The reference adapter remains frozen. Source-derived correctness and action costs determine rewards; eight held-out source families, evaluated across all four access versions, select the checkpoint. No benchmark outcome enters optimization or checkpoint selection.
+
+For 2B, interactive accuracy changes from 71.8\% to 72.2\%---1 additional correct answer on the fixed cohort---and the policy still requests no photographs.
+
+For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. Its 79.9\% row in Table~\ref{tab:sft} therefore reports the initialization, rather than an improvement due to RL.
+
+These single-run results do not establish an acquisition benefit from the current RL setup.
 % adaptation-results-end
 
 \section*{LLM Usage Statement}

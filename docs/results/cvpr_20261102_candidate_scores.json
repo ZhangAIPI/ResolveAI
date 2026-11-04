@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-11-03T22:13:43.090921+00:00",
+  "as_of_utc": "2026-11-04T14:50:02.650706+00:00",
   "scope": "Literal agreement with unreviewed construction labels, not grounded accuracy",
   "selection": "Pre-frozen 209 Sufficient source-labeled families; identical cases retained for later models",
   "variant": "Sufficient",
@@ -1220,6 +1220,124 @@
                 "No submitted verdict": 86,
                 "Need more evidence": 2,
                 "Refuted": 36
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "available_known_families": 252,
+      "name": "pixtral",
+      "model_id": "mistral-experimental/pixtral-12b",
+      "revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+      "source_commit": "38f4a8bd05d3c9cb6cdeeb867ea9b9f769bb59af",
+      "paper_cohort_complete": true,
+      "full_study_complete": true,
+      "raw_episodes": 5736,
+      "expected_raw_episodes": 5736,
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "label_matches": 88,
+          "label_agreement": 0.42105263157894735,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 158,
+            "Supported": 31,
+            "Need more evidence": 20
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 29,
+              "label_agreement": 0.5178571428571429,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 54,
+                "Supported": 2
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 59,
+              "label_agreement": 0.38562091503267976,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 104,
+                "Supported": 29,
+                "Need more evidence": 20
+              }
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "label_matches": 87,
+          "label_agreement": 0.41626794258373206,
+          "submitted": 209,
+          "verdicts": {
+            "Refuted": 142,
+            "Supported": 37,
+            "Need more evidence": 30
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 34,
+              "label_agreement": 0.6071428571428571,
+              "submitted": 56,
+              "verdicts": {
+                "Refuted": 49,
+                "Supported": 7
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 53,
+              "label_agreement": 0.3464052287581699,
+              "submitted": 153,
+              "verdicts": {
+                "Refuted": 93,
+                "Supported": 30,
+                "Need more evidence": 30
+              }
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "label_matches": 17,
+          "label_agreement": 0.08133971291866028,
+          "submitted": 31,
+          "verdicts": {
+            "Refuted": 5,
+            "No submitted verdict": 178,
+            "Need more evidence": 7,
+            "Supported": 19
+          },
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "label_matches": 12,
+              "label_agreement": 0.21428571428571427,
+              "submitted": 20,
+              "verdicts": {
+                "Refuted": 4,
+                "No submitted verdict": 36,
+                "Need more evidence": 7,
+                "Supported": 9
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "label_matches": 5,
+              "label_agreement": 0.032679738562091505,
+              "submitted": 11,
+              "verdicts": {
+                "No submitted verdict": 142,
+                "Refuted": 1,
+                "Supported": 10
               }
             }
           }

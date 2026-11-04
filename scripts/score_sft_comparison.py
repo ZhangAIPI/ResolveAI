@@ -114,6 +114,14 @@ def render(report):
     return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"])+"\n"
 
 
+
+def initial_rl_checkpoint(report):
+    """Validation may retain the SFT initialization despite later policy updates."""
+    state = report["checkpoint"]["state"]
+    return ("groups" in report["training"]["configuration"]
+            and report["checkpoint"].get("evaluated_group", state.get("best_group")) == 0)
+
+
 def render_adaptations(reports):
     """Compare independent adapters, preserving each model's measured base once."""
     if not reports:
@@ -130,6 +138,7 @@ def render_adaptations(reports):
         group.append(report)
     from scripts.paper_result_table import ORDER
     labels={"Acquisition SFT":"Identity SFT","Mixed-source SFT":"Mixed-task SFT","Online GRPO":"Mixed-task SFT + GRPO","Terminal-only SFT":"Identity: finish only","Mixed terminal-only SFT":"Mixed-task: finish only"}
+    retained_initial = any(initial_rl_checkpoint(r) for r in reports)
     has_terminal = any("terminal" in r["models"][1]["name"].lower() for r in reports)
     has_rl = any(r["models"][1]["name"] == "Online GRPO" for r in reports)
     lines=[r"\begin{table*}[t]",r"\centering\small",
@@ -138,7 +147,8 @@ def render_adaptations(reports):
            (r"SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data." if has_rl else r"Each SFT adapter starts from its listed base; checkpoints use held-out validation data."),
            r"Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.",
            (r"Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. "
-            if has_terminal else "") + r"The settings and measurements follow Table~\ref{tab:benchmark}.}",
+            if has_terminal else "") + r"The settings and measurements follow Table~\ref{tab:benchmark}. "
+            + (r"$^{*}$Validation retained the initial SFT checkpoint for the 8B GRPO run; this row does not measure an updated policy." if retained_initial else "") + "}",
            r"\label{tab:sft}",*comparison_header("Training")]
     for index,model in enumerate(sorted(groups,key=ORDER.index)):
         if index:
@@ -146,7 +156,8 @@ def render_adaptations(reports):
         lines.append(r"\multicolumn{11}{l}{\emph{"+NAMES[model]+r"}}\\")
         group=groups[model]
         rows=[("Before SFT",group[0]["models"][0]["arms"],group[0]["efficiency"][0]["arms"])]
-        rows += [(labels.get(r["models"][1]["name"],r["models"][1]["name"]),
+        rows += [(labels.get(r["models"][1]["name"],r["models"][1]["name"]) +
+                  (r"$^{*}$" if initial_rl_checkpoint(r) else ""),
                   r["models"][1]["arms"],r["efficiency"][1]["arms"]) for r in group]
         for label,arms,costs in rows:
             lines.append(label+" & "+" & ".join(comparison_cells(comparison_values(arms,costs)))+r"\\")

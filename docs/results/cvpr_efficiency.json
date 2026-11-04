@@ -2,7 +2,7 @@
   "as_of_utc": "2026-11-03T22:14:07.840789+00:00",
   "scope": "Observed per-attempt cost on the same unreviewed source-label cohort as Table 1",
   "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
-  "cohort_sha256": "e9e1bf02d5ee87bdba3586d69c57606940a2fd5d2ddf80cd63027989dc2f88e4",
+  "cohort_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
   "family_ids": [
     "case-0013955d31d3d1958ae4",
     "case-008fddbd675adc4570ad",
@@ -1705,6 +1705,171 @@
               "mean_requests": 0,
               "p50_wall_s": 29.260160955018364,
               "p90_wall_s": 33.5967289339751
+            }
+          }
+        }
+      }
+    },
+    {
+      "model_id": "mistral-experimental/pixtral-12b",
+      "revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+      "gpu": "NVIDIA RTX A6000",
+      "manifest_sha256": "88eb46a6f63d0086a61a63b37b9ca12cb5fdc2df07656ae44666451d6102c8ea",
+      "source_commit": "38f4a8bd05d3c9cb6cdeeb867ea9b9f769bb59af",
+      "versions": {
+        "torch": "2.4.0",
+        "transformers": "4.57.6",
+        "Pillow": "12.2.0",
+        "rapidocr-onnxruntime": "1.4.4"
+      },
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "correct": 88,
+          "accuracy_pct": 42.10526315789473,
+          "finished_pct": 100,
+          "mean_wall_s": 1.4372846747455565,
+          "mean_model_s": 0.7885393553865186,
+          "mean_input_tokens": 2554.1483253588517,
+          "mean_output_tokens": 2.9473684210526314,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 1.321601839037612,
+          "p90_wall_s": 1.9792030280223116,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 29,
+              "accuracy_pct": 51.78571428571429,
+              "finished_pct": 100,
+              "mean_wall_s": 1.0071866789304684,
+              "mean_model_s": 0.6482122055884767,
+              "mean_input_tokens": 2065.4285714285716,
+              "mean_output_tokens": 2.9642857142857144,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 0.8746819669613615,
+              "p90_wall_s": 1.5354311720002443
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 59,
+              "accuracy_pct": 38.56209150326798,
+              "finished_pct": 100,
+              "mean_wall_s": 1.5947061634099027,
+              "mean_model_s": 0.8399009265544295,
+              "mean_input_tokens": 2733.02614379085,
+              "mean_output_tokens": 2.9411764705882355,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.6750167879508808,
+              "p90_wall_s": 2.0048680839827284
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "correct": 87,
+          "accuracy_pct": 41.62679425837321,
+          "finished_pct": 100,
+          "mean_wall_s": 1.6910032960700436,
+          "mean_model_s": 0.946900529991646,
+          "mean_input_tokens": 3139.6746411483255,
+          "mean_output_tokens": 2.9665071770334928,
+          "mean_model_calls": 1,
+          "mean_rejected_calls": 0,
+          "mean_tool_calls": 0,
+          "mean_requests": 0,
+          "p50_wall_s": 1.6876529819564894,
+          "p90_wall_s": 2.0694765920052305,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 34,
+              "accuracy_pct": 60.71428571428571,
+              "finished_pct": 100,
+              "mean_wall_s": 1.8525805318734325,
+              "mean_model_s": 1.1456747899605293,
+              "mean_input_tokens": 3884.375,
+              "mean_output_tokens": 2.875,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.584894591011107,
+              "p90_wall_s": 2.932390380068682
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 53,
+              "accuracy_pct": 34.64052287581699,
+              "finished_pct": 100,
+              "mean_wall_s": 1.6318639156452739,
+              "mean_model_s": 0.8741465524866951,
+              "mean_input_tokens": 2867.1045751633987,
+              "mean_output_tokens": 3,
+              "mean_model_calls": 1,
+              "mean_rejected_calls": 0,
+              "mean_tool_calls": 0,
+              "mean_requests": 0,
+              "p50_wall_s": 1.7036834330065176,
+              "p90_wall_s": 2.0387881639180705
+            }
+          }
+        },
+        "interactive_agent": {
+          "episodes": 209,
+          "correct": 17,
+          "accuracy_pct": 8.133971291866029,
+          "finished_pct": 14.832535885167463,
+          "mean_wall_s": 11.517721706671857,
+          "mean_model_s": 9.850548301280908,
+          "mean_input_tokens": 15562.45933014354,
+          "mean_output_tokens": 103.67942583732058,
+          "mean_model_calls": 2.511961722488038,
+          "mean_rejected_calls": 0.8516746411483254,
+          "mean_tool_calls": 2.2535885167464116,
+          "mean_requests": 0,
+          "p50_wall_s": 7.824733690940775,
+          "p90_wall_s": 21.071788201923482,
+          "by_task": {
+            "identity": {
+              "episodes": 56,
+              "correct": 12,
+              "accuracy_pct": 21.428571428571427,
+              "finished_pct": 35.714285714285715,
+              "mean_wall_s": 18.92023085854557,
+              "mean_model_s": 17.347513807624637,
+              "mean_input_tokens": 20009.51785714286,
+              "mean_output_tokens": 218.64285714285714,
+              "mean_model_calls": 3.3214285714285716,
+              "mean_rejected_calls": 0.6428571428571429,
+              "mean_tool_calls": 2.9464285714285716,
+              "mean_requests": 0,
+              "p50_wall_s": 18.830859537003562,
+              "p90_wall_s": 26.69929662393406
+            },
+            "state": {
+              "episodes": 153,
+              "correct": 5,
+              "accuracy_pct": 3.2679738562091507,
+              "finished_pct": 7.18954248366013,
+              "mean_wall_s": 8.808306592260564,
+              "mean_model_s": 7.106560926410001,
+              "mean_input_tokens": 13934.777777777777,
+              "mean_output_tokens": 61.60130718954248,
+              "mean_model_calls": 2.215686274509804,
+              "mean_rejected_calls": 0.9281045751633987,
+              "mean_tool_calls": 2,
+              "mean_requests": 0,
+              "p50_wall_s": 7.314740258036181,
+              "p90_wall_s": 14.88003978796769
             }
           }
         }

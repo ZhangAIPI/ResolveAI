@@ -7,7 +7,7 @@
 [闭源模型接入：80 美元预算、60 美元运行上限（API 认证通过）](docs/experiments/openai-budget.zh-CN.md)
 
 <!-- benchmark-results-start -->
-当前主表已覆盖 **9 个模型**，使用同一固定题组。
+当前主表已覆盖 **10 个模型**，使用同一固定题组。
 下表是来源标签下的答对率（%），并非独立审核后的证据充分性成绩。
 
 | 模型 | 无工具 | 有工具 |
@@ -21,8 +21,9 @@
 | InternVL3.5-14B | 59.8 | 40.2 |
 | LLaVA-OneVision-7B | 44.5 | 0.0 |
 | SmolVLM2-2.2B | 50.7 | 0.0 |
+| Pixtral-12B | 42.1 | 8.1 |
 
-模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)。
+模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261104-adaptation.zh-CN.md)。
 <!-- benchmark-results-end -->
 
 <!-- api-results-start -->
