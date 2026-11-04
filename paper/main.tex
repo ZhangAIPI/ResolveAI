@@ -406,7 +406,7 @@ In Obtainable, our local 8B SFT policy requests photographs in 82 cases, all con
 
 We apply GRPO either directly to the pretrained base (RL) or after SFT (SFT+RL), using 64 groups of four sampled tool trajectories. Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. Table~\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints.
 
-Qwen3-VL-2B reaches 72.7\% with SFT+RL, compared with 71.8\% after SFT and 40.7\% for the base. Qwen3-VL-8B reaches 83.7\% with SFT+RL, compared with 82.9\% after SFT and 82.3\% for the base.
+Qwen3-VL-2B reaches 72.7\% with SFT+RL, compared with 71.8\% after SFT and 40.7\% for the base. Qwen3-VL-8B reaches 83.7\% with SFT+RL, compared with 82.9\% after SFT and 82.3\% for the base. Qwen2.5-VL-7B reaches 77.5\% with SFT+RL, compared with 73.7\% after SFT and 3.8\% for the base.
 
 Qwen3-VL-2B requests photographs in 64 Obtainable cases; Qwen3-VL-8B requests photographs in 92 Obtainable cases. The supplement separates requesting a photograph from receiving usable new evidence.
 % adaptation-results-end
