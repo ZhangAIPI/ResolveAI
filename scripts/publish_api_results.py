@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import subprocess
 
-from scripts.paper_result_table import render
+from scripts.paper_result_table import render,display_api_workers
 
 LABELS={"terra-eval":"GPT-6.1 Terra","gpt61_sol":"GPT-6.1 Sol (low)",
         "gpt56_sol":"GPT-5.6 Sol","gpt41":"GPT-4.1","gpt41_mini":"GPT-4.1 mini",
@@ -30,7 +30,7 @@ def publish(repository, report, lock_path):
         efficiency=json.loads((repository/"docs/results/cvpr_efficiency.json").read_text())
         table=repository/"paper/tables/benchmark_results.tex"
         table.write_text(render(reference,efficiency,report))
-        workers=report["workers"]
+        workers=display_api_workers(report["workers"])
         names=", ".join(LABELS[w["name"]] for w in workers)
         main=repository/"paper/main.tex"
         text=main.read_text()
@@ -55,8 +55,15 @@ def publish(repository, report, lock_path):
                  "We retain encrypted reasoning and native call identifiers between turns. "
                  "Other API models use their documented non-reasoning setting. "
                  "The Decisions API returns a choice among the same three verdicts from the same pixels; "
-                 "it does not generate free-form action arguments, so we evaluate direct decisions only. "
-                 "Its tool and generated-text entries in Table 1 are inapplicable. "
+                 "it can also select an application-executed action. Our public-menu-v1 adapter constructs up to "
+                 "64 concrete actions from released image metadata, public request options and tool availability. "
+                 "It includes requests, image operations, grounding and explicit finish choices. "
+                 "All three verdicts remain available; ordering is deterministic and independent of labels. "
+                 "Tool results, including failed requests and new image pixels, enter the next decision. "
+                 "The same eight-turn and cost limits apply. Candidate parameters and source-region citation "
+                 "presets are provided by the application, so this condition is marked separately from native "
+                 "argument generation. The menu does not read hidden availability, annotations or asset paths. "
+                 "Only complete interactive cohorts populate its tool columns; generated-text counts remain inapplicable. "
                  "All API times include network round trips, input counting and CPU tool execution; "
                  "they are not an equal-hardware throughput comparison with local GPUs. "
                  "Pilot response reuse retains original token counts and generation time rather than treating replay as fresh inference. "
@@ -73,7 +80,7 @@ def publish(repository, report, lock_path):
                r"\begin{tabular}{@{}llrrrrr@{}}",r"\toprule",
                r"Model & Endpoint & Input tokens (k) & Reasoning tokens & Calls & Tool calls & Finished (\%)\\",r"\midrule"]
         for worker in workers:
-            arm="initial_text" if worker["endpoint"]=="decisions" else "interactive_agent"
+            arm="interactive_agent" if "interactive_agent" in worker["arms"] else "initial_text"
             cost=worker["costs"][arm]
             values=[f"{cost['mean_input_tokens']/1000:.1f}",f"{cost['mean_reasoning_tokens']:.0f}",
                     f"{cost['mean_model_calls']:.2f}",f"{cost['mean_tool_calls']:.2f}",f"{cost['finished_pct']:.1f}"]
@@ -93,7 +100,7 @@ def publish(repository, report, lock_path):
             agent=worker["arms"].get("interactive_agent")
             tools=f'{100*agent["label_matches"]/agent["episodes"]:.1f}' if agent else "不适用"
             body.append(f'| {LABELS[worker["name"]]} | {initial:.1f} | {tools} |')
-        body += ["","仅完整固定题组入表。Decisions 为直接分类接口；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。"]
+        body += ["","仅完整固定题组入表。Decisions 的多轮版本从公开候选动作中选择，参数由程序提供；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。"]
         readme.write_text(replace_block(readme.read_text(),"<!-- api-results-start -->","<!-- api-results-end -->",
                                         "\n".join(body),"[**2026-11-01 四卡实验："))
         paths=["docs/results/openai_candidate_scores.json","README.md","paper/main.tex","paper/appendix.tex",

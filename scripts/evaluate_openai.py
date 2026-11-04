@@ -70,6 +70,8 @@ def main():
     p.add_argument("--grounding-root",type=Path,required=True)
     p.add_argument("--stage",choices=("pilot","paper"),default="pilot")
     p.add_argument("--all-variants",action="store_true")
+    p.add_argument("--variants",nargs="+",choices=("Sufficient","Obtainable","Missing","Unavailable"),help="Access variants; default Sufficient")
+    p.add_argument("--agent-only",action="store_true",help="Evaluate only interactive episodes; never reuse a direct score as an agent score")
     p.add_argument("--key-file",type=Path,help="Owner-only credential file outside Git; never a key value")
     p.add_argument("--budget-usd",type=float,default=60,help="Prefunded ledger cap, never above USD 60")
     p.add_argument("--stage-name",help="Persistent budget-stage identifier")
@@ -80,9 +82,15 @@ def main():
     configure_api_key(args.key_file)
     config = json.loads(args.config.read_text())
     plan, cohort = json.loads(args.plan.read_text()), json.loads(args.cohort.read_text())
-    variants = ["Sufficient","Obtainable","Missing","Unavailable"] if args.all_variants else ["Sufficient"]
+    if args.all_variants and args.variants:
+        p.error("Choose --all-variants or --variants")
+    variants = args.variants or (["Sufficient","Obtainable","Missing","Unavailable"] if args.all_variants else ["Sufficient"])
+    if len(set(variants))!=len(variants):
+        p.error("Duplicate access variants")
     cases = select_cases(plan,cohort,args.stage,variants)
-    arms = ARMS[:2] if config.get("endpoint")=="decisions" else ARMS
+    arms = ARMS[:2] if config.get("endpoint")=="decisions" and not config.get("decision_tools") else ARMS
+    if args.agent_only:
+        arms = ("interactive_agent",)
     stage_cap = args.stage_budget_usd if args.stage_budget_usd is not None else (1 if args.stage=="pilot" else 60)
     if not 0 < stage_cap <= 60:
         p.error("Stage budget must be within USD 60")

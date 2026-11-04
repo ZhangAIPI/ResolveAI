@@ -78,5 +78,25 @@ class ApiResultTests(unittest.TestCase):
             render(reference,costs,{**closed,"family_ids":[]})
 
 
+    def test_decisions_menu_adds_tools_without_changing_direct_results(self):
+        from scripts.paper_result_table import display_api_workers
+        direct={"name":"luna_decisions","model_id":"gpt-6-luna","endpoint":"decisions",
+                "api_config":{},"arms":{"initial_text":{"score":"unchanged"}},
+                "costs":{"initial_text":{"cost":"original"}}}
+        menu={"name":"luna_decisions_tools","model_id":"gpt-6-luna","endpoint":"decisions",
+              "api_config":{"decision_tools":"public-menu-v1"},
+              "arms":{"interactive_agent":{"score":"measured"}},
+              "costs":{"interactive_agent":{"cost":"measured"}}}
+        original=deepcopy(direct)
+        rows=display_api_workers([direct,menu])
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["arms"]["initial_text"],direct["arms"]["initial_text"])
+        self.assertIn("interactive_agent",rows[0]["arms"])
+        self.assertEqual(rows[0]["action_adapter"],"public-menu-v1")
+        self.assertEqual(direct,original)
+        with self.assertRaises(ValueError):
+            display_api_workers([{**direct,"model_id":"different"},menu])
+
+
 if __name__=="__main__":
     unittest.main()

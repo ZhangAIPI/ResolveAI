@@ -91,7 +91,7 @@ def refresh(repository, root, plan_path):
     if hashlib.sha256(payload).hexdigest()!=reference["dataset_sha256"]:
         raise ValueError("Frozen cases changed")
     cases={c["family_id"]:c for c in json.loads(payload) if c["variant"]=="Sufficient"}
-    names=["terra-eval"]+[p["name"] for p in json.loads((repository/"docs/experiments/openai-models.json").read_text())["profiles"]]
+    names=["terra-eval"]+[p["name"] for p in json.loads((repository/"docs/experiments/openai-models.json").read_text())["profiles"]]+["luna_decisions_tools"]
     workers,status=[],[]
     for name in names:
         directory=root/name

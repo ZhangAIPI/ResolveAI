@@ -116,13 +116,33 @@ def comparison_cells(values, best=None):
     return cells
 
 
+def display_api_workers(workers):
+    """Combine the unchanged direct baseline with its separately audited menu run."""
+    menu=next((w for w in workers if w["name"]=="luna_decisions_tools"),None)
+    if menu is None:
+        return list(workers)
+    baseline=next((w for w in workers if w["name"]=="luna_decisions"),None)
+    if (baseline is None or menu["model_id"]!=baseline["model_id"]
+            or menu["endpoint"]!="decisions"
+            or menu["api_config"].get("decision_tools")!="public-menu-v1"
+            or set(menu["arms"])!={"interactive_agent"}):
+        raise ValueError("Decisions menu run does not match its direct baseline")
+    merged={**baseline,
+            "arms":{**baseline["arms"],**menu["arms"]},
+            "costs":{**baseline["costs"],**menu["costs"]},
+            "action_adapter":"public-menu-v1","tool_source":menu["name"]}
+    return [merged if w["name"]=="luna_decisions" else w
+            for w in workers if w["name"]!="luna_decisions_tools"]
+
+
 def render(report, efficiency, closed=None):
     cost_rows(report, efficiency)
     costs = {row["model_id"]:row for row in efficiency["workers"]}
     workers = sorted(report["workers"],key=lambda w:ORDER.index(w["model_id"]))
     values = [comparison_values(w["arms"],costs[w["model_id"]]["arms"]) for w in workers]
     best = [max(column) for column in zip(*values)]
-    api = closed["workers"] if closed else []
+    api = display_api_workers(closed["workers"]) if closed else []
+    has_menu = any(w.get("action_adapter")=="public-menu-v1" for w in api)
     if api and (closed["dataset_sha256"]!=report["dataset_sha256"] or closed["family_ids"]!=report["family_ids"]):
         raise ValueError("API and local-model cohorts differ")
     api_labels = {"terra-eval":"GPT-6.1 Terra", "gpt61_sol":"GPT-6.1 Sol (low)",
@@ -153,7 +173,7 @@ def render(report, efficiency, closed=None):
         r"No tools answers directly from the initial photographs; With tools starts from the same photographs and permits interaction.",
         r"Condition, Identity and Overall report correct answers (\%) against unreviewed source labels; abstentions and missing decisions receive zero.",
         (r"Time and output tokens are means over all attempts. Local models run on RTX A6000; API time includes network round trips and CPU tools." if api else r"Time and output tokens are means over all attempts on RTX A6000 GPUs."),
-        (r"Output includes API reasoning tokens where present; input images and prompts are excluded. Decisions is a direct classifier, so its tool and generation entries are inapplicable." if api else r"Output tokens count generated text and end markers, excluding input images and prompts."),
+        (r"Output includes API reasoning tokens; inputs are excluded. $^{\dagger}$Decisions selects supplied action parameters and citation regions; its generated-text counts are inapplicable." if has_menu else (r"Output includes API reasoning tokens where present; input images and prompts are excluded. Decisions is a direct classifier, so its tool and generation entries are inapplicable." if api else r"Output tokens count generated text and end markers, excluding input images and prompts.")),
         (r"Best accuracy is bold within each group; -- marks inapplicable or unmeasured entries. API settings are detailed in the supplement.}" if api else r"Best accuracy results are bold; unmeasured baseline costs are marked --.}"),
         r"\label{tab:benchmark}",*comparison_header("Model"),
     ]
@@ -164,7 +184,8 @@ def render(report, efficiency, closed=None):
     if api:
         lines += [r"\midrule",r"\multicolumn{11}{l}{\emph{API-served models}}\\"]
         for worker,row in zip(api,api_values):
-            lines.append(api_labels[worker["name"]]+" & "+" & ".join(comparison_cells(row,api_best))+r"\\")
+            label=api_labels[worker["name"]]+(r"$^{\dagger}$" if worker.get("action_adapter") else "")
+            lines.append(label+" & "+" & ".join(comparison_cells(row,api_best))+r"\\")
     prior = []
     for task in ("state","identity",None):
         counts = report["task_label_counts"][task] if task else report["label_counts"]

@@ -92,6 +92,10 @@ class OpenAIClient:
             raise ValueError("Model pricing/capabilities have not been audited")
         rate_in, rate_out, effort = MODEL_RATES[model]
         self.endpoint = config.get("endpoint","responses")
+        if config.get("decision_tools") not in (None,"public-menu-v1"):
+            raise ValueError("Unknown Decisions action menu")
+        if config.get("decision_tools") and self.endpoint!="decisions":
+            raise ValueError("Action menu requires the Decisions endpoint")
         if self.endpoint not in {"responses","decisions"}:
             raise ValueError("Unsupported endpoint")
         if self.endpoint=="decisions":
@@ -111,7 +115,7 @@ class OpenAIClient:
         if transport is None and not self.key:
             raise RuntimeError("Configure OPENAI_API_KEY privately on the server")
         self.ready = {"provider":"OpenAI","model":model,"reasoning":effort,
-                      "tool_adapter":"choice-only" if self.endpoint=="decisions" else "responses-functions-best-effort",
+                      "tool_adapter":(config.get("decision_tools") or "choice-only") if self.endpoint=="decisions" else "responses-functions-best-effort",
                       "endpoint":self.endpoint,"image_max_pixels":512*512}
         self.namespace = ""
         self.native_outputs = {}
@@ -220,13 +224,19 @@ class OpenAIClient:
         return {"raw":raw,"text":text,"tool_call":call,"parse_error":parse_error,**metadata}
 
     def _decision(self, public):
-        if public["mode"]!="text":
-            raise ValueError("Decisions does not generate native tool arguments")
+        tool_mode = public["mode"]=="tools"
+        if tool_mode and self.config.get("decision_tools")!="public-menu-v1":
+            raise ValueError("Configure the public action menu for Decisions tool use")
         started = time.perf_counter()
         question = {"name":"verdict","type":"choice",
                     "instructions":"Choose the verdict for the stated visual claim.",
                     "choices":[{"value":v,"description":v} for v in
                                ("Supported","Refuted","Need more evidence")]}
+        candidates = None
+        if tool_mode:
+            from .action_menu import action_candidates,action_question
+            candidates = action_candidates(public)
+            question = action_question(candidates)
         inputs = responses_input(public["messages"])
         # Decisions has no token-count endpoint. Count an explicit question proxy,
         # allow 512 tokens of interface overhead, and reserve the full input cap.
@@ -244,11 +254,19 @@ class OpenAIClient:
         if verdict not in {"Supported","Refuted","Need more evidence"}:
             verdict = ""
         usage = response["usage"]
-        return {"raw":verdict,"input_tokens":usage["input_tokens"],"output_tokens":usage["output_tokens"],
+        call = None
+        if tool_mode:
+            from .action_menu import selected_action
+            call = selected_action(answer,candidates)
+        result = {"raw":verdict,"input_tokens":usage["input_tokens"],"output_tokens":usage["output_tokens"],
                 "api_usage":usage,"api_model":response.get("model"),"api_answer":answer,
                 "api_endpoint":"decisions","response_reused":reused,
                 "latency_s":response["_resolveai_latency_s"],
                 "current_wall_s":time.perf_counter()-started,"replay_wall_s":replay_wall}
+        if tool_mode:
+            result.update(raw=json.dumps(answer),text="",tool_call=call,parse_error=call is None,
+                          action_adapter="public-menu-v1",action_candidates=candidates)
+        return result
 
     def close(self):
         pass
