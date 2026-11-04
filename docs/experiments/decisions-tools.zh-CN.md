@@ -23,4 +23,8 @@ public-menu-v1 每轮从公开会话构造最多 64 个具体动作：
 
 新增拨款最多 3.80 美元，包含试跑和扩展，受原来的 60 美元总账限制。没有足够剩余额度则不启动，不扩张到预留的 20 美元。Decisions 输入及重发历史计费，分类输出不计生成 token；模型实际输入 usage、时延与本地工具成本照常记录。
 
-scripts/run_decisions_tools.py 使用独立冻结源码执行；scripts/score_api_results.py 只接纳完整固定题组。公开报告单独保存菜单版本来源，Table 1 将其工具结果与原直接判断合成一行并加注参数辅助差异。44 项离线检查已验证真实环境中的请求、裁剪、反馈、停止、旧分数保留和隐藏标签隔离；这些软件测试使用灰色图片，不作为研究结果。
+scripts/run_decisions_tools.py 使用独立冻结源码执行；scripts/score_api_results.py 只接纳完整固定题组。公开报告单独保存菜单版本来源，Table 1 将其工具结果与原直接判断合成一行并加注参数辅助差异。45 项离线检查已验证真实环境中的请求、裁剪、反馈、停止、旧分数保留和隐藏标签隔离；这些软件测试使用灰色图片，不作为研究结果。
+
+## 真实接口检查
+
+16/16 次试跑正常结束，零工具错误，51 次 Decisions 调用的保守费用核算为 0.055063 美元。模型自主发起 17 次照片请求：11 次返回照片，6 次返回无法提供。返回其他照片不意味着关键证据已补齐；Missing / Unavailable 也可能提供非关键材料。实际出现 grounding → request_photo → crop → finish 和 zoom → crop → inspect → request_photo → finish 等多轮链条。该小组仅验证接口，不报告为正式 benchmark 分数。209 题主表工具条件正在运行，完整后自动更新 GitHub 与 Overleaf。

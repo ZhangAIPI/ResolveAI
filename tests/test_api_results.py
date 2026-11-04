@@ -98,5 +98,28 @@ class ApiResultTests(unittest.TestCase):
             display_api_workers([{**direct,"model_id":"different"},menu])
 
 
+    def test_decisions_menu_has_one_annotated_table_row(self):
+        root=Path(__file__).resolve().parents[1]
+        reference=json.loads((root/"docs/results/cvpr_20261102_candidate_scores.json").read_text())
+        costs=json.loads((root/"docs/results/cvpr_efficiency.json").read_text())
+        source=reference["workers"][0]
+        efficiency=next(c for c in costs["workers"] if c["model_id"]==source["model_id"])
+        direct={"name":"luna_decisions","endpoint":"decisions","model_id":"gpt-6-luna",
+                "api_config":{},"arms":{"initial_text":source["arms"]["initial_text"]},
+                "costs":{"initial_text":efficiency["arms"]["initial_text"]}}
+        menu={"name":"luna_decisions_tools","endpoint":"decisions","model_id":"gpt-6-luna",
+              "api_config":{"decision_tools":"public-menu-v1"},
+              "arms":{"interactive_agent":source["arms"]["interactive_agent"]},
+              "costs":{"interactive_agent":efficiency["arms"]["interactive_agent"]}}
+        report={"dataset_sha256":reference["dataset_sha256"],"family_ids":reference["family_ids"],
+                "workers":[direct,menu]}
+        table=render(reference,costs,report)
+        rows=[line for line in table.splitlines() if line.startswith("GPT-6 Luna (Decisions)")]
+        self.assertEqual(len(rows),1)
+        self.assertIn("dagger",rows[0])
+        self.assertIn("supplied action parameters",table)
+        self.assertEqual(rows[0].rstrip(chr(92)).split(" & ").count("--"),2)
+
+
 if __name__=="__main__":
     unittest.main()
