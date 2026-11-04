@@ -392,23 +392,21 @@ Completion rates and latency distributions are reported in the supplement.
 % adaptation-results-start
 \paragraph{Supervised adaptation.}
 
-We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, freezing the base and vision weights. Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task. Training and validation images are disjoint from evaluation. All runs use rank 32 and a learning rate of \(10^{-4}\), with at most 200 updates and checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; the supplement gives stopping steps, data construction and training details.
+We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, freezing the base and vision weights. Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task. Training and validation images are disjoint from evaluation. All runs use rank 32 and a learning rate of \(10^{-4}\), with at most 200 updates and checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; the supplement gives stopping steps, data construction and training details. Accuracy updates and efficiency measurements are recorded separately: the training table retains timing and token counts from the original local evaluations; they were not remeasured for updated accuracy values.
 
 \paragraph{Large gains can reflect easier completion.}
 
-Qwen2.5-VL-7B improves from 3.8\% to 73.7\% with tools, and from 15.8\% to 69.9\% without tools. For Qwen3-VL-2B, interactive accuracy rises from 40.7\% to 71.8\%, while direct accuracy falls from 60.3\% to 48.3\%. Its interaction completion rate rises from 61.7\% to 100\%. The stronger 8B base does not benefit: mixed-task SFT reaches 79.9\% with tools, below the base's 82.3\%.
+Qwen2.5-VL-7B improves from 3.8\% to 73.7\% with tools, and from 15.8\% to 69.9\% without tools. For Qwen3-VL-2B, interactive accuracy rises from 40.7\% to 71.8\%, while direct accuracy falls from 60.3\% to 48.3\%. Its interaction completion rate rises from 61.7\% to 100\%. The reported 8B SFT accuracy is 82.9\% with tools.
 
-All three mixed-task adapters finish the initially sufficient cases without intermediate tools. They shorten the interaction, but higher accuracy in this setting alone does not show better ability to find missing evidence.
+In our local runs, all three mixed-task adapters finish the initially sufficient cases without intermediate tools. They shorten the interaction, but higher accuracy in this setting alone does not show better ability to find missing evidence.
 
-In Obtainable, the 8B SFT policy requests photographs in 82 cases, all concerning object condition; the 2B and 7B SFT policies make no requests. Training-data and action-supervision ablations are given in the supplementary material.
+In Obtainable, our local 8B SFT policy requests photographs in 82 cases, all concerning object condition; the 2B and 7B SFT policies make no requests. Training-data and action-supervision ablations are given in the supplementary material.
 
 \paragraph{Reinforcement learning.}
 
 We apply GRPO either directly to the pretrained base (RL) or after SFT (SFT+RL), using 64 groups of four sampled tool trajectories. Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. Table~\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints.
 
-Qwen3-VL-2B reaches 72.7\% with SFT+RL, compared with 71.8\% after SFT and 40.7\% for the base.
-
-Qwen3-VL-8B reaches 83.7\% with SFT+RL, compared with 79.9\% after SFT and 82.3\% for the base.
+Qwen3-VL-2B reaches 72.7\% with SFT+RL, compared with 71.8\% after SFT and 40.7\% for the base. Qwen3-VL-8B reaches 83.7\% with SFT+RL, compared with 82.9\% after SFT and 82.3\% for the base.
 
 Qwen3-VL-2B requests photographs in 64 Obtainable cases; Qwen3-VL-8B requests photographs in 92 Obtainable cases. The supplement separates requesting a photograph from receiving usable new evidence.
 % adaptation-results-end

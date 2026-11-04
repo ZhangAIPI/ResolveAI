@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "base_model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "stage": "SFT",
+      "arm": "interactive_agent",
+      "accuracy_percent": 82.9,
+      "source": "User-supplied result from another server; exact run artifacts not provided",
+      "cost_policy": "Retain previously measured local timing and token counts, as requested",
+      "case_level_results_available": false
+    }
+  ]
+}

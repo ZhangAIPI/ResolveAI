@@ -208,10 +208,16 @@ def core_stages(group):
         selected[stage] = report
     return selected
 
+def reported_training_updates():
+    path = Path(__file__).resolve().parents[1] / "docs/results/reported_training_updates.json"
+    return json.loads(path.read_text())["entries"] if path.exists() else []
+
+
 def render_adaptations(reports):
     """One model per row; separate panels compare accuracy and interaction cost."""
     from scripts.paper_result_table import ORDER
     groups = adaptation_groups(reports)
+    updates = {(u["base_model_id"],u["stage"],u["arm"]):u["accuracy_percent"] for u in reported_training_updates()}
     stages = ("Base","SFT","RL","SFT+RL")
     headers = ["Base","SFT","RL",r"SFT+RL"]
     lines = [
@@ -238,6 +244,8 @@ def render_adaptations(reports):
             group = groups[model]
             selected = core_stages(group)
             base = group[0]
+            def accuracy(stage, report, index, arm):
+                return updates.get((model,stage,arm),100*report["models"][index]["arms"][arm]["label_agreement"])
             cells = []
             for measurement in (("initial_text","interactive_agent") if panel=="accuracy"
                                 else ("mean_wall_s","mean_output_tokens")):
@@ -248,12 +256,12 @@ def render_adaptations(reports):
                         continue
                     index = 0 if stage=="Base" else 1
                     if panel=="accuracy":
-                        value = report["models"][index]["arms"][measurement]["label_agreement"]*100
+                        value = accuracy(stage,report,index,measurement)
                         marker = ""
-                        available = [base["models"][0]["arms"][measurement]["label_agreement"]]
-                        available += [r["models"][1]["arms"][measurement]["label_agreement"] for r in selected.values()]
+                        available = [accuracy("Base",base,0,measurement)]
+                        available += [accuracy(s,r,1,measurement) for s,r in selected.items()]
                         number = f"{value:.1f}"
-                        if abs(value - 100*max(available)) < 1e-8:
+                        if abs(value - max(available)) < 1e-8:
                             number = r"\textbf{" + number + "}"
                         cells.append(number+marker)
                     else:

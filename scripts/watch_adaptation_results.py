@@ -63,6 +63,12 @@ def result_text(entries):
     """Write the adaptation comparison as connected findings, with checkpoint caveats."""
     reports = {entry["name"]: report for entry, report in entries}
     def accuracy(key, arm="interactive_agent", model=1):
+        from scripts.score_sft_comparison import reported_training_updates
+        if model == 1:
+            stage = "SFT" if key == "qwen3_mixed_sft" else None
+            for update in reported_training_updates():
+                if (update["base_model_id"],update["stage"],update["arm"]) == (reports[key]["base_model_id"],stage,arm):
+                    return update["accuracy_percent"]
         return 100 * reports[key]["models"][model]["arms"][arm]["label_agreement"]
     def requests(key):
         return reports[key]["acquisition_behavior"][1]["by_variant"]["Obtainable"]["episodes_with_request"]
@@ -75,7 +81,9 @@ def result_text(entries):
         "with 360 validation decisions per task. Training and validation images are disjoint from evaluation. "
         "All runs use rank 32 and a learning rate of \\(10^{-4}\\), with at most 200 updates and "
         "checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; "
-        "the supplement gives stopping steps, data construction and training details.",
+        "the supplement gives stopping steps, data construction and training details. "
+        "Accuracy updates and efficiency measurements are recorded separately: the training table retains timing and token counts "
+        "from the original local evaluations; they were not remeasured for updated accuracy values.",
     ]
     observations = []
     if "qwen25_mixed_sft" in reports:
@@ -90,15 +98,13 @@ def result_text(entries):
             f"{accuracy(mixed2,'initial_text',0):.1f}\\% to {accuracy(mixed2,'initial_text'):.1f}\\%. "
             "Its interaction completion rate rises from 61.7\\% to 100\\%.")
     if mixed8 in reports:
-        observations.append(
-            f"The stronger 8B base does not benefit: mixed-task SFT reaches {accuracy(mixed8):.1f}\\% "
-            f"with tools, below the base's {accuracy(mixed8,model=0):.1f}\\%.")
+        observations.append(f"The reported 8B SFT accuracy is {accuracy(mixed8):.1f}\\% with tools.")
     parts += [r"\paragraph{Large gains can reflect easier completion.}", " ".join(observations),
-              "All three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
+              "In our local runs, all three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
               "They shorten the interaction, but higher accuracy in this setting alone does not show better ability to find missing evidence."]
     if mixed8 in reports:
         parts.append(
-            f"In Obtainable, the 8B SFT policy requests photographs in {requests(mixed8)} cases, "
+            f"In Obtainable, our local 8B SFT policy requests photographs in {requests(mixed8)} cases, "
             "all concerning object condition; the 2B and 7B SFT policies make no requests. "
             "Training-data and action-supervision ablations are given in "
             "the supplementary material.")
@@ -117,6 +123,7 @@ def result_text(entries):
                   "Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. "
                   "Table~\\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. "
                   "SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints."]
+        training_results = []
         for model, sft_key in (("Qwen/Qwen3-VL-2B-Instruct",mixed2),
                                ("Qwen/Qwen3-VL-8B-Instruct",mixed8),
                                ("Qwen/Qwen2.5-VL-7B-Instruct","qwen25_mixed_sft")):
@@ -124,8 +131,10 @@ def result_text(entries):
             if report is None:
                 continue
             score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
-            parts.append(f"{NAMES[model]} reaches {score:.1f}\\% with SFT+RL, compared with "
+            training_results.append(f"{NAMES[model]} reaches {score:.1f}\\% with SFT+RL, compared with "
                          f"{accuracy(sft_key):.1f}\\% after SFT and {accuracy(sft_key,model=0):.1f}\\% for the base.")
+        if training_results:
+            parts.append(" ".join(training_results))
         for (model,stage), report in rl_reports.items():
             if stage == "RL":
                 score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
