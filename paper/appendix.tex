@@ -342,3 +342,42 @@ The main GRPO results use the fixed endpoint at group 64. Validation selection a
 Qwen3-VL-2B scores 72.7\% at the final checkpoint, compared with 72.2\% after validation selection and 71.8\% after SFT. It requests photographs in 64 Obtainable cases; request frequency alone does not establish evidence utility.
 Qwen3-VL-8B scores 83.7\% at the final checkpoint, compared with 79.9\% after validation selection and 79.9\% after SFT. It requests photographs in 92 Obtainable cases; request frequency alone does not establish evidence utility.
 % rl-final-diagnostics-end
+
+
+% paired-case-analysis-start
+\section{Paired Answer Changes and Recorded Examples}
+
+All comparisons below retain the same 209 families and count failed and abstaining attempts as incorrect. The intervals use 10,000 paired family resamples with seed 20261104. They describe evaluation-set uncertainty for one trained run, not variation across training seeds.
+
+\begin{table*}[t]\centering\small
+
+\caption{\textbf{Paired changes in source-label accuracy.} Differences and percentile bootstrap intervals are in percentage points.}
+
+\begin{tabular}{@{}lrrr@{}}\toprule
+
+Comparison & Corrected & Lost & Difference [95\% interval]\\\midrule
+
+Qwen3-VL-2B: With tools vs No tools & 7 & 48 & -19.6 [-25.8, -13.4]\\
+
+Qwen3-VL-8B: With tools vs No tools & 38 & 22 & +7.7 [+0.5, +14.8]\\
+
+Qwen3-VL-2B: SFT+RL vs SFT & 6 & 4 & +1.0 [-1.9, +3.8]\\
+
+Qwen2.5-VL-7B: SFT+RL vs SFT & 13 & 5 & +3.8 [+0.0, +8.1]\\
+
+\bottomrule\end{tabular}\end{table*}
+
+\paragraph{Bottle: a successful request can repeat existing pixels.}
+
+The case is \texttt{case-52a69b7c898d12a8e0a5-Obtainable}. Both models start with a normal reference and the same preview. The 2B SFT+RL policy requests object bottle, time capture, view overview. The response has status provided, but returns the preview already visible. The policy answers Refuted and also links the different normal reference specimen as the same object. The 8B SFT+RL policy changes the view field to original, receives the recorded original and answers Supported. The observation is a difference in request content, not a controlled causal comparison between the two models.
+
+\paragraph{Vehicle: descriptive success and interface failure.}
+
+The case is \texttt{case-cc1dcd4afe1b98c554c6-Sufficient}. The base 8B model answers Supported in the direct setting. In the interactive run it compares the two images and describes the same vehicle from different angles. Seven subsequent finish attempts are not parsed as accepted tool calls, and the run ends at the turn limit with no submitted answer. It therefore receives zero under the recorded completion rule. This trace cannot establish that the model failed to recognize the vehicle.
+
+\paragraph{Source-label disagreement is not independent visual review.}
+
+The additional audited screw case, \texttt{case-035e4ca9730fd6a3fcab-Sufficient}, is labelled normal by its source. The base 8B model answers Refuted directly but Supported after inspect, crop, inspect, crop and compare. The crops use the same pixel rectangle in two differently posed specimens, which does not establish part correspondence. The answer disagrees with the source label; deciding whether the cited mark is genuinely a scratch requires independent condition review.
+
+The released analysis JSON records case identifiers, exact tool arguments, source database locations, trace hashes and unchanged figure-image hashes. It can be regenerated from existing records without rerunning a model.
+% paired-case-analysis-end

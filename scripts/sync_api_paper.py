@@ -10,7 +10,7 @@ import subprocess
 import sys
 import time
 
-SUFFIXES={".tex",".bib",".sty",".bst",".jpg",".png",".json",".md"}
+SUFFIXES={".pdf",".tex",".bib",".sty",".bst",".jpg",".png",".json",".md"}
 
 
 def synchronize(repository,runtime,project):

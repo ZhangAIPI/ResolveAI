@@ -1,45 +1,24 @@
-\begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\footnotesize,
-  panel/.style={draw=black!15,rounded corners=2pt,fill=black!2},
-  action/.style={draw=teal!65!black,rounded corners=2pt,fill=teal!7,align=center,text width=2.5cm,minimum height=.55cm},
-  arrow/.style={-{Stealth[length=1.8mm]},thick,draw=teal!70!black}]
-\draw[panel] (0,0) rectangle (5,4.2);
-\draw[panel] (5.35,0) rectangle (10.85,4.2);
-\draw[panel] (11.2,0) rectangle (17.2,4.2);
-\node[anchor=west,font=\sffamily\bfseries\small] at (.22,3.88) {1\quad See the initial evidence};
-\node[anchor=west,font=\sffamily\bfseries\small] at (5.57,3.88) {2\quad Choose what to see next};
-\node[anchor=west,font=\sffamily\bfseries\small] at (11.42,3.88) {3\quad Decide with evidence};
-\node[align=center,text width=4.6cm] at (2.5,3.25) {Claim: A and B are the same physical chair.};
-\node at (1.3,1.75) {\includegraphics[height=1.95cm,width=1.95cm,keepaspectratio]{figures/chair-a.jpg}};
-\node at (3.75,1.75) {\includegraphics[height=1.95cm,width=1.95cm,keepaspectratio]{figures/chair-b-preview.jpg}};
-\node at (1.3,.54) {A: current view};
-\node at (3.75,.54) {B: preview};
-\node[action] (local) at (7.0,2.95) {Look closer / compare};
-\node[align=center,text width=2.4cm,text=black!65,font=\sffamily\scriptsize] at (9.45,2.95) {Re-examine\\released pixels};
-\node[action] (request) at (7.0,1.53) {Ask for another\\photograph};
-\node (newview) at (9.6,1.65) {\includegraphics[height=1.55cm,width=1.25cm,keepaspectratio]{figures/chair-a-new.jpg}};
-\node[font=\sffamily\scriptsize,align=center] at (9.6,.53) {Recorded view\\if available};
-\draw[arrow] (5,2.65) -- (5.35,2.65);
-\draw[arrow] (local.east) -- (8.65,2.95);
-\draw[arrow] (request.east) -- (8.95,1.53);
-\draw[arrow] (10.85,2.65) -- (11.2,2.65);
-\node[draw=teal!65!black,fill=teal!7,rounded corners=2pt,align=center,text width=5.1cm,minimum height=.65cm] at (14.2,3.05) {Supported\quad Refuted\quad Need more evidence};
-\node[align=left,text width=5.1cm] at (14.2,1.82) {
-  \textbf{Support:} establish all claim parts.\\[3pt]
-  \textbf{Refute:} cite a decisive counterexample.\\[3pt]
-  \textbf{Unresolved:} insufficient evidence.};
-\node[align=center,text=teal!65!black,text width=5.1cm,font=\sffamily\scriptsize] at (14.2,.48) {Cite the photographs and regions\\that justify the decision.};
-\draw[arrow] (9.6,.17) -- (9.6,-.35) -- (2.5,-.35) -- (2.5,.03);
-\node[fill=white,font=\sffamily\scriptsize,text=teal!65!black] at (6.05,-.35) {See the actual response, then choose the next step};
-
-\node[font=\sffamily\bfseries\footnotesize,anchor=west] at (0,-.95)
-  {Hold the claim fixed; vary access to evidence};
-\foreach \x/\name/\desc in {
-  0/Sufficient/{Enough evidence is provided\\from the start},
-  4.4/Obtainable/{A useful photograph\\can be requested},
-  8.8/Missing/{The needed photograph\\was not recorded},
-  13.2/Unavailable/{The photograph exists but\\cannot be supplied}} {
-  \draw[panel,fill=white] (\x,-2.45) rectangle ++(4,1.12);
-  \node[anchor=north,font=\sffamily\bfseries\footnotesize] at (\x+2,-1.44) {\name};
-  \node[anchor=north,align=center,text width=3.65cm,font=\sffamily\scriptsize] at (\x+2,-1.83) {\desc};
-}
-\end{tikzpicture}
+\begin{minipage}[c]{.56\textwidth}
+\centering\small
+\textbf{Claim: A and B show the same physical chair.}\\[6pt]
+\begin{tabular}{@{}ccc@{}}
+\includegraphics[height=2.2cm,width=2.3cm,keepaspectratio]{figures/chair-a.jpg}&
+\includegraphics[height=2.2cm,width=2.3cm,keepaspectratio]{figures/chair-b-preview.jpg}&
+\includegraphics[height=2.2cm,width=2.3cm,keepaspectratio]{figures/chair-a-new.jpg}\\
+\footnotesize A&\footnotesize B (preview)&\footnotesize Another view of A
+\end{tabular}\\[5pt]
+\footnotesize Inspect an image \(\cdot\) Crop a region \(\cdot\) Request a view
+\end{minipage}\hfill
+\begin{minipage}[c]{.41\textwidth}
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Version & Access to the needed evidence\\
+\midrule
+Sufficient & Supplied initially.\\[3pt]
+Obtainable & Available on request.\\[3pt]
+Missing & Not in the recorded collection.\\[3pt]
+Unavailable & Recorded, but cannot be supplied.\\
+\bottomrule
+\end{tabularx}
+\end{minipage}

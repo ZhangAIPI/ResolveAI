@@ -60,91 +60,92 @@ def replace_block(text, body):
 
 
 def result_text(entries):
-    """Write the adaptation comparison as connected findings, with checkpoint caveats."""
-    reports = {entry["name"]: report for entry, report in entries}
-    def accuracy(key, arm="interactive_agent", model=1):
-        from scripts.score_sft_comparison import reported_training_updates
-        if model == 1:
-            stage = "SFT" if key == "qwen3_mixed_sft" else None
-            for update in reported_training_updates():
-                if (update["base_model_id"],update["stage"],update["arm"]) == (reports[key]["base_model_id"],stage,arm):
-                    return update["accuracy_percent"]
-        return 100 * reports[key]["models"][model]["arms"][arm]["label_agreement"]
-    def requests(key):
-        return reports[key]["acquisition_behavior"][1]["by_variant"]["Obtainable"]["episodes_with_request"]
-    mixed8, mixed2 = "qwen3_mixed_sft", "qwen3_2b_mixed_sft"
-    parts = [
-        r"\paragraph{Supervised adaptation.}",
-        "We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, "
-        "freezing the base and vision weights. "
-        "Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\\cite{visa}, "
-        "with 360 validation decisions per task. Training and validation images are disjoint from evaluation. "
-        "All runs use rank 32 and a learning rate of \\(10^{-4}\\), with at most 200 updates and "
-        "checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; "
-        "the supplement gives stopping steps, data construction and training details.",
-    ]
-    observations = []
-    if "qwen25_mixed_sft" in reports:
-        key = "qwen25_mixed_sft"
-        observations.append(
-            f"Qwen2.5-VL-7B improves from {accuracy(key,model=0):.1f}\\% to {accuracy(key):.1f}\\% "
-            f"with tools, and from {accuracy(key,'initial_text',0):.1f}\\% to {accuracy(key,'initial_text'):.1f}\\% without tools.")
-    if mixed2 in reports:
-        observations.append(
-            f"For Qwen3-VL-2B, interactive accuracy rises from {accuracy(mixed2,model=0):.1f}\\% "
-            f"to {accuracy(mixed2):.1f}\\%, while direct accuracy falls from "
-            f"{accuracy(mixed2,'initial_text',0):.1f}\\% to {accuracy(mixed2,'initial_text'):.1f}\\%. "
-            "Its interaction completion rate rises from 61.7\\% to 100\\%.")
-    if mixed8 in reports:
-        observations.append(f"The reported 8B SFT accuracy is {accuracy(mixed8):.1f}\\% with tools.")
-    parts += [r"\paragraph{Large gains can reflect easier completion.}", " ".join(observations),
-              "In our local runs, all three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
-              "They shorten the interaction, but higher accuracy in this setting alone does not show better ability to find missing evidence."]
-    if mixed8 in reports:
-        parts.append(
-            f"In Obtainable, our local 8B SFT policy requests photographs in {requests(mixed8)} cases, "
-            "all concerning object condition; the 2B and 7B SFT policies make no requests. "
-            "Training-data and action-supervision ablations are given in "
-            "the supplementary material.")
-    rl_reports = {}
-    from scripts.score_sft_comparison import adaptation_groups, core_stages
+    """Report training effects separately from the observed search for photographs."""
     from scripts.paper_result_table import NAMES
-    for model, group in adaptation_groups(list(reports.values())).items():
-        stages = core_stages(group)
-        for stage in ("RL","SFT+RL"):
-            if stage in stages:
-                rl_reports[(model,stage)] = stages[stage]
-    if rl_reports:
-        parts += [r"\paragraph{Reinforcement learning.}",
-                  "We apply GRPO either directly to the pretrained base (RL) or after SFT "
-                  "(SFT+RL), using 64 groups of four sampled tool trajectories. "
-                  "Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. "
-                  "Table~\\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. "
-                  "SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints."]
-        training_results = []
-        for model, sft_key in (("Qwen/Qwen3-VL-2B-Instruct",mixed2),
-                               ("Qwen/Qwen3-VL-8B-Instruct",mixed8),
-                               ("Qwen/Qwen2.5-VL-7B-Instruct","qwen25_mixed_sft")):
-            report = rl_reports.get((model,"SFT+RL"))
-            if report is None:
-                continue
-            score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
-            training_results.append(f"{NAMES[model]} reaches {score:.1f}\\% with SFT+RL, compared with "
-                         f"{accuracy(sft_key):.1f}\\% after SFT and {accuracy(sft_key,model=0):.1f}\\% for the base.")
-        if training_results:
-            parts.append(" ".join(training_results))
-        for (model,stage), report in rl_reports.items():
-            if stage == "RL":
-                score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
-                parts.append(f"Direct RL reaches {score:.1f}\\% for {NAMES[model]}.")
-        behavior = []
-        for model in ("Qwen/Qwen3-VL-2B-Instruct","Qwen/Qwen3-VL-8B-Instruct"):
-            report = rl_reports.get((model,"SFT+RL"))
-            if report:
-                row = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
-                behavior.append(f"{NAMES[model]} requests photographs in {row['episodes_with_request']} Obtainable cases")
-        if behavior:
-            parts.append("; ".join(behavior)+". The supplement separates requesting a photograph from receiving usable new evidence.")
+    from scripts.score_sft_comparison import adaptation_groups, core_stages, reported_training_updates
+    reports={entry["name"]:report for entry,report in entries}
+    def accuracy(key,arm="interactive_agent",model=1):
+        report=reports[key]
+        if key=="qwen3_mixed_sft" and model==1:
+            for update in reported_training_updates():
+                if (update["base_model_id"],update["stage"],update["arm"])==(report["base_model_id"],"SFT",arm):
+                    return update["accuracy_percent"]
+        return 100*report["models"][model]["arms"][arm]["label_agreement"]
+    parts=[
+        r"\paragraph{Training settings.}",
+        "We train attention LoRA adapters on disjoint CO3D and VisA~\\cite{visa} trajectories, "
+        "balancing 1,080 training decisions and 360 validation decisions per task. "
+        "SFT uses rank 32, learning rate \\(10^{-4}\\), at most 200 updates and held-out token-loss selection. "
+        "RL starts from the base or SFT adapter and uses 64 groups of four sampled trajectories, "
+        "a frozen initial reference policy, source-derived rewards and action costs. "
+        "The RL columns report the fixed checkpoint after all 64 groups. Full settings and checkpoint comparisons are in the supplement.",
+        r"\paragraph{SFT produces shorter interactions.}",
+    ]
+    observations=[]
+    if "qwen25_mixed_sft" in reports:
+        key="qwen25_mixed_sft"
+        observations.append(f"Qwen2.5-VL-7B rises from {accuracy(key,model=0):.1f}\\% to {accuracy(key):.1f}\\% with tools.")
+    if "qwen3_2b_mixed_sft" in reports:
+        key="qwen3_2b_mixed_sft"
+        observations.append(f"The 2B model rises from {accuracy(key,model=0):.1f}\\% to {accuracy(key):.1f}\\%, "
+                            f"but falls from {accuracy(key,'initial_text',0):.1f}\\% to {accuracy(key,'initial_text'):.1f}\\% without tools.")
+    if "qwen3_mixed_sft" in reports:
+        observations.append(f"The 8B SFT score is {accuracy('qwen3_mixed_sft'):.1f}\\%.")
+    parts.append(" ".join(observations))
+    parts.append(
+        "The local SFT policies finish initially sufficient cases without intermediate tools. "
+        "For 2B, completion rises from 61.7\\% to 100\\%, while mean time falls from 17.1 to 5.5 seconds "
+        "and output length from 449 to 118 tokens. "
+        "These gains include learning to submit a short final response; they do not show that the policy has learned which missing photograph to request. "
+        "The decline under the direct response format also argues against interpreting the entire gain as better visual recognition.")
+    stages={model:core_stages(group) for model,group in adaptation_groups(list(reports.values())).items()}
+    continued=[]
+    for model,key in (("Qwen/Qwen2.5-VL-7B-Instruct","qwen25_mixed_sft"),
+                      ("Qwen/Qwen3-VL-2B-Instruct","qwen3_2b_mixed_sft"),
+                      ("Qwen/Qwen3-VL-8B-Instruct","qwen3_mixed_sft")):
+        report=stages.get(model,{}).get("SFT+RL")
+        if report is not None:
+            continued.append((model,key,report))
+    if continued:
+        parts.append(r"\paragraph{RL can improve answers without adding a search.}")
+        descriptions=[]
+        for model,key,report in continued:
+            score=100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
+            descriptions.append(f"{NAMES[model]} changes from {accuracy(key):.1f}\\% after SFT to {score:.1f}\\% after SFT+RL")
+        parts.append("; ".join(descriptions)+".")
+        model="Qwen/Qwen2.5-VL-7B-Instruct"
+        report=stages.get(model,{}).get("SFT+RL")
+        if report is not None:
+            behavior=report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
+            if behavior["episodes_with_request"]==0:
+                parts.append(
+                    "The 7B gain is eight additional correct answers on the fixed initially sufficient set. "
+                    "In Obtainable, however, the same policy makes no photograph requests. "
+                    "It has improved its answers without checking the withheld photographs. "
+                    "Paired family bootstrap intervals, reported in the supplement, quantify the uncertainty of the single-run differences.")
+    direct=[]
+    for model,group in stages.items():
+        report=group.get("RL")
+        if report is not None:
+            score=100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
+            direct.append(f"{NAMES[model]}: {score:.1f}\\%")
+    if direct:
+        parts.append("Direct RL gives "+"; ".join(direct)+".")
+    small=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("SFT+RL")
+    large=stages.get("Qwen/Qwen3-VL-8B-Instruct",{}).get("SFT+RL")
+    if small and large:
+        a=small["acquisition_behavior"][1]["by_variant"]["Obtainable"]
+        b=large["acquisition_behavior"][1]["by_variant"]["Obtainable"]
+        parts += [
+            r"\paragraph{A request need not add an image.}",
+            f"The 2B SFT+RL policy requests photographs in {a['episodes_with_request']} Obtainable cases, "
+            f"but receives a new image in only {a['episodes_with_new_photo']}. "
+            "Its 63 condition requests all ask for the overview already supplied in the initial evidence. "
+            f"The 8B policy requests an original in {b['episodes_with_request']} cases and receives a new image in each; "
+            "all of these requests concern condition, rather than another viewpoint for identity. "
+            "Figure~\\ref{fig:cases}(a) shows the difference on one bottle. "
+            "Both policies spend one request, but only the request for the original changes the available detail."
+        ]
     return "\n\n".join(parts)
 
 
@@ -214,7 +215,7 @@ def publish_changes(repo,runtime,changes,message):
         shutil.copytree(repo/"paper",stage)
         for name,content in changes.items():
             if name.startswith("paper/"):
-                (stage/name.removeprefix("paper/")).write_text(content)
+                (stage/name.removeprefix("paper/")).write_bytes(content) if isinstance(content,bytes) else (stage/name.removeprefix("paper/")).write_text(content)
         environment = {**os.environ,"XDG_CACHE_HOME":str(runtime/"tools/tex/cache")}
         for source in ("main.tex","supplementary.tex"):
             run([str(runtime/"tools/tex/tectonic"),"--outdir",temp,source],stage,environment)
@@ -223,10 +224,15 @@ def publish_changes(repo,runtime,changes,message):
         for name in ("main.pdf","supplementary.pdf"):
             with fitz.open(Path(temp)/name) as doc:
                 text = "\n".join(p.get_text() for p in doc)
+                if name == "main.pdf":
+                    references = next((i+1 for i,page in enumerate(doc) if "References" in page.get_text()),None)
+                    print("COMPILED_MAIN",len(doc),"REFERENCES_START",references,flush=True)
+                    if references is None or references > 8:
+                        raise ValueError("Main text exceeds the eight-page layout target")
                 if "[?]" in text or "??" in text or "\ufffd" in text or doc.metadata.get("author"):
                     raise ValueError("Compiled adaptation paper failed reference or anonymity checks")
         for name,content in changes.items():
-            (repo/name).write_text(content)
+            (repo/name).write_bytes(content) if isinstance(content,bytes) else (repo/name).write_text(content)
     run(["git","diff","--check"],repo)
     if run(["git","diff","--name-only"],repo).strip():
         run(["git","add",*changes],repo)
