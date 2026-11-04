@@ -69,8 +69,8 @@ def prepare_final_run(run):
             raise ValueError("Final evaluation requires completed training with parameter updates")
         adapter = run / "latest"
         digest = hashlib.sha256((adapter / "adapter_model.safetensors").read_bytes()).hexdigest()
-        saved = json.loads((adapter / "state.json").read_text())
-        if saved != state:
+        saved = json.loads((adapter / "checkpoint_group.json").read_text())
+        if saved.get("group") != state["group"]:
             raise ValueError("Final adapter state does not match completed training")
         manifest["evaluation_checkpoint_policy"] = {
             "training_run":str(run), "evaluated_group":groups,

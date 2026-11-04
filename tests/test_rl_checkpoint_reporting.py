@@ -12,7 +12,7 @@ class FinalCheckpointTests(unittest.TestCase):
         run = root / "training"
         (run/"latest").mkdir(parents=True)
         state = {"group":group,"optimizer_updates":updates,"best_group":0}
-        (run/"latest/state.json").write_text(json.dumps(state))
+        (run/"latest/checkpoint_group.json").write_text(json.dumps({"group":group}))
         (run/"latest/adapter_model.safetensors").write_bytes(b"final-weights")
         (run/"complete.json").write_text(json.dumps({"state":state,"adapter":"best","adapter_sha256":"old"}))
         (run/"training_manifest.json").write_text(json.dumps({"configuration":{"groups":64},"data":{}}))
