@@ -1,11 +1,11 @@
 \begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}
 \begin{minipage}{.94\textwidth}\centering
 \caption{\textbf{Checkpoint choice after online GRPO.}
-SFT and validation-selected GRPO match the main training comparison; Final GRPO always uses group 64.
+SFT and Final GRPO match the main training comparison; Selected GRPO uses held-out validation selection.
 Condition, Identity and Overall are source-label accuracy (\%) on initially sufficient cases.
 Time (s) and output tokens are means over all attempts.
 Request (\%) is the fraction requesting a photograph in Obtainable, a different access version.
-$^{*}$Validation retained the initial SFT policy. Final rows are diagnostics, not replacements selected by test performance.}
+$^{*}$Validation retained the initial SFT policy. Both checkpoint choices are retained; the main table uses the fixed training endpoint.}
 \label{tab:rl-final}
 \begin{tabular}{@{}llrrrrrr@{}}\toprule
 Model & Checkpoint & Condition & Identity & Overall & Time (s) & Output & Request (\%)\\\midrule

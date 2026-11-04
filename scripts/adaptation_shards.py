@@ -54,6 +54,41 @@ def finalize(output, plan_path, count):
     (output / "shard_index.json").write_text(json.dumps({"shards":entries},indent=2)+"\n")
 
 
+def prepare_final_run(run):
+    """Reference completed final weights without changing training records or copying tensors."""
+    import fcntl
+    output = run.with_name(run.name + "_final")
+    with (run / "final-evaluation.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        raw = (run / "training_manifest.json").read_bytes()
+        manifest = json.loads(raw)
+        complete = json.loads((run / "complete.json").read_text())
+        groups = manifest["configuration"]["groups"]
+        state = complete["state"]
+        if state["group"] != groups or state["optimizer_updates"] < 1:
+            raise ValueError("Final evaluation requires completed training with parameter updates")
+        adapter = run / "latest"
+        digest = hashlib.sha256((adapter / "adapter_model.safetensors").read_bytes()).hexdigest()
+        saved = json.loads((adapter / "state.json").read_text())
+        if saved != state:
+            raise ValueError("Final adapter state does not match completed training")
+        manifest["evaluation_checkpoint_policy"] = {
+            "training_run":str(run), "evaluated_group":groups,
+            "selection":"fixed completed-training checkpoint",
+            "no_additional_training":True,
+            "source_training_manifest_sha256":hashlib.sha256(raw).hexdigest()}
+        complete.update(adapter=str(adapter), adapter_sha256=digest,
+                        evaluated_group=groups, selection="Fixed completed-training checkpoint")
+        output.mkdir(exist_ok=True)
+        for name,value in (("training_manifest.json",manifest),("complete.json",complete)):
+            path = output / name
+            if path.exists() and json.loads(path.read_text()) != value:
+                raise ValueError("Existing final-checkpoint identity differs: " + name)
+            if not path.exists():
+                path.write_text(json.dumps(value,indent=2)+"\n")
+    return output
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("run", type=Path)
@@ -63,7 +98,10 @@ def main():
     p.add_argument("--model-spec", type=Path)
     p.add_argument("--grounding-root", type=Path)
     p.add_argument("--priority-cohort", type=Path)
+    p.add_argument("--checkpoint", choices=("selected","final"), default="selected")
     args = p.parse_args()
+    if args.checkpoint == "final":
+        args.run = prepare_final_run(args.run)
     output = args.run / "benchmark"
     if args.shard is None:
         finalize(output, args.plan, args.shards)

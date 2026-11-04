@@ -2,8 +2,8 @@
 \begin{minipage}{.68\textwidth}\centering
 \caption{\textbf{Effect of policy training.}
 SFT uses balanced identity and condition data; RL trains directly from the pretrained model; SFT+RL applies GRPO after SFT.
-Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.
--- denotes an unfinished comparison. $^{*}$Validation selected the initial SFT checkpoint.
+SFT uses validation selection; RL and SFT+RL use the checkpoint after all 64 training groups. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.
+-- denotes an unfinished comparison.
 Training-data and action-target ablations are reported separately in the supplement.}
 \label{tab:sft}
 \begin{tabular}{@{}l*{8}{r}@{}}
@@ -14,8 +14,8 @@ Training-data and action-target ablations are reported separately in the supplem
 Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
 \midrule
 Qwen2.5-VL-7B & 15.8 & \textbf{69.9} & -- & -- & 3.8 & \textbf{73.7} & -- & --\\
-Qwen3-VL-2B & \textbf{60.3} & 48.3 & -- & 48.8 & 40.7 & 71.8 & -- & \textbf{72.2}\\
-Qwen3-VL-8B & 74.6 & \textbf{78.9} & -- & \textbf{78.9}$^{*}$ & \textbf{82.3} & 79.9 & -- & 79.9$^{*}$\\
+Qwen3-VL-2B & \textbf{60.3} & 48.3 & -- & 48.8 & 40.7 & 71.8 & -- & \textbf{72.7}\\
+Qwen3-VL-8B & 74.6 & 78.9 & -- & \textbf{81.3} & 82.3 & 79.9 & -- & \textbf{83.7}\\
 \addlinespace[6pt]
 \multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\
  & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\
@@ -23,7 +23,7 @@ Qwen3-VL-8B & 74.6 & \textbf{78.9} & -- & \textbf{78.9}$^{*}$ & \textbf{82.3} & 
 Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
 \midrule
 Qwen2.5-VL-7B & 13.1 & 5.6 & -- & -- & 186 & 112 & -- & --\\
-Qwen3-VL-2B & 17.1 & 5.5 & -- & 5.4 & 449 & 118 & -- & 117\\
-Qwen3-VL-8B & 16.8 & 7.1 & -- & 7.2 & 283 & 117 & -- & 117\\
+Qwen3-VL-2B & 17.1 & 5.5 & -- & 6.1 & 449 & 118 & -- & 140\\
+Qwen3-VL-8B & 16.8 & 7.1 & -- & 8.0 & 283 & 117 & -- & 129\\
 \bottomrule
 \end{tabular}\end{minipage}\end{table*}

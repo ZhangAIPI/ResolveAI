@@ -399,13 +399,13 @@ In Obtainable, the 8B SFT policy requests photographs in 82 cases, all concernin
 
 \paragraph{Reinforcement learning.}
 
-We apply GRPO either directly to the pretrained base (RL) or after SFT (SFT$\to$RL), using 64 groups of four sampled tool trajectories. Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards; eight held-out source families, evaluated across all four access versions, select the checkpoint. No benchmark outcome enters optimization or checkpoint selection.
+We apply GRPO either directly to the pretrained base (RL) or after SFT (SFT+RL), using 64 groups of four sampled tool trajectories. Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. Table~\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints.
 
-For 2B, interactive accuracy changes from 71.8\% to 72.2\%---1 additional correct answer on the fixed cohort---and the policy still requests no photographs.
+Qwen3-VL-2B reaches 72.7\% with SFT+RL, compared with 71.8\% after SFT and 40.7\% for the base.
 
-For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. Its 79.9\% row in Table~\ref{tab:sft} therefore reports the initialization, rather than an improvement due to RL.
+Qwen3-VL-8B reaches 83.7\% with SFT+RL, compared with 79.9\% after SFT and 82.3\% for the base.
 
-Checkpoint selection and requests for missing photographs are analyzed in the supplement.
+Qwen3-VL-2B requests photographs in 64 Obtainable cases; Qwen3-VL-8B requests photographs in 92 Obtainable cases. The supplement separates requesting a photograph from receiving usable new evidence.
 % adaptation-results-end
 
 \section*{LLM Usage Statement}

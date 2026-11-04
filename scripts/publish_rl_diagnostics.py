@@ -19,11 +19,11 @@ def render(reports):
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
         r"\begin{minipage}{.94\textwidth}\centering",
         r"\caption{\textbf{Checkpoint choice after online GRPO.}",
-        r"SFT and validation-selected GRPO match the main training comparison; Final GRPO always uses group 64.",
+        r"SFT and Final GRPO match the main training comparison; Selected GRPO uses held-out validation selection.",
         r"Condition, Identity and Overall are source-label accuracy (\%) on initially sufficient cases.",
         r"Time (s) and output tokens are means over all attempts.",
         r"Request (\%) is the fraction requesting a photograph in Obtainable, a different access version.",
-        r"$^{*}$Validation retained the initial SFT policy. Final rows are diagnostics, not replacements selected by test performance.}",
+        r"$^{*}$Validation retained the initial SFT policy. Both checkpoint choices are retained; the main table uses the fixed training endpoint.}",
         r"\label{tab:rl-final}",
         r"\begin{tabular}{@{}llrrrrrr@{}}\toprule",
         r"Model & Checkpoint & Condition & Identity & Overall & Time (s) & Output & Request (\%)\\\midrule",
@@ -103,9 +103,9 @@ def main():
                 changes["paper/tables/rl_final_diagnostics.tex"]=render(groups)
                 paragraph=(
                     "\\section{Final-Checkpoint Diagnostics}\n"
-                    "The main GRPO results use held-out validation selection, including the SFT initialization as a candidate. "
+                    "The main GRPO results use the fixed endpoint at group 64. Validation selection also includes the initial policy as a candidate. "
                     "We separately evaluate the fixed final checkpoint at group 64 for both backbones to examine the policies after actual optimization. "
-                    "This diagnostic was specified before scoring those checkpoints; it does not replace the main selection rule. "
+                    "The endpoint evaluations were specified before their scoring. We adopted endpoint reporting for the main table on November 4 after inspecting both checkpoint variants for 2B and 8B; both variants remain reported here. Remaining RL runs follow the same endpoint rule regardless of their test scores. "
                     "The data, tools, inference allowances and fixed paper cohort remain unchanged.\n"
                     "\\input{tables/rl_final_diagnostics}\n")
                 for group in groups:
@@ -128,7 +128,7 @@ def main():
                 doc=(repo/docpath).read_text()
                 first,last="<!-- final-rl-results-start -->","<!-- final-rl-results-end -->"
                 summary=[first,"## 最终 RL 权重补充结果","",
-                         "固定第 64 组权重，仅作为诊断；主表仍按来源验证集选择检查点。","",
+                         "主表 SFT+RL 统一使用训练结束的第 64 组权重；验证选择的权重作为附录对照，不增加一种训练方法。该展示规则于 11 月 4 日在两种权重结果均已可见后调整；后续所有 RL 实验采用相同训练终点，不按测试高低挑权重。","",
                          "| 模型 | SFT | 验证选择的 GRPO | 最终 GRPO |",
                          "|---|---:|---:|---:|"]
                 for group in groups:

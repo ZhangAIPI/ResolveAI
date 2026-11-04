@@ -33,20 +33,20 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(selected["checkpoint"]["state"]["best_group"],0)
 
 
-    def test_primary_stages_are_predefined_not_selected_by_test_accuracy(self):
-        def report(name, config, **extra):
-            return {"training":{"configuration":config,**extra},
-                    "models":[{},{"name":name,"score":0.99 if name=="Acquisition SFT" else 0.1}]}
+    def test_primary_stages_use_fixed_endpoints_even_when_validation_scores_are_higher(self):
+        def report(name, config, evaluated=None, score=0.1):
+            return {"training":{"configuration":config},
+                    "checkpoint":{"evaluated_group":evaluated},
+                    "models":[{},{"name":name,"score":score}]}
         sft=report("Mixed-source SFT",{})
-        direct=report("RL only",{"groups":64,"initialization":"base"})
-        continued=report("Online GRPO",{"groups":64,"initialization":"sft"})
-        ablation=report("Acquisition SFT",{})
-        diagnostic=report("Online GRPO final",{"groups":64},evaluation_checkpoint_policy={})
-        selected=core_stages([ablation,sft,direct,continued,diagnostic])
-        self.assertEqual(set(selected),{"SFT","RL","SFT+RL"})
-        self.assertIs(selected["SFT"],sft)
-        self.assertIs(selected["RL"],direct)
-        self.assertIs(selected["SFT+RL"],continued)
+        direct=report("RL only",{"groups":64,"initialization":"base"},64)
+        continued=report("Online GRPO",{"groups":64,"initialization":"sft"},64)
+        selected=report("Online GRPO",{"groups":64,"initialization":"sft"},24,0.99)
+        stages=core_stages([sft,direct,continued,selected])
+        self.assertEqual(set(stages),{"SFT","RL","SFT+RL"})
+        self.assertIs(stages["RL"],direct)
+        self.assertIs(stages["SFT+RL"],continued)
+        self.assertEqual(set(core_stages([sft,selected])),{"SFT"})
         with self.assertRaisesRegex(ValueError,"More than one"):
             core_stages([sft,sft])
 

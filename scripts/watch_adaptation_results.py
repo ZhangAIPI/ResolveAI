@@ -102,43 +102,42 @@ def result_text(entries):
             "all concerning object condition; the 2B and 7B SFT policies make no requests. "
             "Training-data and action-supervision ablations are given in "
             "the supplementary material.")
-    rl_keys = [key for key in ("qwen3_2b_grpo","qwen3_8b_grpo") if key in reports]
-    if rl_keys:
+    rl_reports = {}
+    from scripts.score_sft_comparison import adaptation_groups, core_stages
+    from scripts.paper_result_table import NAMES
+    for model, group in adaptation_groups(list(reports.values())).items():
+        stages = core_stages(group)
+        for stage in ("RL","SFT+RL"):
+            if stage in stages:
+                rl_reports[(model,stage)] = stages[stage]
+    if rl_reports:
         parts += [r"\paragraph{Reinforcement learning.}",
                   "We apply GRPO either directly to the pretrained base (RL) or after SFT "
-                  "(SFT$\\to$RL), using 64 groups of four sampled tool trajectories. "
-                  "Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards; "
-                  "eight held-out source families, evaluated across all four access versions, select the checkpoint. "
-                  "No benchmark outcome enters optimization or checkpoint selection."]
-        if "qwen3_2b_grpo" in reports:
-            key = "qwen3_2b_grpo"
-            gain = reports[key]["models"][1]["arms"]["interactive_agent"]["label_matches"] - reports[mixed2]["models"][1]["arms"]["interactive_agent"]["label_matches"]
-            parts.append(
-                f"For 2B, interactive accuracy changes from {accuracy(mixed2):.1f}\\% to {accuracy(key):.1f}\\%---"
-                f"{gain} additional correct answer on the fixed cohort---and the policy still requests no photographs.")
-        if "qwen3_8b_grpo" in reports:
-            key = "qwen3_8b_grpo"
-            if reports[key]["checkpoint"]["state"]["best_group"] == 0:
-                parts.append(
-                    "For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. "
-                    f"Its {accuracy(key):.1f}\\% row in Table~\\ref{{tab:sft}} therefore reports the initialization, "
-                    "rather than an improvement due to RL.")
-            else:
-                parts.append(f"The selected 8B GRPO policy scores {accuracy(key):.1f}\\% with tools.")
-        additions = []
-        for key in ("qwen25_grpo","qwen25_rl_only","qwen3_2b_rl_only","qwen3_8b_rl_only"):
-            if key not in reports:
+                  "(SFT+RL), using 64 groups of four sampled tool trajectories. "
+                  "Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards. "
+                  "Table~\\ref{tab:sft} evaluates the checkpoint at the end of the 64-group budget for every RL run. "
+                  "SFT retains held-out token-loss selection; the supplement also reports validation-selected RL checkpoints."]
+        for model, sft_key in (("Qwen/Qwen3-VL-2B-Instruct",mixed2),
+                               ("Qwen/Qwen3-VL-8B-Instruct",mixed8),
+                               ("Qwen/Qwen2.5-VL-7B-Instruct","qwen25_mixed_sft")):
+            report = rl_reports.get((model,"SFT+RL"))
+            if report is None:
                 continue
-            report = reports[key]
-            from scripts.paper_result_table import NAMES
-            model = NAMES[report["base_model_id"]]
-            stage = "RL" if report["training"]["configuration"].get("initialization") == "base" else "SFT$\\to$RL"
-            additions.append(f"{model} reaches {accuracy(key):.1f}\\% with {stage}.")
-            if report["checkpoint"]["state"]["best_group"] == 0:
-                additions.append("Validation retains that run's initial policy.")
-        if additions:
-            parts.append(" ".join(additions))
-        parts.append("Checkpoint selection and requests for missing photographs are analyzed in the supplement.")
+            score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
+            parts.append(f"{NAMES[model]} reaches {score:.1f}\\% with SFT+RL, compared with "
+                         f"{accuracy(sft_key):.1f}\\% after SFT and {accuracy(sft_key,model=0):.1f}\\% for the base.")
+        for (model,stage), report in rl_reports.items():
+            if stage == "RL":
+                score = 100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
+                parts.append(f"Direct RL reaches {score:.1f}\\% for {NAMES[model]}.")
+        behavior = []
+        for model in ("Qwen/Qwen3-VL-2B-Instruct","Qwen/Qwen3-VL-8B-Instruct"):
+            report = rl_reports.get((model,"SFT+RL"))
+            if report:
+                row = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
+                behavior.append(f"{NAMES[model]} requests photographs in {row['episodes_with_request']} Obtainable cases")
+        if behavior:
+            parts.append("; ".join(behavior)+". The supplement separates requesting a photograph from receiving usable new evidence.")
     return "\n\n".join(parts)
 
 
@@ -160,10 +159,10 @@ def detail_text(entries):
                 +f"of {config['group_size']} trajectories, with two clipped policy updates per nonconstant-reward group. "
                 +f"The learning rate is \\({config['learning_rate']:g}\\), clipping threshold 0.2 and reference penalty 0.02. "
                 +"The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. "
-                +"A fixed held-out set of eight source families across four access versions selects the checkpoint. "
+                +"A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. "
                 +"The benchmark supplies no training or checkpoint-selection feedback. "
                 +f"The run performs {report['checkpoint']['state']['optimizer_updates']} optimizer updates "
-                +f"and selects group {report['checkpoint']['state']['best_group']}; group zero denotes the initial SFT adapter.")
+                +f"and records validation-selected group {report['checkpoint']['state']['best_group']}; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.")
         else:
             checkpoint = report["checkpoint"]["state"]
             lines.append(entry["description"] + f" completes {checkpoint['step']} optimizer steps, "

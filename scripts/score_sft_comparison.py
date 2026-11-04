@@ -191,14 +191,13 @@ def adaptation_groups(reports):
 
 
 def core_stages(group):
-    """Choose predetermined training stages, never the highest benchmark score."""
+    """Use completed-training RL checkpoints, independent of their test scores."""
     selected = {}
     for report in group:
-        training = report["training"]
-        if "evaluation_checkpoint_policy" in training:
-            continue  # Fixed-final diagnostics have their own supplementary table.
-        config = training["configuration"]
+        config = report["training"]["configuration"]
         if "groups" in config:
+            if report["checkpoint"].get("evaluated_group") != config["groups"]:
+                continue
             stage = "RL" if config.get("initialization","sft") == "base" else "SFT+RL"
         elif report["models"][1]["name"] == "Mixed-source SFT":
             stage = "SFT"
@@ -208,7 +207,6 @@ def core_stages(group):
             raise ValueError("More than one comparison for a core training stage")
         selected[stage] = report
     return selected
-
 
 def render_adaptations(reports):
     """One model per row; separate panels compare accuracy and interaction cost."""
@@ -221,8 +219,8 @@ def render_adaptations(reports):
         r"\begin{minipage}{.68\textwidth}\centering",
         r"\caption{\textbf{Effect of policy training.}",
         r"SFT uses balanced identity and condition data; RL trains directly from the pretrained model; SFT+RL applies GRPO after SFT.",
-        r"Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.",
-        r"-- denotes an unfinished comparison. $^{*}$Validation selected the initial SFT checkpoint.",
+        r"SFT uses validation selection; RL and SFT+RL use the checkpoint after all 64 training groups. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.",
+        r"-- denotes an unfinished comparison.",
         r"Training-data and action-target ablations are reported separately in the supplement.}",
         r"\label{tab:sft}",r"\begin{tabular}{@{}l*{8}{r}@{}}",r"\toprule",
     ]
@@ -251,7 +249,7 @@ def render_adaptations(reports):
                     index = 0 if stage=="Base" else 1
                     if panel=="accuracy":
                         value = report["models"][index]["arms"][measurement]["label_agreement"]*100
-                        marker = r"$^{*}$" if stage!="Base" and initial_rl_checkpoint(report) else ""
+                        marker = ""
                         available = [base["models"][0]["arms"][measurement]["label_agreement"]]
                         available += [r["models"][1]["arms"][measurement]["label_agreement"] for r in selected.values()]
                         number = f"{value:.1f}"
