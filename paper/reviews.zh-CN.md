@@ -298,3 +298,8 @@
 - [CounterCredit](https://arxiv.org/html/2609.22910v1)：核对同前缀立即回答及内容替换比较，明确已有方法与本工作数据设计的区别。
 
 新增统计、轨迹摘要、图片来源及哈希见 docs/results/paper_trace_analysis.json，可用 scripts/analyze_paper_traces.py 重新生成。正文与补充材料均需编译、引用检查、匿名信息检查及逐页排版核查后再同步 Overleaf。
+
+
+### 逐页检查后的补充修订
+
+原案例图被浮动到参考文献页前，已把图的源位置提前至训练表之前，使照片案例出现在实验部分。图内短声明改为左对齐，避免两端对齐拉开单词。进一步核对 8B 的 92 组访问对照：公开图像、工具定义及首个请求一致；原图提供后 50 例 Supported、42 例 Refuted；Missing 和 Unavailable 均返回无法提供，全部 92 例变为 Need more evidence。该正向结果补入摘要、实验及结论，避免只分析失败。当前返回消息相同，因此不把 Missing 与 Unavailable 说成两种独立视觉能力。

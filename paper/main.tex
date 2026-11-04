@@ -26,11 +26,12 @@ Checking a claim about an object can require more than the photographs initially
 A closer view may reveal a small defect, while another angle may help distinguish two similar items.
 We introduce \benchmark to study these choices.
 Each case family keeps the claim and physical state fixed while changing access to photographs: enough evidence is supplied initially, further evidence can be requested, the needed photograph is missing, or it cannot be provided.
-The evaluation separates finding enough evidence from answering correctly once it is available.
+We define separate measures for finding enough evidence and answering correctly once it is available.
 We construct 478 families from public condition and multi-view datasets and compare models on 209 source-labeled families.
-The interactive setting corrects 38 errors made by Qwen3-VL-8B without tools, but also loses 22 previously correct answers; for the 2B model, the counts are 7 and 48.
+The interactive setting corrects 38 errors made by Qwen3-VL-8B without tools, but also loses 22 previously correct answers; the 2B model corrects 7 and loses 48.
 Training improves answer accuracy without consistently improving the search for evidence.
 After SFT followed by RL, Qwen2.5-VL-7B rises from 73.7\% to 77.5\%, yet makes no photograph requests in cases constructed to require additional evidence.
+In 92 matched families, the 8B policy gives definite answers when the requested original is returned and abstains when the same request fails.
 \end{abstract}
 
 \begin{figure*}[t]
@@ -117,8 +118,8 @@ In \emph{Sufficient}, the initial images establish an answer.
 In \emph{Obtainable}, a permitted request can supply the missing evidence.
 In \emph{Missing}, the recorded collection lacks sufficient evidence.
 In \emph{Unavailable}, relevant photographs exist but cannot be supplied.
-Missing and Unavailable can require the same final answer, although the request responses explain different reasons for stopping.
-They do not test distinct visual abilities when their responses are identical.
+Missing and Unavailable differ in the recorded pool, but may return the same failure message and require the same final answer.
+They do not test distinct visual abilities when their public responses are identical.
 
 A usable path must also fit the interaction budget.
 Let \(c^\star(q,v)\) be the minimum tool cost of reaching sufficient evidence before resource caps, with \(c^\star=\infty\) if no permitted path exists.
@@ -291,6 +292,18 @@ Mean episode time includes model and environment execution.
 Output tokens accumulate across calls, including end markers and API reasoning tokens; input prompts and image tokens are excluded.
 Failed and abstaining attempts remain in the efficiency statistics.
 
+\begin{figure*}[t]
+\centering
+\input{figures/action_examples}
+\caption{\textbf{Two examples from the recorded evaluations.}
+(a) Both SFT+RL models make one request on the same bottle case.
+The 2B model requests the overview and receives the existing preview again; the 8B model requests the original and receives more detail.
+Sizes denote returned images before model preprocessing.
+(b) The base 8B model describes the vehicle match but never submits a parseable final answer.
+Photographs are unchanged source images from MVTec AD~\cite{mvtec} and CO3D~\cite{co3d}; the supplement identifies the cases and exact calls.}
+\label{fig:cases}
+\end{figure*}
+
 \input{tables/sft_results}
 
 \subsection{When Tools Help}
@@ -338,17 +351,7 @@ Model size alone therefore gives a poor estimate of the cost of a complete inter
 Conversely, Qwen2.5-VL-7B emits fewer tokens but is correct in only 3.8\% of interactive cases.
 Latency and token counts need to be read together with completion and answer accuracy.
 
-\begin{figure*}[t]
-\centering
-\input{figures/action_examples}
-\caption{\textbf{Two examples from the recorded evaluations.}
-(a) Both SFT+RL models make one request on the same bottle case.
-The 2B model requests the overview and receives the existing preview again; the 8B model requests the original and receives more detail.
-Sizes denote returned images before model preprocessing.
-(b) The base 8B model describes the vehicle match but never submits a parseable final answer.
-Photographs are unchanged source images from MVTec AD~\cite{mvtec} and CO3D~\cite{co3d}; the supplement identifies the cases and exact calls.}
-\label{fig:cases}
-\end{figure*}
+
 
 \subsection{Learning to Check Claims and Find Evidence}
 \label{sec:sft}
@@ -363,7 +366,7 @@ Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools. The 2B model rises from 40.
 
 The local SFT policies finish initially sufficient cases without intermediate tools. For 2B, completion rises from 61.7\% to 100\%, while mean time falls from 17.1 to 5.5 seconds and output length from 449 to 118 tokens. These gains include learning to submit a short final response; they do not show that the policy has learned which missing photograph to request. The decline under the direct response format also argues against interpreting the entire gain as better visual recognition.
 
-\paragraph{RL can improve answers without adding a search.}
+\paragraph{RL gains do not always involve new evidence.}
 
 Qwen2.5-VL-7B changes from 73.7\% after SFT to 77.5\% after SFT+RL; Qwen3-VL-2B changes from 71.8\% after SFT to 72.7\% after SFT+RL; Qwen3-VL-8B changes from 82.9\% after SFT to 83.7\% after SFT+RL.
 
@@ -372,6 +375,10 @@ The 7B gain is eight additional correct answers on the fixed initially sufficien
 \paragraph{A request need not add an image.}
 
 The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:cases}(a) shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail.
+
+\paragraph{Stopping changes when a request fails.}
+
+For the 92 families where 8B requests an original, we compare Obtainable, Missing and Unavailable. All 92 triples have identical public images, tool definitions and first requests up to the returned response. With the original provided, the policy answers Supported in 50 cases and Refuted in 42. When the same request returns unable to provide, all 92 answers change to Need more evidence. The 8B policy therefore responds to access feedback after making the request. Missing and Unavailable return the same failure message here, and produce the same stopping behavior.
 % adaptation-results-end
 
 \section{Conclusion}
@@ -380,7 +387,7 @@ Its evaluation distinguishes an unfinished search from a wrong answer after suff
 The experiments show why that distinction matters.
 Interactive settings both correct and lose answers, and submission errors can obscure otherwise correct visual descriptions.
 Training improves source-label accuracy, but the observed search behavior remains uneven: the 7B SFT+RL policy never requests a photograph in Obtainable, while the 2B policy repeatedly asks for a preview it already has.
-These are specific failures that answer accuracy alone does not reveal.
+The 8B policy, in contrast, changes its stopping decision when a requested original cannot be supplied.
 
 \section*{LLM Usage Statement}
 OpenAI Codex assisted with code, literature lookup, manuscript drafting and schematic figure code.

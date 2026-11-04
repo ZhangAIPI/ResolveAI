@@ -107,7 +107,7 @@ def result_text(entries):
         if report is not None:
             continued.append((model,key,report))
     if continued:
-        parts.append(r"\paragraph{RL can improve answers without adding a search.}")
+        parts.append(r"\paragraph{RL gains do not always involve new evidence.}")
         descriptions=[]
         for model,key,report in continued:
             score=100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
@@ -145,6 +145,16 @@ def result_text(entries):
             "all of these requests concern condition, rather than another viewpoint for identity. "
             "Figure~\\ref{fig:cases}(a) shows the difference on one bottle. "
             "Both policies spend one request, but only the request for the original changes the available detail."
+        ]
+    if large:
+        parts += [
+            r"\paragraph{Stopping changes when a request fails.}",
+            "For the 92 families where 8B requests an original, we compare Obtainable, Missing and Unavailable. "
+            "All 92 triples have identical public images, tool definitions and first requests up to the returned response. "
+            "With the original provided, the policy answers Supported in 50 cases and Refuted in 42. "
+            "When the same request returns unable to provide, all 92 answers change to Need more evidence. "
+            "The 8B policy therefore responds to access feedback after making the request. "
+            "Missing and Unavailable return the same failure message here, and produce the same stopping behavior."
         ]
     return "\n\n".join(parts)
 

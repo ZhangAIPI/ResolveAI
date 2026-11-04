@@ -1,4 +1,4 @@
-\begin{minipage}[t]{.48\textwidth}
+\begin{minipage}[t]{.48\textwidth}\raggedright
 \small\textbf{(a) One request, different information.}\\[3pt]
 \footnotesize Claim: the bottle has a chipped or broken rim.
 \begin{minipage}[c][3.15cm][c]{\linewidth}\centering
@@ -9,16 +9,17 @@
 \end{tabular}
 \end{minipage}
 \footnotesize
-\begin{tabularx}{\linewidth}{@{}lX@{}}
+\begin{tabularx}{\linewidth}{@{}lY@{}}
 \toprule
 2B SFT+RL & Request \texttt{overview}; same preview returned.\\
  & Answer: Refuted.\\
 8B SFT+RL & Request \texttt{original}; original returned.\\
  & Answer: Supported (matches source label).\\
+If unavailable & Same request; Need more evidence.\\
 \bottomrule
 \end{tabularx}
 \end{minipage}\hfill
-\begin{minipage}[t]{.48\textwidth}
+\begin{minipage}[t]{.48\textwidth}\raggedright
 \small\textbf{(b) A correct description, no final answer.}\\[3pt]
 \footnotesize Claim: A and B show the same physical item.
 \begin{minipage}[c][3.15cm][c]{\linewidth}\centering
@@ -29,7 +30,7 @@
 \end{tabular}
 \end{minipage}
 \footnotesize
-\begin{tabularx}{\linewidth}{@{}lX@{}}
+\begin{tabularx}{\linewidth}{@{}lY@{}}
 \toprule
 No tools & Supported; 1.1 seconds.\\
 With tools & Compare A and B; describes the same vehicle.\\

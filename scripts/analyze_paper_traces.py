@@ -90,7 +90,44 @@ def analyze(repo, runtime):
     assert result["paired"]["base8"]["overall"]["counts"]["correct_wrong"]==22
     assert result["paired"]["base2"]["overall"]["counts"]["wrong_correct"]==7
     assert result["paired"]["base2"]["overall"]["counts"]["correct_wrong"]==48
+    result["availability_feedback"]=availability_feedback(data["rl8"],families)
     return result,cases
+
+
+def availability_feedback(data, families):
+    selected = sorted(f for f in families if data[(f,"Obtainable","interactive_agent")][0]["requests"]>0)
+    versions=("Obtainable","Missing","Unavailable")
+    outcomes={v:Counter() for v in versions}
+    statuses={v:Counter() for v in versions}
+    records=[]
+    for family in selected:
+        prefixes=[]
+        for version in versions:
+            result,path=data[(family,version,"interactive_agent")]
+            with closing(sqlite3.connect(path.resolve().as_uri()+"?mode=ro",uri=True)) as db:
+                raw=db.execute("SELECT trace FROM episodes WHERE case_id=? AND arm=?",(result["case_id"],"interactive_agent")).fetchone()[0]
+            trace=json.loads(raw)
+            messages=trace["messages"]
+            stop=next(i for i,m in enumerate(messages) if m.get("role")=="tool")
+            prefix=json.dumps({"messages":messages[:stop],"tools":trace["tools"]},sort_keys=True)
+            prefixes.append(prefix)
+            outcomes[version][result["verdict"]]+=1
+            for part in messages[stop]["content"]:
+                if part.get("type")=="text":
+                    try:
+                        value=json.loads(part["text"])
+                    except ValueError:
+                        continue
+                    if "status" in value:
+                        statuses[version][value["status"]]+=1
+        if len(set(prefixes))!=1:
+            raise ValueError("Availability comparison does not share its public prefix")
+        records.append({"family_id":family,"shared_prefix_sha256":hashlib.sha256(prefixes[0].encode()).hexdigest()})
+    if len(selected)!=92 or outcomes["Missing"]["Need more evidence"]!=92 or outcomes["Unavailable"]["Need more evidence"]!=92:
+        raise ValueError("Frozen 8B availability outcomes changed")
+    return {"matched_families":len(selected),"outcomes":{k:dict(v) for k,v in outcomes.items()},
+            "first_tool_status":{k:dict(v) for k,v in statuses.items()},"families":records,
+            "scope":"Observed response to access feedback; not independently reviewed answer correctness"}
 
 
 def figure_assets(runtime, analysis, cases):

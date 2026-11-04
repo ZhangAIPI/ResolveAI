@@ -620,6 +620,403 @@
       "source_database": "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
     }
   },
+  "availability_feedback": {
+    "matched_families": 92,
+    "outcomes": {
+      "Obtainable": {
+        "Refuted": 42,
+        "Supported": 50
+      },
+      "Missing": {
+        "Need more evidence": 92
+      },
+      "Unavailable": {
+        "Need more evidence": 92
+      }
+    },
+    "first_tool_status": {
+      "Obtainable": {
+        "provided": 92
+      },
+      "Missing": {
+        "unable_to_provide": 92
+      },
+      "Unavailable": {
+        "unable_to_provide": 92
+      }
+    },
+    "families": [
+      {
+        "family_id": "case-00bb48fa5a6b3e55662e",
+        "shared_prefix_sha256": "63fae9aa34137142e6e8fa67b5a9a10eb68ffff045755ebee7d4f040e52252a7"
+      },
+      {
+        "family_id": "case-035e4ca9730fd6a3fcab",
+        "shared_prefix_sha256": "109a65f1f9bfaf9c31b49abc13d33d90526ce661ababbed6b33664b377042051"
+      },
+      {
+        "family_id": "case-03cfc447c84672dba323",
+        "shared_prefix_sha256": "85a98d7a9da00931453d1f214e6719121b6aaef7b5a9aff716f0fc04ae5b5759"
+      },
+      {
+        "family_id": "case-04e33f6404ed5ae10513",
+        "shared_prefix_sha256": "7bcfd995a5a3c2b589c5baa96fb79b9754895e46a8015072fb77cc92f457d0be"
+      },
+      {
+        "family_id": "case-06bd2e2c619173cd0e26",
+        "shared_prefix_sha256": "f827f43122dfec2e493906faa45a134e0caea4dc203b7dd852dfc505a9ae0a5b"
+      },
+      {
+        "family_id": "case-0b0848b8e7b8745990d1",
+        "shared_prefix_sha256": "0733bec7a57eeee49957808aed862fdd350edb31c8d2ee9c859e5847742a47f5"
+      },
+      {
+        "family_id": "case-0be3f37fb1d1a7e1ff03",
+        "shared_prefix_sha256": "97535f1abaf3d6a8c86db17ffc125b05cdcfcb42f837fc6c0502d8aa890b0eaa"
+      },
+      {
+        "family_id": "case-0d15c862cc16bbe4c099",
+        "shared_prefix_sha256": "9f4aa1468f94c69b187f3507e40639f09b5900d4711e0668bbe52367e81e16d8"
+      },
+      {
+        "family_id": "case-0e8fbed0931b991c25af",
+        "shared_prefix_sha256": "9671fd3d4be0326fca2bc63e288d6e285fe1cb03dd4c18e75c548e6175d8ff1e"
+      },
+      {
+        "family_id": "case-0ed00b56217ebb655b95",
+        "shared_prefix_sha256": "bf621381275650d13956a47ec5cff30b12355914d30edddaec2d932c5fa2359f"
+      },
+      {
+        "family_id": "case-10c99db3e69bc9972b3d",
+        "shared_prefix_sha256": "6697082233cf759e48b3814db72d4bf84936e58eb5874798c0029dc08af417b1"
+      },
+      {
+        "family_id": "case-158a8df02f25f99f87e8",
+        "shared_prefix_sha256": "7ef09a9d42792bfaad474cd180344614fd591d7d13c8449c4e2085f4815343fc"
+      },
+      {
+        "family_id": "case-161136a9ec3cc64771f8",
+        "shared_prefix_sha256": "7ccb33e1033ab725642200e807a13ca5b39f989c831fd271ac133aef89925f52"
+      },
+      {
+        "family_id": "case-1704dbd0a5480d63465e",
+        "shared_prefix_sha256": "7785e83eb74068b38dff7ae9e280b3aedaeb999839e6039452997c508ed19aec"
+      },
+      {
+        "family_id": "case-1736d455af2ed926f7db",
+        "shared_prefix_sha256": "daa054d047cd9cf5d4fa2a8e38becf5b5786b5e4801bf871e6996c9db8526994"
+      },
+      {
+        "family_id": "case-1d7591ee4eba4847495f",
+        "shared_prefix_sha256": "6fd8b67c4d547eb29c9a6d737429fa8d37e75fc3f9281bec0f5a5291b253fd08"
+      },
+      {
+        "family_id": "case-1e688e6208ebb40a4ab2",
+        "shared_prefix_sha256": "02f3f1de8a666b3ad2465522143d433f8f9f22c7434238054a1ac0cd86d5c901"
+      },
+      {
+        "family_id": "case-1f6755d1255c1b951af4",
+        "shared_prefix_sha256": "59ae0bce35eee7bc6547a5cea0693bce5b6b47a28657573639d4cf56b3412085"
+      },
+      {
+        "family_id": "case-1fb073759024a879af6b",
+        "shared_prefix_sha256": "277bdda1db622f9d9265ee30b46c56507a8811f3ac8dfe1c49279f95f6de4a4f"
+      },
+      {
+        "family_id": "case-218d1dcffccb1edb0c4b",
+        "shared_prefix_sha256": "7bd713ad5cab3bd9c059cae3ebf74cf6ff03ed088fda288b7c7b1bac33a30e82"
+      },
+      {
+        "family_id": "case-2580989ed62995f74c9a",
+        "shared_prefix_sha256": "5cebc9c295982aecd1f5fe87e8815bbe1841543c82d7c84ea4fb550f486678f4"
+      },
+      {
+        "family_id": "case-33507d1bf22357977e87",
+        "shared_prefix_sha256": "fe0817505006f12fc317a0aac4d3a097e029e584ce0f34bc883b35a62ff966c9"
+      },
+      {
+        "family_id": "case-374f6ae20a2cc9dee151",
+        "shared_prefix_sha256": "2968848ef72f15ea17af869e88b810dbb51cdc4d87e982b9a592be49716ddfe3"
+      },
+      {
+        "family_id": "case-3816b0594bbd57f597dc",
+        "shared_prefix_sha256": "449985d86e538b1c8adbd1e301211dc5de8dab9298e4afb4f4c59f0050be5bca"
+      },
+      {
+        "family_id": "case-3d45aca0f9331e9bc057",
+        "shared_prefix_sha256": "c2d5c266eecaa29d2ca0828aaad5babd44c6ce7e99f2cc97e1ba7c3daf20f561"
+      },
+      {
+        "family_id": "case-3e74e410a110e150612c",
+        "shared_prefix_sha256": "433183f82ee0c08e23b867629cdef8ecf2121b9306b857a637bca4d10ae30177"
+      },
+      {
+        "family_id": "case-401c2a17d2ad647c820a",
+        "shared_prefix_sha256": "2a9b53e3fadf1c6d7121837689c4b698195c9197176433b51b5223624e0bfcfa"
+      },
+      {
+        "family_id": "case-4075816a3e17dc65388c",
+        "shared_prefix_sha256": "c6509eb6e5d9b2a7b8e966c40748723f99de2548b9c44ed6575861322cd5434b"
+      },
+      {
+        "family_id": "case-4329c6fad6a0fe133467",
+        "shared_prefix_sha256": "7c649bea725fca6ae09c2b596e5f2c716efdc196b55ece8dc253eff8cb78e174"
+      },
+      {
+        "family_id": "case-4beee846d0814a3edcdc",
+        "shared_prefix_sha256": "5ff596cf588c911a4558ffb51bd679c8513f67a1a5e78a9cb0b132714ecd53b5"
+      },
+      {
+        "family_id": "case-4ca0bdc9023fb6ddf0f7",
+        "shared_prefix_sha256": "322ba7026377721f360730997b8dbe161b80c28e3a70c010c5b53a89514d621c"
+      },
+      {
+        "family_id": "case-505b0a13881bd0283930",
+        "shared_prefix_sha256": "67bc225abedcd2d87215d2d2cab46e150e46e5789f6282ad709e94ce166e388e"
+      },
+      {
+        "family_id": "case-527a794c9651d1527e1c",
+        "shared_prefix_sha256": "ae73a80d136050b384a7481802f40c732dd8b1e3c163c203a0be4d99633e5a10"
+      },
+      {
+        "family_id": "case-52a69b7c898d12a8e0a5",
+        "shared_prefix_sha256": "56bc3ee32330b44ecd18d9dfef1d67f7fb9265e4d30d16fd5304cc854ed8907c"
+      },
+      {
+        "family_id": "case-58d5dfa36b59e88b3264",
+        "shared_prefix_sha256": "e0747b86400a44472998aef3d7fc4be018e2f1c09dd998d28fbc35418fe2cc50"
+      },
+      {
+        "family_id": "case-5f3570aff0075cfce6cb",
+        "shared_prefix_sha256": "86da460f1401426f2de6c709a621e70f3fd8c703f5ed80ffe83a3d8513926046"
+      },
+      {
+        "family_id": "case-600855f607d656065ab8",
+        "shared_prefix_sha256": "6316d6f7f2d420d1cb7952c71a4e095117a1ed93c0b783245ce79d2ccf41aa21"
+      },
+      {
+        "family_id": "case-61298e2087460fff0b38",
+        "shared_prefix_sha256": "e65a5b7eb4f7c06ca183ed32f5606acfab9586d16fab0e9818fed362df22b176"
+      },
+      {
+        "family_id": "case-62466e732168dfaf8214",
+        "shared_prefix_sha256": "030bbc4aa018a67c18b469264596a85a0f761cc21b4811b8dcf6b7d2d8428f2c"
+      },
+      {
+        "family_id": "case-673ed71d240f5d142b82",
+        "shared_prefix_sha256": "a51cc906da3e87853d318e08a4fe8fe36d4e4a82a4adcb7ed082751afee1bebe"
+      },
+      {
+        "family_id": "case-6aaa1faab1e4de97ff49",
+        "shared_prefix_sha256": "9f9f4b69d379dea9181552668b2b6808b0e79a9b028be8801622b83acf21d979"
+      },
+      {
+        "family_id": "case-6c98a14b04dc66a9a887",
+        "shared_prefix_sha256": "db9afd84b8c471b7c8b3a3c7de3e7f3c176d2e9c47a9eb78c08de23d20c9da4d"
+      },
+      {
+        "family_id": "case-6d756f50b68d12061b4c",
+        "shared_prefix_sha256": "92abcacf35acf205f1a150efaf0eb4b882bb12fce1b18f1596dad36e913886e8"
+      },
+      {
+        "family_id": "case-6e617c52f117568663ec",
+        "shared_prefix_sha256": "c179e15f88af4d9094e69a8605477ebf43a0d22f2055d832a6224854fb7160cc"
+      },
+      {
+        "family_id": "case-72b9852afb9370eb1e2f",
+        "shared_prefix_sha256": "8eb24b73c1faf9dd363cc81bd1b69c4fa43fbada848ec56f86ae883349ca1b4e"
+      },
+      {
+        "family_id": "case-74920d6b31973fa69172",
+        "shared_prefix_sha256": "ca46a1c632c38574b358e9a9e3ab224faee59230b9b1071032066437007c22f0"
+      },
+      {
+        "family_id": "case-75af8f8edccb80ca46b5",
+        "shared_prefix_sha256": "c7295798e102f26ccd81592e0f53040901b245206bb6e063f47b57a3509c8dd4"
+      },
+      {
+        "family_id": "case-76e046ab45ce352eb231",
+        "shared_prefix_sha256": "fe5b2976b32806bed979119d5a005352cbbfe904e4cd81f22d6da46ef2931c2c"
+      },
+      {
+        "family_id": "case-776ac4ef6bd4c68d9255",
+        "shared_prefix_sha256": "e4f4454411d9cabe6acc7f8679eb92f97ec2aa870c0a8c6f44c9fc4981947dfa"
+      },
+      {
+        "family_id": "case-7897eb4a5dfb1eec5de4",
+        "shared_prefix_sha256": "903ee8630c9e16fd5a7993da1f7e269f9497044a07117b1457be84e313a5c4a4"
+      },
+      {
+        "family_id": "case-79d971530ee82a51dd40",
+        "shared_prefix_sha256": "84e2c1297ef331ea76330c6bf7f81dd28238816b5d43602d4cef2a1de4938a1f"
+      },
+      {
+        "family_id": "case-7b297d92a47b18846107",
+        "shared_prefix_sha256": "7e73789c9cdee3b84789d708f576768479a90e85d2b891878ca8bad87ae0da08"
+      },
+      {
+        "family_id": "case-7cfd522af627f62da66b",
+        "shared_prefix_sha256": "cba1dc34fc576c08f5ae44d7ce54105e5922f747fc3282b54b289f9beb2b2417"
+      },
+      {
+        "family_id": "case-7d53235c8442a2971e7f",
+        "shared_prefix_sha256": "735437118168b32477c736ea8472e9e70ca9f617094d8592e7ca7274113bc947"
+      },
+      {
+        "family_id": "case-7dc3561f55a0bc0bc5fe",
+        "shared_prefix_sha256": "b166096dca3178c5cbfd331a429b094dd39addfe2cb6347ec50e54dfdf5a9269"
+      },
+      {
+        "family_id": "case-7e03002a680778a4ab12",
+        "shared_prefix_sha256": "9fbc748b1474eb3a48f28a56c5e105a55d1c5969d9a5c6a2708de126ed65a5b4"
+      },
+      {
+        "family_id": "case-8002ba7cfe4ee4425dc8",
+        "shared_prefix_sha256": "4cdf2faab88614f6f0f64353e3b5df23e5cedb9a358f3790baefd30a46f0f576"
+      },
+      {
+        "family_id": "case-8a720eb5cec384819027",
+        "shared_prefix_sha256": "06d66908176b7f41fa4f4b2dc7e86acddba72558d6fd351de91724c2da97afde"
+      },
+      {
+        "family_id": "case-8ea68576affa0184b654",
+        "shared_prefix_sha256": "9d5f91a0ae436dc999ab7c00b8d7ef1022eb439c718fc41340aa816631cc8c92"
+      },
+      {
+        "family_id": "case-8f00f840530fa8edeb8b",
+        "shared_prefix_sha256": "5c6be3b38e69322a3290483b657d93c8be97a7cedd05a2d3112fe3e5822ca043"
+      },
+      {
+        "family_id": "case-8f77c26785c28fc51d4c",
+        "shared_prefix_sha256": "97f1d0900b1e701c00a5d6be237faca0fc264f9f6a45f584af0dbab30d2e1cd3"
+      },
+      {
+        "family_id": "case-919281c3b936a72161eb",
+        "shared_prefix_sha256": "6a74a348ae8a9b1a21212340ea3859899aede73d24f0b99252c7fba649aba3d0"
+      },
+      {
+        "family_id": "case-91c4ea3c6210cc21aa35",
+        "shared_prefix_sha256": "6058420f25fc0306f93166dd681413698aae5a567825ddc36a5298da4d6e7ace"
+      },
+      {
+        "family_id": "case-94873a21bd4db2e983e7",
+        "shared_prefix_sha256": "b8d76d87e4edbf8cad256ff82e0b41f932fab5b47c49eee3e1aa3a28ece4ca6b"
+      },
+      {
+        "family_id": "case-9488eb02d53de8d64e4d",
+        "shared_prefix_sha256": "9e07546b817529092aab55a61d9889c480063d7369229edcb3c75b45bda4985d"
+      },
+      {
+        "family_id": "case-95fdc1ae76158756dc33",
+        "shared_prefix_sha256": "75f0d1ae09f572c508cb827c42a8c7bdabb1b566e2b2c4c4221b2e7dbe421271"
+      },
+      {
+        "family_id": "case-976734884edf1aaede77",
+        "shared_prefix_sha256": "dec6088a2cd6cfa8791adcb3d990ac58aae497622dc4fcf8e0a04061235bed34"
+      },
+      {
+        "family_id": "case-995af3c4557049fb0e18",
+        "shared_prefix_sha256": "0309a66b10737db062d5fa519995b73b31759a18bb1ad3d572abe532c25ff1c3"
+      },
+      {
+        "family_id": "case-99b291151e0dc8c5fe77",
+        "shared_prefix_sha256": "7538ec00b1aaa336233527703c1df0ea2e121b2ef94fc75605a40ce64e4aba3a"
+      },
+      {
+        "family_id": "case-9d0e6521f3dc955fcade",
+        "shared_prefix_sha256": "07b481515bbd763ac51cb6809454e57b846a595655db3b1e7d7ea776001b49ac"
+      },
+      {
+        "family_id": "case-a0005d8bd8d6d2c24edb",
+        "shared_prefix_sha256": "127532df857fb9b1033a856a5fc9f1e742b152356d610007a34ed014b715443f"
+      },
+      {
+        "family_id": "case-a474e949667b6a8393be",
+        "shared_prefix_sha256": "ff613b41a6e1f2412a414fb3636f048597a4b7a5b096dc324d5c3dc17d2ed6f2"
+      },
+      {
+        "family_id": "case-a58b60a912dacc29a8ba",
+        "shared_prefix_sha256": "180a7ea52f927c9ac70fe11bc441a76edd37f4129255cf014a8488c0cbc3d476"
+      },
+      {
+        "family_id": "case-a5f95ce3ed0472ab9c58",
+        "shared_prefix_sha256": "8971dcad93f08504a8588227e9b1850e306c822ce866b9c9e5d23ab0e6fa530c"
+      },
+      {
+        "family_id": "case-a64d88e560addf16c7cd",
+        "shared_prefix_sha256": "d88c2e507efeb0ae3f043eb27af25d1717c863411d856838275fc422702d809b"
+      },
+      {
+        "family_id": "case-aa88b43fddefd22c3288",
+        "shared_prefix_sha256": "34a6060a583269ff0ee16ffd85f7935ba32d62e1f43de2d4bd2913f96631c13f"
+      },
+      {
+        "family_id": "case-ac22f9611d7241c74b7b",
+        "shared_prefix_sha256": "b429f91090ce806c89b75b119c75649f05e1768a1c394de0e81dbdf18f30bb48"
+      },
+      {
+        "family_id": "case-ae893e972e9357a6f87e",
+        "shared_prefix_sha256": "949a5d10ecad6d877744ea22784279c38c806f71fe7ae9876aea3aafae6f0976"
+      },
+      {
+        "family_id": "case-aebd42bd62d3bfa51533",
+        "shared_prefix_sha256": "c1916cd3fbd43e7f5f408d9477d2b2eed7273822525844827bad775645f7eb61"
+      },
+      {
+        "family_id": "case-bff8ff386e3183174825",
+        "shared_prefix_sha256": "56509cbd64fd6aa86d5add4d8f24b3a8abfd9744328ee75533e74a24f12025e4"
+      },
+      {
+        "family_id": "case-c66f319b9681bf706240",
+        "shared_prefix_sha256": "5602ff83cda0680b8c7a4d50a41a3865b6857713d25174b2004b141fed89348f"
+      },
+      {
+        "family_id": "case-ca40775005dd65b7b5d7",
+        "shared_prefix_sha256": "ce1087eec11e615eb247f13a7da6f6ed9c754edb71077cf28242a19a4e6353b6"
+      },
+      {
+        "family_id": "case-cc5be89c161bc0fd85a6",
+        "shared_prefix_sha256": "fbab4369a668c41a9f75c164a63f3a4f8be778cf43eed8ccab72a1108d2aca7c"
+      },
+      {
+        "family_id": "case-cd075280055a56377140",
+        "shared_prefix_sha256": "04ec701b2762b6e38b82bbb8383b39873aa308662334a38f4b3de913b2650e29"
+      },
+      {
+        "family_id": "case-cd3a60a78b58aa3c819d",
+        "shared_prefix_sha256": "cf2da0e612901f09821944ba8ae914bd52e659b251f5e6bea1646395f9729148"
+      },
+      {
+        "family_id": "case-d0e1b7e15938b69ef9b1",
+        "shared_prefix_sha256": "2b74a973e1e86b0e049a4e221f8a8e3d8247adc8fbe8f20099d2d4155f348b4b"
+      },
+      {
+        "family_id": "case-d1720f38cbfbe6a40804",
+        "shared_prefix_sha256": "0f76a823d56563041017d7c574d93f40cc49a0eb26612d22af5ccca043becc93"
+      },
+      {
+        "family_id": "case-d2f5466dfaee7ddc96dd",
+        "shared_prefix_sha256": "b3099d63b0157b8671c20ee7db674afce9429ee3cf53ce45af5804ed8c9cf11a"
+      },
+      {
+        "family_id": "case-d6e0c906dd87b5bdb2ad",
+        "shared_prefix_sha256": "8a5c380ad5bfa9e332079a7d6ceb5f22846122d6b6c2a978602673881e8581cb"
+      },
+      {
+        "family_id": "case-d98fd9dff55de259d6c8",
+        "shared_prefix_sha256": "747dec5d5a628d5632bf54a637d638fcb93f50392a2916fdad6aa757abfa125f"
+      },
+      {
+        "family_id": "case-dc4ab08a27629d5e94df",
+        "shared_prefix_sha256": "02248431f03746da0584f37c76226fd2c8cc122dae2d6715ed6258b049b236f6"
+      },
+      {
+        "family_id": "case-dc8468196b97bba4df44",
+        "shared_prefix_sha256": "e990c8eda02d239c08d6fc9a60da05a5512f6eb228cb7f60d365613d31f22158"
+      }
+    ],
+    "scope": "Observed response to access feedback; not independently reviewed answer correctness"
+  },
   "figure_sources": [
     {
       "figure_file": "case-bottle-preview.png",
