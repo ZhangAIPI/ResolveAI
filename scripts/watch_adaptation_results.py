@@ -95,7 +95,7 @@ def result_text(entries):
             f"with tools, below the base's {accuracy(mixed8,model=0):.1f}\\%.")
     parts += [r"\paragraph{Large gains can reflect easier completion.}", " ".join(observations),
               "All three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
-              "They shorten the interaction, but higher accuracy in this setting alone does not show better acquisition of missing evidence."]
+              "They shorten the interaction, but higher accuracy in this setting alone does not show better ability to find missing evidence."]
     if mixed8 in reports:
         parts.append(
             f"In Obtainable, the 8B SFT policy requests photographs in {requests(mixed8)} cases, "
@@ -145,7 +145,7 @@ def detail_text(entries):
     lines = ["\\section{Training Data and Action Supervision}",
              "\\input{tables/training_ablation}",
              "Identity-only SFT uses CO3D trajectories; mixed-task SFT adds balanced condition supervision. "
-             "The paired finish-only controls retain public histories but remove acquisition-action targets. "
+             "The paired finish-only controls retain public histories but remove tool-action targets. "
              "These controls have the same update cap rather than matched target-token compute.",
              "\\subsection{Training Details}"]
     for entry,report in entries:
@@ -170,7 +170,7 @@ def detail_text(entries):
                          +"Its data and exact selected checkpoint are recorded with the released comparison.")
             if "terminal" in report["models"][1]["name"].lower():
                 lines.append("Finish-only retains complete public histories at the final decision, "
-                             "but removes acquisition-action prediction targets. It uses the same update limit, "
+                             "but removes tool-action prediction targets. It uses the same update limit, "
                              "not matched target-token compute, as the corresponding full-trajectory SFT.")
     lines.append("All rows retain the fixed paper cohort, failure accounting and inference allowances. "
                  "Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.")

@@ -8,17 +8,17 @@
 \node[box,text width=2.45cm] (c) at (4.15,3.09) {Request a view};
 \node[box,text width=2.45cm] (d) at (4.15,2.36) {Stop now};
 \node[box,draw=teal!60,fill=teal!7,text width=1.75cm,minimum height=1.25cm] (audit) at (7.1,3.45)
- {Same policy\\Audit evidence};
+ {Same model\\Check evidence};
 \foreach \n in {a,b,c,d} {
  \draw[arr] (h.east) -- ++(.18,0) |- (\n.west);
  \draw[arr] (\n.east) -- ++(.16,0) -| (audit.west);
 }
 \node[anchor=west,font=\sffamily\bfseries\scriptsize] at (0,1.65)
- {Initially unresolved, reviewed answerable cases:};
+ {Cases with an initial gap that more evidence can resolve:};
 \node[anchor=north west,text width=8.0cm,font=\sffamily\scriptsize] at (0,1.40)
- {Insufficient acquired evidence \(\rightarrow\) acquisition remains incomplete.\\[3pt]
- Sufficient evidence, invalid verdict \(\rightarrow\) inspect interpretation / citations.\\[3pt]
- Sufficient evidence, grounded verdict \(\rightarrow\) resolve the claim.};
+ {Not enough evidence \(\rightarrow\) the search is unfinished.\\[3pt]
+ Enough evidence, incorrect answer or references \(\rightarrow\) inspect interpretation / citations.\\[3pt]
+ Enough evidence, correct answer and references \(\rightarrow\) resolve the claim.};
 \node[anchor=west,text=teal!70!black,font=\sffamily\scriptsize,text width=8cm] at (0,-.18)
- {Acquisition and grounded conversion are audited separately.};
+ {Check separately: enough evidence found, and used correctly.};
 \end{tikzpicture}

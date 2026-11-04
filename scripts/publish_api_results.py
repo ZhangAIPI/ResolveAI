@@ -54,7 +54,7 @@ def publish(repository, report, lock_path):
                  "the visible counts exclude its reported reasoning tokens, and a response exceeding the visible cap receives no credit. "
                  "We retain encrypted reasoning and native call identifiers between turns. "
                  "Other API models use their documented non-reasoning setting. "
-                 "The Decisions API returns a choice among the same three verdicts from the same pixels; "
+                 "The Decisions API returns a choice among the same three decisions from the same pixels; "
                  "it can also select an application-executed action. Our public-menu-v1 adapter constructs up to "
                  "64 concrete actions from released image metadata, public request options and tool availability. "
                  "It includes requests, image operations, grounding and explicit finish choices. "

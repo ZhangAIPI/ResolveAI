@@ -279,7 +279,7 @@ def render_training_ablation(reports):
         r"\caption{\textbf{Training data and action supervision.} All rows use Qwen3-VL-8B.",
         r"Condition, Identity and Overall are accuracy (\%) with tools on initially sufficient cases.",
         r"Request (\%) is the fraction requesting another photograph in Obtainable.",
-        r"Final-decision supervision retains the same public histories but omits acquisition-action targets.",
+        r"Final-decision supervision retains the same public histories but omits tool-action targets.",
         r"The update limit is shared; target-token compute is not matched.}",
         r"\label{tab:training-ablation}",
         r"\begin{tabular}{@{}llrrrr@{}}\toprule",
