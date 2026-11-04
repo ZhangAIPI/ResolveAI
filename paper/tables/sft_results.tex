@@ -2,8 +2,8 @@
 \centering\small
 \setlength{\tabcolsep}{3.5pt}
 \begin{minipage}{.88\textwidth}\centering
-\caption{\textbf{Supervised adaptation.}
-Each SFT adapter starts from its listed base; checkpoints use held-out validation data.
+\caption{\textbf{Supervised and reinforcement adaptation.}
+SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data.
 Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.
 The settings and measurements follow Table~\ref{tab:benchmark}.}
 \label{tab:sft}
@@ -20,6 +20,7 @@ Mixed-task SFT & 61.4 & 92.9 & 69.9 & 1.0 & 3 & 64.7 & 98.2 & 73.7 & 5.6 & 112\\
 \multicolumn{11}{l}{\emph{Qwen3-VL-2B}}\\
 Before SFT & 46.4 & 98.2 & 60.3 & 0.8 & 2 & 24.2 & 85.7 & 40.7 & 17.1 & 449\\
 Mixed-task SFT & 41.2 & 67.9 & 48.3 & 1.0 & 7 & 61.4 & 100.0 & 71.8 & 5.5 & 118\\
+Mixed-task SFT + GRPO & 41.2 & 69.6 & 48.8 & 1.0 & 7 & 62.7 & 98.2 & 72.2 & 5.4 & 117\\
 \midrule
 \multicolumn{11}{l}{\emph{Qwen3-VL-8B}}\\
 Before SFT & 69.9 & 87.5 & 74.6 & 1.0 & 3 & 79.1 & 91.1 & 82.3 & 16.8 & 283\\

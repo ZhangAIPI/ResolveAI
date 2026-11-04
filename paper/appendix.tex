@@ -310,6 +310,8 @@ Responses runs use native function calls and best-effort schemas. Direct and int
 % adaptation-results-start
 \section{Additional Adaptation Runs}
 
+Qwen3-VL-2B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen SFT adapter. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions selects the checkpoint. The benchmark supplies no training or checkpoint-selection feedback. The run performs 44 optimizer updates and selects group 24; group zero denotes the initial SFT adapter.
+
 Qwen2.5-VL-7B with mixed-task SFT completes 200 optimizer steps, using the same rank-32 attention adapters and held-out token-loss selection as the other SFT runs. Its data and exact selected checkpoint are recorded with the released comparison.
 
 All rows retain the fixed paper cohort, failure accounting and inference allowances. Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.
