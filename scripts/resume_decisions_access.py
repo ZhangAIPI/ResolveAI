@@ -17,6 +17,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repository",type=Path)
     parser.add_argument("runtime",type=Path)
+    parser.add_argument("--continue-existing",action="store_true",help="Continue the same funded ledger after an externally terminated job step")
     args=parser.parse_args()
     if os.getenv("SLURMD_NODENAME")!="macula":
         parser.error("Use the retained GPU node")
@@ -26,8 +27,11 @@ def main():
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     old=root/"luna_decisions_tools-obtainable"
     output=root/"luna_decisions_tools-obtainable-resume1"
-    if output.exists():
-        raise RuntimeError("This continuation has already been prepared; inspect it before any new attempt")
+    continuing=output.exists()
+    if continuing and not args.continue_existing:
+        raise RuntimeError("This continuation exists; inspect it and pass --continue-existing to resume")
+    if args.continue_existing and not continuing:
+        raise RuntimeError("No existing continuation to resume")
     summary=json.loads((old/"summary.json").read_text())
     manifest=json.loads((old/"manifest.json").read_text())
     if summary["complete"] or "OpenAI HTTP 503" not in (old/"run.log").read_text():
@@ -54,16 +58,22 @@ def main():
     if child is None:
         parent.close()
         raise RuntimeError("Recovery allocation is already closed")
-    with child.db:
-        for key,response in known:
-            child.db.execute("INSERT INTO calls VALUES (?,?,?,?,?,?)",
-                             ("cache/"+key,key,"original-paid-cache",0,0,response))
+    if child.db.execute("SELECT 1 FROM calls WHERE charge IS NULL").fetchone():
+        child.close()
+        parent.close()
+        raise RuntimeError("Unresolved spending must be reconciled before continuing")
+    if not continuing:
+        with child.db:
+            for key,response in known:
+                child.db.execute("INSERT INTO calls VALUES (?,?,?,?,?,?)",
+                                 ("cache/"+key,key,"original-paid-cache",0,0,response))
     child.close()
-    output.mkdir()
-    with sqlite3.connect(old/"episodes.sqlite") as original, sqlite3.connect(output/"episodes.sqlite") as copied:
-        original.backup(copied)
-    if (old/"images").exists():
-        shutil.copytree(old/"images",output/"images",copy_function=os.link)
+    if not continuing:
+        output.mkdir()
+        with sqlite3.connect(old/"episodes.sqlite") as original, sqlite3.connect(output/"episodes.sqlite") as copied:
+            original.backup(copied)
+        if (old/"images").exists():
+            shutil.copytree(old/"images",output/"images",copy_function=os.link)
     preserved=set(row_digests(output/"episodes.sqlite"))
     audit={"reason":"One explicit continuation after HTTP 503; no automatic network retry",
            "previous_manifest":str(old/"manifest.json"),
@@ -72,11 +82,18 @@ def main():
            "original_ledger":descriptor["ledger"],"cached_known_responses":len(known),
            "unresolved_old_call_bound_usd":sum(row[1] for row in unresolved)/1e6,
            "note":"The old unresolved reservation remains counted; reused responses are charged in the old ledger."}
+    if continuing:
+        audit=json.loads((output/"continuation.json").read_text())
+    audit.setdefault("resume_segments",[]).append({
+        "slurm_job":os.getenv("SLURM_JOB_ID"),
+        "preserved_episodes":len(preserved),
+        "preserved_hashes_sha256":hashlib.sha256(json.dumps(sorted(preserved)).encode()).hexdigest(),
+        "same_funded_ledger":str(ledger_path)})
     (output/"continuation.json").write_text(json.dumps(audit,indent=2)+"\n")
     status_path=root/"decisions-tools-status.json"
     def status(phase,**fields):
         status_path.write_text(json.dumps({"phase":phase,"primary_episodes":209,
-                              "obtainable_output":str(output),"preserved_episodes":len(preserved),**fields},indent=2)+"\n")
+                              "obtainable_output":str(output),"preserved_episodes":len(preserved),"slurm_job":os.getenv("SLURM_JOB_ID"),**fields},indent=2)+"\n")
     status("obtainable_recovery")
     command=[sys.executable,"-u","-m","scripts.evaluate_openai",
              str(runtime/"evaluation/cvpr-20261101/plan.json"),
