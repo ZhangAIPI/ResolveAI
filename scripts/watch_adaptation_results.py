@@ -203,6 +203,8 @@ def main():
                 state_path.write_text(json.dumps({"published":signature,"included":[e["name"] for e,_ in entries],
                                                   "waiting":waiting},indent=2)+"\n")
                 print(json.dumps({"table2_updated":[e["name"] for e,_ in entries],"waiting":waiting}),flush=True)
+            if run(["git","status","--porcelain"],args.repository).strip():
+                raise RuntimeError("Independent repository edits; defer Overleaf synchronization")
             synchronize(args.repository,args.runtime,"6ae80679a4c7a64df04ac5b8")
             previous_error = None
             if args.once or not waiting:
