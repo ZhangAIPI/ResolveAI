@@ -384,27 +384,33 @@ Completion rates and latency distributions are reported in the supplement.
 \subsection{Effect of Supervised Fine-Tuning}
 \label{sec:sft}
 \paragraph{Training setup.}
-We train two independent Qwen3-VL-8B adapters from the same base.
+We train independent adapters for Qwen3-VL-8B and Qwen3-VL-2B from their respective base checkpoints.
 Identity SFT uses CO3D identity/acquisition trajectories.
 Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task.
 Training and validation images are disjoint from evaluation.
-Both runs freeze the base and vision weights and use rank-32 attention LoRA for 200 updates at \(10^{-4}\).
+All runs freeze the base and vision weights and use rank-32 attention LoRA at \(10^{-4}\), with at most 200 updates; the 2B run stops at 150.
 Checkpoints are selected by held-out assistant-token loss.
 Each adaptation is a single run with source-derived labels; construction details are in the supplement.
 
 \paragraph{Better direct answers do not ensure better interaction.}
-Without tools, accuracy rises from 74.6\% to 77.5\% after identity SFT and 78.9\% after mixed-task SFT (Table~\ref{tab:sft}).
+For the 8B model, direct accuracy rises from 74.6\% to 77.5\% after identity SFT and 78.9\% after mixed-task SFT (Table~\ref{tab:sft}).
 With tools, both adapters improve identity accuracy from 91.1\% to 98.2\%, but condition accuracy declines.
 Neither exceeds the base's 82.3\% overall accuracy: identity SFT reaches 78.5\%, and mixed-task SFT reaches 79.9\%.
 
-Both adapters finish all initially sufficient cases without intermediate tools.
+Both 8B adapters finish all initially sufficient cases without intermediate tools.
 Mean episode time falls from 16.8 seconds to 11.2 and 7.1 seconds, respectively; output length falls from 283 to 177 and 117 tokens.
 The faster completion accompanies lower answer accuracy.
 
+The 2B model improves with the tool interface: accuracy rises from 40.7\% to 71.8\%, and completion from 61.7\% to 100\%.
+It also finishes every initially sufficient case immediately, reducing mean time from 17.1 to 5.5 seconds.
+Direct accuracy falls from 60.3\% to 48.3\%.
+The improvement is therefore specific to the interaction setting, and includes recovery from failed completion.
+
 \paragraph{Requests change more than the final accuracy.}
-On the matched Obtainable versions, the base requests and receives a photograph in 12 cases, compared with 153 after identity SFT and 82 after mixed-task SFT.
+For the 8B model, the base requests and receives a photograph in 12 matched Obtainable cases, compared with 153 after identity SFT and 82 after mixed-task SFT.
 All post-training requests occur in condition cases; neither adapter requests photographs for identity cases.
 In Missing and Unavailable, the requested key material cannot be supplied and both adapters abstain on the corresponding cases.
+The 2B mixed-task adapter makes no photograph requests in any of the four access versions.
 Training thus changes requests and stopping decisions.
 Selecting the most useful observation still requires comparison with available alternatives.
 

@@ -115,29 +115,38 @@ def render(report):
 
 
 def render_adaptations(reports):
-    """Keep the same base once and compare independently trained adapters."""
+    """Compare independent adapters, preserving each model's measured base once."""
     if not reports:
         raise ValueError("At least one complete SFT comparison is required")
-    first=reports[0]
-    for report in reports[1:]:
-        for key in ("base_model_id","dataset_sha256","family_ids"):
-            if report[key]!=first[key]:
-                raise ValueError("SFT comparisons do not share the same base/cohort")
-        if report["models"][0]!=first["models"][0] or report["efficiency"][0]!=first["efficiency"][0]:
+    groups={}
+    for report in reports:
+        for key in ("dataset_sha256","family_ids"):
+            if report[key]!=reports[0][key]:
+                raise ValueError("SFT comparisons do not share the same cohort")
+        group=groups.setdefault(report["base_model_id"],[])
+        if group and (report["models"][0]!=group[0]["models"][0]
+                      or report["efficiency"][0]!=group[0]["efficiency"][0]):
             raise ValueError("SFT comparisons use different base measurements")
+        group.append(report)
+    from scripts.paper_result_table import ORDER
     labels={"Acquisition SFT":"Identity SFT","Mixed-source SFT":"Mixed-task SFT"}
     lines=[r"\begin{table*}[t]",r"\centering\small",
            r"\setlength{\tabcolsep}{3.5pt}",r"\begin{minipage}{.88\textwidth}\centering",
-           r"\caption{\textbf{Supervised adaptation of "+NAMES[first["base_model_id"]]+r".}",
-           r"Both adapters start from the same base checkpoint and use 200 LoRA updates.",
-           r"Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT combines identity and condition supervision.",
-           r"The two column groups use the same test cases and the definitions of Table~\ref{tab:benchmark}.}",
+           r"\caption{\textbf{Supervised adaptation.}",
+           r"Each adapter starts from its listed base; checkpoints are selected on held-out validation data.",
+           r"Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.",
+           r"The settings and measurements follow Table~\ref{tab:benchmark}.}",
            r"\label{tab:sft}",*comparison_header("Training")]
-    rows=[("Before SFT",first["models"][0]["arms"],first["efficiency"][0]["arms"])]
-    rows += [(labels.get(r["models"][1]["name"],r["models"][1]["name"]),
-              r["models"][1]["arms"],r["efficiency"][1]["arms"]) for r in reports]
-    for label,arms,costs in rows:
-        lines.append(label+" & "+" & ".join(comparison_cells(comparison_values(arms,costs)))+r"\\")
+    for index,model in enumerate(sorted(groups,key=ORDER.index)):
+        if index:
+            lines.append(r"\midrule")
+        lines.append(r"\multicolumn{11}{l}{\emph{"+NAMES[model]+r"}}\\")
+        group=groups[model]
+        rows=[("Before SFT",group[0]["models"][0]["arms"],group[0]["efficiency"][0]["arms"])]
+        rows += [(labels.get(r["models"][1]["name"],r["models"][1]["name"]),
+                  r["models"][1]["arms"],r["efficiency"][1]["arms"]) for r in group]
+        for label,arms,costs in rows:
+            lines.append(label+" & "+" & ".join(comparison_cells(comparison_values(arms,costs)))+r"\\")
     return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"])+"\n"
 
 

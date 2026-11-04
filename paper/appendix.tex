@@ -215,6 +215,13 @@ The same 82 cases attempt a request in Missing and Unavailable, receive no key p
 All initially sufficient cases finish without intermediate tools.
 The paired accuracy, timing, checkpoint and split records are retained separately for both adaptations.
 
+The Qwen3-VL-2B mixed-task adapter uses the same training and validation examples as the 8B mixed-task adapter, with rank 32 and the same learning rate.
+Validation selects its checkpoint after an early-stopped 150-update run.
+It completes all 209 initially sufficient cases, compared with 129 for the base, and makes no intermediate calls.
+Across all four matched access versions it makes no photograph requests and submits a definite verdict in every case.
+Its higher source-label accuracy with the tool interface therefore does not establish evidence acquisition.
+The direct-condition score falls from 60.3\% to 48.3\%; ten direct attempts produce no valid verdict and remain in the denominator.
+
 \subsection{Measured inference cost}
 Cost statistics use the same fixed family list as the main accuracy comparison.
 Every attempted episode is retained, including abstentions, incorrect verdicts and failures to finish.
