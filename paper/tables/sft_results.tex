@@ -1,35 +1,29 @@
-\begin{table*}[t]
-\centering\small
-\setlength{\tabcolsep}{3.5pt}
-\begin{minipage}{.88\textwidth}\centering
-\caption{\textbf{Supervised and reinforcement adaptation.}
-SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data.
-Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.
-Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. The settings and measurements follow Table~\ref{tab:benchmark}. $^{*}$Validation retained the initial SFT checkpoint for the 8B GRPO run; this row does not measure an updated policy.}
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
+\begin{minipage}{.68\textwidth}\centering
+\caption{\textbf{Effect of policy training.}
+SFT uses balanced identity and condition data; RL applies GRPO directly to the base; SFT$\to$RL continues the SFT adapter.
+Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.
+-- denotes an unfinished comparison. $^{*}$Validation retained the initial policy for that RL run.
+Training-data and action-target ablations are reported separately in the supplement.}
 \label{tab:sft}
-\begin{tabular}{@{}lrrrrrrrrrr@{}}
+\begin{tabular}{@{}l*{8}{r}@{}}
 \toprule
- & \multicolumn{5}{c}{No tools} & \multicolumn{5}{c}{With tools}\\
-\cmidrule(lr){2-6}\cmidrule(l){7-11}
-Training & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens} & Condition & Identity & Overall & \shortstack{Time\\(s)} & \shortstack{Output\\tokens}\\
+\multicolumn{9}{l}{\emph{(a) Overall accuracy (\%)}}\\
+ & \multicolumn{4}{c}{No tools} & \multicolumn{4}{c}{With tools}\\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Model & Base & SFT & RL & SFT$\to$RL & Base & SFT & RL & SFT$\to$RL\\
 \midrule
-\multicolumn{11}{l}{\emph{Qwen2.5-VL-7B}}\\
-Before SFT & 20.3 & 3.6 & 15.8 & 1.0 & 4 & 5.2 & 0.0 & 3.8 & 13.1 & 186\\
-Mixed-task SFT & 61.4 & 92.9 & 69.9 & 1.0 & 3 & 64.7 & 98.2 & 73.7 & 5.6 & 112\\
+Qwen2.5-VL-7B & 15.8 & \textbf{69.9} & -- & -- & 3.8 & \textbf{73.7} & -- & --\\
+Qwen3-VL-2B & \textbf{60.3} & 48.3 & -- & 48.8 & 40.7 & 71.8 & -- & \textbf{72.2}\\
+Qwen3-VL-8B & 74.6 & \textbf{78.9} & -- & \textbf{78.9}$^{*}$ & \textbf{82.3} & 79.9 & -- & 79.9$^{*}$\\
+\addlinespace[6pt]
+\multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\
+ & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Model & Base & SFT & RL & SFT$\to$RL & Base & SFT & RL & SFT$\to$RL\\
 \midrule
-\multicolumn{11}{l}{\emph{Qwen3-VL-2B}}\\
-Before SFT & 46.4 & 98.2 & 60.3 & 0.8 & 2 & 24.2 & 85.7 & 40.7 & 17.1 & 449\\
-Mixed-task SFT & 41.2 & 67.9 & 48.3 & 1.0 & 7 & 61.4 & 100.0 & 71.8 & 5.5 & 118\\
-Mixed-task SFT + GRPO & 41.2 & 69.6 & 48.8 & 1.0 & 7 & 62.7 & 98.2 & 72.2 & 5.4 & 117\\
-\midrule
-\multicolumn{11}{l}{\emph{Qwen3-VL-8B}}\\
-Before SFT & 69.9 & 87.5 & 74.6 & 1.0 & 3 & 79.1 & 91.1 & 82.3 & 16.8 & 283\\
-Identity SFT & 71.9 & 92.9 & 77.5 & 1.0 & 3 & 71.2 & 98.2 & 78.5 & 11.2 & 177\\
-Mixed-task SFT & 73.2 & 94.6 & 78.9 & 1.0 & 3 & 73.2 & 98.2 & 79.9 & 7.1 & 117\\
-Identity: finish only & 66.0 & 92.9 & 73.2 & 1.0 & 3 & 57.5 & 100.0 & 68.9 & 11.1 & 175\\
-Mixed-task: finish only & 71.2 & 92.9 & 77.0 & 1.0 & 3 & 75.2 & 98.2 & 81.3 & 7.4 & 120\\
-Mixed-task SFT + GRPO$^{*}$ & 73.2 & 94.6 & 78.9 & 1.0 & 3 & 73.2 & 98.2 & 79.9 & 7.2 & 117\\
+Qwen2.5-VL-7B & 13.1 & 5.6 & -- & -- & 186 & 112 & -- & --\\
+Qwen3-VL-2B & 17.1 & 5.5 & -- & 5.4 & 449 & 118 & -- & 117\\
+Qwen3-VL-8B & 16.8 & 7.1 & -- & 7.2 & 283 & 117 & -- & 117\\
 \bottomrule
-\end{tabular}
-\end{minipage}
-\end{table*}
+\end{tabular}\end{minipage}\end{table*}

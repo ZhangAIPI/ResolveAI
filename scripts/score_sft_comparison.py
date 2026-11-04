@@ -122,46 +122,130 @@ def initial_rl_checkpoint(report):
             and report["checkpoint"].get("evaluated_group", state.get("best_group")) == 0)
 
 
-def render_adaptations(reports):
-    """Compare independent adapters, preserving each model's measured base once."""
+def adaptation_groups(reports):
     if not reports:
-        raise ValueError("At least one complete SFT comparison is required")
-    groups={}
+        raise ValueError("At least one complete adaptation comparison is required")
+    groups = {}
     for report in reports:
-        for key in ("dataset_sha256","family_ids"):
-            if report[key]!=reports[0][key]:
-                raise ValueError("SFT comparisons do not share the same cohort")
-        group=groups.setdefault(report["base_model_id"],[])
-        if group and (report["models"][0]!=group[0]["models"][0]
-                      or report["efficiency"][0]!=group[0]["efficiency"][0]):
-            raise ValueError("SFT comparisons use different base measurements")
+        if any(report[key] != reports[0][key] for key in ("dataset_sha256","family_ids")):
+            raise ValueError("Adaptation comparisons do not share the same cohort")
+        group = groups.setdefault(report["base_model_id"],[])
+        if group and (report["models"][0] != group[0]["models"][0]
+                      or report["efficiency"][0] != group[0]["efficiency"][0]):
+            raise ValueError("Adaptation comparisons use different base measurements")
         group.append(report)
+    return groups
+
+
+def core_stages(group):
+    """Choose predetermined training stages, never the highest benchmark score."""
+    selected = {}
+    for report in group:
+        training = report["training"]
+        if "evaluation_checkpoint_policy" in training:
+            continue  # Fixed-final diagnostics have their own supplementary table.
+        config = training["configuration"]
+        if "groups" in config:
+            stage = "RL" if config.get("initialization","sft") == "base" else "SFT+RL"
+        elif report["models"][1]["name"] == "Mixed-source SFT":
+            stage = "SFT"
+        else:
+            continue
+        if stage in selected:
+            raise ValueError("More than one comparison for a core training stage")
+        selected[stage] = report
+    return selected
+
+
+def render_adaptations(reports):
+    """One model per row; separate panels compare accuracy and interaction cost."""
     from scripts.paper_result_table import ORDER
-    labels={"Acquisition SFT":"Identity SFT","Mixed-source SFT":"Mixed-task SFT","Online GRPO":"Mixed-task SFT + GRPO","Terminal-only SFT":"Identity: finish only","Mixed terminal-only SFT":"Mixed-task: finish only"}
-    retained_initial = any(initial_rl_checkpoint(r) for r in reports)
-    has_terminal = any("terminal" in r["models"][1]["name"].lower() for r in reports)
-    has_rl = any(r["models"][1]["name"] == "Online GRPO" for r in reports)
-    lines=[r"\begin{table*}[t]",r"\centering\small",
-           r"\setlength{\tabcolsep}{3.5pt}",r"\begin{minipage}{.88\textwidth}\centering",
-           (r"\caption{\textbf{Supervised and reinforcement adaptation.}" if has_rl else r"\caption{\textbf{Supervised adaptation.}"),
-           (r"SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data." if has_rl else r"Each SFT adapter starts from its listed base; checkpoints use held-out validation data."),
-           r"Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.",
-           (r"Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. "
-            if has_terminal else "") + r"The settings and measurements follow Table~\ref{tab:benchmark}. "
-            + (r"$^{*}$Validation retained the initial SFT checkpoint for the 8B GRPO run; this row does not measure an updated policy." if retained_initial else "") + "}",
-           r"\label{tab:sft}",*comparison_header("Training")]
-    for index,model in enumerate(sorted(groups,key=ORDER.index)):
-        if index:
+    groups = adaptation_groups(reports)
+    stages = ("Base","SFT","RL","SFT+RL")
+    headers = ["Base","SFT","RL",r"SFT$\to$RL"]
+    lines = [
+        r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}",
+        r"\begin{minipage}{.68\textwidth}\centering",
+        r"\caption{\textbf{Effect of policy training.}",
+        r"SFT uses balanced identity and condition data; RL applies GRPO directly to the base; SFT$\to$RL continues the SFT adapter.",
+        r"Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.",
+        r"-- denotes an unfinished comparison. $^{*}$Validation retained the initial policy for that RL run.",
+        r"Training-data and action-target ablations are reported separately in the supplement.}",
+        r"\label{tab:sft}",r"\begin{tabular}{@{}l*{8}{r}@{}}",r"\toprule",
+    ]
+    for panel in ("accuracy","cost"):
+        if panel == "accuracy":
+            lines += [r"\multicolumn{9}{l}{\emph{(a) Overall accuracy (\%)}}\\",
+                      r" & \multicolumn{4}{c}{No tools} & \multicolumn{4}{c}{With tools}\\"]
+        else:
+            lines += [r"\addlinespace[6pt]",
+                      r"\multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\",
+                      r" & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\"]
+        lines += [r"\cmidrule(lr){2-5}\cmidrule(l){6-9}",
+                  "Model & "+" & ".join(headers+headers)+r"\\",r"\midrule"]
+        for model in sorted(groups,key=ORDER.index):
+            group = groups[model]
+            selected = core_stages(group)
+            base = group[0]
+            cells = []
+            for measurement in (("initial_text","interactive_agent") if panel=="accuracy"
+                                else ("mean_wall_s","mean_output_tokens")):
+                for stage in stages:
+                    report = base if stage=="Base" else selected.get(stage)
+                    if report is None:
+                        cells.append("--")
+                        continue
+                    index = 0 if stage=="Base" else 1
+                    if panel=="accuracy":
+                        value = report["models"][index]["arms"][measurement]["label_agreement"]*100
+                        marker = r"$^{*}$" if stage!="Base" and initial_rl_checkpoint(report) else ""
+                        available = [base["models"][0]["arms"][measurement]["label_agreement"]]
+                        available += [r["models"][1]["arms"][measurement]["label_agreement"] for r in selected.values()]
+                        number = f"{value:.1f}"
+                        if abs(value - 100*max(available)) < 1e-8:
+                            number = r"\textbf{" + number + "}"
+                        cells.append(number+marker)
+                    else:
+                        value = report["efficiency"][index]["arms"]["interactive_agent"][measurement]
+                        cells.append(f"{value:.1f}" if measurement=="mean_wall_s" else str(round(value)))
+            lines.append(NAMES[model]+" & "+" & ".join(cells)+r"\\")
+    return "\n".join(lines+[r"\bottomrule",r"\end{tabular}\end{minipage}\end{table*}"])+"\n"
+
+
+def render_training_ablation(reports):
+    """A compact paired ablation, rather than a catalogue of every training run."""
+    by_name = {r["models"][1]["name"]:r for r in reports
+               if r["base_model_id"]=="Qwen/Qwen3-VL-8B-Instruct"}
+    variants = [
+        ("Identity","Final decisions","Terminal-only SFT"),
+        ("","Actions + decisions","Acquisition SFT"),
+        ("Mixed-task","Final decisions","Mixed terminal-only SFT"),
+        ("","Actions + decisions","Mixed-source SFT"),
+    ]
+    lines = [
+        r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}",
+        r"\begin{minipage}{.86\textwidth}\centering",
+        r"\caption{\textbf{Training data and action supervision.} All rows use Qwen3-VL-8B.",
+        r"Condition, Identity and Overall are accuracy (\%) with tools on initially sufficient cases.",
+        r"Request (\%) is the fraction requesting another photograph in Obtainable.",
+        r"Final-decision supervision retains the same public histories but omits acquisition-action targets.",
+        r"The update limit is shared; target-token compute is not matched.}",
+        r"\label{tab:training-ablation}",
+        r"\begin{tabular}{@{}llrrrr@{}}\toprule",
+        r"Training data & Supervised targets & Condition & Identity & Overall & Request (\%)\\\midrule",
+    ]
+    for data,targets,name in variants:
+        if name not in by_name:
+            continue
+        report = by_name[name]
+        scores = report["models"][1]["arms"]["interactive_agent"]
+        behavior = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
+        values = [100*scores["by_task"][task]["label_agreement"] for task in ("state","identity")]
+        values += [100*scores["label_agreement"],100*behavior["episodes_with_request"]/behavior["episodes"]]
+        if data=="Mixed-task":
             lines.append(r"\midrule")
-        lines.append(r"\multicolumn{11}{l}{\emph{"+NAMES[model]+r"}}\\")
-        group=groups[model]
-        rows=[("Before SFT",group[0]["models"][0]["arms"],group[0]["efficiency"][0]["arms"])]
-        rows += [(labels.get(r["models"][1]["name"],r["models"][1]["name"]) +
-                  (r"$^{*}$" if initial_rl_checkpoint(r) else ""),
-                  r["models"][1]["arms"],r["efficiency"][1]["arms"]) for r in group]
-        for label,arms,costs in rows:
-            lines.append(label+" & "+" & ".join(comparison_cells(comparison_values(arms,costs)))+r"\\")
-    return "\n".join(lines+[r"\bottomrule",r"\end{tabular}",r"\end{minipage}",r"\end{table*}"])+"\n"
+        lines.append(data+" & "+targets+" & "+" & ".join(f"{v:.1f}" for v in values)+r"\\")
+    return "\n".join(lines+[r"\bottomrule",r"\end{tabular}\end{minipage}\end{table*}"])+"\n"
 
 
 if __name__ == "__main__":

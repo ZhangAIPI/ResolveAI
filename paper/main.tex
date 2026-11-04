@@ -387,7 +387,7 @@ Completion rates and latency distributions are reported in the supplement.
 % adaptation-results-start
 \paragraph{Supervised adaptation.}
 
-We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, freezing the base and vision weights. Identity SFT uses CO3D identity/acquisition trajectories. Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task. Training and validation images are disjoint from evaluation. All runs use rank 32 and a learning rate of \(10^{-4}\), with at most 200 updates and checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; the supplement gives stopping steps, data construction and training details.
+We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, freezing the base and vision weights. Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task. Training and validation images are disjoint from evaluation. All runs use rank 32 and a learning rate of \(10^{-4}\), with at most 200 updates and checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; the supplement gives stopping steps, data construction and training details.
 
 \paragraph{Large gains can reflect easier completion.}
 
@@ -395,23 +395,17 @@ Qwen2.5-VL-7B improves from 3.8\% to 73.7\% with tools, and from 15.8\% to 69.9\
 
 All three mixed-task adapters finish the initially sufficient cases without intermediate tools. They shorten the interaction, but higher accuracy in this setting alone does not show better acquisition of missing evidence.
 
-\paragraph{Action supervision changes the stopping policy.}
+In Obtainable, the 8B SFT policy requests photographs in 82 cases, all concerning object condition; the 2B and 7B SFT policies make no requests. Training-data and action-supervision ablations are given in Table~\ref{tab:training-ablation}.
 
-On the 8B identity training subset, supervising only final decisions yields 68.9\% with tools, compared with 78.5\% when acquisition actions are also targets. The mixed-task comparison reverses this ordering: finish-only reaches 81.3\%, compared with 79.9\% for full-trajectory supervision.
+\paragraph{Reinforcement learning.}
 
-Finish-only retains the same public histories at the final decision but removes acquisition-action targets. The runs share an update limit rather than matched target-token compute.
-
-In Obtainable, identity and mixed-task SFT request photographs in 153 and 82 cases, respectively; these requests all concern object condition. Neither finish-only adapter requests photographs. The 2B and 7B mixed-task adapters also make no requests. Supervising actions therefore affects whether the model seeks another observation, but the effect on initially sufficient verification is not uniformly positive.
-
-\paragraph{Online reinforcement learning adds little in this trial.}
-
-GRPO continues the mixed-task SFT adapters for 64 groups of four sampled tool trajectories. The reference adapter remains frozen. Source-derived correctness and action costs determine rewards; eight held-out source families, evaluated across all four access versions, select the checkpoint. No benchmark outcome enters optimization or checkpoint selection.
+We apply GRPO either directly to the pretrained base (RL) or after SFT (SFT$\to$RL), using 64 groups of four sampled tool trajectories. Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards; eight held-out source families, evaluated across all four access versions, select the checkpoint. No benchmark outcome enters optimization or checkpoint selection.
 
 For 2B, interactive accuracy changes from 71.8\% to 72.2\%---1 additional correct answer on the fixed cohort---and the policy still requests no photographs.
 
 For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. Its 79.9\% row in Table~\ref{tab:sft} therefore reports the initialization, rather than an improvement due to RL.
 
-These single-run results do not establish an acquisition benefit from the current RL setup.
+The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.
 % adaptation-results-end
 
 \section*{LLM Usage Statement}

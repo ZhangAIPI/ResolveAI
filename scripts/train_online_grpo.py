@@ -14,15 +14,15 @@ import shutil
 import time
 
 import torch
-from peft import PeftModel
+from peft import LoraConfig, PeftModel, get_peft_model
 from transformers import AutoModelForImageTextToText, AutoProcessor
 
 from resolveai.conversation import Conversation
 from resolveai.environment import Environment
 from resolveai.grounding_tools import FrozenGrounding
-from resolveai.model_processing import chat_inputs
+from resolveai.model_processing import chat_inputs, processor_options
 from resolveai.policy_gradient import group_advantages, grpo_token_loss, trajectory_reward
-from resolveai.vlm_worker import decode_tool_call, generation_eos_ids, materialize
+from resolveai.vlm_worker import decode_tool_call, generation_eos_ids, materialize, portable_tools
 
 
 def sha(path):
@@ -49,6 +49,32 @@ def token_logps(model, turn):
     return logits.float().log_softmax(-1).gather(-1, target.unsqueeze(-1)).squeeze()
 
 
+
+def policy_inputs(processor, public):
+    """Use exactly the native/portable transport selected by the evaluation worker."""
+    template = processor.chat_template or ""
+    native = isinstance(template, str) and "tools" in template and "tool_calls" in template
+    adapter = "native" if native else "portable"
+    messages = materialize(public["messages"])
+    if not native:
+        messages = portable_tools(messages, public["tools"], assistant_prefix=True)
+    batch = chat_inputs(processor, messages, tools=public["tools"] if native else None)
+    prefix = '' if native else '<tool_call>\n{"name":'
+    if prefix:
+        ids = processor.tokenizer(prefix, add_special_tokens=False, return_tensors="pt").input_ids
+        batch["input_ids"] = torch.cat([batch["input_ids"], ids], -1)
+        batch["attention_mask"] = torch.cat([batch["attention_mask"], torch.ones_like(ids)], -1)
+        for key in ("token_type_ids", "mm_token_type_ids"):
+            if key in batch:
+                batch[key] = torch.cat([batch[key], torch.zeros_like(ids)], -1)
+    return batch, prefix, adapter
+
+
+def assert_unadapted(model):
+    matrices = [value for name,value in model.named_parameters() if ".lora_B.default." in name]
+    if not matrices or any(torch.count_nonzero(value).item() for value in matrices):
+        raise ValueError("RL-only initialization must have zero-output LoRA updates")
+
 def rollout(model, processor, case, grounding, *, sample, keep_tokens):
     env = Environment(case, case["asset_root"], 12, grounding_backend=grounding)
     session = Conversation(env)
@@ -58,7 +84,7 @@ def rollout(model, processor, case, grounding, *, sample, keep_tokens):
     for _ in range(8):
         # No case metadata, source label or reward is passed to the processor.
         public = session.public()
-        batch = chat_inputs(processor, materialize(public["messages"]), tools=public["tools"])
+        batch, prefix, adapter = policy_inputs(processor, public)
         if batch["input_ids"].shape[1] > 8192:
             session.termination = "context_limit"
             break
@@ -71,10 +97,10 @@ def rollout(model, processor, case, grounding, *, sample, keep_tokens):
         tokens = generated[0, batch["input_ids"].shape[1]:].detach().cpu()
         if keep_tokens:
             turns.append({"batch":{key:value.detach().cpu() for key,value in batch.items()}, "tokens":tokens})
-        raw = processor.tokenizer.decode(tokens, skip_special_tokens=True)
+        raw = prefix + processor.tokenizer.decode(tokens, skip_special_tokens=True)
         raw_calls.append(raw)
         try:
-            call, text = decode_tool_call(raw, public["tools"], "native", model.config.model_type, True)
+            call, text = decode_tool_call(raw, public["tools"], adapter, model.config.model_type, True)
         except (ValueError, TypeError, KeyError, json.JSONDecodeError):
             session.invalid_output(raw)
         else:
@@ -109,34 +135,46 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--groups", type=int, default=64)
     parser.add_argument("--group-size", type=int, default=4)
+    parser.add_argument("--from-base", action="store_true", help="Skip SFT; use - for the sft_run argument")
     args = parser.parse_args()
     if not os.environ.get("SLURM_JOB_ID") or not torch.cuda.is_available():
         parser.error("Run on a retained allocated GPU")
     if args.groups < 1 or args.group_size < 2:
         parser.error("Positive groups and at least two samples are required")
-    # Wait for the SFT checkpoint without treating its benchmark score as training feedback.
-    waiting = time.monotonic()
-    while True:
-        try:
-            sft = json.loads((args.sft_run/"complete.json").read_text())
-            break
-        except (FileNotFoundError, json.JSONDecodeError):
-            if time.monotonic()-waiting > 21600:
-                raise TimeoutError("SFT checkpoint was not ready within six hours")
-            print(json.dumps({"stage":"waiting_for_sft_checkpoint"}), flush=True)
-            time.sleep(20)
     torch.set_num_threads(4)
     torch.manual_seed(101)
     random.seed(101)
     spec = json.loads(args.model_spec.read_text())
-    sft_manifest = json.loads((args.sft_run/"training_manifest.json").read_text())
-    if sft_manifest["configuration"]["base_revision"] != spec["revision"]:
-        raise ValueError("SFT and RL base revisions differ")
-    initial = Path(sft["adapter"])
-    if sha(initial/"adapter_model.safetensors") != sft["adapter_sha256"]:
-        raise ValueError("SFT adapter changed")
-    if Path(sft_manifest["configuration"]["base_model"]).resolve() != Path(spec["path"]).resolve():
-        raise ValueError("SFT and RL base paths differ")
+    initial = None
+    sft = None
+    rank = 32
+    if not args.from_base:
+        waiting = time.monotonic()
+        while True:
+            try:
+                sft = json.loads((args.sft_run/"complete.json").read_text())
+                break
+            except (FileNotFoundError, json.JSONDecodeError):
+                if time.monotonic()-waiting > 21600:
+                    raise TimeoutError("SFT checkpoint was not ready within six hours")
+                print(json.dumps({"stage":"waiting_for_sft_checkpoint"}), flush=True)
+                time.sleep(20)
+        sft_manifest = json.loads((args.sft_run/"training_manifest.json").read_text())
+        if sft_manifest["configuration"]["base_revision"] != spec["revision"]:
+            raise ValueError("SFT and RL base revisions differ")
+        initial = Path(sft["adapter"])
+        if sha(initial/"adapter_model.safetensors") != sft["adapter_sha256"]:
+            raise ValueError("SFT adapter changed")
+        if Path(sft_manifest["configuration"]["base_model"]).resolve() != Path(spec["path"]).resolve():
+            raise ValueError("SFT and RL base paths differ")
+        rank = sft_manifest["configuration"]["rank"]
+    processor_path = initial or Path(spec["path"])
+    processor = AutoProcessor.from_pretrained(processor_path,max_pixels=512*512,min_pixels=48*48,
+                                              **processor_options(processor_path))
+    template = processor.chat_template or ""
+    adapter = "native" if isinstance(template,str) and "tools" in template and "tool_calls" in template else "portable"
+    if sft and adapter != sft_manifest["configuration"].get("tool_adapter",adapter):
+        raise ValueError("SFT and RL tool transports differ")
     data_manifest = json.loads((args.data/"manifest.json").read_text())
     for split,checksum in data_manifest["files"].items():
         if sha(args.data/(split+"_cases.json")) != checksum:
@@ -154,12 +192,13 @@ def main():
     validation = [case for family in val_families for case in validation if case["family_id"]==family]
     args.output.mkdir(parents=True, exist_ok=True)
     config = {"base_model":spec["path"],"base_revision":spec["revision"],
-        "initial_adapter_sha256":sft["adapter_sha256"],"data_sha256":sha(args.data/"manifest.json"),
+        "initial_adapter_sha256":sft["adapter_sha256"] if sft else None,
+        "initialization":"base" if args.from_base else "sft","data_sha256":sha(args.data/"manifest.json"),
         "groups":args.groups,"group_size":args.group_size,"ppo_epochs":2,"clip":.2,"beta":.02,
          "learning_rate":1e-5,"seed":101,"reward_scaling":"none; group mean baseline",
         "sampling":{"temperature":1.0,"top_p":1.0,"top_k":0,"repetition_penalty":1.0},
-        "budget":12,"image_max_pixels":512*512,"tool_adapter":"native","dropout":0.0,
-        "lora_rank":sft_manifest["configuration"]["rank"],
+        "budget":12,"image_max_pixels":512*512,"tool_adapter":adapter,"dropout":0.0,
+        "lora_rank":rank,
         "grounding_manifest":json.loads((args.grounding/"manifest.json").read_text()),"max_turns":8,"max_input_tokens":8192,"max_output_tokens":384,
         "validation_cases":[case["case_id"] for case in validation],
         "checkpoint_selection":"Held-out source success, then cost-aware reward; no benchmark feedback",
@@ -177,13 +216,28 @@ def main():
             raise ValueError("Completed RL adapter changed")
         print(json.dumps(complete), flush=True)
         return
-    processor = AutoProcessor.from_pretrained(initial,max_pixels=512*512,min_pixels=48*48)
-    if not ("tools" in processor.chat_template and "tool_calls" in processor.chat_template):
-        raise ValueError("This RL pilot requires a native tool template")
     base = AutoModelForImageTextToText.from_pretrained(spec["path"],
         dtype=torch.bfloat16,device_map={"":0},attn_implementation="sdpa")
     latest = args.output/"latest"
-    model = PeftModel.from_pretrained(base,latest if latest.exists() else initial,is_trainable=True)
+    if args.from_base:
+        initial = args.output/"initial"
+        if latest.exists():
+            if not initial.exists():
+                raise ValueError("RL-only resume lost its reference initialization")
+            model = PeftModel.from_pretrained(base,latest,is_trainable=True)
+        elif initial.exists():
+            model = PeftModel.from_pretrained(base,initial,is_trainable=True)
+            assert_unadapted(model)
+        else:
+            model = get_peft_model(base,LoraConfig(r=rank,lora_alpha=64,lora_dropout=0.,
+                bias="none",task_type="CAUSAL_LM",
+                target_modules=r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj)$"))
+            assert_unadapted(model)
+            save_policy(model,processor,initial,0)
+        if manifest_path.exists() and previous["initialization"]["reference_adapter_sha256"] != sha(initial/"adapter_model.safetensors"):
+            raise ValueError("RL-only reference initialization changed")
+    else:
+        model = PeftModel.from_pretrained(base,latest if latest.exists() else initial,is_trainable=True)
     model.load_adapter(initial,adapter_name="reference",is_trainable=False)
     for module in model.modules():
         if isinstance(module,torch.nn.Dropout):
@@ -203,8 +257,10 @@ def main():
         optimizer.load_state_dict(payload["optimizer"])
         torch.set_rng_state(payload["torch_rng"])
         torch.cuda.set_rng_state_all(payload["cuda_rng"])
-    manifest_path.write_text(json.dumps({"configuration":config,"data":{**data_manifest,"adaptation_name":"Online GRPO"},
-        "script_sha256":sha(Path(__file__)),"gpu":torch.cuda.get_device_name(0),
+    manifest_path.write_text(json.dumps({"configuration":config, "data":{**data_manifest,"adaptation_name":"RL only" if args.from_base else "Online GRPO"},
+        "script_sha256":sha(Path(__file__)),"initialization":{"sft_used":not args.from_base,
+            "reference_adapter":str(initial),"reference_adapter_sha256":sha(initial/"adapter_model.safetensors")},
+        "gpu":torch.cuda.get_device_name(0),
         "trainable_parameters":sum(p.numel() for p in parameters),
         "versions":{"torch":torch.__version__,"transformers":__import__("transformers").__version__,
                     "peft":__import__("peft").__version__}},indent=2)+"\n")

@@ -53,6 +53,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repository",type=Path)
     parser.add_argument("runtime",type=Path)
+    parser.add_argument("--once",action="store_true")
     args = parser.parse_args()
     if os.getenv("SLURMD_NODENAME") != "macula":
         parser.error("Use a CPU-only allocation on the retained GPU host")
@@ -88,12 +89,14 @@ def main():
                     groups.append([("SFT",sft),("Selected GRPO",selected),("Final GRPO",final)])
                     changes[target]=json.dumps(final,indent=2)+"\n"
                 if not groups:
+                    if args.once:
+                        return
                     time.sleep(30)
                     continue
                 signature=hashlib.sha256(json.dumps([g[-1][1]["checkpoint"]["adapter_sha256"] for g in groups]).encode()).hexdigest()
                 state_path=root/"final-diagnostics-published.json"
                 if state_path.exists() and json.loads(state_path.read_text()).get("signature")==signature:
-                    if ready:
+                    if ready or args.once:
                         return
                     time.sleep(30)
                     continue
@@ -145,12 +148,14 @@ def main():
                 synchronize(repo,runtime,"6ae80679a4c7a64df04ac5b8")
                 state_path.write_text(json.dumps({"signature":signature,"complete":ready},indent=2)+"\n")
                 print(json.dumps({"final_rl_diagnostics":"published","backbones":len(groups),"all_complete":ready}),flush=True)
-                if ready:
+                if ready or args.once:
                     return
                 time.sleep(30)
             except Exception as error:
                 message=str(error) if isinstance(error,(RuntimeError,ValueError)) else type(error).__name__
                 print(json.dumps({"diagnostics_waiting":message}),flush=True)
+                if args.once:
+                    raise SystemExit(1)
                 time.sleep(30)
 
 

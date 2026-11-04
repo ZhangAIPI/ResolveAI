@@ -5,7 +5,7 @@ import sqlite3
 import tempfile
 import unittest
 from scripts.watch_adaptation_results import complete_cohort, replace_block
-from scripts.score_sft_comparison import render_adaptations, initial_rl_checkpoint
+from scripts.score_sft_comparison import render_adaptations, initial_rl_checkpoint, core_stages
 
 
 class PublicationTests(unittest.TestCase):
@@ -31,6 +31,24 @@ class PublicationTests(unittest.TestCase):
         final = {**selected, "checkpoint":{**selected["checkpoint"],"evaluated_group":64}}
         self.assertFalse(initial_rl_checkpoint(final))
         self.assertEqual(selected["checkpoint"]["state"]["best_group"],0)
+
+
+    def test_primary_stages_are_predefined_not_selected_by_test_accuracy(self):
+        def report(name, config, **extra):
+            return {"training":{"configuration":config,**extra},
+                    "models":[{},{"name":name,"score":0.99 if name=="Acquisition SFT" else 0.1}]}
+        sft=report("Mixed-source SFT",{})
+        direct=report("RL only",{"groups":64,"initialization":"base"})
+        continued=report("Online GRPO",{"groups":64,"initialization":"sft"})
+        ablation=report("Acquisition SFT",{})
+        diagnostic=report("Online GRPO final",{"groups":64},evaluation_checkpoint_policy={})
+        selected=core_stages([ablation,sft,direct,continued,diagnostic])
+        self.assertEqual(set(selected),{"SFT","RL","SFT+RL"})
+        self.assertIs(selected["SFT"],sft)
+        self.assertIs(selected["RL"],direct)
+        self.assertIs(selected["SFT+RL"],continued)
+        with self.assertRaisesRegex(ValueError,"More than one"):
+            core_stages([sft,sft])
 
 
     def test_result_block_preserves_surrounding_edits(self):

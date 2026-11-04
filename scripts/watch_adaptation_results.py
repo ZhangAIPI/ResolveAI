@@ -66,7 +66,7 @@ def result_text(entries):
     parts = [
         r"\paragraph{Supervised adaptation.}",
         "We train attention LoRA adapters for Qwen3-VL-2B, Qwen3-VL-8B and Qwen2.5-VL-7B, "
-        "freezing the base and vision weights. Identity SFT uses CO3D identity/acquisition trajectories. "
+        "freezing the base and vision weights. "
         "Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\\cite{visa}, "
         "with 360 validation decisions per task. Training and validation images are disjoint from evaluation. "
         "All runs use rank 32 and a learning rate of \\(10^{-4}\\), with at most 200 updates and "
@@ -92,34 +92,18 @@ def result_text(entries):
     parts += [r"\paragraph{Large gains can reflect easier completion.}", " ".join(observations),
               "All three mixed-task adapters finish the initially sufficient cases without intermediate tools. "
               "They shorten the interaction, but higher accuracy in this setting alone does not show better acquisition of missing evidence."]
-    controls = []
-    identity, identity_finish, mixed_finish = "qwen3_acquisition_sft", "qwen3_terminal_sft", "qwen3_mixed_terminal_sft"
-    if identity in reports and identity_finish in reports:
-        controls.append(
-            f"On the 8B identity training subset, supervising only final decisions yields "
-            f"{accuracy(identity_finish):.1f}\\% with tools, compared with {accuracy(identity):.1f}\\% "
-            "when acquisition actions are also targets.")
-    if mixed8 in reports and mixed_finish in reports:
-        controls.append(
-            f"The mixed-task comparison reverses this ordering: finish-only reaches {accuracy(mixed_finish):.1f}\\%, "
-            f"compared with {accuracy(mixed8):.1f}\\% for full-trajectory supervision.")
-    if controls:
-        parts += [r"\paragraph{Action supervision changes the stopping policy.}",
-                  " ".join(controls),
-                  "Finish-only retains the same public histories at the final decision but removes acquisition-action targets. "
-                  "The runs share an update limit rather than matched target-token compute."]
-    if identity in reports and mixed8 in reports:
+    if mixed8 in reports:
         parts.append(
-            f"In Obtainable, identity and mixed-task SFT request photographs in {requests(identity)} and "
-            f"{requests(mixed8)} cases, respectively; these requests all concern object condition. "
-            "Neither finish-only adapter requests photographs. The 2B and 7B mixed-task adapters also make no requests. "
-            "Supervising actions therefore affects whether the model seeks another observation, "
-            "but the effect on initially sufficient verification is not uniformly positive.")
+            f"In Obtainable, the 8B SFT policy requests photographs in {requests(mixed8)} cases, "
+            "all concerning object condition; the 2B and 7B SFT policies make no requests. "
+            "Training-data and action-supervision ablations are given in "
+            "Table~\\ref{tab:training-ablation}.")
     rl_keys = [key for key in ("qwen3_2b_grpo","qwen3_8b_grpo") if key in reports]
     if rl_keys:
-        parts += [r"\paragraph{Online reinforcement learning adds little in this trial.}",
-                  "GRPO continues the mixed-task SFT adapters for 64 groups of four sampled tool trajectories. "
-                  "The reference adapter remains frozen. Source-derived correctness and action costs determine rewards; "
+        parts += [r"\paragraph{Reinforcement learning.}",
+                  "We apply GRPO either directly to the pretrained base (RL) or after SFT "
+                  "(SFT$\\to$RL), using 64 groups of four sampled tool trajectories. "
+                  "Each run freezes its own initial policy as the reference. Source-derived correctness and action costs determine rewards; "
                   "eight held-out source families, evaluated across all four access versions, select the checkpoint. "
                   "No benchmark outcome enters optimization or checkpoint selection."]
         if "qwen3_2b_grpo" in reports:
@@ -137,22 +121,41 @@ def result_text(entries):
                     "rather than an improvement due to RL.")
             else:
                 parts.append(f"The selected 8B GRPO policy scores {accuracy(key):.1f}\\% with tools.")
-        parts.append("These single-run results do not establish an acquisition benefit from the current RL setup.")
+        additions = []
+        for key in ("qwen25_grpo","qwen25_rl_only","qwen3_2b_rl_only","qwen3_8b_rl_only"):
+            if key not in reports:
+                continue
+            report = reports[key]
+            from scripts.paper_result_table import NAMES
+            model = NAMES[report["base_model_id"]]
+            stage = "RL" if report["training"]["configuration"].get("initialization") == "base" else "SFT$\\to$RL"
+            additions.append(f"{model} reaches {accuracy(key):.1f}\\% with {stage}.")
+            if report["checkpoint"]["state"]["best_group"] == 0:
+                additions.append("Validation retains that run's initial policy.")
+        if additions:
+            parts.append(" ".join(additions))
+        parts.append("The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.")
     return "\n\n".join(parts)
 
 
 def detail_text(entries):
-    lines = ["\\section{Additional Adaptation Runs}"]
+    lines = ["\\section{Training Data and Action Supervision}",
+             "\\input{tables/training_ablation}",
+             "Identity-only SFT uses CO3D trajectories; mixed-task SFT adds balanced condition supervision. "
+             "The paired finish-only controls retain public histories but remove acquisition-action targets. "
+             "These controls have the same update cap rather than matched target-token compute.",
+             "\\subsection{Training Details}"]
     for entry,report in entries:
         if not entry.get("new_analysis"):
             continue
         config = report["training"]["configuration"]
         if "groups" in config:
             lines.append(
-                entry["description"] + f" continues mixed-task SFT for {config['groups']} sampled groups "
+                entry["description"] + (" starts from the pretrained base without SFT, for " if config.get("initialization")=="base" else " continues mixed-task SFT for ")
+                +f"{config['groups']} sampled groups "
                 +f"of {config['group_size']} trajectories, with two clipped policy updates per nonconstant-reward group. "
                 +f"The learning rate is \\({config['learning_rate']:g}\\), clipping threshold 0.2 and reference penalty 0.02. "
-                +"The reference is the frozen SFT adapter. Training sees only public observations; private source annotations enter as scalar rewards. "
+                +"The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. "
                 +"A fixed held-out set of eight source families across four access versions selects the checkpoint. "
                 +"The benchmark supplies no training or checkpoint-selection feedback. "
                 +f"The run performs {report['checkpoint']['state']['optimizer_updates']} optimizer updates "
@@ -180,7 +183,9 @@ def run(command,cwd,env=None):
 
 def publish(repo,runtime,entries):
     table = render_adaptations([report for _,report in entries])
-    changes = {"paper/tables/sft_results.tex":table}
+    from scripts.score_sft_comparison import render_training_ablation
+    changes = {"paper/tables/sft_results.tex":table,
+               "paper/tables/training_ablation.tex":render_training_ablation([report for _,report in entries])}
     for entry,report in entries:
         changes[entry["public_report"]] = json.dumps(report,indent=2)+"\n"
     body = result_text(entries)
