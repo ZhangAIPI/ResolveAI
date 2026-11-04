@@ -318,6 +318,10 @@ Qwen3-VL-8B with identity terminal-only SFT completes 125 optimizer steps, using
 
 Finish-only retains complete public histories at the final decision, but removes acquisition-action prediction targets. It uses the same update limit, not matched target-token compute, as the corresponding full-trajectory SFT.
 
+Qwen3-VL-8B with mixed-task terminal-only SFT completes 175 optimizer steps, using the same rank-32 attention adapters and held-out token-loss selection as the other SFT runs. Its data and exact selected checkpoint are recorded with the released comparison.
+
+Finish-only retains complete public histories at the final decision, but removes acquisition-action prediction targets. It uses the same update limit, not matched target-token compute, as the corresponding full-trajectory SFT.
+
 Qwen3-VL-8B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen SFT adapter. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions selects the checkpoint. The benchmark supplies no training or checkpoint-selection feedback. The run performs 24 optimizer updates and selects group 0; group zero denotes the initial SFT adapter.
 
 All rows retain the fixed paper cohort, failure accounting and inference allowances. Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.
