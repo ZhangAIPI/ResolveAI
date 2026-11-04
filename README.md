@@ -33,7 +33,7 @@
 | GPT-6.1 Terra | 65.1 | 70.8 |
 | GPT-4.1 mini | 80.9 | 67.5 |
 | GPT-6 Luna | 59.3 | 67.5 |
-| GPT-6 Luna (Decisions) | 55.5 | 不适用 |
+| GPT-6 Luna (Decisions) | 55.5 | 57.4 |
 | GPT-5.4 mini | 50.7 | 75.1 |
 | GPT-6.1 Sol (low) | 77.5 | 74.6 |
 
