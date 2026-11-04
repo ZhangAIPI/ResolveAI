@@ -19,7 +19,7 @@ def render(reports):
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
         r"\begin{minipage}{.94\textwidth}\centering",
         r"\caption{\textbf{Checkpoint choice after online GRPO.}",
-        r"SFT and validation-selected GRPO match Table~\ref{tab:sft}; Final GRPO always uses group 64.",
+        r"SFT and validation-selected GRPO match the main training comparison; Final GRPO always uses group 64.",
         r"Condition, Identity and Overall are source-label accuracy (\%) on initially sufficient cases.",
         r"Time (s) and output tokens are means over all attempts.",
         r"Request (\%) is the fraction requesting a photograph in Obtainable, a different access version.",

@@ -97,7 +97,7 @@ def result_text(entries):
             f"In Obtainable, the 8B SFT policy requests photographs in {requests(mixed8)} cases, "
             "all concerning object condition; the 2B and 7B SFT policies make no requests. "
             "Training-data and action-supervision ablations are given in "
-            "Table~\\ref{tab:training-ablation}.")
+            "the supplementary material.")
     rl_keys = [key for key in ("qwen3_2b_grpo","qwen3_8b_grpo") if key in reports]
     if rl_keys:
         parts += [r"\paragraph{Reinforcement learning.}",
@@ -213,7 +213,7 @@ def publish_changes(repo,runtime,changes,message):
         for name in ("main.pdf","supplementary.pdf"):
             with fitz.open(Path(temp)/name) as doc:
                 text = "\n".join(p.get_text() for p in doc)
-                if "[?]" in text or "\ufffd" in text or doc.metadata.get("author"):
+                if "[?]" in text or "??" in text or "\ufffd" in text or doc.metadata.get("author"):
                     raise ValueError("Compiled adaptation paper failed reference or anonymity checks")
         for name,content in changes.items():
             (repo/name).write_text(content)

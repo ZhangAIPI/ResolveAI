@@ -53,7 +53,7 @@ def synchronize(repository,runtime,project):
             call(["pdf",project,"-o",str(pdf),"-r",source])
             with fitz.open(pdf) as document:
                 text="\n".join(page.get_text() for page in document)
-                if "[?]" in text or "\ufffd" in text or document.metadata.get("author"):
+                if "[?]" in text or "??" in text or "\ufffd" in text or document.metadata.get("author"):
                     raise RuntimeError("Exported PDF failed text or anonymity checks")
                 exported.append({"root":source,"pages":len(document)})
             shutil.copy2(pdf,Path("/u/zzh136/Documents/Codex")/name)
