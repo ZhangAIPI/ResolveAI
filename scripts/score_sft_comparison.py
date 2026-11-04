@@ -211,51 +211,60 @@ def core_stages(group):
 
 
 def render_adaptations(reports):
-    """One model per row; separate panels compare accuracy and interaction cost."""
+    """Show validation-selected training stages and a labeled fixed-final diagnostic."""
     from scripts.paper_result_table import ORDER
     groups = adaptation_groups(reports)
-    stages = ("Base","SFT","RL","SFT+RL")
-    headers = ["Base","SFT","RL",r"SFT$\to$RL"]
+    stages = ("Base","SFT","RL","SFT+RL","Final")
+    headers = ["Base","SFT","RL",r"SFT$\to$RL",r"Final$^{\dagger}$"]
     lines = [
-        r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}",
-        r"\begin{minipage}{.68\textwidth}\centering",
+        r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
+        r"\begin{minipage}{.94\textwidth}\centering",
         r"\caption{\textbf{Effect of policy training.}",
-        r"SFT uses balanced identity and condition data; RL applies GRPO directly to the base; SFT$\to$RL continues the SFT adapter.",
-        r"Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.",
-        r"-- denotes an unfinished comparison. $^{*}$Validation retained the initial policy for that RL run.",
-        r"Training-data and action-target ablations are reported separately in the supplement.}",
-        r"\label{tab:sft}",r"\begin{tabular}{@{}l*{8}{r}@{}}",r"\toprule",
+        r"RL applies GRPO directly to the base; SFT$\to$RL continues mixed-task SFT. These columns use validation-selected checkpoints.",
+        r"$^{\dagger}$Final evaluates SFT$\to$RL at the fixed training endpoint (group 64), independently of validation selection; it is a diagnostic and is excluded from boldface comparisons.",
+        r"Accuracy and cost follow Table~\ref{tab:benchmark}; best validation-selected accuracy is bold within each model and tool setting.",
+        r"-- denotes an unfinished comparison. $^{*}$Validation retained the initial SFT policy.",
+        r"Training-data, action-target and checkpoint analyses appear in the supplement.}",
+        r"\label{tab:sft}",r"\begin{tabular}{@{}l*{10}{r}@{}}",r"\toprule",
     ]
     for panel in ("accuracy","cost"):
         if panel == "accuracy":
-            lines += [r"\multicolumn{9}{l}{\emph{(a) Overall accuracy (\%)}}\\",
-                      r" & \multicolumn{4}{c}{No tools} & \multicolumn{4}{c}{With tools}\\"]
+            lines += [r"\multicolumn{11}{l}{\emph{(a) Overall accuracy (\%)}}\\",
+                      r" & \multicolumn{5}{c}{No tools} & \multicolumn{5}{c}{With tools}\\"]
         else:
             lines += [r"\addlinespace[6pt]",
-                      r"\multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\",
-                      r" & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\"]
-        lines += [r"\cmidrule(lr){2-5}\cmidrule(l){6-9}",
+                      r"\multicolumn{11}{l}{\emph{(b) Interaction cost with tools}}\\",
+                      r" & \multicolumn{5}{c}{Time per case (s)} & \multicolumn{5}{c}{Output tokens per case}\\"]
+        lines += [r"\cmidrule(lr){2-6}\cmidrule(l){7-11}",
                   "Model & "+" & ".join(headers+headers)+r"\\",r"\midrule"]
         for model in sorted(groups,key=ORDER.index):
             group = groups[model]
             selected = core_stages(group)
+            diagnostics = [r for r in group if "evaluation_checkpoint_policy" in r["training"]
+                           and r["training"]["configuration"].get("initialization","sft") == "sft"
+                           and r["checkpoint"].get("evaluated_group") == 64]
+            if len(diagnostics) > 1:
+                raise ValueError("More than one fixed-final SFT-to-RL diagnostic")
+            displayed = {**selected}
+            if diagnostics:
+                displayed["Final"] = diagnostics[0]
             base = group[0]
             cells = []
             for measurement in (("initial_text","interactive_agent") if panel=="accuracy"
                                 else ("mean_wall_s","mean_output_tokens")):
                 for stage in stages:
-                    report = base if stage=="Base" else selected.get(stage)
+                    report = base if stage=="Base" else displayed.get(stage)
                     if report is None:
                         cells.append("--")
                         continue
                     index = 0 if stage=="Base" else 1
                     if panel=="accuracy":
                         value = report["models"][index]["arms"][measurement]["label_agreement"]*100
-                        marker = r"$^{*}$" if stage!="Base" and initial_rl_checkpoint(report) else ""
+                        marker = r"$^{*}$" if stage not in ("Base","Final") and initial_rl_checkpoint(report) else ""
                         available = [base["models"][0]["arms"][measurement]["label_agreement"]]
                         available += [r["models"][1]["arms"][measurement]["label_agreement"] for r in selected.values()]
                         number = f"{value:.1f}"
-                        if abs(value - 100*max(available)) < 1e-8:
+                        if stage != "Final" and abs(value - 100*max(available)) < 1e-8:
                             number = r"\textbf{" + number + "}"
                         cells.append(number+marker)
                     else:

@@ -405,7 +405,7 @@ For 2B, interactive accuracy changes from 71.8\% to 72.2\%---1 additional correc
 
 For 8B, validation retains the initial SFT checkpoint despite 24 subsequent optimizer updates. Its 79.9\% row in Table~\ref{tab:sft} therefore reports the initialization, rather than an improvement due to RL.
 
-A separate diagnostic evaluates the fixed final checkpoint at group 64 (2B: 72.7\%; 8B: 83.7\%). These checkpoints were specified before test scoring and do not replace validation selection in Table~\ref{tab:sft}. For 8B, the validation set retains the initial policy even though the final policy scores higher on the paper cohort. The supplementary material reports checkpoint choice and acquisition behavior together.
+A separate diagnostic evaluates the fixed final checkpoint at group 64 (2B: 72.7\%; 8B: 83.7\%). Table~\ref{tab:sft} reports these fixed endpoints in the Final column alongside the validation-selected checkpoints. For 8B, the validation set retains the initial policy even though the final policy scores higher on the paper cohort. The supplementary material reports checkpoint choice and acquisition behavior together.
 
 The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.
 % adaptation-results-end

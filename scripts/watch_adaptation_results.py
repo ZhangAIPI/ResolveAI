@@ -147,7 +147,7 @@ def result_text(entries):
             parts.append(
                 "A separate diagnostic evaluates the fixed final checkpoint at group 64 ("
                 + "; ".join(final_scores) + "). "
-                "These checkpoints were specified before test scoring and do not replace validation selection in Table~\\ref{tab:sft}. "
+                "Table~\\ref{tab:sft} reports these fixed endpoints in the Final column alongside the validation-selected checkpoints. "
                 "For 8B, the validation set retains the initial policy even though the final policy scores higher on the paper cohort. "
                 "The supplementary material reports checkpoint choice and acquisition behavior together.")
         parts.append("The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.")
