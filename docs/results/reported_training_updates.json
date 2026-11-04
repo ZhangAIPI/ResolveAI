@@ -7,7 +7,8 @@
       "accuracy_percent": 82.9,
       "source": "User-supplied result from another server; exact run artifacts not provided",
       "cost_policy": "Retain previously measured local timing and token counts, as requested",
-      "case_level_results_available": false
+      "case_level_results_available": false,
+      "configuration": "Author confirms all settings and other measurements are unchanged; only the accuracy value is updated."
     }
   ]
 }

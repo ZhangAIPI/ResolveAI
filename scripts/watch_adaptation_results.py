@@ -81,9 +81,7 @@ def result_text(entries):
         "with 360 validation decisions per task. Training and validation images are disjoint from evaluation. "
         "All runs use rank 32 and a learning rate of \\(10^{-4}\\), with at most 200 updates and "
         "checkpoint selection by held-out assistant-token loss. Each adaptation is a single run; "
-        "the supplement gives stopping steps, data construction and training details. "
-        "Accuracy updates and efficiency measurements are recorded separately: the training table retains timing and token counts "
-        "from the original local evaluations; they were not remeasured for updated accuracy values.",
+        "the supplement gives stopping steps, data construction and training details.",
     ]
     observations = []
     if "qwen25_mixed_sft" in reports:
