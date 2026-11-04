@@ -1,5 +1,6 @@
 """Compare candidate source labels on a common cohort; never claim sufficiency accuracy."""
 import argparse
+from contextlib import closing
 from collections import Counter
 from datetime import datetime, timezone
 import json
@@ -33,7 +34,7 @@ def episode_databases(directory):
 def read_rows(path):
     rows = []
     for database in episode_databases(path.parent):
-        with sqlite3.connect(database.resolve().as_uri() + "?mode=ro", uri=True) as db:
+        with closing(sqlite3.connect(database.resolve().as_uri() + "?mode=ro", uri=True)) as db:
             rows.extend(json.loads(row[0]) for row in db.execute("SELECT result FROM episodes"))
     return rows
 

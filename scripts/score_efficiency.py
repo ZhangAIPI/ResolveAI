@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 import sqlite3
 from statistics import mean
-from contextlib import ExitStack
+from contextlib import ExitStack, closing
 from scripts.score_candidate_labels import episode_databases
 
 
@@ -70,7 +70,7 @@ def summarize_run(directory, families, dataset_sha256):
     wanted = set(families)
     groups = {}
     with ExitStack() as stack:
-        databases = [stack.enter_context(sqlite3.connect(path.resolve().as_uri()+"?mode=ro", uri=True))
+        databases = [stack.enter_context(closing(sqlite3.connect(path.resolve().as_uri()+"?mode=ro", uri=True)))
                      for path in episode_databases(directory)]
         for arm in ("initial_text", "full_available_text", "interactive_agent"):
             rows, seen = [], set()

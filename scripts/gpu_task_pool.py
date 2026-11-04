@@ -1,5 +1,6 @@
 """Run dependency-ordered tasks on already allocated GPUs, claiming each task once."""
 import argparse
+from contextlib import closing
 import fcntl
 import hashlib
 import json
@@ -48,9 +49,10 @@ def claim(root, tasks, job_id):
 
 
 def finish(root, task, code):
-    with sqlite3.connect(root / "pool.sqlite", timeout=30) as db:
+    with closing(sqlite3.connect(root / "pool.sqlite", timeout=30)) as db:
         db.execute("UPDATE tasks SET status=?,exit_code=? WHERE id=?",
                    ("completed" if code == 0 else "failed", code, task["id"]))
+        db.commit()
 
 
 def main():
@@ -65,7 +67,7 @@ def main():
         tasks = json.loads((args.root / "tasks.json").read_text())
         selected = claim(args.root, tasks, os.environ["SLURM_JOB_ID"])
         if selected is None:
-            with sqlite3.connect(args.root / "pool.sqlite") as db:
+            with closing(sqlite3.connect(args.root / "pool.sqlite")) as db:
                 states = dict(db.execute("SELECT id,status FROM tasks"))
             if all(states.get(t["id"]) == "completed" for t in tasks):
                 return

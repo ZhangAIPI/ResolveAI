@@ -1,5 +1,6 @@
 """Publish complete fixed-cohort SFT/RL comparisons without rerunning inference."""
 import argparse
+from contextlib import closing
 import fcntl
 import hashlib
 import json
@@ -31,7 +32,7 @@ def complete_cohort(directory, families):
     for path in episode_databases(directory):
         if not path.exists():
             return False
-        with sqlite3.connect(path.resolve().as_uri()+"?mode=ro",uri=True) as db:
+        with closing(sqlite3.connect(path.resolve().as_uri()+"?mode=ro",uri=True)) as db:
             for (raw,) in db.execute("SELECT result FROM episodes"):
                 row = json.loads(raw)
                 key = row["family_id"],row["variant"],row["arm"]
@@ -179,6 +180,7 @@ def main():
     families = json.loads(cohort.read_text())["family_ids"]
     state_path = root/"state.json"
     previous_error = None
+    print(json.dumps({"table2_watcher":"started","policy":"complete fixed cohorts only","gpu_allocation":0}),flush=True)
     while True:
         entries,waiting = [],[]
         try:

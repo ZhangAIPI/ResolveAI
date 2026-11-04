@@ -1,5 +1,6 @@
 """Evaluate disjoint family shards; publish a read-only index after all are complete."""
 import argparse
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -32,7 +33,7 @@ def finalize(output, plan_path, count):
         database = directory / "episodes.sqlite"
         digest = hashlib.sha256()
         actual = set()
-        with sqlite3.connect(database.resolve().as_uri()+"?mode=ro", uri=True) as db:
+        with closing(sqlite3.connect(database.resolve().as_uri()+"?mode=ro", uri=True)) as db:
             for cid,arm,result,trace in db.execute("SELECT * FROM episodes ORDER BY case_id,arm"):
                 row = json.loads(result)
                 if cid != row["case_id"] or arm != row["arm"] or row["family_id"] != cases[cid]["family_id"]:
