@@ -145,7 +145,7 @@ def render(report, efficiency, closed=None):
     has_menu = any(w.get("action_adapter")=="public-menu-v1" for w in api)
     if api and (closed["dataset_sha256"]!=report["dataset_sha256"] or closed["family_ids"]!=report["family_ids"]):
         raise ValueError("API and local-model cohorts differ")
-    api_labels = {"terra-eval":"GPT-6.1 Terra", "gpt61_sol":"GPT-6.1 Sol (low)",
+    api_labels = {"terra-eval":"GPT-6.1 Terra", "gpt61_sol":"GPT-6.1 Sol",
                   "gpt56_sol":"GPT-5.6 Sol", "gpt41":"GPT-4.1", "gpt41_mini":"GPT-4.1 mini",
                   "gpt54_mini":"GPT-5.4 mini", "luna":"GPT-6 Luna",
                   "luna_decisions":"GPT-6 Luna (Decisions)"}
