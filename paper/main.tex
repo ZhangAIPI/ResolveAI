@@ -313,7 +313,7 @@ Table~\ref{tab:benchmark} evaluates nine open-source models: Qwen2.5-VL-7B~\cite
 We additionally evaluate GPT-6.1 Terra, GPT-6 Luna, GPT-6 Luna (Decisions), GPT-5.4 mini, GPT-6.1 Sol (low) through the OpenAI API on the same cases~\cite{openai_api}.
 % api-models-end
 Base checkpoints are evaluated without task demonstrations; supervised adaptation is examined separately in Section~\ref{sec:sft}.
-In \emph{Images only}, a model receives the initial photographs and produces a verdict directly.
+In \emph{No tools}, a model receives the initial photographs and produces a verdict directly.
 In \emph{With tools}, it starts from the same photographs and may inspect, crop, compare or request images before submitting its verdict.
 Models share the tool definitions and costs; their native image processors and supported call formats are retained.
 The two column groups place decisions without and with tools side by side for each model.
@@ -350,6 +350,12 @@ The reported accuracy therefore measures agreement with those labels, rather tha
 Qwen3-VL-8B reaches 82.3\%, compared with 74.6\% from the initial images alone.
 The same comparison raises Qwen3-VL-4B from 33.0\% to 49.3\%, but lowers Qwen3-VL-2B from 60.3\% to 40.7\%.
 Access to the tool interface thus does not produce a uniform benefit, even within one model family.
+
+The API models show the same variation.
+GPT-6.1 Sol scores 77.5\% without tools and 74.6\% with tools, while GPT-5.4 mini improves from 50.7\% to 75.1\%.
+For the latter, both condition accuracy (45.1\% to 70.6\%) and identity accuracy (66.1\% to 87.5\%) increase.
+Its interactive runs make 0.51 non-terminal tool calls per case on average and no photograph requests.
+The improvement therefore occurs during verification of the initial evidence, rather than through acquisition of new photographs.
 
 The task breakdown exposes a further difference.
 For Qwen3.5-9B, tools increase condition accuracy from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
