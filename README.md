@@ -34,6 +34,7 @@
 | GPT-6 Luna | 59.3 | 67.5 |
 | GPT-6 Luna (Decisions) | 55.5 | 不适用 |
 | GPT-5.4 mini | 50.7 | 75.1 |
+| GPT-6.1 Sol (low) | 77.5 | 74.6 |
 
 仅完整固定题组入表。Decisions 为直接分类接口；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。
 <!-- api-results-end -->
