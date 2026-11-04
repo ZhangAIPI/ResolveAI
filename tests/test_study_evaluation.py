@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import tempfile
+import sqlite3
 import unittest
 from types import SimpleNamespace
 from scripts.evaluate_study import normalize_agent_record, Records
@@ -76,6 +77,30 @@ class EvaluationStorageTests(unittest.TestCase):
             reopened = Records(Path(directory))
             self.assertTrue(reopened.has("c", "initial_text"))
             reopened.db.close()
+
+    def test_cached_summary_survives_resume_and_failed_duplicate_insert(self):
+        with tempfile.TemporaryDirectory() as directory:
+            records = Records(Path(directory))
+            row = {"case_id": "c", "arm": "interactive_agent",
+                   "termination": "finished", "errors": 2, "requests": 1,
+                   "source_label": "Supported", "source_label_match": True}
+            records.save(row, {"messages": []})
+            expected = records.summary()
+            self.assertEqual(expected["arms"]["interactive_agent"]["source_label_matches"], 1)
+            expected["arms"]["interactive_agent"]["episodes"] = 99
+            self.assertEqual(records.summary()["episodes"], 1)
+            with self.assertRaises(sqlite3.IntegrityError):
+                records.save(row, {"messages": []})
+            self.assertEqual(records.summary()["arms"]["interactive_agent"]["episodes"], 1)
+            before = records.summary()
+            # summary must neither scan the growing trace database nor modify it.
+            records.db.set_authorizer(lambda *args: sqlite3.SQLITE_DENY)
+            self.assertEqual(records.summary(), before)
+            records.db.set_authorizer(None)
+            records.db.close()
+            resumed = Records(Path(directory))
+            self.assertEqual(resumed.summary(), before)
+            resumed.db.close()
 
 
 if __name__ == "__main__":

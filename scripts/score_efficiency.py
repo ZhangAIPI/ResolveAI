@@ -7,6 +7,8 @@ import math
 from pathlib import Path
 import sqlite3
 from statistics import mean
+from contextlib import ExitStack
+from scripts.score_candidate_labels import episode_databases
 
 
 def episode_usage(result, trace):
@@ -67,11 +69,13 @@ def summarize_run(directory, families, dataset_sha256):
         raise ValueError("Efficiency run uses a different dataset")
     wanted = set(families)
     groups = {}
-    with sqlite3.connect((directory / "episodes.sqlite").resolve().as_uri()+"?mode=ro", uri=True) as db:
+    with ExitStack() as stack:
+        databases = [stack.enter_context(sqlite3.connect(path.resolve().as_uri()+"?mode=ro", uri=True))
+                     for path in episode_databases(directory)]
         for arm in ("initial_text", "full_available_text", "interactive_agent"):
             rows, seen = [], set()
             query = "SELECT result, trace FROM episodes WHERE arm=? AND json_extract(result,'$.variant')='Sufficient'"
-            for raw_result, raw_trace in db.execute(query, (arm,)):
+            for raw_result, raw_trace in (row for db in databases for row in db.execute(query, (arm,))):
                 result = json.loads(raw_result)
                 family = result["family_id"]
                 if family not in wanted:

@@ -10,9 +10,32 @@ import sqlite3
 ARMS = ("initial_text", "full_available_text", "interactive_agent")
 
 
+def episode_databases(directory):
+    index = directory / "shard_index.json"
+    if not index.exists():
+        return [directory / "episodes.sqlite"]
+    aggregate = json.loads((directory / "manifest.json").read_text())["aggregation"]["shards"]
+    entries = json.loads(index.read_text())["shards"]
+    if entries != aggregate:
+        raise ValueError("Shard index differs from aggregate manifest")
+    paths = []
+    for entry in entries:
+        name = entry["directory"]
+        if Path(name).name != name:
+            raise ValueError("Shard directory must be a direct child")
+        shard = directory / name
+        if hashlib.sha256((shard / "manifest.json").read_bytes()).hexdigest() != entry["manifest_sha256"]:
+            raise ValueError("Indexed shard manifest changed")
+        paths.append(shard / "episodes.sqlite")
+    return paths
+
+
 def read_rows(path):
-    with sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True) as db:
-        return [json.loads(row[0]) for row in db.execute("SELECT result FROM episodes")]
+    rows = []
+    for database in episode_databases(path.parent):
+        with sqlite3.connect(database.resolve().as_uri() + "?mode=ro", uri=True) as db:
+            rows.extend(json.loads(row[0]) for row in db.execute("SELECT result FROM episodes"))
+    return rows
 
 
 def summarize(rows):

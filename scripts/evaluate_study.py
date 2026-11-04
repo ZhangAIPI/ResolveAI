@@ -1,6 +1,7 @@
 """Resumable model evaluation on all release versions of the human-study families."""
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -37,6 +38,22 @@ class Records:
             "CREATE TABLE IF NOT EXISTS episodes (case_id TEXT, arm TEXT, result TEXT, trace TEXT, PRIMARY KEY(case_id,arm))"
         )
         self.db.commit()
+        self._summary = {"episodes": 0, "arms": {arm: {
+            "episodes": 0, "finished": 0, "errors": 0, "requests": 0,
+            "known_source_labels": 0, "source_label_matches": 0,
+        } for arm in ARMS}}
+        for (raw,) in self.db.execute("SELECT result FROM episodes"):
+            self._count(json.loads(raw))
+
+    def _count(self, row):
+        group = self._summary["arms"][row["arm"]]
+        self._summary["episodes"] += 1
+        group["episodes"] += 1
+        group["finished"] += row["termination"] == "finished"
+        group["errors"] += row["errors"]
+        group["requests"] += row["requests"]
+        group["known_source_labels"] += row["source_label"] is not None
+        group["source_label_matches"] += row["source_label_match"] is True
 
     def has(self, case_id, arm):
         return (
@@ -53,28 +70,12 @@ class Records:
                 "INSERT INTO episodes VALUES (?,?,?,?)",
                 (row["case_id"], row["arm"], json.dumps(row), json.dumps(saved)),
             )
+        self._count(row)
         self.store.output.unlink(missing_ok=True)
 
     def summary(self):
-        rows = [
-            json.loads(r[0]) for r in self.db.execute("SELECT result FROM episodes")
-        ]
-        groups = {}
-        for arm in ARMS:
-            selected = [r for r in rows if r["arm"] == arm]
-            groups[arm] = {
-                "episodes": len(selected),
-                "finished": sum(r["termination"] == "finished" for r in selected),
-                "errors": sum(r["errors"] for r in selected),
-                "requests": sum(r["requests"] for r in selected),
-                "known_source_labels": sum(
-                    r["source_label"] is not None for r in selected
-                ),
-                "source_label_matches": sum(
-                    r["source_label_match"] is True for r in selected
-                ),
-            }
-        return {"episodes": len(rows), "arms": groups}
+        # A single writer owns this database; resume rebuilds counters once.
+        return deepcopy(self._summary)
 
 
 def main():
@@ -87,6 +88,7 @@ def main():
     p.add_argument("--grounding-root", type=Path, required=True)
     p.add_argument("--shards", type=int, default=1)
     p.add_argument("--shard", type=int, default=0)
+    p.add_argument("--priority-cohort", type=Path, help="Order these fixed families first; retain every planned case")
     args = p.parse_args()
     if not os.getenv("SLURM_JOB_ID"):
         p.error("Run on an allocated GPU node")
@@ -107,7 +109,12 @@ def main():
         for c in json.loads((data / "cases.json").read_text())
         if c["family_id"] in selected
     ]
-    cases.sort(key=lambda c: c["case_id"])
+    priority = None
+    if args.priority_cohort:
+        priority = json.loads(args.priority_cohort.read_text())
+        if priority["dataset_sha256"] != plan["dataset_sha256"] or not set(priority["family_ids"]) <= set(plan["family_ids"]):
+            raise ValueError("Priority cohort differs from the frozen study")
+    cases.sort(key=lambda c: (priority is not None and c["family_id"] not in priority["family_ids"], c["case_id"]))
     args.output.mkdir(parents=True, exist_ok=True)
     config = {
         "protocol": "study-model-eval-v1",
@@ -133,6 +140,8 @@ def main():
         "grounding_manifest": json.loads((args.grounding_root / "manifest.json").read_text()),
         "scope": "Unreviewed diagnosis; actual trajectories can be regraded after human review",
     }
+    if priority is not None:
+        config["priority_cohort_sha256"] = hashlib.sha256(args.priority_cohort.read_bytes()).hexdigest()
     manifest = locked_manifest(args.output / "manifest.json", config)
     records = Records(args.output)
     backend = FrozenGrounding(args.grounding_root, device="cuda:0")
