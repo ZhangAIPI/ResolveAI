@@ -205,6 +205,16 @@ In Missing and Unavailable, the same condition cases attempt a request, receive 
 On Sufficient, the adapter terminates on all 209 cases without intermediate tools.
 These measurements describe the learned interaction pattern, not reviewed evidence acquisition or a causal benefit from the returned pixels.
 
+The mixed-task adapter combines 1,080 CO3D identity/acquisition decisions and 1,080 VisA condition decisions for training, with 360 of each task for validation.
+VisA examples use the official two-class high-shot training partition; no official test rows or anomaly masks enter the model input.
+Source images and categories are separated between training and validation, and image hashes are checked against the evaluation pool.
+The mixed training set contains 1,844 families and 2,160 decisions; validation contains 584 families and 720 decisions.
+It uses the same LoRA rank, learning rate, accumulation, update limit and checkpoint-selection rule as the identity adapter, starting independently from the base.
+In Obtainable, it requests and receives a photograph in 82 condition cases and no identity cases.
+The same 82 cases attempt a request in Missing and Unavailable, receive no key photograph, and submit Need more evidence.
+All initially sufficient cases finish without intermediate tools.
+The paired accuracy, timing, checkpoint and split records are retained separately for both adaptations.
+
 \subsection{Measured inference cost}
 Cost statistics use the same fixed family list as the main accuracy comparison.
 Every attempted episode is retained, including abstentions, incorrect verdicts and failures to finish.

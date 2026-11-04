@@ -357,6 +357,9 @@ For the latter, both condition accuracy (45.1\% to 70.6\%) and identity accuracy
 Its interactive runs make 0.51 non-terminal tool calls per case on average and no photograph requests.
 The improvement therefore occurs during verification of the initial evidence, rather than through acquisition of new photographs.
 
+On the same Luna backbone, Decisions scores 55.5\% directly and 57.4\% when selecting candidate actions, compared with 67.5\% for the native Responses agent.
+The Decisions menu supplies action parameters and citation regions; its score evaluates this constrained interface.
+
 The task breakdown exposes a further difference.
 For Qwen3.5-9B, tools increase condition accuracy from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
 An overall gain can therefore coexist with a decline in cross-image identity judgments.
@@ -381,29 +384,29 @@ Completion rates and latency distributions are reported in the supplement.
 \subsection{Effect of Supervised Fine-Tuning}
 \label{sec:sft}
 \paragraph{Training setup.}
-We fine-tune Qwen3-VL-8B on identity and acquisition trajectories from 1,280 CO3D development families, with 320 category-disjoint families for validation.
-Source sequences and image hashes do not overlap with the evaluation pool.
-Same-sequence views and cross-category negatives provide weak identity targets.
-The training conversations contain actual released photographs and tool feedback, including failed requests.
-We freeze the base model and vision encoder and train rank-32 attention LoRA adapters for 200 updates at a learning rate of \(10^{-4}\).
-The checkpoint is selected by held-out assistant-token loss, without benchmark feedback.
-The supplement gives the trajectory composition and optimization details.
-This is a single training run; evaluation uses greedy decoding.
+We train two independent Qwen3-VL-8B adapters from the same base.
+Identity SFT uses CO3D identity/acquisition trajectories.
+Mixed-task SFT balances 1,080 decisions per task from CO3D and VisA~\cite{visa}, with 360 validation decisions per task.
+Training and validation images are disjoint from evaluation.
+Both runs freeze the base and vision weights and use rank-32 attention LoRA for 200 updates at \(10^{-4}\).
+Checkpoints are selected by held-out assistant-token loss.
+Each adaptation is a single run with source-derived labels; construction details are in the supplement.
 
-\paragraph{Identity supervision does not improve both tasks.}
-Table~\ref{tab:sft} compares the selected adapter with its base, both with and without access to tools.
-With tools, identity accuracy rises from 91.1\% to 98.2\%, but condition accuracy falls from 79.1\% to 71.2\%, reducing overall accuracy from 82.3\% to 78.5\%.
-This single-run result shows a trade-off across tasks after identity-focused training, rather than an overall verification gain.
-The no-tool columns reveal a different effect: direct accuracy rises from 74.6\% to 77.5\%.
-The difference between interactive and direct decisions therefore narrows from 7.7 to 1.0 percentage points after training.
-Mean episode time falls from 16.8 to 11.2 seconds and output length from 283 to 177 tokens.
-The shorter interaction reduces recorded cost while overall answer accuracy declines.
+\paragraph{Better direct answers do not ensure better interaction.}
+Without tools, accuracy rises from 74.6\% to 77.5\% after identity SFT and 78.9\% after mixed-task SFT (Table~\ref{tab:sft}).
+With tools, both adapters improve identity accuracy from 91.1\% to 98.2\%, but condition accuracy declines.
+Neither exceeds the base's 82.3\% overall accuracy: identity SFT reaches 78.5\%, and mixed-task SFT reaches 79.9\%.
 
-The action traces also change.
-The adapter completes every Sufficient episode, but makes no inspection calls before its verdict.
-On the matched Obtainable versions, it requests a photograph in every condition case and in none of the identity cases.
-This uniform behavior does not establish selection of a view based on visual ambiguity.
-More reliable termination and more frequent requests can accompany lower answer accuracy; the action sequence and the final judgment need to be evaluated separately.
+Both adapters finish all initially sufficient cases without intermediate tools.
+Mean episode time falls from 16.8 seconds to 11.2 and 7.1 seconds, respectively; output length falls from 283 to 177 and 117 tokens.
+The faster completion accompanies lower answer accuracy.
+
+\paragraph{Requests change more than the final accuracy.}
+On the matched Obtainable versions, the base requests and receives a photograph in 12 cases, compared with 153 after identity SFT and 82 after mixed-task SFT.
+All post-training requests occur in condition cases; neither adapter requests photographs for identity cases.
+In Missing and Unavailable, the requested key material cannot be supplied and both adapters abstain on the corresponding cases.
+Training thus changes requests and stopping decisions.
+Selecting the most useful observation still requires comparison with available alternatives.
 
 \section*{LLM Usage Statement}
 OpenAI Codex assisted with code, literature lookup, manuscript drafting and schematic figure code.
