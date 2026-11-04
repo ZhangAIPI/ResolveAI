@@ -1,30 +1,29 @@
-\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}
-\begin{minipage}{.94\textwidth}\centering
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
+\begin{minipage}{.68\textwidth}\centering
 \caption{\textbf{Effect of policy training.}
-RL applies GRPO directly to the base; SFT$\to$RL continues mixed-task SFT. These columns use validation-selected checkpoints.
-$^{\dagger}$Final evaluates SFT$\to$RL at the fixed training endpoint (group 64), independently of validation selection; it is a diagnostic and is excluded from boldface comparisons.
-Accuracy and cost follow Table~\ref{tab:benchmark}; best validation-selected accuracy is bold within each model and tool setting.
--- denotes an unfinished comparison. $^{*}$Validation retained the initial SFT policy.
-Training-data, action-target and checkpoint analyses appear in the supplement.}
+SFT uses balanced identity and condition data; RL trains directly from the pretrained model; SFT+RL applies GRPO after SFT.
+Checkpoints use held-out validation data. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.
+-- denotes an unfinished comparison. $^{*}$Validation selected the initial SFT checkpoint.
+Training-data and action-target ablations are reported separately in the supplement.}
 \label{tab:sft}
-\begin{tabular}{@{}l*{10}{r}@{}}
+\begin{tabular}{@{}l*{8}{r}@{}}
 \toprule
-\multicolumn{11}{l}{\emph{(a) Overall accuracy (\%)}}\\
- & \multicolumn{5}{c}{No tools} & \multicolumn{5}{c}{With tools}\\
-\cmidrule(lr){2-6}\cmidrule(l){7-11}
-Model & Base & SFT & RL & SFT$\to$RL & Final$^{\dagger}$ & Base & SFT & RL & SFT$\to$RL & Final$^{\dagger}$\\
+\multicolumn{9}{l}{\emph{(a) Overall accuracy (\%)}}\\
+ & \multicolumn{4}{c}{No tools} & \multicolumn{4}{c}{With tools}\\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
 \midrule
-Qwen2.5-VL-7B & 15.8 & \textbf{69.9} & -- & -- & -- & 3.8 & \textbf{73.7} & -- & -- & --\\
-Qwen3-VL-2B & \textbf{60.3} & 48.3 & -- & 48.8 & 48.8 & 40.7 & 71.8 & -- & \textbf{72.2} & 72.7\\
-Qwen3-VL-8B & 74.6 & \textbf{78.9} & -- & \textbf{78.9}$^{*}$ & 81.3 & \textbf{82.3} & 79.9 & -- & 79.9$^{*}$ & 83.7\\
+Qwen2.5-VL-7B & 15.8 & \textbf{69.9} & -- & -- & 3.8 & \textbf{73.7} & -- & --\\
+Qwen3-VL-2B & \textbf{60.3} & 48.3 & -- & 48.8 & 40.7 & 71.8 & -- & \textbf{72.2}\\
+Qwen3-VL-8B & 74.6 & \textbf{78.9} & -- & \textbf{78.9}$^{*}$ & \textbf{82.3} & 79.9 & -- & 79.9$^{*}$\\
 \addlinespace[6pt]
-\multicolumn{11}{l}{\emph{(b) Interaction cost with tools}}\\
- & \multicolumn{5}{c}{Time per case (s)} & \multicolumn{5}{c}{Output tokens per case}\\
-\cmidrule(lr){2-6}\cmidrule(l){7-11}
-Model & Base & SFT & RL & SFT$\to$RL & Final$^{\dagger}$ & Base & SFT & RL & SFT$\to$RL & Final$^{\dagger}$\\
+\multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\
+ & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
 \midrule
-Qwen2.5-VL-7B & 13.1 & 5.6 & -- & -- & -- & 186 & 112 & -- & -- & --\\
-Qwen3-VL-2B & 17.1 & 5.5 & -- & 5.4 & 6.1 & 449 & 118 & -- & 117 & 140\\
-Qwen3-VL-8B & 16.8 & 7.1 & -- & 7.2 & 8.0 & 283 & 117 & -- & 117 & 129\\
+Qwen2.5-VL-7B & 13.1 & 5.6 & -- & -- & 186 & 112 & -- & --\\
+Qwen3-VL-2B & 17.1 & 5.5 & -- & 5.4 & 449 & 118 & -- & 117\\
+Qwen3-VL-8B & 16.8 & 7.1 & -- & 7.2 & 283 & 117 & -- & 117\\
 \bottomrule
 \end{tabular}\end{minipage}\end{table*}

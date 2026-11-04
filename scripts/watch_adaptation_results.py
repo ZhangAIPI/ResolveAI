@@ -138,19 +138,7 @@ def result_text(entries):
                 additions.append("Validation retains that run's initial policy.")
         if additions:
             parts.append(" ".join(additions))
-        final_scores = []
-        for size,model in (("2b","2B"),("8b","8B")):
-            key = "qwen3_"+size+"_grpo_final"
-            if key in reports:
-                final_scores.append(f"{model}: {accuracy(key):.1f}\\%")
-        if final_scores:
-            parts.append(
-                "A separate diagnostic evaluates the fixed final checkpoint at group 64 ("
-                + "; ".join(final_scores) + "). "
-                "Table~\\ref{tab:sft} reports these fixed endpoints in the Final column alongside the validation-selected checkpoints. "
-                "For 8B, the validation set retains the initial policy even though the final policy scores higher on the paper cohort. "
-                "The supplementary material reports checkpoint choice and acquisition behavior together.")
-        parts.append("The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.")
+        parts.append("Checkpoint selection and requests for missing photographs are analyzed in the supplement.")
     return "\n\n".join(parts)
 
 
