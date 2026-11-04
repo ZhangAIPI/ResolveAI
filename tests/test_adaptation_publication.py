@@ -51,6 +51,29 @@ class PublicationTests(unittest.TestCase):
             core_stages([sft,sft])
 
 
+    def test_live_shards_need_the_entire_fixed_cohort_and_create_no_aggregate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for index,family in enumerate(("a","b")):
+                shard=root/f"shard-{index}"
+                shard.mkdir()
+                rows=[{"family_id":family,"variant":v,"arm":"interactive_agent"} for v in
+                      ("Sufficient","Obtainable","Missing","Unavailable")]
+                rows += [{"family_id":family,"variant":"Sufficient","arm":arm}
+                         for arm in ("initial_text","full_available_text")]
+                if family=="b":
+                    missing=rows.pop()
+                with sqlite3.connect(shard/"episodes.sqlite") as db:
+                    db.execute("CREATE TABLE episodes(result)")
+                    db.executemany("INSERT INTO episodes VALUES(?)",[(json.dumps(row),) for row in rows])
+            self.assertFalse(complete_cohort(root,["a","b"]))
+            with sqlite3.connect(root/"shard-1/episodes.sqlite") as db:
+                db.execute("INSERT INTO episodes VALUES(?)",(json.dumps(missing),))
+            self.assertTrue(complete_cohort(root,["a","b"]))
+            self.assertFalse((root/"manifest.json").exists())
+            self.assertFalse((root/"shard_index.json").exists())
+
+
     def test_result_block_preserves_surrounding_edits(self):
         text = "Author introduction\n\\section*{LLM Usage Statement}\nAuthor end"
         first = replace_block(text,"First measurements")

@@ -23,13 +23,17 @@ END = "% adaptation-results-end"
 
 def complete_cohort(directory, families):
     if not (directory / "manifest.json").exists():
-        return False
+        databases = sorted(directory.glob("shard-*/episodes.sqlite"))
+        if not databases:
+            return False
+    else:
+        databases = episode_databases(directory)
     wanted = {(family,variant,"interactive_agent") for family in families
               for variant in ("Sufficient","Obtainable","Missing","Unavailable")}
     wanted |= {(family,"Sufficient",arm) for family in families
                for arm in ("initial_text","full_available_text")}
     found = set()
-    for path in episode_databases(directory):
+    for path in databases:
         if not path.exists():
             return False
         with closing(sqlite3.connect(path.resolve().as_uri()+"?mode=ro",uri=True)) as db:
@@ -134,6 +138,18 @@ def result_text(entries):
                 additions.append("Validation retains that run's initial policy.")
         if additions:
             parts.append(" ".join(additions))
+        final_scores = []
+        for size,model in (("2b","2B"),("8b","8B")):
+            key = "qwen3_"+size+"_grpo_final"
+            if key in reports:
+                final_scores.append(f"{model}: {accuracy(key):.1f}\\%")
+        if final_scores:
+            parts.append(
+                "A separate diagnostic evaluates the fixed final checkpoint at group 64 ("
+                + "; ".join(final_scores) + "). "
+                "These checkpoints were specified before test scoring and do not replace validation selection in Table~\\ref{tab:sft}. "
+                "For 8B, the validation set retains the initial policy even though the final policy scores higher on the paper cohort. "
+                "The supplementary material reports checkpoint choice and acquisition behavior together.")
         parts.append("The supplementary acquisition analysis distinguishes answer accuracy from requests for missing photographs.")
     return "\n\n".join(parts)
 

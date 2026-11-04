@@ -43,7 +43,60 @@ def acquisition_behavior(rows, cases, families):
     }
 
 
+def compare_sharded_snapshot(cohort, base, adapted, training, plan_path):
+    """Score the complete paper cohort from live shards; keep full-study status explicit."""
+    from copy import deepcopy
+    from contextlib import closing
+    import sqlite3
+    import tempfile
+    plan = json.loads(plan_path.read_text())
+    directories = sorted(path for path in adapted.glob("shard-*") if path.is_dir())
+    if not directories:
+        raise ValueError("No evaluation shards are available")
+    manifests = [json.loads((path/"manifest.json").read_text()) for path in directories]
+    count = manifests[0]["configuration"]["shards"]
+    if len(directories) != count:
+        raise ValueError("Not all planned shard workers have started")
+    entries, progress = [], []
+    first = {k:v for k,v in manifests[0]["configuration"].items() if k not in {"families","cases","shard"}}
+    for index,(directory,manifest) in enumerate(zip(directories,manifests)):
+        config = manifest["configuration"]
+        common = {k:v for k,v in config.items() if k not in {"families","cases","shard"}}
+        expected = [family for i,family in enumerate(plan["family_ids"]) if i%count==index]
+        if common != first or config["shard"] != index or config["families"] != expected:
+            raise ValueError("Snapshot shards have different policies or family assignments")
+        if manifest["worker"]["gpu"] != manifests[0]["worker"]["gpu"]:
+            raise ValueError("Snapshot GPU types differ")
+        with closing(sqlite3.connect((directory/"episodes.sqlite").resolve().as_uri()+"?mode=ro",uri=True)) as db:
+            rows = db.execute("SELECT count(*) FROM episodes").fetchone()[0]
+        entries.append({"directory":directory.name,
+                        "manifest_sha256":hashlib.sha256((directory/"manifest.json").read_bytes()).hexdigest()})
+        progress.append({"shard":index,"observed_episodes":rows})
+    merged = deepcopy(manifests[0])
+    merged["configuration"].update(shard=None,families=plan["family_ids"],
+                                   cases=sum(m["configuration"]["cases"] for m in manifests))
+    merged["aggregation"] = {"type":"read-only paper-cohort snapshot from ongoing family shards",
+                             "source_directory":str(adapted.resolve()),"shards":entries}
+    with tempfile.TemporaryDirectory(prefix="resolveai-paper-cohort-") as temporary:
+        view = Path(temporary)
+        for directory in directories:
+            (view/directory.name).symlink_to(directory.resolve(),target_is_directory=True)
+        (view/"manifest.json").write_text(json.dumps(merged,indent=2)+"\n")
+        (view/"shard_index.json").write_text(json.dumps({"shards":entries},indent=2)+"\n")
+        # compare() independently requires every fixed family/arm and all four interactive versions.
+        report = compare(cohort,base,view,training,plan_path)
+    observed = sum(row["observed_episodes"] for row in progress)
+    planned = len(plan["family_ids"])*4*len(ARMS)
+    report["evaluation_progress"] = {"paper_cohort_complete":True,"full_study_complete":observed==planned,
+        "observed_raw_episodes":observed,"planned_raw_episodes":planned,"by_shard":progress,
+        "scope":"Scores use the unchanged complete paper cohort; remaining planned episodes continue independently"}
+    return report
+
+
 def compare(cohort, base, adapted, training, plan_path=None):
+    if not (adapted/"manifest.json").exists() and list(adapted.glob("shard-*/manifest.json")):
+        return compare_sharded_snapshot(cohort,base,adapted,training,
+                                         plan_path or base.parent/"plan.json")
     reference = json.loads(cohort.read_text())
     manifests = [json.loads((directory / "manifest.json").read_text()) for directory in (base, adapted)]
     model_id = manifests[0]["configuration"]["model_id"]
