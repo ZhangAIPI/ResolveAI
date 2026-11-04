@@ -56,6 +56,12 @@ def replace_block(text, body):
 
 def result_text(entries):
     paragraphs = []
+    if any("groups" in report["training"]["configuration"] for _,report in entries):
+        paragraphs.append(
+            "\\paragraph{Online policy optimization.}\n"
+            "GRPO continues each mixed-task SFT adapter using sampled tool interactions and source-derived rewards. "
+            "The reference adapter stays frozen; validation families select the checkpoint. "
+            "We use 64 groups of four trajectories per model, with training details in the supplement.")
     for entry,report in entries:
         if not entry.get("new_analysis"):
             continue
@@ -74,7 +80,11 @@ def result_text(entries):
         paragraph += (f"In Obtainable, {requests} cases trigger a photograph request and {new_photos} receive a new photograph. "
                       "These action counts alone do not establish that the requested evidence is useful.")
         paragraphs.append(paragraph)
-    return "\\paragraph{Further adaptation results.}\n"+"\n\n".join(paragraphs) if paragraphs else ""
+    if not paragraphs:
+        return ""
+    if paragraphs[0].startswith("\\paragraph{Online"):
+        return paragraphs[0]+"\n\n\\paragraph{Further adaptation results.}\n"+"\n\n".join(paragraphs[1:])
+    return "\\paragraph{Further adaptation results.}\n"+"\n\n".join(paragraphs)
 
 
 def detail_text(entries):
@@ -90,12 +100,18 @@ def detail_text(entries):
                 +f"The learning rate is \\({config['learning_rate']:g}\\), clipping threshold 0.2 and reference penalty 0.02. "
                 +"The reference is the frozen SFT adapter. Training sees only public observations; private source annotations enter as scalar rewards. "
                 +"A fixed held-out set of eight source families across four access versions selects the checkpoint. "
-                +"The benchmark supplies no training or checkpoint-selection feedback.")
+                +"The benchmark supplies no training or checkpoint-selection feedback. "
+                +f"The run performs {report['checkpoint']['state']['optimizer_updates']} optimizer updates "
+                +f"and selects group {report['checkpoint']['state']['best_group']}; group zero denotes the initial SFT adapter.")
         else:
             checkpoint = report["checkpoint"]["state"]
             lines.append(entry["description"] + f" completes {checkpoint['step']} optimizer steps, "
                          +"using the same rank-32 attention adapters and held-out token-loss selection as the other SFT runs. "
                          +"Its data and exact selected checkpoint are recorded with the released comparison.")
+            if "terminal" in report["models"][1]["name"].lower():
+                lines.append("Finish-only retains complete public histories at the final decision, "
+                             "but removes acquisition-action prediction targets. It uses the same update limit, "
+                             "not matched target-token compute, as the corresponding full-trajectory SFT.")
     lines.append("All rows retain the fixed paper cohort, failure accounting and inference allowances. "
                  "Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.")
     return "\n\n".join(lines)

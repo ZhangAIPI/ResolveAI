@@ -129,14 +129,16 @@ def render_adaptations(reports):
             raise ValueError("SFT comparisons use different base measurements")
         group.append(report)
     from scripts.paper_result_table import ORDER
-    labels={"Acquisition SFT":"Identity SFT","Mixed-source SFT":"Mixed-task SFT","Online GRPO":"Mixed-task SFT + GRPO"}
+    labels={"Acquisition SFT":"Identity SFT","Mixed-source SFT":"Mixed-task SFT","Online GRPO":"Mixed-task SFT + GRPO","Terminal-only SFT":"Identity: finish only","Mixed terminal-only SFT":"Mixed-task: finish only"}
+    has_terminal = any("terminal" in r["models"][1]["name"].lower() for r in reports)
     has_rl = any(r["models"][1]["name"] == "Online GRPO" for r in reports)
     lines=[r"\begin{table*}[t]",r"\centering\small",
            r"\setlength{\tabcolsep}{3.5pt}",r"\begin{minipage}{.88\textwidth}\centering",
            (r"\caption{\textbf{Supervised and reinforcement adaptation.}" if has_rl else r"\caption{\textbf{Supervised adaptation.}"),
            (r"SFT starts from the listed base; GRPO continues its mixed-task SFT adapter. Checkpoints use held-out validation data." if has_rl else r"Each SFT adapter starts from its listed base; checkpoints use held-out validation data."),
            r"Identity SFT uses CO3D identity/acquisition examples; Mixed-task SFT balances identity and condition supervision.",
-           r"The settings and measurements follow Table~\ref{tab:benchmark}.}",
+           (r"Finish-only supervises final decisions on the same visible histories, omitting acquisition-action targets. "
+            if has_terminal else "") + r"The settings and measurements follow Table~\ref{tab:benchmark}.}",
            r"\label{tab:sft}",*comparison_header("Training")]
     for index,model in enumerate(sorted(groups,key=ORDER.index)):
         if index:
