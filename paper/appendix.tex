@@ -332,3 +332,11 @@ Qwen3-VL-8B after mixed-task SFT and online GRPO continues mixed-task SFT for 64
 
 All rows retain the fixed paper cohort, failure accounting and inference allowances. Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.
 % adaptation-results-end
+
+% rl-final-diagnostics-start
+\section{Final-Checkpoint Diagnostics}
+The main GRPO results use held-out validation selection, including the SFT initialization as a candidate. We separately evaluate the fixed final checkpoint at group 64 for both backbones to examine the policies after actual optimization. This diagnostic was specified before scoring those checkpoints; it does not replace the main selection rule. The data, tools, inference allowances and fixed paper cohort remain unchanged.
+\input{tables/rl_final_diagnostics}
+Qwen3-VL-2B scores 72.7\% at the final checkpoint, compared with 72.2\% after validation selection and 71.8\% after SFT. It requests photographs in 64 Obtainable cases; request frequency alone does not establish evidence utility.
+Qwen3-VL-8B scores 83.7\% at the final checkpoint, compared with 79.9\% after validation selection and 79.9\% after SFT. It requests photographs in 92 Obtainable cases; request frequency alone does not establish evidence utility.
+% rl-final-diagnostics-end
