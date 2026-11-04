@@ -37,7 +37,7 @@
 | GPT-5.4 mini | 50.7 | 75.1 |
 | GPT-6.1 Sol (low) | 77.5 | 74.6 |
 
-仅完整固定题组入表。Decisions 为直接分类接口；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。
+仅完整固定题组入表。Decisions 的多轮版本从公开候选动作中选择，参数由程序提供；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。
 <!-- api-results-end -->
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
