@@ -72,16 +72,7 @@ def result_text(entries):
                 if (update["base_model_id"],update["stage"],update["arm"])==(report["base_model_id"],"SFT",arm):
                     return update["accuracy_percent"]
         return 100*report["models"][model]["arms"][arm]["label_agreement"]
-    parts=[
-        r"\paragraph{Training settings.}",
-        "We train attention LoRA adapters on disjoint CO3D and VisA~\\cite{visa} trajectories, "
-        "balancing 1,080 training decisions and 360 validation decisions per task. "
-        "SFT uses rank 32, learning rate \\(10^{-4}\\), at most 200 updates and held-out token-loss selection. "
-        "RL starts from the base or SFT adapter and uses 64 groups of four sampled trajectories, "
-        "a frozen initial reference policy, source-derived rewards and action costs. "
-        "The RL columns report the fixed checkpoint after all 64 groups. Full settings and checkpoint comparisons are in the supplement.",
-        r"\paragraph{SFT produces shorter interactions.}",
-    ]
+    parts=[r"\paragraph{SFT produces shorter interactions.}"]
     observations=[]
     if "qwen25_mixed_sft" in reports:
         key="qwen25_mixed_sft"
@@ -98,8 +89,7 @@ def result_text(entries):
         "The local SFT policies finish initially sufficient cases without intermediate tools. "
         "For 2B, completion rises from 61.7\\% to 100\\%, while mean time falls from 17.1 to 5.5 seconds "
         "and output length from 449 to 118 tokens. "
-        "These gains include learning to submit a short final response; they do not show that the policy has learned which missing photograph to request. "
-        "The decline under the direct response format also argues against interpreting the entire gain as better visual recognition.")
+        "The same SFT adapter thus has different effects under the two response formats.")
     stages={model:core_stages(group) for model,group in adaptation_groups(list(reports.values())).items()}
     continued=[]
     for model,key in (("Qwen/Qwen2.5-VL-7B-Instruct","qwen25_mixed_sft"),
@@ -169,15 +159,18 @@ def result_text(entries):
         r"\textbf{Similar answer accuracy can mask different evidence access.} "
         "The paired Sufficient accuracy difference for SFT+RL minus RL is "
         r"\(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). "
-        "The interval describes one pair of trained runs, rather than training-seed variation. "
         "The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, "
         "but corrects ten condition errors while losing sixteen. "
-        "The overall score alone therefore misses both the task trade-off and the difference in requests.",
+        "",
+        r"""\textbf{Efficiency depends on which evidence is supplied.}
+The 8B SFT+RL policy is faster than RL alone on initially sufficient cases, yet obtains more photographs when images are withheld.
+Its shorter primary interactions therefore do not correspond to a uniform reduction in requests.
+The 7B model shows a different pattern: its gains in accuracy and efficiency over the base policy accompany zero photograph requests in Obtainable.
+The efficiency columns and access measurements describe complementary parts of the policy: answering from the initial images and deciding to obtain another image when the available evidence changes.""",
         r"\paragraph{The requested evidence differs by task.}",
         "For 8B, direct RL retrieves new images in 9 of 153 condition families and 5 of 56 identity families. "
         "SFT+RL retrieves originals in 92 condition families and no new identity views. "
-        "Its more frequent requests therefore concern recovering condition detail. "
-        "The observed behavior does not establish the same improvement in cross-view identity search.",
+        "The increase is concentrated in condition-detail retrieval; requests for additional identity views remain absent.",
     ]
     small=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("SFT+RL")
     large=stages.get("Qwen/Qwen3-VL-8B-Instruct",{}).get("SFT+RL")
@@ -192,7 +185,7 @@ def result_text(entries):
             f"The 8B policy requests an original in {b['episodes_with_request']} cases and receives a new image in each; "
             "all of these requests concern condition, rather than another viewpoint for identity. "
             "Figure~\\ref{fig:teaser} shows the difference on one bottle. "
-            "Both policies spend one request, but only the request for the original changes the available detail."
+            "Both policies spend one request, but only the request for the original changes the available detail. The bottle preview and original derive from the same photograph. The 48-pixel preview repeats under the overview request, whereas the original record retains 900-pixel detail. Cropping or enlarging the returned overview cannot recover the pixels discarded when the preview was made. Requesting the original changes the observation without changing the item, time or camera. Counting requests alone would therefore treat two different evidence outcomes as equivalent."
         ]
     if large:
         parts += [
@@ -205,16 +198,22 @@ def result_text(entries):
             "Missing and Unavailable return the same failure message here, and produce the same stopping behavior."
         ]
     if large:
-        parts += [
-            r"\paragraph{Responding to failure is only part of stopping.}",
-            "The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, "
-            "but still gives definite answers in 116 of the 209 Unavailable episodes. "
-            "Those 116 are not failed-request cases: the policy stops without asking for the withheld photograph. "
-            "The 7B policy makes no requests in Unavailable and gives 209 definite answers. "
-            "These outcomes separate stopping after failed access from choosing to investigate in the first place. "
-            "Independent sufficiency review is needed to determine which unrequested cases already have adequate evidence in the preview.",
-        ]
-    return "\n\n".join(parts)
+        parts += [r"""\paragraph{Responding to failure is only part of stopping.}
+
+The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, but gives definite answers in 116 of the 209 Unavailable episodes.
+Let \(U\) denote the Unavailable episodes and \(F\subseteq U\) those containing a failed photograph request.
+The observed abstention rates are
+\begin{equation}
+\Pr(\hat y=\Nme\mid F)=1,\qquad
+\Pr(\hat y=\Nme\mid U)=0.445.
+\label{eq:failed-request}
+\end{equation}
+The first rate is conditioned on the policy choosing to ask.
+All 92 requested episodes concern condition; among the other 117 episodes, one identity case ends in abstention and 116 end in definite answers.
+The 7B policy makes no requests and gives 209 definite answers in Unavailable.
+These outcomes distinguish responding to access feedback from initiating a search.
+A policy can consistently change its answer after denial while leaving other photographs unrequested."""]
+    return "\n\n".join(part.strip() for part in parts if part.strip())
 
 
 def detail_text(entries):

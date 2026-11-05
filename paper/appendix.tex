@@ -1,5 +1,5 @@
 \section{Source Reuse and Related Benchmarks}
-The evaluation photographs are drawn from MVTec AD and CO3D; no new photographic collection is claimed.
+The evaluation photographs and source annotations come from MVTec AD and CO3D.
 MVTec supplies condition categories and anomaly masks, while CO3D supplies recorded views and sequence metadata.
 We add object claims, image pools, public request options, access versions and interaction records.
 Training trajectories separately use CO3D development sequences and VisA, as described below.
@@ -13,7 +13,7 @@ The current measured results therefore concern source-label agreement and record
 
 \input{tables/related_benchmarks}
 
-\section{Formal Task and Evidence Audit}
+\section{Task Definition and Evidence Matching}
 This supplement specifies evidence matching, annotation checks, tool behavior, execution settings and action comparisons.
 
 \subsection{Recorded, obtainable and released evidence}
@@ -103,7 +103,7 @@ Each access version starts a fresh conversation, without history or memory from 
 
 The separate interface study targets 20 participants, each completing three search trials and two full-pool judgments in 5--10 minutes, without hard time or action limits. It checks clarity; optional region marks and full-pool judgments do not replace evidence annotation.
 
-\section{Environment and Tool Contract}
+\section{Environment and Tools}
 \subsection{Observations, costs and provenance}
 The tool pool and default costs are shown in Table~\ref{tab:supptools}.
 Failed requests incur their ordinary request cost.
@@ -296,6 +296,18 @@ Correspondence accuracy and damage-region IoU apply only to suitably annotated s
 Before independent review, reports describe interaction behavior and explicitly labeled construction-label agreement.
 
 \section{Controlled Action Comparisons}
+
+For public history \(h_t\), candidate action \(a\) and continuation policy \(\pi\), define
+\begin{equation}
+\Delta_G(h_t,a)=
+\mathbb{E}\!\left[
+G(d^{a\rightarrow\pi})-G(d^{\mathrm{stop}})
+\mid h_t\right].
+\end{equation}
+The first branch includes the charged candidate action and its continuation.
+The stop branch answers immediately from the same history.
+These estimates require sufficient-evidence annotations; the reported model comparisons use source-label accuracy and recorded access behavior.
+
 A trusted evaluator forks the same public conversation, released pool, derived views and remaining budget while preserving the physical world.
 The candidate action is executed and charged before continuation.
 All branches use the same continuation policy and total remaining-turn allowance.

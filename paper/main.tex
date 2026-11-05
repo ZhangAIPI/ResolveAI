@@ -36,82 +36,54 @@ The 8B policy answers Supported when the original is returned and Need more evid
 }]
 
 \begin{abstract}
-Checking an object claim can require another photograph.
-We introduce \benchmark to study how vision-language models find this evidence.
-Models inspect the initial images, request further photographs, and decide when to stop.
-Each case fixes the claim and object state while varying whether relevant photographs are supplied initially, obtainable, missing, or unavailable.
-We construct 478 case families from public condition and multi-view datasets and compare ten open-weight and five API models on 209 source-labeled families.
-We measure answer accuracy, new-image access and stopping behavior separately.
-Tools improve some answers but also introduce failures to submit a valid response.
-Post-training improves completion and efficiency without consistently increasing access to new photographs.
-Policies with similar answer scores behave differently when images are withheld: Qwen3-VL-8B with SFT+RL requests original photographs much more often than direct RL, yet never requests another viewpoint to check identity.
+Verifying a claim about an object may require a detail or viewpoint absent from the supplied photographs.
+We introduce \benchmark, an interactive benchmark in which vision-language models inspect and request photographs to check an object's condition or identity.
+Each case family keeps the claim and object state fixed while varying access to recorded photographs: supplied initially, obtainable on request, missing, or unavailable.
+These matched settings test how a model inspects images, requests further photographs, and responds when a request cannot be satisfied.
+We construct 478 families from public datasets and evaluate ten open-weight and five API models on 209 labeled families.
+Post-training improves interactive answer accuracy and efficiency, but the resulting policies can still repeat existing images or stop without requesting new ones.
+Policies with similar answer scores differ substantially in both the photographs they obtain and their stopping decisions after access failures.
 \end{abstract}
 
 
 
 \section{Introduction}
-Do two photographs show the same chair?
-Is a bright mark on a bottle rim a chip or a reflection?
-A model can recognize an object yet lack the detail or viewpoint needed to check these claims.
-It must decide whether to keep inspecting, ask for another photograph, or stop.
+A close-up can reveal a chip without identifying the item, while a wider view can establish identity and hide the defect. Verifying an object claim may therefore require several photographs, each answering a different question. A model must decide which detail to inspect, whether another view is worth requesting, and when the available material supports an answer.
 
-Visual benchmarks evaluate distinctions, correspondence and spatial reasoning~\cite{mmvp,blink,mmmu,vsibench}.
-Active-perception benchmarks also let models choose observations~\cite{openeqa,actiview}.
-For object verification, choosing an observation is only part of the problem.
-A damage close-up can show a defect without establishing which item it belongs to.
-An identity mismatch can refute a claim that the photographed damage belongs to the listed item without inspecting every surface.
-What counts as enough evidence depends on the claim.
+Existing evaluations reveal weaknesses in visual distinctions, correspondence and spatial reasoning~\cite{mmvp,blink,mmperspective,vsibench}. Active-perception benchmarks further test how models choose observations~\cite{actiview,openeqa}. Object verification connects these choices to a specific claim. The value of another image depends on whether it addresses the unresolved part of that claim. Enlarging a preview repeats its pixels; obtaining the original can reveal finer detail. Another viewpoint can expose a hidden surface, but the required photograph may never have been taken or may no longer be available.
 
-Answer accuracy alone cannot locate the failure.
-A wrong answer may follow an unfinished search or a visual error after sufficient evidence has been seen.
-Need more evidence can be appropriate when a photograph is unavailable, or premature when a useful view remains obtainable.
-These possibilities are difficult to distinguish when every model receives one fixed collection of images.
+We introduce \benchmark to study these decisions through matched case families. Each family fixes an object claim and its physical state, then varies which recorded photographs can be obtained. Relevant images are supplied initially, released on request, absent from the collection, or unavailable for submission. The model operates through the same public interface across these versions. Its next observation depends on the image it asks for and the material available to satisfy that request.
 
-We build \benchmark around matched case families (Figure~\ref{fig:framework}).
-A family fixes the object claim and physical state while varying access to recorded photographs.
-A crop revisits existing pixels; a request can release another photograph or fail.
-Comparing these versions reveals whether the policy changes its decision after the evidence outcome changes.
+The paired construction exposes differences that a final score can hide. A policy can repeatedly examine the same pixels, request an image that adds no new material, or stop while further photographs remain accessible. It can also obtain additional detail and still answer incorrectly. The recorded interaction links each answer to the observations that preceded it.
+
+We construct condition and identity cases from MVTec AD and CO3D photographs~\cite{mvtec,co3d}. Experiments compare ten open-weight and five API models, with SFT and RL studies on three open-weight models. Post-training can produce shorter, more accurate answers without corresponding changes in photograph requests. Two training routes with similar answer accuracy also behave differently when evidence is withheld.
 
 Our contributions are:
 \begin{itemize}
-\item An object-claim benchmark built from public condition and multi-view photographs, with fixed claims, requestable image pools and four matched access settings.
-\item An interactive environment that records the evidence actually shown, including derived views, and distinguishes search behavior from answer outcomes. It supports shared-history action comparisons following prior work~\cite{countercredit}.
-\item A study of ten open-weight and five API models, with SFT and RL comparisons on three open-weight models, showing that improved answer scores can coexist with repeated images, missing requests and submission failures.
+\item Matched object-claim cases that vary access to recorded photographs while preserving the claim and object state.
+\item An interactive environment for inspecting released images, requesting recorded photographs and comparing actions from a shared evidence history.
+\item A comparison of current models and post-training methods that exposes differences between answering accurately, obtaining new images and responding to failed requests.
 \end{itemize}
-The current quantitative comparisons use source labels.
-Independently reviewed evidence sufficiency is not yet claimed.
+
 \section{Related Work}
-\paragraph{Datasets and visual benchmarks.}
-MVTec AD provides photographs and anomaly annotations for industrial inspection~\cite{mvtec}; CO3D provides recorded object views for reconstruction and novel-view synthesis~\cite{co3d}.
-We reuse these photographs and source annotations to construct condition and identity claims.
-Reformulating existing visual data is established practice: BLINK turns classic vision tasks into multimodal questions~\cite{blink}.
-MMVP, MMPerspective and VSI-Bench examine visual distinctions, perspective and spatial reasoning~\cite{mmvp,mmperspective,vsibench}.
-Our added construction pairs each object claim with a recorded evidence pool and four access settings.
-The photographs retain their original provenance; source labels do not establish whether a preview is sufficient to decide the new claim.
+\paragraph{Visual benchmarks and source datasets.}
+BLINK reformulates classical vision tasks as multimodal questions, including correspondence and multi-view reasoning~\cite{blink}. MMVP examines visual distinctions, while MMPerspective and VSI-Bench study perspective and spatial reasoning~\cite{mmvp,mmperspective,vsibench}. \benchmark uses object condition and identity as the basis for a sequence of evidence choices. Its photographs come from MVTec AD, developed for anomaly detection and localization, and CO3D, developed for object reconstruction and novel-view synthesis~\cite{mvtec,co3d}. Their anomaly labels and sequence metadata provide the source supervision for the constructed cases. We build claims and requestable image pools from these records, then pair each claim with different access conditions.
 
-\paragraph{Active observation.}
-ActiView evaluates zooming and shifting a restricted perceptual field~\cite{actiview}; OpenEQA supports active exploration~\cite{openeqa}.
-ActiveVision tests repeated inspection through scanning, traversal and attribute comparison~\cite{activevision}.
-V*, Visual Sketchpad and tool benchmarks evaluate further ways to inspect and manipulate visual inputs~\cite{vstar,sketchpad,visualtoolbench,vtcbench}.
-These works already establish observation choice and visual tools as evaluation targets.
-We examine requests across recorded photographs, including access failures, while holding the object claim and physical state fixed.
+\paragraph{Active observation and visual tools.}
+ActiView evaluates zooming and shifting within a restricted field of view~\cite{actiview}. ActiveVision studies repeated inspection through scanning, traversal and attribute comparison~\cite{activevision}, while OpenEQA includes active exploration of embodied environments~\cite{openeqa}. V*, Visual Sketchpad and visual-tool benchmarks extend the actions available for examining images~\cite{vstar,sketchpad,visualtoolbench,vtcbench}. Our setting concerns requests for recorded photographs in addition to operations on images already shown. A request may expose another view or return a failure, allowing the same claim to be studied under different opportunities to obtain evidence.
 
-\paragraph{Evidence and stopping.}
-WebQA evaluates multimodal evidence selection~\cite{webqa}, and AVerImaTeC verifies image--text claims using annotated web evidence and sufficiency checks~\cite{averimatec}.
-AbstainEQA pairs answerable questions with variants requiring abstention~\cite{abstaineqa}.
-CounterCredit compares looking with answering immediately and substitutes returned pixels to test evidence use~\cite{countercredit}.
-We adopt shared-history comparisons for object claims.
-Our matched access versions test how a policy changes its decision when the same requested photograph is returned or cannot be supplied.
-The present experiments measure source-label accuracy, new-image access and stopping behavior; evidence sufficiency still requires independent review.
-The supplement compares inherited data and task differences.
+\paragraph{Evidence selection and abstention.}
+WebQA evaluates multimodal source selection~\cite{webqa}; AVerImaTeC verifies image--text claims using annotated web evidence~\cite{averimatec}. AbstainEQA pairs embodied questions with variants that require abstention~\cite{abstaineqa}. CounterCredit evaluates the value of a visual call through shared-history answering and image-content substitutions~\cite{countercredit}. \benchmark focuses on the same object claim under different access to its recorded evidence. Its paired versions let us compare the answer and stopping decision when a requested photograph is returned or cannot be supplied.
 \section{The \benchmark Benchmark}
 
 \begin{figure*}[t]\centering
 \resizebox{\textwidth}{!}{\input{figures/framework}}
-\caption{\textbf{Public observations and private evaluation.}
-A family fixes the claim and object state while changing access to recorded photographs.
-Requests match object, time and view against the pool and release permissions, without using sufficiency labels.
-Only released content reaches the agent; the evaluator receives its trace and private annotations.}
+\caption{\textbf{From photographs to an evidence-search task.}
+(a) MVTec AD and CO3D supply condition and multi-view photographs~\cite{mvtec,co3d}.
+(b) Four versions preserve the claim and object state while changing photo access.
+The last three start from the same preview; requests return the original or an access failure.
+The crossed-out image denotes a recorded but unreleased photograph.
+(c) Representative tools from different cases inspect released pixels, compare objects or request recorded images before a final answer.}
 \label{fig:framework}
 \end{figure*}
 
@@ -158,7 +130,7 @@ Supporting every part can require several observations.
 Refuting one part can be enough to stop.
 For example, a close-up of damage does not establish that the photographed item is the listed one, but an identity mismatch refutes the claim that the photograph shows damage to that item.
 
-Given reviewed evidence annotations, the justified answer is
+For consistent evidence annotations, the justified answer is
 \begin{equation}
 Y_q(\mathcal{E})=
 \begin{cases}
@@ -169,7 +141,6 @@ Y_q(\mathcal{E})=
 \label{eq:decision}
 \end{equation}
 where \(\Spt,\Rft,\Nme\) denote the three responses.
-Conflicting annotations require adjudication before scoring.
 The episode target is \(Y_q(\mathcal{A})\), taking account of obtainable records and permitted viewing actions.
 A true claim can still have target \(\Nme\) if none of those records establishes it.
 
@@ -180,38 +151,34 @@ Stopping with \emph{Need more evidence} before that point leaves a useful observ
 The same response is appropriate when the obtainable collection cannot settle the claim.
 
 More than one image set may establish the same fact.
-We allow alternative sufficient sets; plausible references unmatched by the automatic evaluator require review.
+Alternative sufficient sets receive the same credit.
 Crops retain their source mapping: repeated crops of one region do not become independent evidence.
 A normal reference from another specimen may clarify a defect's appearance, but cannot establish the target item's earlier condition.
 
 \subsection{Constructing the Cases}
-The initial pool combines condition queries from MVTec AD~\cite{mvtec} with multi-view identity candidates from CO3D~\cite{co3d}.
-Condition cases ask about a named defect on the photographed surface, sometimes alongside a normal reference from another specimen.
-Their evidence gap concerns detail lost in a low-resolution preview.
-Identity cases ask whether two submission slots show the same physical item, with additional recorded views available on request.
+We construct condition queries from MVTec AD~\cite{mvtec} and multi-view identity queries from CO3D~\cite{co3d}.
+Condition queries concern a named defect on the photographed surface, sometimes with a normal reference from another specimen.
+Low-resolution previews and their originals provide different levels of detail.
+Identity queries ask whether two submissions show the same physical item, with further recorded views available on request.
 
 The pool contains 478 families and 1,912 access versions: 188 condition families, 64 source-labeled identity controls and 226 further identity candidates.
-The controls contain equal numbers of source-positive and source-negative constructions.
-A shared category does not establish identity, and different source sequences do not guarantee different physical items.
-The source labels are therefore construction labels, not independent visual judgments.
+The controls are balanced between source-positive and source-negative constructions.
+Anomaly annotations and sequence metadata supply the source labels.
+Different sequences need not represent different physical items, so sequence-based controls and unlabelled identity candidates are recorded separately.
 
-Withholding an original does not by itself make a case Obtainable.
-The preview may already reveal the relevant feature.
-The required relationship is \(Y_q(\mathcal{E}_0)=\Nme\) and \(Y_q(\mathcal{A})\ne\Nme\), with at least one sufficient set reachable through the public request options within budget.
-Missing and Unavailable must leave every accessible alternative insufficient.
-Independent sufficiency review, described in the supplement, is still needed to validate these intended access conditions in the current pool.
+An Obtainable case requires \(Y_q(\mathcal{E}_0)=\Nme\) and \(Y_q(\mathcal{A})\ne\Nme\), with a sufficient set reachable through public request options within budget.
+Lowering image resolution alone does not enforce this relationship.
+Missing and Unavailable instead exclude a sufficient set from every accessible path.
+The evidence-matching and annotation procedures are described in the supplement.
 
-The two sources also require different controls.
-Requesting the original is a useful fixed baseline for condition cases.
-Cross-view identity requires selecting a view that helps relate the submitted items.
-Enlarging a preview cannot reveal an occluded surface.
-Requests match object, time and view fields against recorded material; they do not use sufficiency labels to select a decisive image.
-All evidence comes from recorded photographs, without generated images or generative enhancement.
+Requests match object, time and view fields against recorded material.
+Condition requests can recover original detail; identity requests can expose another viewpoint.
+Neither the request matcher nor image operations use sufficiency labels to select a decisive image.
+All returned pixels come from recorded photographs.
 
-The current experiments evaluate identity and condition separately.
-Different normal and anomalous specimens are not presented as a before--after pair.
-Unknown identity remains unlabelled rather than being assigned \(\Nme\).
-Related views, claim rewrites and all four access versions share source groups for data splits and uncertainty estimation.
+We evaluate condition and identity separately, without treating different normal and anomalous specimens as a before--after pair.
+Unknown identities remain unlabelled.
+Related views, claim rewrites and access versions share source groups for splitting and uncertainty estimation.
 
 \subsection{Finding Evidence and Using It Correctly}
 A returned photograph may be relevant without settling the claim.
@@ -247,20 +214,8 @@ Initial-only, interactive and full-access settings compare a model before and af
 Full access removes the choice of which photographs to obtain, but does not guarantee higher accuracy, so it serves as a reference.
 We also record requests, tool cost, tokens and running time.
 
-To compare individual actions, the environment supports branches from a shared history into a crop, another released image, a requested view or an immediate answer.
-Following shared-history comparisons of visual calls~\cite{countercredit}, the same policy continues after each action with the budget left after its cost:
-\begin{equation}
-\Delta_G(h_t,a)=
-\mathbb{E}\!\left[
-G(d^{a\rightarrow\pi})-G(d^{\mathrm{stop}})
-\mid h_t\right].
-\label{eq:branch}
-\end{equation}
-The branches share their public prefix and total remaining resources.
-This measures the action and its continuation, including later observations.
-Content substitutions are additionally needed to test dependence on the returned pixels~\cite{countercredit}.
-Fixed-order and random search provide further comparisons under the same tools and budget.
-These action-value comparisons require reviewed evidence sets; the present experiments report source-label accuracy and observed tool behavior.
+The environment also supports replaying a shared history before alternative actions, following shared-history comparisons of visual calls~\cite{countercredit}.
+Action-value definitions and content controls are given in the supplement.
 \section{Experiments}
 We examine three questions: when the interactive setting changes an answer, which failures account for the change, and whether training improves decisions or the search for missing evidence.
 
@@ -296,12 +251,19 @@ Context, image-processing and parsing details are in the supplement.
 API runs retain the image-size, context, action and turn limits, with provider-native sampling; generation settings and the supplied action menu used by Decisions are given in the supplement.
 % api-inference-end
 
+\paragraph{Post-training.}
+We train attention LoRA adapters on source-disjoint CO3D and VisA~\cite{visa} trajectories, balancing 1,080 training and 360 validation decisions per task.
+SFT uses validation-loss checkpoint selection; RL starts from either the base model or the SFT adapter and runs 64 groups of four sampled trajectories.
+We evaluate the checkpoint after all 64 groups.
+Each training condition uses one run; confidence intervals resample case families.
+Optimization settings and checkpoint comparisons are in the supplement.
+
 \paragraph{Measures.}
 Accuracy is the percentage of attempted cases whose final answer matches the source label:
 \(\mathrm{Acc}=100\,n_{\mathrm{correct}}/n_{\mathrm{attempted}}\).
 Need more evidence, an invalid final response and failure to finish receive zero and remain in the denominator.
 Overall accuracy pools both tasks by case count.
-The labels have not been independently reviewed for evidence sufficiency, so this is source-label accuracy, not Equation~\ref{eq:grounded}.
+Labels come from the source annotations and case construction. The sufficient evidence sets have not been independently adjudicated, so the accuracy tables measure label agreement; Equation~\ref{eq:grounded} defines evidence-based scoring.
 Mean episode time includes model and environment execution.
 Output tokens accumulate across calls, including end markers and API reasoning tokens; input prompts and image tokens are excluded.
 Failed and abstaining attempts remain in the efficiency statistics.
@@ -330,7 +292,7 @@ For Qwen3.5-9B, condition accuracy rises from 47.7\% to 65.4\%, while identity a
 The API models vary as well: GPT-5.4 mini improves from 50.7\% to 75.1\%, whereas GPT-4.1 mini falls from 80.9\% to 67.5\%.
 GPT-5.4 mini makes only 0.51 non-terminal calls per case on average and no photograph requests.
 Its improvement occurs while working with the initial evidence.
-These comparisons concern checking the supplied images, since the main table uses initially sufficient constructions; they do not establish an ability to choose missing evidence.
+These gains concern checking the supplied images; photograph requests are examined separately below.
 
 \paragraph{A visual answer can fail at submission.}
 Figure~\ref{fig:cases} shows two views of the same vehicle.
@@ -357,15 +319,11 @@ Latency and token counts need to be read together with completion and answer acc
 \subsection{Effects of Post-training}
 \label{sec:sft}
 % adaptation-results-start
-\paragraph{Training settings.}
-
-We train attention LoRA adapters on disjoint CO3D and VisA~\cite{visa} trajectories, balancing 1,080 training decisions and 360 validation decisions per task. SFT uses rank 32, learning rate \(10^{-4}\), at most 200 updates and held-out token-loss selection. RL starts from the base or SFT adapter and uses 64 groups of four sampled trajectories, a frozen initial reference policy, source-derived rewards and action costs. The RL columns report the fixed checkpoint after all 64 groups. Full settings and checkpoint comparisons are in the supplement.
-
 \paragraph{SFT produces shorter interactions.}
 
 Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools. The 2B model rises from 40.7\% to 71.8\%, but falls from 60.3\% to 48.3\% without tools. The 8B SFT score is 82.9\%.
 
-\textbf{SFT improves completion and efficiency.} The local SFT policies finish initially sufficient cases without intermediate tools. For 2B, completion rises from 61.7\% to 100\%, while mean time falls from 17.1 to 5.5 seconds and output length from 449 to 118 tokens. These gains include learning to submit a short final response; they do not show that the policy has learned which missing photograph to request. The decline under the direct response format also argues against interpreting the entire gain as better visual recognition.
+\textbf{SFT improves completion and efficiency.} The local SFT policies finish initially sufficient cases without intermediate tools. For 2B, completion rises from 61.7\% to 100\%, while mean time falls from 17.1 to 5.5 seconds and output length from 449 to 118 tokens. The same SFT adapter thus has different effects under the two response formats.
 
 \paragraph{RL gains do not always involve new evidence.}
 
@@ -385,15 +343,21 @@ The smaller models respond differently. Direct RL gives 54.5\% for 2B and 3.3\% 
 
 \paragraph{Similar accuracy, different evidence access.}
 
-The two 8B training routes differ by one correct answer in Sufficient, but behave differently once evidence is withheld. In Obtainable, direct RL requests photographs in 15 families and receives a new image in 14. SFT+RL requests and receives new images in 92 families, and finishes all 209 episodes rather than 194. \textbf{Similar answer accuracy can mask different evidence access.} The paired Sufficient accuracy difference for SFT+RL minus RL is \(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). The interval describes one pair of trained runs, rather than training-seed variation. The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, but corrects ten condition errors while losing sixteen. The overall score alone therefore misses both the task trade-off and the difference in requests.
+The two 8B training routes differ by one correct answer in Sufficient, but behave differently once evidence is withheld. In Obtainable, direct RL requests photographs in 15 families and receives a new image in 14. SFT+RL requests and receives new images in 92 families, and finishes all 209 episodes rather than 194. \textbf{Similar answer accuracy can mask different evidence access.} The paired Sufficient accuracy difference for SFT+RL minus RL is \(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, but corrects ten condition errors while losing sixteen.
+
+\textbf{Efficiency depends on which evidence is supplied.}
+The 8B SFT+RL policy is faster than RL alone on initially sufficient cases, yet obtains more photographs when images are withheld.
+Its shorter primary interactions therefore do not correspond to a uniform reduction in requests.
+The 7B model shows a different pattern: its gains in accuracy and efficiency over the base policy accompany zero photograph requests in Obtainable.
+The efficiency columns and access measurements describe complementary parts of the policy: answering from the initial images and deciding to obtain another image when the available evidence changes.
 
 \paragraph{The requested evidence differs by task.}
 
-For 8B, direct RL retrieves new images in 9 of 153 condition families and 5 of 56 identity families. SFT+RL retrieves originals in 92 condition families and no new identity views. Its more frequent requests therefore concern recovering condition detail. The observed behavior does not establish the same improvement in cross-view identity search.
+For 8B, direct RL retrieves new images in 9 of 153 condition families and 5 of 56 identity families. SFT+RL retrieves originals in 92 condition families and no new identity views. The increase is concentrated in condition-detail retrieval; requests for additional identity views remain absent.
 
 \paragraph{A request need not add an image.}
 
-The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:teaser} shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail.
+The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:teaser} shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail. The bottle preview and original derive from the same photograph. The 48-pixel preview repeats under the overview request, whereas the original record retains 900-pixel detail. Cropping or enlarging the returned overview cannot recover the pixels discarded when the preview was made. Requesting the original changes the observation without changing the item, time or camera. Counting requests alone would therefore treat two different evidence outcomes as equivalent.
 
 \paragraph{Stopping changes when a request fails.}
 
@@ -401,7 +365,20 @@ For the 92 families where 8B requests an original, we compare Obtainable, Missin
 
 \paragraph{Responding to failure is only part of stopping.}
 
-The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, but still gives definite answers in 116 of the 209 Unavailable episodes. Those 116 are not failed-request cases: the policy stops without asking for the withheld photograph. The 7B policy makes no requests in Unavailable and gives 209 definite answers. These outcomes separate stopping after failed access from choosing to investigate in the first place. Independent sufficiency review is needed to determine which unrequested cases already have adequate evidence in the preview.
+The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, but gives definite answers in 116 of the 209 Unavailable episodes.
+Let \(U\) denote the Unavailable episodes and \(F\subseteq U\) those containing a failed photograph request.
+The observed abstention rates are
+\begin{equation}
+\Pr(\hat y=\Nme\mid F)=1,\qquad
+\Pr(\hat y=\Nme\mid U)=0.445.
+\label{eq:failed-request}
+\end{equation}
+The first rate is conditioned on the policy choosing to ask.
+All 92 requested episodes concern condition; among the other 117 episodes, one identity case ends in abstention and 116 end in definite answers.
+The 7B policy makes no requests and gives 209 definite answers in Unavailable.
+These outcomes distinguish responding to access feedback from initiating a search.
+A policy can consistently change its answer after denial while leaving other photographs unrequested.
+
 % adaptation-results-end
 
 
@@ -412,7 +389,7 @@ We repeat the direct setting with a 384-token allowance for Qwen2.5-VL-7B, Qwen3
 Accuracy remains 15.8\%, 74.6\% and 57.9\%, respectively, on the fixed initially sufficient set.
 The paired correctness vectors are unchanged, as are the full-access results.
 The short direct outputs therefore do not result from hitting the 96-token limit.
-This control changes one direct-call allowance; it does not match the structured response or cumulative generation budget of an interactive episode.
+This control isolates the per-call output allowance under direct answering.
 
 \paragraph{Action targets change request behavior.}
 We also compare SFT on complete public histories with two target choices: only the final decision, or both actions and the final decision.
@@ -422,7 +399,9 @@ With mixed-task training, the corresponding fractions are 0\% and 39.2\% (Table~
 All additional requests in both action-supervised settings concern condition originals; neither policy requests another identity view.
 Both comparisons use the same update cap, rather than matched target-token compute.
 The result distinguishes exposure to tool results in a history from supervision to issue the preceding call.
-It establishes a change in request behavior; choosing a new and sufficient view remains a separate test.
+
+Identity-only action supervision produces requests in every condition case but none of the identity cases. Mixed-task supervision changes this behavior selectively: requests for condition originals fall from 153 to 82, while requests for identity views remain at zero. The additional calls reflect transfer of the request operation to condition images. The task breakdown exposes behavior hidden by the overall request rate: these policies retrieve finer detail from originals, while leaving the available identity views unexplored.
+
 
 \begin{table}[t]\centering\small
 \caption{\textbf{Action-target ablation for 8B SFT.}
@@ -444,25 +423,18 @@ Additional images do not consistently improve accuracy, even before a search pol
 The full-access reference thus checks whether more visual material helps the same answer format; it cannot be assumed to dominate every interactive policy.
 Complete task-wise results are in the supplement.
 
-\paragraph{Scope of the current evidence gaps.}
-Condition requests chiefly recover original image detail; identity requests expose additional recorded views.
-The source-derived labels and intended gaps still need independent visual review.
-We therefore report new-image access and stopping behavior separately from the grounded evaluation defined in Section~3.
-A correct source-label answer or a new image alone does not certify sufficient evidence.
-
-Public photographs may also have appeared in base-model pretraining.
-Our post-training splits separate source groups and image hashes, but cannot rule out that earlier exposure.
-We therefore compare policies on fixed cases without claiming generalization to previously unseen photographs or physical items.
+\paragraph{Limitations.}
+Condition queries chiefly test recovery of original image detail, while identity queries permit additional recorded viewpoints.
+The reported access measurements count new images and stopping decisions, without assigning them independent sufficiency labels.
+Source groups and image hashes are disjoint between post-training and evaluation data.
+The public photographs may nevertheless have appeared in base-model pretraining, which limits conclusions about unseen-image generalization.
 
 \section{Conclusion}
-\benchmark organizes object claims into families with different access to the photographs needed to check them.
-Its evaluation distinguishes an unfinished search from a wrong answer after sufficient evidence has been seen.
-The experiments show why that distinction matters.
-Interactive settings both correct and lose answers, and submission errors can obscure otherwise correct visual descriptions.
-Training improves source-label accuracy, but the observed search behavior remains uneven: the 7B SFT+RL policy never requests a photograph in Obtainable, while the 2B policy repeatedly asks for a preview it already has.
-The two 8B training routes achieve similar answer accuracy but retrieve new images in 14 and 92 Obtainable families.
-The SFT+RL policy changes its stopping decision when a requested original cannot be supplied.
-Similar answer scores can conceal whether a policy requests new pixels, repeats an old view, or stops without looking.
+\benchmark evaluates visual evidence search by varying access to photographs for a fixed object claim.
+Recorded interactions distinguish image selection, responses to access failures and final-answer submission.
+Across models, tools improve some answers and disrupt others; SFT and RL change completion, cost and request behavior in different ways.
+The two 8B training routes reach similar answer accuracy but obtain new photographs in 14 and 92 families with withheld images.
+The more frequent requests recover condition detail without producing additional identity views.
 
 \label{resolveai-main-end}
 \clearpage
