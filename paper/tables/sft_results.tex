@@ -1,28 +1,27 @@
-\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
-\begin{minipage}{.68\textwidth}\centering
-\caption{\textbf{Effect of policy training.}
-SFT uses balanced identity and condition data; RL trains directly from the pretrained model; SFT+RL applies GRPO after SFT.
-SFT uses validation selection; RL and SFT+RL use the checkpoint after all 64 training groups. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.
-Training-data ablations are reported in the supplement; Table~\ref{tab:action-targets} compares action targets.}
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}
+\begin{minipage}{.94\textwidth}\centering
+\caption{\textbf{Training with supplied and withheld evidence.}
+SFT uses mixed-task trajectories; RL starts from the base model; SFT+RL applies GRPO after SFT.
+RL checkpoints follow 64 training groups. All accuracy columns use source labels and retain failed and abstaining attempts.
+Obtainable uses the interactive setting; New image counts requests returning new pixels.
+Time and output tokens describe these Obtainable interactions. Best accuracy is bold within each model and column.}
 \label{tab:sft}
-\begin{tabular}{@{}l*{8}{r}@{}}
-\toprule
-\multicolumn{9}{l}{\emph{(a) Overall accuracy (\%)}}\\
- & \multicolumn{4}{c}{No tools} & \multicolumn{4}{c}{With tools}\\
-\cmidrule(lr){2-5}\cmidrule(l){6-9}
-Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
+\begin{tabular}{@{}llrrrrrrrr@{}}\toprule
+ & & \multicolumn{2}{c}{Sufficient accuracy} & \multicolumn{3}{c}{Obtainable accuracy} & \multicolumn{3}{c}{Obtainable agent}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}
+Model & Training & Direct & Agent & Cond. & Identity & Overall & New image (\%) & Time (s) & Output tokens\\\midrule
+Qwen2.5-VL-7B & Base & 15.8 & 3.8 & 0.0 & 0.0 & 0.0 & 0.5 & 15.4 & 280\\
+ & SFT & 69.9 & 73.7 & 51.6 & \textbf{75.0} & \textbf{57.9} & 0.0 & 5.1 & 112\\
+ & RL & 12.4 & 3.3 & 0.0 & 0.0 & 0.0 & 1.4 & 4.4 & 69\\
+ & SFT+RL & \textbf{73.2} & \textbf{77.5} & \textbf{52.9} & 62.5 & 55.5 & 0.0 & 4.7 & 112\\
 \midrule
-Qwen2.5-VL-7B & 15.8 & 69.9 & 12.4 & \textbf{73.2} & 3.8 & 73.7 & 3.3 & \textbf{77.5}\\
-Qwen3-VL-2B & \textbf{60.3} & 48.3 & 59.8 & 48.8 & 40.7 & 71.8 & 54.5 & \textbf{72.7}\\
-Qwen3-VL-8B & 74.6 & 78.9 & 73.7 & \textbf{81.3} & 82.3 & 82.9 & \textbf{84.2} & 83.7\\
-\addlinespace[6pt]
-\multicolumn{9}{l}{\emph{(b) Interaction cost with tools}}\\
- & \multicolumn{4}{c}{Time per case (s)} & \multicolumn{4}{c}{Output tokens per case}\\
-\cmidrule(lr){2-5}\cmidrule(l){6-9}
-Model & Base & SFT & RL & SFT+RL & Base & SFT & RL & SFT+RL\\
+Qwen3-VL-2B & Base & \textbf{60.3} & 40.7 & 19.6 & 46.4 & 26.8 & 1.0 & 13.4 & 409\\
+ & SFT & 48.3 & 71.8 & \textbf{54.2} & \textbf{73.2} & \textbf{59.3} & 0.0 & 6.2 & 139\\
+ & RL & 59.8 & 54.5 & 13.1 & 64.3 & 26.8 & 0.0 & 17.4 & 408\\
+ & SFT+RL & 48.8 & \textbf{72.7} & 50.3 & \textbf{73.2} & 56.5 & 0.5 & 8.2 & 205\\
 \midrule
-Qwen2.5-VL-7B & 13.1 & 5.6 & 4.7 & 5.5 & 186 & 112 & 61 & 113\\
-Qwen3-VL-2B & 17.1 & 5.5 & 18.1 & 6.1 & 449 & 118 & 345 & 140\\
-Qwen3-VL-8B & 16.8 & 7.1 & 16.4 & 8.0 & 283 & 117 & 263 & 129\\
-\bottomrule
-\end{tabular}\end{minipage}\end{table*}
+Qwen3-VL-8B & Base & 74.6 & 82.3 & 45.8 & 71.4 & 52.6 & 5.7 & 20.5 & 397\\
+ & SFT & 78.9 & 82.9 & 63.4 & 76.8 & 67.0 & 39.2 & 8.0 & 135\\
+ & RL & 73.7 & \textbf{84.2} & 51.6 & 66.1 & 55.5 & 6.7 & 23.1 & 395\\
+ & SFT+RL & \textbf{81.3} & 83.7 & \textbf{66.0} & \textbf{83.9} & \textbf{70.8} & 44.0 & 9.2 & 153\\
+\bottomrule\end{tabular}\end{minipage}\end{table*}

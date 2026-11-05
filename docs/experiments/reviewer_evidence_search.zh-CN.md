@@ -16,6 +16,8 @@
 
 主表并列 Sufficient 与 Obtainable，给出缺图条件下的状态/身份准确率、新图返回率、完成率、实际时间和输出 token。原 Sufficient 任务与效率细目保留附录，训练表保持独立。每个模型/设置必须齐全后才出分；缺测不是零分，失败和弃答留在分母。
 
+训练模型也已全部复核。缺图条件下，SFT→SFT+RL的分数变化为：7B 57.9%→55.5%，2B 59.3%→56.5%，8B 67.0%→70.8%。这与初始证据充足时三模型均提高的趋势不同。主Table2已同时呈现两种访问条件，原有Sufficient分数保持不变。[完整12政策细目](adaptation_obtainable_results.md)包含任务拆分、请求、完成率和实际效率。
+
 ## Priority 2：独立充分性检查
 
 来源标签正确，不代表模型取得或引用的照片足以判题。因此 grounded accuracy、evidence-found rate、correct-evidence-use rate 和 unsupported-decision rate 暂无正式分数；新图率不能代替它们。

@@ -1,0 +1,2815 @@
+{
+  "schema_version": "resolveai-adaptation-obtainable-v1",
+  "scope": "Source-label agreement and recorded behavior on the frozen Obtainable cohort; not grounded accuracy. No inference or database mutation.",
+  "variant": "Obtainable",
+  "arm": "interactive_agent",
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "family_ids": [
+    "case-0013955d31d3d1958ae4",
+    "case-008fddbd675adc4570ad",
+    "case-00bb48fa5a6b3e55662e",
+    "case-03415461c3ae41ab58f8",
+    "case-035e4ca9730fd6a3fcab",
+    "case-03cfc447c84672dba323",
+    "case-0491092a72058aac0ea9",
+    "case-04e33f6404ed5ae10513",
+    "case-050c440b3c0528140212",
+    "case-0687c95a9b01fa5c5bd9",
+    "case-06bd2e2c619173cd0e26",
+    "case-07af5dd50459cd1cebad",
+    "case-08da5fca484862c6a91d",
+    "case-094409637f3979c65dde",
+    "case-0b0848b8e7b8745990d1",
+    "case-0be3f37fb1d1a7e1ff03",
+    "case-0d15c862cc16bbe4c099",
+    "case-0e8fbed0931b991c25af",
+    "case-0ed00b56217ebb655b95",
+    "case-0fb42a8c2b7c8437ef8c",
+    "case-0fe3f5acad0e718287c1",
+    "case-10c99db3e69bc9972b3d",
+    "case-1171b0a231e8710764bf",
+    "case-13a2fed0403ff94d313e",
+    "case-14c2c9cfcfb0ee57927f",
+    "case-14fdadb344d83119c987",
+    "case-158a8df02f25f99f87e8",
+    "case-161136a9ec3cc64771f8",
+    "case-1704dbd0a5480d63465e",
+    "case-1736d455af2ed926f7db",
+    "case-198036c061f8860e137d",
+    "case-1b38372ab3a9c802472f",
+    "case-1d2273c2f03c0b1e3766",
+    "case-1d7591ee4eba4847495f",
+    "case-1e688e6208ebb40a4ab2",
+    "case-1f6755d1255c1b951af4",
+    "case-1fb073759024a879af6b",
+    "case-2188cca9dcb429a58d96",
+    "case-218d1dcffccb1edb0c4b",
+    "case-2238dd539b5b090ec4c5",
+    "case-2462de3af747832feb12",
+    "case-2580989ed62995f74c9a",
+    "case-2921ec601a7224865d46",
+    "case-2a0fffc202578b67463d",
+    "case-2c1a2e9300951599e5a1",
+    "case-2d8e0e473a213cb80cae",
+    "case-2deee0f03d49b3f2dcba",
+    "case-2f436ab6aeaa0b7b20a1",
+    "case-2fc44bf1dff7ba972c9f",
+    "case-306465647a99ee75ba24",
+    "case-33507d1bf22357977e87",
+    "case-374f6ae20a2cc9dee151",
+    "case-3816b0594bbd57f597dc",
+    "case-3a77f3fa43ae2ea19853",
+    "case-3ce617a2c9c23d8bf77d",
+    "case-3d45aca0f9331e9bc057",
+    "case-3d76ad32b1ae434e1008",
+    "case-3e356c47c66a1c95006d",
+    "case-3e74e410a110e150612c",
+    "case-3f6829fdbe913aaa7d8d",
+    "case-401c2a17d2ad647c820a",
+    "case-4075816a3e17dc65388c",
+    "case-422ae37eebd4196a1c88",
+    "case-4329c6fad6a0fe133467",
+    "case-44d34af477c63dbeadec",
+    "case-482d81c6b59e8b9e993d",
+    "case-4907473a0cb857f0290c",
+    "case-4beee846d0814a3edcdc",
+    "case-4ca0bdc9023fb6ddf0f7",
+    "case-4cbb34d919b6796dc3c6",
+    "case-4cd023a5d1cf1dfb5f3f",
+    "case-4d4c204a9a775f2eb945",
+    "case-4f6d9ad29d8928752244",
+    "case-505b0a13881bd0283930",
+    "case-511ee5c29083e3320780",
+    "case-519b31b53e05b9444226",
+    "case-527a794c9651d1527e1c",
+    "case-52a69b7c898d12a8e0a5",
+    "case-52bbfb6426b7a7e880dc",
+    "case-56ebf13312e918355e08",
+    "case-58d5dfa36b59e88b3264",
+    "case-5b4d10e649bbb741d641",
+    "case-5cbd8b31de7506a7b579",
+    "case-5d2f8f6f284da954b7d1",
+    "case-5ebe8ae572d5aab88e3e",
+    "case-5ed8ddd944db90518517",
+    "case-5f3570aff0075cfce6cb",
+    "case-600855f607d656065ab8",
+    "case-61298e2087460fff0b38",
+    "case-62466e732168dfaf8214",
+    "case-6392cfc01bb502fb9ea2",
+    "case-673ed71d240f5d142b82",
+    "case-6aaa1faab1e4de97ff49",
+    "case-6bb63cd0a32977fc8276",
+    "case-6bb901b72d1d9f36970b",
+    "case-6c98a14b04dc66a9a887",
+    "case-6d756f50b68d12061b4c",
+    "case-6e3bb1bb009b9408c877",
+    "case-6e617c52f117568663ec",
+    "case-6f48f4e2cb087a0f87d0",
+    "case-72b9852afb9370eb1e2f",
+    "case-744edc80b6d2d2866d9f",
+    "case-74920d6b31973fa69172",
+    "case-75629614a6bf5964d782",
+    "case-75af8f8edccb80ca46b5",
+    "case-76557903e96adaea78ae",
+    "case-76d243146dc40df1831d",
+    "case-76e046ab45ce352eb231",
+    "case-776ac4ef6bd4c68d9255",
+    "case-7897eb4a5dfb1eec5de4",
+    "case-79d971530ee82a51dd40",
+    "case-7b297d92a47b18846107",
+    "case-7bed7b97b72117d1a8a2",
+    "case-7cfd522af627f62da66b",
+    "case-7d53235c8442a2971e7f",
+    "case-7dc3561f55a0bc0bc5fe",
+    "case-7e03002a680778a4ab12",
+    "case-7e39b62471c03c73d995",
+    "case-7fc0077a4b1452489a00",
+    "case-8002ba7cfe4ee4425dc8",
+    "case-8021c25ae38ad5931e40",
+    "case-81e0e8f4cfa94f3deadd",
+    "case-8271cc372f24d3c5fe4d",
+    "case-8382554c6be762943bdd",
+    "case-83e1e69518d482ef4109",
+    "case-84726da18c39ea85a416",
+    "case-854c45c5f8ce31d14213",
+    "case-8606651323bb9a95aaa5",
+    "case-8802a95c8b66734a85f1",
+    "case-8902b3dfae78b07aabbb",
+    "case-89929c5660c3d8406f66",
+    "case-8a694ef7370ceb9c9bb2",
+    "case-8a720eb5cec384819027",
+    "case-8b5d4384ca7ef0be6cfe",
+    "case-8b7246d25a61c698312c",
+    "case-8cf68eec4936014dc689",
+    "case-8ea68576affa0184b654",
+    "case-8f00f840530fa8edeb8b",
+    "case-8f77c26785c28fc51d4c",
+    "case-919281c3b936a72161eb",
+    "case-91c4ea3c6210cc21aa35",
+    "case-91d211c82d2285480b29",
+    "case-9224f5fdbc8c158709b6",
+    "case-93dd02a172e3378a70e1",
+    "case-9473a070c17fccb32b55",
+    "case-94873a21bd4db2e983e7",
+    "case-9488eb02d53de8d64e4d",
+    "case-95fdc1ae76158756dc33",
+    "case-9602772422d7fad6e956",
+    "case-976734884edf1aaede77",
+    "case-995af3c4557049fb0e18",
+    "case-99b291151e0dc8c5fe77",
+    "case-9a2da1ff244329d9ba8b",
+    "case-9d0e6521f3dc955fcade",
+    "case-9f1340d3c2e87f62b537",
+    "case-a0005d8bd8d6d2c24edb",
+    "case-a183de3a0d6f799887a3",
+    "case-a278a66cccceb59dd30d",
+    "case-a2fc8c952def814bf0ca",
+    "case-a474e949667b6a8393be",
+    "case-a48f6a846280388313f9",
+    "case-a58b60a912dacc29a8ba",
+    "case-a5f95ce3ed0472ab9c58",
+    "case-a64d88e560addf16c7cd",
+    "case-a69cdab83dae7be217b6",
+    "case-a6ed346a1b92f57b56c7",
+    "case-a7e97245c5fffd3f7270",
+    "case-aa88b43fddefd22c3288",
+    "case-ac22f9611d7241c74b7b",
+    "case-acca9551f49d9a2feaa2",
+    "case-ade369acc373e1df4866",
+    "case-ae893e972e9357a6f87e",
+    "case-aebd42bd62d3bfa51533",
+    "case-afb2faf54f4d8b6c52d1",
+    "case-b07bf82071c4a6987827",
+    "case-b0e0d4a5462fd898ae13",
+    "case-b1d8df4efdfe8e6c01cd",
+    "case-b2b0065d37ffec6b63e9",
+    "case-b4f26464904e5d0bc975",
+    "case-b59331fa682194a251ad",
+    "case-b849fdd52b58a7c9763c",
+    "case-b92489441aa7de3bde40",
+    "case-bb0616e95c508e78f505",
+    "case-bd0d6da67c515870f9a2",
+    "case-bff8ff386e3183174825",
+    "case-c28519175996893e6e11",
+    "case-c43236afe044e25392c2",
+    "case-c496e7ec10a784f42b49",
+    "case-c66f319b9681bf706240",
+    "case-c6d3fb69a424b6fbf678",
+    "case-c81fc8a91afe9669aaa9",
+    "case-c9a7cef5c381e3b62b67",
+    "case-ca40775005dd65b7b5d7",
+    "case-cc1dcd4afe1b98c554c6",
+    "case-cc5be89c161bc0fd85a6",
+    "case-cd075280055a56377140",
+    "case-cd3a60a78b58aa3c819d",
+    "case-ce17d2b7a68c256b9fec",
+    "case-cefaf5825e0ee8436597",
+    "case-d03eb7a33f6f45ea03cc",
+    "case-d0e1b7e15938b69ef9b1",
+    "case-d1720f38cbfbe6a40804",
+    "case-d2f5466dfaee7ddc96dd",
+    "case-d5ee73ab73310dc8bf22",
+    "case-d6e0c906dd87b5bdb2ad",
+    "case-d98fd9dff55de259d6c8",
+    "case-db9a2e17f4eb09e61b4d",
+    "case-dc4ab08a27629d5e94df",
+    "case-dc8468196b97bba4df44"
+  ],
+  "task_counts": {
+    "overall": 209,
+    "state": 153,
+    "identity": 56
+  },
+  "definitions": {
+    "accuracy": "Percentage matching the source-derived Supported/Refuted label, counting all 209 attempts. Abstentions and invalid or missing final answers score zero.",
+    "finished": "Valid final answer, including Need more evidence.",
+    "new_image": "A request returns an RGB shape-and-pixel SHA256 absent from earlier observations. Not independent or sufficient visual evidence.",
+    "efficiency": "All frozen-cohort attempts, including failures and abstentions, enter means.",
+    "checkpoints": "Exactly the Table 2 policies: validation-selected SFT; fixed completed 64-group RL and SFT+RL checkpoints.",
+    "sufficient_results": "Not recomputed or modified by this analysis. An externally supplied scalar for a different access version does not supply Obtainable case predictions."
+  },
+  "provenance": {
+    "reference_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_20261102_candidate_scores.json",
+    "reference_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+    "runs_config_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/adaptation-publication/runs.json",
+    "runs_config_sha256": "b6bf6ba1c9d17287f9081e1a662cc4a3ab5b439d691251f5711e728b465d1230",
+    "helper_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/reviewer-response-staging/aggregate_obtainable.py",
+    "helper_sha256": "2db418464f388faec8abe2fd603d1f8ae7e8fb8a594327bddaae5018572a0eff",
+    "script_sha256": "86a86fe3c8a25d2d3c5bfa02845a69340dce8755cabeb1c0b3bcc98ae0a5fd4f"
+  },
+  "policies": [
+    {
+      "model": "Qwen2.5-VL-7B",
+      "policy": "Base",
+      "run_name": "qwen25",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": null,
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_20261102_candidate_scores.json",
+      "report_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-20261101/qwen25/episodes.sqlite",
+          "manifest_sha256": "c6bbc0508cb5c6228321d3eb5bfb6bb4a4439a93ca51b374550a7d4eac0b3099",
+          "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+          "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+          "configuration_sha256": "6825e520b5dafdffa1b33cbd827cc85a6292c752f3db464bf7ac41fbff7053ef",
+          "lora_adapter": null,
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 160,
+            "abstained": 157,
+            "definite": 3,
+            "episodes_with_request": 1,
+            "request_calls": 2,
+            "request_responses": 2,
+            "episodes_with_new_pixels": 1,
+            "new_pixel_images": 1,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 1
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 76.55502392344498,
+          "abstained_pct": 75.11961722488039,
+          "definite_pct": 1.4354066985645932,
+          "request_pct": 0.4784688995215311,
+          "new_pixel_image_pct": 0.4784688995215311,
+          "repeated_image_request_pct": 0.4784688995215311,
+          "request_views": {
+            "view-01": 1,
+            "view-02": 1
+          },
+          "request_status": {
+            "provided": 2
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 15.376219716952706,
+            "mean_input_tokens": 28830.086124401914,
+            "mean_output_tokens": 279.6363636363636,
+            "mean_model_calls": 6.631578947368421,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "d607de4e5c8c6f254f0351939e607c453e08e783c6efb577fa15e8991c25a449",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen25/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 112,
+            "abstained": 109,
+            "definite": 3,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 73.20261437908496,
+          "abstained_pct": 71.24183006535948,
+          "definite_pct": 1.9607843137254901,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 15.304641922164306,
+            "mean_input_tokens": 29128.549019607843,
+            "mean_output_tokens": 267.718954248366,
+            "mean_model_calls": 6.771241830065359,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "250520e10bbb4f4b1ab1c56051c33ab2ba50507934520ba45fcc5c48ce37dc28",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen25/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 48,
+            "abstained": 48,
+            "definite": 0,
+            "episodes_with_request": 1,
+            "request_calls": 2,
+            "request_responses": 2,
+            "episodes_with_new_pixels": 1,
+            "new_pixel_images": 1,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 1
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 85.71428571428571,
+          "abstained_pct": 85.71428571428571,
+          "definite_pct": 0.0,
+          "request_pct": 1.7857142857142858,
+          "new_pixel_image_pct": 1.7857142857142858,
+          "repeated_image_request_pct": 1.7857142857142858,
+          "request_views": {
+            "view-01": 1,
+            "view-02": 1
+          },
+          "request_status": {
+            "provided": 2
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 15.571780477713869,
+            "mean_input_tokens": 28014.64285714286,
+            "mean_output_tokens": 312.19642857142856,
+            "mean_model_calls": 6.25,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "039157c4951bb30ce1a203b3edb2e430fc1471cd08f6f9a6ca19a967881de788",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen25/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen2.5-VL-7B",
+      "policy": "SFT",
+      "run_name": "qwen25_mixed_sft",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "step": 200,
+          "cursor": 1600,
+          "best_validation": 0.001914909093556868,
+          "bad_validations": 3
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_mixed_sft/best",
+        "adapter_sha256": "9312af0096bd1b07dad3bbb7400eb839e3eaccf89eb24a121e8c5f8fae02fbfd",
+        "benchmark_performance": null,
+        "selection": "Held-out source-disjoint teacher-forced validation loss"
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_qwen25_mixed_sft_candidate_scores.json",
+      "report_sha256": "32e2dbf727cc6d3bc52afd04610a93944db7f22bf08822e5a4bcf99c95445f86",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen25_mixed_sft/benchmark/episodes.sqlite",
+          "manifest_sha256": "236769ddd1456c3bbb53c5a318bcc7899a858e33979b257aa88c70f933af92fa",
+          "source_commit": "2b8d73f989e54ae2c9c998e840e538db29057c52",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-acquisition-LoRA",
+          "model_revision": "9312af0096bd1b07dad3bbb7400eb839e3eaccf89eb24a121e8c5f8fae02fbfd",
+          "configuration_sha256": "0b14d53ac7f2ec2a29f0d9511101476d0b7a76e1d2c24fdd32e38ec8a77fd05a",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_mixed_sft/best",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 121,
+            "finished": 209,
+            "abstained": 0,
+            "definite": 209,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 57.89473684210526,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 5.1073301906851185,
+            "mean_input_tokens": 3304.0765550239234,
+            "mean_output_tokens": 111.95693779904306,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "501f0f726e3687c89a79b9d45c370fffe71cf7677a3013748fdc4106815f79e3",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 79,
+            "finished": 153,
+            "abstained": 0,
+            "definite": 153,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 51.63398692810458,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 3.197729735484566,
+            "mean_input_tokens": 3287.1111111111113,
+            "mean_output_tokens": 59.42483660130719,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "c37f6837409593d3216ae3ba77b763279f53c813b19d0057c49b9f04ad4f3964",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 42,
+            "finished": 56,
+            "abstained": 0,
+            "definite": 56,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 75.0,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 10.324631434358057,
+            "mean_input_tokens": 3350.4285714285716,
+            "mean_output_tokens": 255.48214285714286,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "1658139f66eee699f06180b86fc2b17ebc26c035dfaa34473fc1eda9664f4b8f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen2.5-VL-7B",
+      "policy": "RL",
+      "run_name": "qwen25_rl_only",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 124,
+          "best_validation": -0.01218750000000001,
+          "best_validation_success": 0.5,
+          "best_group": 48
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_rl_only/latest",
+        "adapter_sha256": "8410f93fbfbd119c118aafbf2797a3e7c161d039ca41b1bd2f7f1a74745baa7f",
+        "selection": "Fixed completed-training checkpoint",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_qwen25_rl_only_candidate_scores.json",
+      "report_sha256": "ba2392a36281842b4c9b12bb588cba2e8169f2ad2add7e9e4317d694c449de3c",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "792b023d5fc95be7d41f4e597f6a0602a657d452396655c0100e5330effd9b71",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-GRPO",
+          "model_revision": "8410f93fbfbd119c118aafbf2797a3e7c161d039ca41b1bd2f7f1a74745baa7f",
+          "configuration_sha256": "a4b08d1b8a968fcf5cab553d4bd4537b348b2d790217db783cbbaea14f3f9730",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "1985785e6fd99e1c42a369e2696e31c9a90875346567b4ed110c44cbc9cb7331",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-GRPO",
+          "model_revision": "8410f93fbfbd119c118aafbf2797a3e7c161d039ca41b1bd2f7f1a74745baa7f",
+          "configuration_sha256": "a0959f7fec4af440cb248acfd7867023bb4b5d756e9025b59a87ea8b784c4550",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 209,
+            "abstained": 209,
+            "definite": 0,
+            "episodes_with_request": 3,
+            "request_calls": 3,
+            "request_responses": 3,
+            "episodes_with_new_pixels": 3,
+            "new_pixel_images": 3,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 100.0,
+          "abstained_pct": 100.0,
+          "definite_pct": 0.0,
+          "request_pct": 1.4354066985645932,
+          "new_pixel_image_pct": 1.4354066985645932,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 3
+          },
+          "request_status": {
+            "provided": 3
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 4.4298354586269975,
+            "mean_input_tokens": 9769.961722488039,
+            "mean_output_tokens": 68.78947368421052,
+            "mean_model_calls": 2.6698564593301435,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "43416e49af80a4c48675019758238866cc1301a17ae2274d99b6e941f2708a8e",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 153,
+            "abstained": 153,
+            "definite": 0,
+            "episodes_with_request": 3,
+            "request_calls": 3,
+            "request_responses": 3,
+            "episodes_with_new_pixels": 3,
+            "new_pixel_images": 3,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 100.0,
+          "abstained_pct": 100.0,
+          "definite_pct": 0.0,
+          "request_pct": 1.9607843137254901,
+          "new_pixel_image_pct": 1.9607843137254901,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 3
+          },
+          "request_status": {
+            "provided": 3
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 3.4207046855898464,
+            "mean_input_tokens": 8435.411764705883,
+            "mean_output_tokens": 47.03921568627451,
+            "mean_model_calls": 2.3856209150326797,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "168478f073d8de90fd2499a0d275cb918082b9c0d812cd23f9263aef5b5ee069",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 0,
+            "finished": 56,
+            "abstained": 56,
+            "definite": 0,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 0.0,
+          "finished_pct": 100.0,
+          "abstained_pct": 100.0,
+          "definite_pct": 0.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 7.186924892103499,
+            "mean_input_tokens": 13416.142857142857,
+            "mean_output_tokens": 128.21428571428572,
+            "mean_model_calls": 3.4464285714285716,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "22ac3ded5cbd6072f2c07a3290a66c4f6578b83078ff1f4c9c18cb99e9983bce",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen2.5-VL-7B",
+      "policy": "SFT+RL",
+      "run_name": "qwen25_grpo",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 24,
+          "best_validation": 0.955,
+          "best_validation_success": 1.0,
+          "best_group": 8
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_grpo/latest",
+        "adapter_sha256": "6a0c8d19cac7314497925d8234f18a60495c6471666a9c51b860cc0649b7d299",
+        "selection": "Fixed completed-training checkpoint",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_qwen25_grpo_candidate_scores.json",
+      "report_sha256": "421e6ec5148dfd6ae6086cdb906ba736007317c88a60f8d21bb79c9af79173b3",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "ddbe4995a1be91d99923b2172fd348c0721f328c2da2cb2fcee1702bbc520a77",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-GRPO",
+          "model_revision": "6a0c8d19cac7314497925d8234f18a60495c6471666a9c51b860cc0649b7d299",
+          "configuration_sha256": "a95c2cf13566733ac39c15ffe185c43a14e462256c942686368a7ac78e649336",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "15510a6bd731d3126816c0e0ad95ac56e955d801d2059b0ae63d1300de4c12a0",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-GRPO",
+          "model_revision": "6a0c8d19cac7314497925d8234f18a60495c6471666a9c51b860cc0649b7d299",
+          "configuration_sha256": "f534a2c39c483f2475be75e4d83e6fcebad45d8ac11f4b0f88bafbb5824b6971",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen25_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 116,
+            "finished": 209,
+            "abstained": 0,
+            "definite": 209,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 55.50239234449761,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 4.692818108300509,
+            "mean_input_tokens": 3304.0765550239234,
+            "mean_output_tokens": 111.78947368421052,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "e21bf6736e835c66f8b3d128fa8fc4b246e97c3d16655cbe63bc74543968f29a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 81,
+            "finished": 153,
+            "abstained": 0,
+            "definite": 153,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 52.94117647058823,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 2.705545674851225,
+            "mean_input_tokens": 3287.1111111111113,
+            "mean_output_tokens": 59.26797385620915,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "9f3a0efb2fd1525d24bf19ded0abcbb7eb77f24de32a9cda5c59b5f5bf5db9b2",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 35,
+            "finished": 56,
+            "abstained": 0,
+            "definite": 56,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 62.5,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 10.122330292545874,
+            "mean_input_tokens": 3350.4285714285716,
+            "mean_output_tokens": 255.28571428571428,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "ccf987f7e667aea2aeb1aa52c5945b78d83267ffd008bcaee812eaf2ffa3e317",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-2B",
+      "policy": "Base",
+      "run_name": "qwen3_2b",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": null,
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_20261102_candidate_scores.json",
+      "report_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite",
+          "manifest_sha256": "86c9875a818d88beb61558ac5862dc3d67fd4ef2e7188e029e648efe24561008",
+          "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+          "model_revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+          "configuration_sha256": "40718895cecc6830c9ff47134edcf9a166c2d39963f8558281e629cfaec18c97",
+          "lora_adapter": null,
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 56,
+            "finished": 96,
+            "abstained": 0,
+            "definite": 96,
+            "episodes_with_request": 4,
+            "request_calls": 4,
+            "request_responses": 4,
+            "episodes_with_new_pixels": 2,
+            "new_pixel_images": 2,
+            "episodes_with_repeated_image_request": 2,
+            "repeated_image_request_calls": 2
+          },
+          "source_label_accuracy_pct": 26.794258373205743,
+          "finished_pct": 45.933014354066984,
+          "abstained_pct": 0.0,
+          "definite_pct": 45.933014354066984,
+          "request_pct": 1.9138755980861244,
+          "new_pixel_image_pct": 0.9569377990430622,
+          "repeated_image_request_pct": 0.9569377990430622,
+          "request_views": {
+            "view-02": 2,
+            "overview": 1,
+            "view-01": 1
+          },
+          "request_status": {
+            "provided": 4
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 13.395432412333879,
+            "mean_input_tokens": 32412.708133971293,
+            "mean_output_tokens": 408.75598086124404,
+            "mean_model_calls": 7.679425837320574,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "9fbf92e9065d1f7077eda251d0e1c07755ab1eefe0e02d97a08ca8e2d3390e9f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 30,
+            "finished": 57,
+            "abstained": 0,
+            "definite": 57,
+            "episodes_with_request": 1,
+            "request_calls": 1,
+            "request_responses": 1,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 1
+          },
+          "source_label_accuracy_pct": 19.607843137254903,
+          "finished_pct": 37.254901960784316,
+          "abstained_pct": 0.0,
+          "definite_pct": 37.254901960784316,
+          "request_pct": 0.6535947712418301,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.6535947712418301,
+          "request_views": {
+            "overview": 1
+          },
+          "request_status": {
+            "provided": 1
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 12.262747826941883,
+            "mean_input_tokens": 31523.18954248366,
+            "mean_output_tokens": 361.87581699346407,
+            "mean_model_calls": 7.73202614379085,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "58a3be299f942c0474686c0822e88ea1b1783e412e0a81dc81052c8ef18e3147",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 26,
+            "finished": 39,
+            "abstained": 0,
+            "definite": 39,
+            "episodes_with_request": 3,
+            "request_calls": 3,
+            "request_responses": 3,
+            "episodes_with_new_pixels": 2,
+            "new_pixel_images": 2,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 1
+          },
+          "source_label_accuracy_pct": 46.42857142857143,
+          "finished_pct": 69.64285714285714,
+          "abstained_pct": 0.0,
+          "definite_pct": 69.64285714285714,
+          "request_pct": 5.357142857142857,
+          "new_pixel_image_pct": 3.5714285714285716,
+          "repeated_image_request_pct": 1.7857142857142858,
+          "request_views": {
+            "view-02": 2,
+            "view-01": 1
+          },
+          "request_status": {
+            "provided": 3
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 16.490088511708432,
+            "mean_input_tokens": 34843.0,
+            "mean_output_tokens": 536.8392857142857,
+            "mean_model_calls": 7.535714285714286,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "e68b4ba442437a1ae93477d76a06e8dea260e4f864fa66747bd8b53b7a61f7ba",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-2B",
+      "policy": "SFT",
+      "run_name": "qwen3_2b_mixed_sft",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "step": 150,
+          "cursor": 1200,
+          "best_validation": 0.0029535305277230976,
+          "bad_validations": 3
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/best",
+        "adapter_sha256": "e56f8d9a218d939dab6cda15629e532daa6b881eccd86671032854986eeb97d6",
+        "benchmark_performance": null,
+        "selection": "Held-out source-disjoint teacher-forced validation loss"
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_2b_mixed_sft_candidate_scores.json",
+      "report_sha256": "2f75363611eef8e19ade75f4c71f1877ce6cb204b9f81c0614b546be1019655e",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite",
+          "manifest_sha256": "3719f14f27ef553f822b48018271de43c37ce2213421353b66bf739b27c830ec",
+          "source_commit": "2b8d73f989e54ae2c9c998e840e538db29057c52",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-acquisition-LoRA",
+          "model_revision": "e56f8d9a218d939dab6cda15629e532daa6b881eccd86671032854986eeb97d6",
+          "configuration_sha256": "f95cc152b774e5128e60dd7a921c364e1294c6b590c9ff324f05fff4039c670d",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/best",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 124,
+            "finished": 209,
+            "abstained": 0,
+            "definite": 209,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 59.33014354066986,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 6.150873558608031,
+            "mean_input_tokens": 3204.8086124401916,
+            "mean_output_tokens": 138.86602870813397,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "f3e692753c39ebd784e86c46cd8a7fe6b72adfb00479f5d5f1582beaa4adbc30",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 83,
+            "finished": 153,
+            "abstained": 0,
+            "definite": 153,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 54.248366013071895,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 4.566863318941757,
+            "mean_input_tokens": 3187.1111111111113,
+            "mean_output_tokens": 93.84967320261438,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "7b32bd778f3378beb7e4d7f41c002f11095833213f400545233dcc8702bf723f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 41,
+            "finished": 56,
+            "abstained": 0,
+            "definite": 56,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 73.21428571428571,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 10.478615820553387,
+            "mean_input_tokens": 3253.160714285714,
+            "mean_output_tokens": 261.85714285714283,
+            "mean_model_calls": 1.0,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "d5d1bc1322d20405c476e44e134e6652beb8591c906755fd04e79e4cd3d8deb3",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-2B",
+      "policy": "RL",
+      "run_name": "qwen3_2b_rl_only",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 124,
+          "best_validation": -0.8278125000000001,
+          "best_validation_success": 0.125,
+          "best_group": 16
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_rl_only/latest",
+        "adapter_sha256": "7848be2c743882b093263d795757521edec113bf08f382fc188cc3ba0a7a0a38",
+        "selection": "Fixed completed-training checkpoint",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_2b_rl_only_candidate_scores.json",
+      "report_sha256": "98c2e25c310409d2caf48cea353d57531f0d7db1525776916bf03b936cc7c562",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "568a9c96978944f94c5ccee931557cd5f41f3f252be10ac8c20fdcc85f4eea5a",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-GRPO",
+          "model_revision": "7848be2c743882b093263d795757521edec113bf08f382fc188cc3ba0a7a0a38",
+          "configuration_sha256": "e34ae8df85ab24a9893a0ece1cb242a3a009ca3d5217cfe7dd4532f5889ddb5f",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "d17e21217114070c77933f41afa919cc940e560f782b4a252dd7fb6cacf48642",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-GRPO",
+          "model_revision": "7848be2c743882b093263d795757521edec113bf08f382fc188cc3ba0a7a0a38",
+          "configuration_sha256": "50faa17d2b5e3d98e87a4b001ededa101618585aaf85dd123130175cd4fd4bda",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 56,
+            "finished": 93,
+            "abstained": 0,
+            "definite": 93,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 26.794258373205743,
+          "finished_pct": 44.49760765550239,
+          "abstained_pct": 0.0,
+          "definite_pct": 44.49760765550239,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 17.419726225384846,
+            "mean_input_tokens": 28268.693779904308,
+            "mean_output_tokens": 407.78468899521533,
+            "mean_model_calls": 7.019138755980861,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "eddc035f396ceb4a40ef1166ed2055984d8262f237f7dede2fd3ae97993735bb",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 20,
+            "finished": 39,
+            "abstained": 0,
+            "definite": 39,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 13.071895424836601,
+          "finished_pct": 25.49019607843137,
+          "abstained_pct": 0.0,
+          "definite_pct": 25.49019607843137,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 16.058518405432288,
+            "mean_input_tokens": 28814.666666666668,
+            "mean_output_tokens": 371.69934640522877,
+            "mean_model_calls": 7.366013071895424,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "3be37875fc3aeb9547c743c6ac7760f82737de2c04b315492d58000e49369939",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 36,
+            "finished": 54,
+            "abstained": 0,
+            "definite": 54,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 64.28571428571429,
+          "finished_pct": 96.42857142857143,
+          "abstained_pct": 0.0,
+          "definite_pct": 96.42857142857143,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 21.13874044775522,
+            "mean_input_tokens": 26777.01785714286,
+            "mean_output_tokens": 506.375,
+            "mean_model_calls": 6.071428571428571,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "3119bd0b8a24209ef28f26dd774e783ce047774b14385b77ca8b4170b9407a5a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-2B",
+      "policy": "SFT+RL",
+      "run_name": "qwen3_2b_grpo_final",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 44,
+          "best_validation": 0.83,
+          "best_validation_success": 0.9375,
+          "best_group": 24
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_grpo/latest",
+        "adapter_sha256": "75e6cc962d58894471f35ef6a44e7ea453865cb441b70b6e5782f89c16c7b2b2",
+        "selection": "Fixed final group, diagnostic; not validation-selected and not selected by benchmark results",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_2b_grpo_final_candidate_scores.json",
+      "report_sha256": "be7bdc043ffbb9404c676a5c8d659d8b063db9d0f003762bd963b7b3c598362d",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "02ca949057a021aa2a9d94b007b094439fec7181baf94ad8ac7056d947cd7ad5",
+          "source_commit": "6be784ec10a85719275ca395434007357490e1b7",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-GRPO",
+          "model_revision": "75e6cc962d58894471f35ef6a44e7ea453865cb441b70b6e5782f89c16c7b2b2",
+          "configuration_sha256": "7692dc860304b6d4f76bea1613b9a779a429434c67cd72a49f8f002ddfd53656",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "5345456503cb60cfe44c6e97fc2b2be88cb22dcb6434fb519e44e7ef06b46a6d",
+          "source_commit": "6be784ec10a85719275ca395434007357490e1b7",
+          "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-GRPO",
+          "model_revision": "75e6cc962d58894471f35ef6a44e7ea453865cb441b70b6e5782f89c16c7b2b2",
+          "configuration_sha256": "435ba63c206df6fa52dccfd262bf0f29ae15a5b8c4f28e5eb8238173716c52bc",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_2b_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 118,
+            "finished": 201,
+            "abstained": 0,
+            "definite": 201,
+            "episodes_with_request": 64,
+            "request_calls": 65,
+            "request_responses": 65,
+            "episodes_with_new_pixels": 1,
+            "new_pixel_images": 1,
+            "episodes_with_repeated_image_request": 64,
+            "repeated_image_request_calls": 64
+          },
+          "source_label_accuracy_pct": 56.45933014354067,
+          "finished_pct": 96.17224880382776,
+          "abstained_pct": 0.0,
+          "definite_pct": 96.17224880382776,
+          "request_pct": 30.62200956937799,
+          "new_pixel_image_pct": 0.4784688995215311,
+          "repeated_image_request_pct": 30.62200956937799,
+          "request_views": {
+            "overview": 63,
+            "view-01": 1,
+            "view-02": 1
+          },
+          "request_status": {
+            "provided": 65
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 8.201221501289835,
+            "mean_input_tokens": 5366.1291866028705,
+            "mean_output_tokens": 205.45933014354068,
+            "mean_model_calls": 1.5502392344497609,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "c3d7bbad5060166753d215da2258dfc10b3a587cf52f3aa32f3eae317b614c2d",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 77,
+            "finished": 145,
+            "abstained": 0,
+            "definite": 145,
+            "episodes_with_request": 63,
+            "request_calls": 63,
+            "request_responses": 63,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 63,
+            "repeated_image_request_calls": 63
+          },
+          "source_label_accuracy_pct": 50.326797385620914,
+          "finished_pct": 94.77124183006536,
+          "abstained_pct": 0.0,
+          "definite_pct": 94.77124183006536,
+          "request_pct": 41.1764705882353,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 41.1764705882353,
+          "request_views": {
+            "overview": 63
+          },
+          "request_status": {
+            "provided": 63
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 7.504068837797092,
+            "mean_input_tokens": 6086.901960784314,
+            "mean_output_tokens": 184.37254901960785,
+            "mean_model_calls": 1.738562091503268,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "cce6ba9f9aed486718698b2c1285fa68b2a961b2f4bc022b4c1455be576ceafe",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 41,
+            "finished": 56,
+            "abstained": 0,
+            "definite": 56,
+            "episodes_with_request": 1,
+            "request_calls": 2,
+            "request_responses": 2,
+            "episodes_with_new_pixels": 1,
+            "new_pixel_images": 1,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 1
+          },
+          "source_label_accuracy_pct": 73.21428571428571,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 1.7857142857142858,
+          "new_pixel_image_pct": 1.7857142857142858,
+          "repeated_image_request_pct": 1.7857142857142858,
+          "request_views": {
+            "view-01": 1,
+            "view-02": 1
+          },
+          "request_status": {
+            "provided": 2
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 10.105942171189652,
+            "mean_input_tokens": 3396.875,
+            "mean_output_tokens": 263.07142857142856,
+            "mean_model_calls": 1.0357142857142858,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "f636237e5a2eccbbb0370c8ee4fe35ebdec0eca859f0ea2ea18b7ff12065132f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-8B",
+      "policy": "Base",
+      "run_name": "qwen3",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": null,
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_20261102_candidate_scores.json",
+      "report_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-20261101/qwen3/episodes.sqlite",
+          "manifest_sha256": "f0c6094c1d7e94018c0a4571337950ff02031c0982027a79ff4f279eef353f3d",
+          "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+          "model_revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+          "configuration_sha256": "69f3a71874794a274d3f15d4c11ebd2a62973d88db1ac618ac92c9de56918543",
+          "lora_adapter": null,
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 110,
+            "finished": 178,
+            "abstained": 6,
+            "definite": 172,
+            "episodes_with_request": 12,
+            "request_calls": 12,
+            "request_responses": 12,
+            "episodes_with_new_pixels": 12,
+            "new_pixel_images": 12,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 52.63157894736842,
+          "finished_pct": 85.16746411483254,
+          "abstained_pct": 2.8708133971291865,
+          "definite_pct": 82.29665071770334,
+          "request_pct": 5.741626794258373,
+          "new_pixel_image_pct": 5.741626794258373,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "view-02": 4,
+            "original": 8
+          },
+          "request_status": {
+            "provided": 12
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 20.51494483673153,
+            "mean_input_tokens": 19803.45933014354,
+            "mean_output_tokens": 397.04784688995215,
+            "mean_model_calls": 5.186602870813397,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "da78397e23e20d1ecfd2ca634b7aa8fed8c8ce49beb2f9d60204db3b0605f74f",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 70,
+            "finished": 123,
+            "abstained": 1,
+            "definite": 122,
+            "episodes_with_request": 8,
+            "request_calls": 8,
+            "request_responses": 8,
+            "episodes_with_new_pixels": 8,
+            "new_pixel_images": 8,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 45.751633986928105,
+          "finished_pct": 80.3921568627451,
+          "abstained_pct": 0.6535947712418301,
+          "definite_pct": 79.73856209150327,
+          "request_pct": 5.228758169934641,
+          "new_pixel_image_pct": 5.228758169934641,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 8
+          },
+          "request_status": {
+            "provided": 8
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 20.54830654808419,
+            "mean_input_tokens": 23048.960784313724,
+            "mean_output_tokens": 381.1372549019608,
+            "mean_model_calls": 6.03921568627451,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "10e1144933f21ee47b93a2de869faa87201305bb29df48e7e561bf49aa61d11a",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 40,
+            "finished": 55,
+            "abstained": 5,
+            "definite": 50,
+            "episodes_with_request": 4,
+            "request_calls": 4,
+            "request_responses": 4,
+            "episodes_with_new_pixels": 4,
+            "new_pixel_images": 4,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 71.42857142857143,
+          "finished_pct": 98.21428571428571,
+          "abstained_pct": 8.928571428571429,
+          "definite_pct": 89.28571428571429,
+          "request_pct": 7.142857142857143,
+          "new_pixel_image_pct": 7.142857142857143,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "view-02": 4
+          },
+          "request_status": {
+            "provided": 4
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 20.423795875357296,
+            "mean_input_tokens": 10936.285714285714,
+            "mean_output_tokens": 440.51785714285717,
+            "mean_model_calls": 2.857142857142857,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "c1ab79da0fd95e7a4b637564afbb65ec7fae7485748f2be4f73b789f6a7c9453",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-8B",
+      "policy": "SFT",
+      "run_name": "qwen3_mixed_sft",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "step": 200,
+          "cursor": 1600,
+          "best_validation": 0.0014704431491205858,
+          "bad_validations": 3
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_mixed_sft/best",
+        "adapter_sha256": "af55d000d5e40d2a3943baf3c5f1d907f909e93068503a41d88d407bb00ef614",
+        "benchmark_performance": null,
+        "selection": "Held-out source-disjoint teacher-forced validation loss"
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_mixed_sft_candidate_scores.json",
+      "report_sha256": "a8a890e0f0be9a46d37c36d7d7001b0fe08f06084f1684841ebea684f0bbd4b5",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite",
+          "manifest_sha256": "75baccbcc31741d73d7aacab44d439e198644c7b87ddded0e2243708981e72a9",
+          "source_commit": "fb5cd36b532ac1804b76d33d6f50635b70b5e6ea",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-acquisition-LoRA",
+          "model_revision": "af55d000d5e40d2a3943baf3c5f1d907f909e93068503a41d88d407bb00ef614",
+          "configuration_sha256": "64ba3d30c691335bd10b6399f38786ae69b0e87df6243c74456ba78c09e1c3d7",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_mixed_sft/best",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 209
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 140,
+            "finished": 209,
+            "abstained": 1,
+            "definite": 208,
+            "episodes_with_request": 82,
+            "request_calls": 82,
+            "request_responses": 82,
+            "episodes_with_new_pixels": 82,
+            "new_pixel_images": 82,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 66.98564593301435,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.4784688995215311,
+          "definite_pct": 99.52153110047847,
+          "request_pct": 39.23444976076555,
+          "new_pixel_image_pct": 39.23444976076555,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 82
+          },
+          "request_status": {
+            "provided": 82
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 7.9882118946209255,
+            "mean_input_tokens": 4667.148325358851,
+            "mean_output_tokens": 134.70334928229664,
+            "mean_model_calls": 1.4019138755980862,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "e48d26491a14ce615d4fc0a6f479685070ba2d21cf346a9271e67c4218a23abf",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 97,
+            "finished": 153,
+            "abstained": 0,
+            "definite": 153,
+            "episodes_with_request": 82,
+            "request_calls": 82,
+            "request_responses": 82,
+            "episodes_with_new_pixels": 82,
+            "new_pixel_images": 82,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 63.39869281045752,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 53.59477124183007,
+          "new_pixel_image_pct": 53.59477124183007,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 82
+          },
+          "request_status": {
+            "provided": 82
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 5.793856592899496,
+            "mean_input_tokens": 5137.601307189542,
+            "mean_output_tokens": 86.30065359477125,
+            "mean_model_calls": 1.5359477124183007,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "44eafeff040847d55db8ad185ccb29cee5c9ea0b30ff223af5f57a444908d043",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 43,
+            "finished": 56,
+            "abstained": 1,
+            "definite": 55,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 76.78571428571429,
+          "finished_pct": 100.0,
+          "abstained_pct": 1.7857142857142858,
+          "definite_pct": 98.21428571428571,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 13.983504058252688,
+            "mean_input_tokens": 3381.8035714285716,
+            "mean_output_tokens": 266.94642857142856,
+            "mean_model_calls": 1.0357142857142858,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "8d9ab8027182943616494260e2fc45477ed85054d429acc95d7568db6b0e697a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-8B",
+      "policy": "RL",
+      "run_name": "qwen3_8b_rl_only",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 116,
+          "best_validation": 0.16906249999999992,
+          "best_validation_success": 0.625,
+          "best_group": 48
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_rl_only/latest",
+        "adapter_sha256": "fee6e6a837d8741b1aac021a92e0b4b5a7a82b581af0a056857151cddce2b360",
+        "selection": "Fixed completed-training checkpoint",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_8b_rl_only_candidate_scores.json",
+      "report_sha256": "816e6373a06075dd2025881d6530085f16b9aa7338cd030ac99e841654ce7d2c",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "24c90de7fefe1da5601acbae8c807daa374ae4c1fa19322e426cca34c24e4845",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+          "model_revision": "fee6e6a837d8741b1aac021a92e0b4b5a7a82b581af0a056857151cddce2b360",
+          "configuration_sha256": "7a7cb6c1df91e6537c3325e2d2738badd2f3dc271f3ebcd6aa49f932844a5ece",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "9ef1fd663e48827d34bf084bf77172ee81f20ff706a38cf1e02f57c3f0975f24",
+          "source_commit": "27090343f9569e5476a1ceca5ae21e0d728570ab",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+          "model_revision": "fee6e6a837d8741b1aac021a92e0b4b5a7a82b581af0a056857151cddce2b360",
+          "configuration_sha256": "1ad0255c5a0290e0a960d860d4f133beb07d093bf8b028ad7c03e44809d71084",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_rl_only/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 116,
+            "finished": 194,
+            "abstained": 20,
+            "definite": 174,
+            "episodes_with_request": 15,
+            "request_calls": 16,
+            "request_responses": 16,
+            "episodes_with_new_pixels": 14,
+            "new_pixel_images": 14,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 2
+          },
+          "source_label_accuracy_pct": 55.50239234449761,
+          "finished_pct": 92.82296650717703,
+          "abstained_pct": 9.569377990430622,
+          "definite_pct": 83.2535885167464,
+          "request_pct": 7.177033492822966,
+          "new_pixel_image_pct": 6.698564593301436,
+          "repeated_image_request_pct": 0.4784688995215311,
+          "request_views": {
+            "original": 9,
+            "view-02": 5,
+            "overview": 2
+          },
+          "request_status": {
+            "provided": 16
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 23.07401333979451,
+            "mean_input_tokens": 17996.363636363636,
+            "mean_output_tokens": 394.9712918660287,
+            "mean_model_calls": 4.732057416267943,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "dc88535e3828c8464b9d8921bf2c83c4e6bfb17ef462388c54b70701158052dc",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 79,
+            "finished": 141,
+            "abstained": 8,
+            "definite": 133,
+            "episodes_with_request": 10,
+            "request_calls": 11,
+            "request_responses": 11,
+            "episodes_with_new_pixels": 9,
+            "new_pixel_images": 9,
+            "episodes_with_repeated_image_request": 1,
+            "repeated_image_request_calls": 2
+          },
+          "source_label_accuracy_pct": 51.63398692810458,
+          "finished_pct": 92.15686274509804,
+          "abstained_pct": 5.228758169934641,
+          "definite_pct": 86.9281045751634,
+          "request_pct": 6.5359477124183005,
+          "new_pixel_image_pct": 5.882352941176471,
+          "repeated_image_request_pct": 0.6535947712418301,
+          "request_views": {
+            "original": 9,
+            "overview": 2
+          },
+          "request_status": {
+            "provided": 11
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 22.131239344331654,
+            "mean_input_tokens": 20642.712418300653,
+            "mean_output_tokens": 361.5686274509804,
+            "mean_model_calls": 5.4640522875816995,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "002ac766276a7ad7e98c41ee6b9843e1b3e32d8b9e57e3df646930ec2c2a8778",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 37,
+            "finished": 53,
+            "abstained": 12,
+            "definite": 41,
+            "episodes_with_request": 5,
+            "request_calls": 5,
+            "request_responses": 5,
+            "episodes_with_new_pixels": 5,
+            "new_pixel_images": 5,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 66.07142857142857,
+          "finished_pct": 94.64285714285714,
+          "abstained_pct": 21.428571428571427,
+          "definite_pct": 73.21428571428571,
+          "request_pct": 8.928571428571429,
+          "new_pixel_image_pct": 8.928571428571429,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "view-02": 5
+          },
+          "request_status": {
+            "provided": 5
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 25.64980657739839,
+            "mean_input_tokens": 10766.160714285714,
+            "mean_output_tokens": 486.23214285714283,
+            "mean_model_calls": 2.732142857142857,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "b7aacd14ab9392a44633a156105e6e133b337a6497c792534ca75e03c8de5fe4",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    },
+    {
+      "model": "Qwen3-VL-8B",
+      "policy": "SFT+RL",
+      "run_name": "qwen3_8b_grpo_final",
+      "complete": true,
+      "expected": 209,
+      "present": 209,
+      "checkpoint": {
+        "state": {
+          "group": 64,
+          "optimizer_updates": 24,
+          "best_validation": 0.955,
+          "best_validation_success": 1.0,
+          "best_group": 0
+        },
+        "adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_grpo/latest",
+        "adapter_sha256": "e2834c04bec82ce59f2325586bde4f39ac268137b0ddbbcfbfc2c0e03b3ac210",
+        "selection": "Fixed final group, diagnostic; not validation-selected and not selected by benchmark results",
+        "evaluated_group": 64
+      },
+      "report_path": "/home/cxu-serve/p62/zzh136/experiments/ResolveAI/docs/results/cvpr_8b_grpo_final_candidate_scores.json",
+      "report_sha256": "5a5bbd9f4ce9360acf375d58df23de899a1deb69b8356edecbf2def425beb343",
+      "manifests": [
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+          "manifest_sha256": "25a4e8902b0346438c5613a523adfdd43cf58a645747f8326bd7a3b50c5324fa",
+          "source_commit": "6be784ec10a85719275ca395434007357490e1b7",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+          "model_revision": "e2834c04bec82ce59f2325586bde4f39ac268137b0ddbbcfbfc2c0e03b3ac210",
+          "configuration_sha256": "990334d92690d2b6020cfa0f644737bc3f8029dd1c926efb66c7baf7030fc66d",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 102
+        },
+        {
+          "database": "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite",
+          "manifest_sha256": "a3d99164f66d139caeb5157fd4a81b49d01b12d0fe5614b47a7f4f0188b79f17",
+          "source_commit": "6be784ec10a85719275ca395434007357490e1b7",
+          "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+          "model_revision": "e2834c04bec82ce59f2325586bde4f39ac268137b0ddbbcfbfc2c0e03b3ac210",
+          "configuration_sha256": "0e106221c358bd45b81fa78d2f9e20ee75afa88187c19634a51503da15b34777",
+          "lora_adapter": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_grpo/latest",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 107
+        }
+      ],
+      "by_task": {
+        "overall": {
+          "episodes": 209,
+          "counts": {
+            "source_label_correct": 148,
+            "finished": 209,
+            "abstained": 1,
+            "definite": 208,
+            "episodes_with_request": 92,
+            "request_calls": 92,
+            "request_responses": 92,
+            "episodes_with_new_pixels": 92,
+            "new_pixel_images": 92,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 70.8133971291866,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.4784688995215311,
+          "definite_pct": 99.52153110047847,
+          "request_pct": 44.01913875598086,
+          "new_pixel_image_pct": 44.01913875598086,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 92
+          },
+          "request_status": {
+            "provided": 92
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 209,
+            "mean_episode_wall_s": 9.246257240562054,
+            "mean_input_tokens": 4928.660287081339,
+            "mean_output_tokens": 153.36363636363637,
+            "mean_model_calls": 1.4736842105263157,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "77b0038c5a5e2d20163c2a774922b74df14fa7e7f9264088961f6f3eb6f964be",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 209,
+            "unique_episode_count": 209
+          }
+        },
+        "state": {
+          "episodes": 153,
+          "counts": {
+            "source_label_correct": 101,
+            "finished": 153,
+            "abstained": 0,
+            "definite": 153,
+            "episodes_with_request": 92,
+            "request_calls": 92,
+            "request_responses": 92,
+            "episodes_with_new_pixels": 92,
+            "new_pixel_images": 92,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 66.01307189542484,
+          "finished_pct": 100.0,
+          "abstained_pct": 0.0,
+          "definite_pct": 100.0,
+          "request_pct": 60.130718954248366,
+          "new_pixel_image_pct": 60.130718954248366,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {
+            "original": 92
+          },
+          "request_status": {
+            "provided": 92
+          },
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 153,
+            "mean_episode_wall_s": 7.0429854174441315,
+            "mean_input_tokens": 5375.0,
+            "mean_output_tokens": 103.26143790849673,
+            "mean_model_calls": 1.6013071895424837,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "950b4f6896c4ea1e14afe3d113f69b3232e1cf3f1fdbf04a7d3410da60dd06f7",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 153,
+            "unique_episode_count": 153
+          }
+        },
+        "identity": {
+          "episodes": 56,
+          "counts": {
+            "source_label_correct": 47,
+            "finished": 56,
+            "abstained": 1,
+            "definite": 55,
+            "episodes_with_request": 0,
+            "request_calls": 0,
+            "request_responses": 0,
+            "episodes_with_new_pixels": 0,
+            "new_pixel_images": 0,
+            "episodes_with_repeated_image_request": 0,
+            "repeated_image_request_calls": 0
+          },
+          "source_label_accuracy_pct": 83.92857142857143,
+          "finished_pct": 100.0,
+          "abstained_pct": 1.7857142857142858,
+          "definite_pct": 98.21428571428571,
+          "request_pct": 0.0,
+          "new_pixel_image_pct": 0.0,
+          "repeated_image_request_pct": 0.0,
+          "request_views": {},
+          "request_status": {},
+          "reviewed_metrics": {
+            "grounded_accuracy_pct": null,
+            "evidence_found_rate_pct": null,
+            "correct_evidence_use_rate_pct": null,
+            "unsupported_decision_rate_pct": null
+          },
+          "efficiency": {
+            "episodes": 56,
+            "mean_episode_wall_s": 15.265910614437805,
+            "mean_input_tokens": 3709.1964285714284,
+            "mean_output_tokens": 290.25,
+            "mean_model_calls": 1.125,
+            "mean_rejected_calls": 0.0,
+            "token_counts_applicable": true,
+            "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+          },
+          "trace_provenance": {
+            "ordered_family_trace_digest": "69e03d05745b490c1f3cce63fbcc811d190e7bbcad0ae0777b113d57ae79554e",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ],
+            "trace_count": 56,
+            "unique_episode_count": 56
+          }
+        }
+      }
+    }
+  ]
+}

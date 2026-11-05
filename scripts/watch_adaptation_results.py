@@ -269,6 +269,11 @@ def publish(repo,runtime,entries):
     for entry,report in entries:
         changes[entry["public_report"]] = json.dumps(report,indent=2)+"\n"
     body = result_text(entries)
+    access_report=repo/"docs/results/adaptation_obtainable_results.json"
+    if access_report.exists():
+        from scripts.render_adaptation_access import render as render_access, revise_text
+        changes["paper/tables/sft_results.tex"]=render_access(repo,json.loads(access_report.read_text()))
+        body=revise_text(body)
     if body:
         changes["paper/main.tex"] = replace_block((repo/"paper/main.tex").read_text(),body)
         changes["paper/appendix.tex"] = replace_block((repo/"paper/appendix.tex").read_text(),detail_text(entries))

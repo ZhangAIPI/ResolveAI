@@ -314,35 +314,36 @@ The supplement reports these outcomes separately, including Pixtral and SmolVLM2
 % adaptation-results-start
 \paragraph{SFT produces shorter interactions.}
 
-Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools. The 2B model rises from 40.7\% to 71.8\%, but falls from 60.3\% to 48.3\% without tools. The 8B SFT score is 82.9\%.
+On Sufficient, Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools. The 2B model rises from 40.7\% to 71.8\%, but falls from 60.3\% to 48.3\% without tools. The 8B SFT score is 82.9\%.
 
-\textbf{SFT improves completion and efficiency.} The local SFT policies finish initially sufficient cases without intermediate tools. For 2B, completion rises from 61.7\% to 100\%, while mean time falls from 17.1 to 5.5 seconds and output length from 449 to 118 tokens. The same SFT adapter thus has different effects under the two response formats.
+\textbf{SFT improves completion and efficiency.}
+On Obtainable, 2B completion rises from 45.9\% to 100\%, mean time falls from 13.4 to 6.2 seconds, and output falls from 409 to 139 tokens.
+The 8B policy requests new images in 82 cases; the 7B and 2B SFT policies make no photograph requests.
 
-\paragraph{RL gains do not always involve new evidence.}
-
-Qwen2.5-VL-7B changes from 73.7\% after SFT to 77.5\% after SFT+RL; Qwen3-VL-2B changes from 71.8\% after SFT to 72.7\% after SFT+RL; Qwen3-VL-8B changes from 82.9\% after SFT to 83.7\% after SFT+RL.
-
-\textbf{Better answers need not involve better search.} The 7B gain is eight additional correct answers on the fixed initially sufficient set. In Obtainable, however, the same policy makes no photograph requests. It has improved its answers without checking the withheld photographs. Paired family bootstrap intervals, reported in the supplement, quantify the uncertainty of the single-run differences.
+\paragraph{Missing images change which training route works best.}
+SFT+RL improves initially sufficient accuracy over SFT for all three models, but its Obtainable effects differ.
+For 8B, accuracy rises from 67.0\% to 70.8\%; for 7B it falls from 57.9\% to 55.5\%, and for 2B from 59.3\% to 56.5\%.
+\textbf{Gains with supplied evidence do not necessarily transfer to missing evidence.}
+Neither 7B policy requests photographs.
+For 8B, new-image cases rise from 82 to 92, all concerning condition detail; neither policy requests an identity view.
 
 \paragraph{Direct RL depends on the starting model.}
 
-Direct RL reaches 84.2\% for 8B, compared with 83.7\% after SFT+RL: 176 versus 175 correct answers. This single-case difference is small. \textbf{SFT+RL uses roughly half the inference time and output tokens.} Mean time falls from 16.4 to 8.0 seconds and output from 263 to 129 tokens.
+On Sufficient, direct RL reaches 84.2\% for 8B, compared with 83.7\% after SFT+RL: 176 versus 175 correct answers. This single-case difference is small. \textbf{The difference is larger when an image is withheld.} On Obtainable, accuracy rises from 55.5\% to 70.8\%, while mean time falls from 23.1 to 9.2 seconds and output from 395 to 153 tokens.
 
-The smaller models respond differently. Direct RL gives 54.5\% for 2B and 3.3\% for 7B, below their SFT results. The 7B policy abstains in 200 of 209 initially sufficient cases.
+For initially sufficient cases, direct RL gives 54.5\% for 2B and 3.3\% for 7B, below their SFT results. The 7B policy abstains in 200 of 209 initially sufficient cases.
 
 \subsection{Finding Missing Evidence}
 
 \input{tables/search_behavior}
 
-\paragraph{Similar accuracy, different evidence access.}
-
-The two 8B training routes differ by one correct answer in Sufficient, but behave differently once evidence is withheld. In Obtainable, direct RL requests photographs in 15 families and receives a new image in 14. SFT+RL requests and receives new images in 92 families, and finishes all 209 episodes rather than 194. \textbf{Similar answer accuracy can mask different evidence access.} The paired Sufficient accuracy difference for SFT+RL minus RL is \(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, but corrects ten condition errors while losing sixteen.
-
-\textbf{Efficiency depends on which evidence is supplied.}
-The 8B SFT+RL policy is faster than RL alone on initially sufficient cases, yet obtains more photographs when images are withheld.
-Its shorter primary interactions therefore do not correspond to a uniform reduction in requests.
-The 7B model shows a different pattern: its gains in accuracy and efficiency over the base policy accompany zero photograph requests in Obtainable.
-The efficiency columns and access measurements describe complementary parts of the policy: answering from the initial images and deciding to obtain another image when the available evidence changes.
+\paragraph{Similar supplied-evidence accuracy, different search.}
+The two 8B training routes differ by one correct answer on Sufficient.
+In Obtainable, direct RL retrieves a new image in 14 families, while SFT+RL does so in 92 and finishes all 209 episodes rather than 194.
+These changes accompany 32 more correct answers: 148 rather than 116.
+\textbf{Answering from supplied photographs and obtaining another photograph are distinct skills.}
+SFT+RL combines more retrieval with shorter interactions than direct RL in Obtainable.
+The increased retrieval concerns condition detail; the identity accuracy improvement occurs without additional identity views.
 
 \paragraph{The requested evidence differs by task.}
 
