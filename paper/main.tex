@@ -374,7 +374,11 @@ Qwen2.5-VL-7B changes from 73.7\% after SFT to 77.5\% after SFT+RL; Qwen3-VL-2B 
 
 The 7B gain is eight additional correct answers on the fixed initially sufficient set. In Obtainable, however, the same policy makes no photograph requests. It has improved its answers without checking the withheld photographs. Paired family bootstrap intervals, reported in the supplement, quantify the uncertainty of the single-run differences.
 
-Direct RL gives Qwen3-VL-2B: 54.5\%; Qwen2.5-VL-7B: 3.3\%; Qwen3-VL-8B: 84.2\%.
+\paragraph{Direct RL depends on the starting model.}
+
+Direct RL reaches 84.2\% for 8B, compared with 83.7\% after SFT+RL: 176 versus 175 correct answers. This single-case difference is small, while SFT+RL reduces mean time from 16.4 to 8.0 seconds and output from 263 to 129 tokens.
+
+The smaller models respond differently. Direct RL gives 54.5\% for 2B and 3.3\% for 7B, below their SFT results. The 7B policy abstains in 200 of 209 initially sufficient cases.
 
 \paragraph{A request need not add an image.}
 

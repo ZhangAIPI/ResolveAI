@@ -130,7 +130,30 @@ def result_text(entries):
             score=100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
             direct.append(f"{NAMES[model]}: {score:.1f}\\%")
     if direct:
-        parts.append("Direct RL gives "+"; ".join(direct)+".")
+        parts.append(r"\paragraph{Direct RL depends on the starting model.}")
+        large_group=stages.get("Qwen/Qwen3-VL-8B-Instruct",{})
+        rl,continued=large_group.get("RL"),large_group.get("SFT+RL")
+        if rl and continued:
+            def interaction(report):
+                return report["efficiency"][-1]["arms"]["interactive_agent"]
+            a,b=interaction(rl),interaction(continued)
+            parts.append(
+                f"Direct RL reaches {a['accuracy_pct']:.1f}\\% for 8B, compared with {b['accuracy_pct']:.1f}\\% after SFT+RL: "
+                f"{a['correct']} versus {b['correct']} correct answers. "
+                "This single-case difference is small, while SFT+RL reduces mean time "
+                f"from {a['mean_wall_s']:.1f} to {b['mean_wall_s']:.1f} seconds and output "
+                f"from {a['mean_output_tokens']:.0f} to {b['mean_output_tokens']:.0f} tokens.")
+            small_rl=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("RL")
+            old_rl=stages.get("Qwen/Qwen2.5-VL-7B-Instruct",{}).get("RL")
+            if small_rl and old_rl:
+                a,b=interaction(small_rl),interaction(old_rl)
+                abstained=old_rl["acquisition_behavior"][-1]["by_variant"]["Sufficient"]["abstained"]
+                parts.append(
+                    f"The smaller models respond differently. Direct RL gives {a['accuracy_pct']:.1f}\\% for 2B "
+                    f"and {b['accuracy_pct']:.1f}\\% for 7B, below their SFT results. "
+                    f"The 7B policy abstains in {abstained} of {old_rl['common_families']} initially sufficient cases.")
+        else:
+            parts.append("Direct RL gives "+"; ".join(direct)+".")
     small=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("SFT+RL")
     large=stages.get("Qwen/Qwen3-VL-8B-Instruct",{}).get("SFT+RL")
     if small and large:

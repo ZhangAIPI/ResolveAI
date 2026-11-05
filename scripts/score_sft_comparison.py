@@ -226,7 +226,6 @@ def render_adaptations(reports):
         r"\caption{\textbf{Effect of policy training.}",
         r"SFT uses balanced identity and condition data; RL trains directly from the pretrained model; SFT+RL applies GRPO after SFT.",
         r"SFT uses validation selection; RL and SFT+RL use the checkpoint after all 64 training groups. Accuracy and cost follow Table~\ref{tab:benchmark}; best accuracy is bold within each model and tool setting.",
-        r"-- denotes an unfinished comparison.",
         r"Training-data and action-target ablations are reported separately in the supplement.}",
         r"\label{tab:sft}",r"\begin{tabular}{@{}l*{8}{r}@{}}",r"\toprule",
     ]
