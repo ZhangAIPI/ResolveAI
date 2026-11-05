@@ -16,7 +16,7 @@ Grounded accuracy, evidence-found rate, correct-evidence-use rate and unsupporte
 | SmolVLM2-2.2B | 50.7 | 50.2 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
 | InternVL3.5-14B | 30.6 | 52.6 | 1.3 | 58.9 | 16.7 | 8.1 | 8.1 | 0.0 | 29.2 |
 | Pixtral-12B | 30.1 | 42.6 | 32.0 | 7.1 | 25.4 | 8.6 | 8.6 | 0.0 | 62.2 |
-| GPT-6.1 Sol | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| GPT-6.1 Sol | -- | -- | 81.7 | 53.6 | 74.2 | 100.0 | 100.0 | 0.5 | 100.0 |
 | GPT-6.1 Terra | -- | -- | 75.8 | 67.9 | 73.7 | 100.0 | 100.0 | 0.5 | 100.0 |
 | GPT-5.4 mini | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 | GPT-4.1 mini | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -35,11 +35,11 @@ Coverage by arm (initial / full / interactive):
 - SmolVLM2-2.2B: 209/209/209 of 209.
 - InternVL3.5-14B: 209/209/209 of 209.
 - Pixtral-12B: 209/209/209 of 209.
-- GPT-6.1 Sol: 0/0/114 of 209.
+- GPT-6.1 Sol: 0/0/209 of 209.
 - GPT-6.1 Terra: 144/144/209 of 209.
 - GPT-5.4 mini: 0/0/0 of 209.
-- GPT-4.1 mini: 0/0/0 of 209.
-- GPT-6 Luna: 0/0/54 of 209.
+- GPT-4.1 mini: 0/0/3 of 209.
+- GPT-6 Luna: 0/0/152 of 209.
 - GPT-6 Luna (Decisions): 0/0/209 of 209.
 
 The Decisions row is an additional interface for GPT-6 Luna, not a sixteenth distinct model.
