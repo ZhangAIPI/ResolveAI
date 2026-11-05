@@ -42,9 +42,8 @@ Each case family fixes the claim and object state while changing access to photo
 The evaluation distinguishes finding sufficient evidence from using it correctly.
 We construct 478 families from public condition and multi-view datasets and evaluate models on 209 source-labeled families.
 Tools improve some answers and disrupt others: Qwen3-VL-8B corrects 38 direct-answer errors but loses 22 correct answers; the 2B model corrects 7 and loses 48.
-Post-training also separates answer accuracy from evidence access.
 The 8B RL and SFT+RL policies differ by one correct answer on initially sufficient cases, yet retrieve new photographs in 14 and 92 cases when evidence is withheld.
-In 92 matched families, SFT+RL gives definite answers when the requested original is returned and abstains when the same request fails.
+In 92 matched families, SFT+RL answers when the original is provided and abstains when the request fails.
 \end{abstract}
 
 
