@@ -1,3 +1,18 @@
+\section{Source Reuse and Related Benchmarks}
+The evaluation photographs are drawn from MVTec AD and CO3D; no new photographic collection is claimed.
+MVTec supplies condition categories and anomaly masks, while CO3D supplies recorded views and sequence metadata.
+We add object claims, image pools, public request options, access versions and interaction records.
+Training trajectories separately use CO3D development sequences and VisA, as described below.
+Table~\ref{tab:related-comparison} distinguishes these uses from the original tasks and related evaluations.
+
+This construction changes what is evaluated with the images.
+It does not turn source metadata into independently verified identity or sufficiency annotations.
+For example, a source anomaly label does not show that the anomaly is invisible in a preview, and two different CO3D sequences need not depict different physical items.
+Likewise, the intended four access versions require evidence review before they can support grounded-accuracy claims.
+The current measured results therefore concern source-label agreement and recorded behavior.
+
+\input{tables/related_benchmarks}
+
 \section{Formal Task and Evidence Audit}
 This supplement specifies evidence matching, annotation checks, tool behavior, execution settings and action comparisons.
 
@@ -74,7 +89,7 @@ The grounded-accuracy identity applies to the finalized reviewed cohort; any pro
 This challenge review is a required evaluation step, not an implemented automatic adjudicator or a completed human study.
 
 \subsection{Independent data review}
-Two annotators independently assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives.
+Independent review requires two annotators to assess claim meaning, object identity, condition, visibility, relevant times and sufficient evidence alternatives separately.
 They inspect both initial and obtainable material for every access configuration.
 Adjudication must establish a justified target or leave the case pending. Pending annotation status is not the task label \(\Nme\). Review uses the exposed displays, registered resolution and permitted crop paths, not private high-resolution files alone.
 An intended Obtainable case must have a sufficient path within the declared action and turn budget, using requests expressible through public object, time and view fields. The evaluator's knowledge of a private filename cannot supply that path.
@@ -166,14 +181,15 @@ The next observation must come from actual execution, never a model-generated to
 
 \subsection{Evaluation cohort and training details}
 The initial pool has 252 families with source-derived labels.
-The first cross-model snapshot contained complete measurements in all three settings for 209 of these families.
-We freeze that intersection for the paper comparison, including every model's failed or unanswered attempts within it.
-The remaining 43 labeled families are not added as later runs complete, and the 226 identity candidates without source labels are excluded.
-The same fixed family list is used for the base and fine-tuned models.
+The 209-family cohort was fixed from the intersection of recorded episodes across the four initial models on November 2, when Qwen3.5 had not yet covered the other 43 source-labeled families.
+Selection used source-label availability and episode presence, without filtering on answer correctness, valid submission or abstention.
+Failed and unanswered attempts remain in the comparison.
+The same cohort is retained for subsequent models and training; the other 43 labeled families are not added after later runs finish.
+The 226 identity candidates without source labels are excluded.
 This historical completion-based subset is not a random sample of the candidate pool.
 It is distinct from admission after independent evidence review.
 
-Nine locally run model checkpoints cover the complete paper cohort: Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B/14B, LLaVA-OneVision-7B and SmolVLM2-2.2B.
+Ten locally run model checkpoints cover the complete paper cohort: Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B/14B, LLaVA-OneVision-7B, SmolVLM2-2.2B and Pixtral-12B.
 All accuracy comparisons in the main paper use the same 209 Sufficient versions.
 Complete raw evaluation runs cover all 478 families, four access versions and three decision settings, totaling 5,736 episodes per model.
 A checkpoint enters the result tables only when every fixed-cohort case has been evaluated in all three settings, even if the remaining raw-pool episodes are still running. Partial cohorts are excluded; cohort membership never changes when a new model arrives.

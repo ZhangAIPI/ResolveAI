@@ -1,0 +1,36 @@
+\begin{table*}[t]
+\centering\small
+\caption{\textbf{Relationship to source datasets and related evaluations.}
+The comparisons describe task design, not a ranking of dataset quality.
+Recorded photographs and source annotations are credited to their original datasets.
+ResolveAI's sufficiency-based scoring requires the independent review described in this supplement.}
+\label{tab:related-comparison}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.32\textwidth}Y@{}}
+\toprule
+Work & Original data or evaluation target & Relationship to ResolveAI\\
+\midrule
+MVTec AD~\cite{mvtec} &
+Industrial anomaly detection and localization. &
+Supplies condition photographs and anomaly annotations. We construct defect claims and vary access to the original image; different specimens are not treated as before--after pairs.\\
+CO3D~\cite{co3d} &
+Multi-view object reconstruction and novel-view synthesis. &
+Supplies recorded object views and sequence metadata. We construct cross-photograph identity queries and requestable views; sequence membership remains a source-derived label.\\
+BLINK / MMPerspective~\cite{blink,mmperspective} &
+Visual perception questions; perspective perception, reasoning and robustness. &
+Image reuse and controlled variants are established practices. Our versions change access to an evidence pool for an object claim, with requests and recorded outcomes.\\
+ActiView / ActiveVision~\cite{actiview,activevision} &
+Restricted-field zoom and shift; repeated scanning, traversal and attribute comparison. &
+Observation choice is shared. Our requests release recorded photographs or return access failures while preserving the claim and object state.\\
+WebQA / AVerImaTeC~\cite{webqa,averimatec} &
+Multimodal source selection; image--text fact-checking with annotated web evidence and sufficiency checks. &
+Evidence selection and sufficiency are shared concerns. We focus on photographed objects and paired changes in the availability of relevant records.\\
+OpenEQA / AbstainEQA~\cite{openeqa,abstaineqa} &
+Embodied questions with memory or exploration; original questions paired with abstention variants. &
+Exploration and abstention are shared concerns. Our matched versions keep the object claim fixed while changing which photographs can be supplied.\\
+CounterCredit~\cite{countercredit} &
+A training method measuring whether visual calls were needed and their returned pixels were used. &
+Shared-history action comparisons and content substitutions are prior methods. Our benchmark provides object-claim settings in which requests can succeed or fail.\\
+\bottomrule
+\end{tabularx}
+\end{table*}

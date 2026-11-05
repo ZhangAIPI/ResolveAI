@@ -36,75 +36,74 @@ The 8B policy answers Supported when the original is returned and Need more evid
 }]
 
 \begin{abstract}
-Checking an object claim may require a closer photograph or another viewpoint.
-We introduce \benchmark to study which evidence a model inspects, what it requests, and when it stops.
-Each case family fixes the claim and object state while changing access to photographs: supplied initially, obtainable on request, missing, or unavailable.
-The evaluation distinguishes finding sufficient evidence from using it correctly.
-We construct 478 families from public condition and multi-view datasets and evaluate models on 209 source-labeled families.
-Tools improve some answers and disrupt others: Qwen3-VL-8B corrects 38 direct-answer errors but loses 22 correct answers; the 2B model corrects 7 and loses 48.
-The 8B RL and SFT+RL policies differ by one correct answer on initially sufficient cases, yet retrieve new photographs in 14 and 92 cases when evidence is withheld.
-In 92 matched families, SFT+RL answers when the original is provided and abstains when the request fails.
+Checking an object claim can require another photograph.
+We introduce \benchmark to study how vision-language models find this evidence.
+Models inspect the initial images, request further photographs, and decide when to stop.
+Each case fixes the claim and object state while varying whether relevant photographs are supplied initially, obtainable, missing, or unavailable.
+We construct 478 case families from public condition and multi-view datasets and compare ten open-weight and five API models on 209 source-labeled families.
+We measure answer accuracy, new-image access and stopping behavior separately.
+Tools improve some answers but also introduce failures to submit a valid response.
+Post-training improves completion and efficiency without consistently increasing access to new photographs.
+Policies with similar answer scores behave differently when images are withheld: Qwen3-VL-8B with SFT+RL requests original photographs much more often than direct RL, yet never requests another viewpoint to check identity.
 \end{abstract}
 
 
 
 \section{Introduction}
 Do two photographs show the same chair?
-Is the bright mark on a bottle rim a chip, or a reflection?
-The answer may depend on a detail that is too small in the supplied image or hidden from the current viewpoint.
-A model can recognize the object and still lack the observation needed to check the claim.
+Is a bright mark on a bottle rim a chip or a reflection?
+A model can recognize an object yet lack the detail or viewpoint needed to check these claims.
+It must decide whether to keep inspecting, ask for another photograph, or stop.
 
-Visual tools offer several ways to continue.
-The model can crop an existing photograph, compare two views, or ask for another image.
-These actions are not interchangeable.
-Enlarging a preview repeats its pixels; requesting the original can expose detail lost in that preview.
-A different viewpoint may reveal a hidden surface, but only if that surface was photographed.
-When no available observation can settle the claim, the model should stop without giving a definite answer.
+Visual benchmarks evaluate distinctions, correspondence and spatial reasoning~\cite{mmvp,blink,mmmu,vsibench}.
+Active-perception benchmarks also let models choose observations~\cite{openeqa,actiview}.
+For object verification, choosing an observation is only part of the problem.
+A damage close-up can show a defect without establishing which item it belongs to.
+An identity mismatch can refute a claim that the photographed damage belongs to the listed item without inspecting every surface.
+What counts as enough evidence depends on the claim.
 
-Most visual benchmarks evaluate an answer to a fixed set of images~\cite{mmvp,blink,mmmu,vsibench}.
-Active-perception benchmarks also evaluate how models choose observations~\cite{openeqa,actiview}.
-For object verification, a further question is whether those observations are enough to establish the particular claim.
-A damage close-up may show a defect without establishing that the item is the one in question.
-A reliable identity mismatch, in contrast, can refute a claim that the photograph shows damage to the listed item without inspecting every surface.
+Answer accuracy alone cannot locate the failure.
+A wrong answer may follow an unfinished search or a visual error after sufficient evidence has been seen.
+Need more evidence can be appropriate when a photograph is unavailable, or premature when a useful view remains obtainable.
+These possibilities are difficult to distinguish when every model receives one fixed collection of images.
 
-Answer accuracy alone leaves these distinctions unresolved.
-A model may answer correctly from incomplete evidence, fail to inspect a useful photograph, or inspect it and still answer incorrectly.
-An unresolved answer is appropriate when no sufficient evidence can be obtained; the same answer stops too early when a useful photograph remains available.
-To distinguish these outcomes, we need to vary the opportunity to find evidence without changing the fact being checked.
+We build \benchmark around matched case families (Figure~\ref{fig:framework}).
+A family fixes the object claim and physical state while varying access to recorded photographs.
+A crop revisits existing pixels; a request can release another photograph or fail.
+Comparing these versions reveals whether the policy changes its decision after the evidence outcome changes.
 
-\benchmark does this through case families (Figure~\ref{fig:framework}).
-The claim and object state remain fixed across four versions, while the photograph needed to decide is supplied initially, available on request, missing, or unavailable.
-The resulting comparison asks whether a model can resolve a claim when the evidence is accessible and withhold a definite answer when it is not.
-We define sufficient evidence through the claim's parts, allow alternative sufficient image sets, and record what evidence the model actually sees.
-Shared-history action comparisons~\cite{countercredit} can then compare a crop, another photograph and stopping without changing the starting observations.
-
-The initial construction uses public photographs of object condition and identity.
-Our experiments distinguish source-label accuracy from the evidence-based evaluation that requires independent sufficiency review.
-The observed failures already differ substantially.
-Some models abandon correct direct answers under the interactive interface.
-Others improve after training but never request a missing photograph.
-The contribution is the controlled pairing of evidence access with an object claim, together with an evaluation that makes these different failures visible.
+Our contributions are:
+\begin{itemize}
+\item An object-claim benchmark built from public condition and multi-view photographs, with fixed claims, requestable image pools and four matched access settings.
+\item An interactive environment that records the evidence actually shown, including derived views, and distinguishes search behavior from answer outcomes. It supports shared-history action comparisons following prior work~\cite{countercredit}.
+\item A study of ten open-weight and five API models, with SFT and RL comparisons on three open-weight models, showing that improved answer scores can coexist with repeated images, missing requests and submission failures.
+\end{itemize}
+The current quantitative comparisons use source labels.
+Independently reviewed evidence sufficiency is not yet claimed.
 \section{Related Work}
-\paragraph{Visual recognition and reasoning.}
-MMVP and BLINK test visual distinctions, correspondence and multi-view reasoning~\cite{mmvp,blink}; MMMU and VSI-Bench examine broader multimodal and spatial reasoning~\cite{mmmu,vsibench}.
-Their task breakdowns show why an overall score can hide different visual weaknesses.
-We retain separate condition and identity tasks, but also vary which photographs a model can obtain while checking the same claim.
+\paragraph{Datasets and visual benchmarks.}
+MVTec AD provides photographs and anomaly annotations for industrial inspection~\cite{mvtec}; CO3D provides recorded object views for reconstruction and novel-view synthesis~\cite{co3d}.
+We reuse these photographs and source annotations to construct condition and identity claims.
+Reformulating existing visual data is established practice: BLINK turns classic vision tasks into multimodal questions~\cite{blink}.
+MMVP, MMPerspective and VSI-Bench examine visual distinctions, perspective and spatial reasoning~\cite{mmvp,mmperspective,vsibench}.
+Our added construction pairs each object claim with a recorded evidence pool and four access settings.
+The photographs retain their original provenance; source labels do not establish whether a preview is sufficient to decide the new claim.
 
-\paragraph{Choosing what to observe.}
-OpenEQA includes both episodic-memory and active-exploration settings~\cite{openeqa}.
-ActiveVision tests repeated observation through distributed scanning, traversal and attribute matching~\cite{activevision}.
-ActiView restricts the visible part of an image and evaluates zooming or shifting the perceptual field~\cite{actiview}.
-V*, Visual Sketchpad and visual-tool benchmarks provide further ways to inspect image content~\cite{vstar,sketchpad,visualtoolbench,vtcbench}.
-These works establish observation choice as an evaluation target.
-Our case families additionally distinguish an observation that can be requested from one that is missing or cannot be supplied, with the underlying claim held fixed.
+\paragraph{Active observation.}
+ActiView evaluates zooming and shifting a restricted perceptual field~\cite{actiview}; OpenEQA supports active exploration~\cite{openeqa}.
+ActiveVision tests repeated inspection through scanning, traversal and attribute comparison~\cite{activevision}.
+V*, Visual Sketchpad and tool benchmarks evaluate further ways to inspect and manipulate visual inputs~\cite{vstar,sketchpad,visualtoolbench,vtcbench}.
+These works already establish observation choice and visual tools as evaluation targets.
+We examine requests across recorded photographs, including access failures, while holding the object claim and physical state fixed.
 
-\paragraph{Evidence and tool-use evaluation.}
-WebQA studies multimodal evidence aggregation~\cite{webqa}, and AVerImaTeC checks image--text claims using annotated web evidence and evidence-sufficiency checks~\cite{averimatec}.
-AbstainEQA examines when an embodied agent should withhold an answer~\cite{abstaineqa}.
-CounterCredit compares a visual call with answering immediately and substitutes returned content to test whether the pixels were used~\cite{countercredit}.
-We use the same distinction between obtaining an observation and benefiting from it.
-Our focus is the evidence needed to check an object's identity or condition across photographs.
-Valid citations establish support for an answer; they do not, by themselves, prove that the model used the cited pixels.
+\paragraph{Evidence and stopping.}
+WebQA evaluates multimodal evidence selection~\cite{webqa}, and AVerImaTeC verifies image--text claims using annotated web evidence and sufficiency checks~\cite{averimatec}.
+AbstainEQA pairs answerable questions with variants requiring abstention~\cite{abstaineqa}.
+CounterCredit compares looking with answering immediately and substitutes returned pixels to test evidence use~\cite{countercredit}.
+We adopt shared-history comparisons for object claims.
+Our matched access versions test how a policy changes its decision when the same requested photograph is returned or cannot be supplied.
+The present experiments measure source-label accuracy, new-image access and stopping behavior; evidence sufficiency still requires independent review.
+The supplement compares inherited data and task differences.
 \section{The \benchmark Benchmark}
 
 \begin{figure*}[t]\centering
@@ -181,7 +180,7 @@ Stopping with \emph{Need more evidence} before that point leaves a useful observ
 The same response is appropriate when the obtainable collection cannot settle the claim.
 
 More than one image set may establish the same fact.
-We allow alternative sufficient sets and review plausible references that fail an automatic match.
+We allow alternative sufficient sets; plausible references unmatched by the automatic evaluator require review.
 Crops retain their source mapping: repeated crops of one region do not become independent evidence.
 A normal reference from another specimen may clarify a defect's appearance, but cannot establish the target item's earlier condition.
 
@@ -245,7 +244,7 @@ All attempts remain in the denominator; if \(n_A=0\), grounded accuracy is zero 
 Unanswerable cases are evaluated separately for unsupported certainty, together with answer coverage and risk~\cite{selective}.
 
 Initial-only, interactive and full-access settings compare a model before and after access to further images.
-Full access removes the choice of which photographs to obtain, but extra images may distract the model, so it is a reference rather than a guaranteed upper bound.
+Full access removes the choice of which photographs to obtain, but does not guarantee higher accuracy, so it serves as a reference.
 We also record requests, tool cost, tokens and running time.
 
 To compare individual actions, the environment supports branches from a shared history into a crop, another released image, a requested view or an immediate answer.
@@ -450,6 +449,10 @@ Condition requests chiefly recover original image detail; identity requests expo
 The source-derived labels and intended gaps still need independent visual review.
 We therefore report new-image access and stopping behavior separately from the grounded evaluation defined in Section~3.
 A correct source-label answer or a new image alone does not certify sufficient evidence.
+
+Public photographs may also have appeared in base-model pretraining.
+Our post-training splits separate source groups and image hashes, but cannot rule out that earlier exposure.
+We therefore compare policies on fixed cases without claiming generalization to previously unseen photographs or physical items.
 
 \section{Conclusion}
 \benchmark organizes object claims into families with different access to the photographs needed to check them.
