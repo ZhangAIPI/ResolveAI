@@ -1146,7 +1146,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 0
+        "interactive_agent": 7
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1158,8 +1158,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 0,
-          "identity": 0
+          "state": 5,
+          "identity": 2
         }
       },
       "complete_three_arms": false,
@@ -1193,9 +1193,36 @@
             "interactive_agent"
           ],
           "raw_episodes": 627
+        },
+        {
+          "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/manifest.json",
+          "sha256": "01da05b3f831d1415a2764424910ce63fd87e0c59e748008e9c654c755696731",
+          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "9b0437a26b792e8210ea4de9961991e805a775303482b2b6a969747c27e9d83a",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 7,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 7
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
+        "Obtainable:interactive_agent": 7,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209
@@ -1209,7 +1236,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 3
+        "interactive_agent": 44
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1221,8 +1248,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 2,
-          "identity": 1
+          "state": 34,
+          "identity": 10
         }
       },
       "complete_three_arms": false,
@@ -1273,7 +1300,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 3,
+          "admitted_obtainable_rows": 44,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -1281,11 +1308,11 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 3
+          "raw_episodes": 44
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
-        "Obtainable:interactive_agent": 3,
+        "Obtainable:interactive_agent": 44,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209
@@ -1299,7 +1326,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 152
+        "interactive_agent": 209
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1311,12 +1338,12 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 112,
-          "identity": 40
+          "state": 153,
+          "identity": 56
         }
       },
       "complete_three_arms": false,
-      "complete_interactive": false,
+      "complete_interactive": true,
       "equivalent_replay_duplicates": 0,
       "manifests": [
         {
@@ -1363,7 +1390,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 152,
+          "admitted_obtainable_rows": 209,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -1371,11 +1398,11 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 152
+          "raw_episodes": 209
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
-        "Obtainable:interactive_agent": 152,
+        "Obtainable:interactive_agent": 209,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209
