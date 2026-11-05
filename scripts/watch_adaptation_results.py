@@ -93,6 +93,7 @@ def result_text(entries):
         observations.append(f"The 8B SFT score is {accuracy('qwen3_mixed_sft'):.1f}\\%.")
     parts.append(" ".join(observations))
     parts.append(
+        r"\textbf{SFT improves completion and efficiency.} "
         "The local SFT policies finish initially sufficient cases without intermediate tools. "
         "For 2B, completion rises from 61.7\\% to 100\\%, while mean time falls from 17.1 to 5.5 seconds "
         "and output length from 449 to 118 tokens. "
@@ -119,6 +120,7 @@ def result_text(entries):
             behavior=report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
             if behavior["episodes_with_request"]==0:
                 parts.append(
+                    r"\textbf{Better answers need not involve better search.} "
                     "The 7B gain is eight additional correct answers on the fixed initially sufficient set. "
                     "In Obtainable, however, the same policy makes no photograph requests. "
                     "It has improved its answers without checking the withheld photographs. "
@@ -140,7 +142,9 @@ def result_text(entries):
             parts.append(
                 f"Direct RL reaches {a['accuracy_pct']:.1f}\\% for 8B, compared with {b['accuracy_pct']:.1f}\\% after SFT+RL: "
                 f"{a['correct']} versus {b['correct']} correct answers. "
-                "This single-case difference is small, while SFT+RL reduces mean time "
+                "This single-case difference is small. "
+                r"\textbf{SFT+RL uses roughly half the inference time and output tokens.} "
+                "Mean time falls "
                 f"from {a['mean_wall_s']:.1f} to {b['mean_wall_s']:.1f} seconds and output "
                 f"from {a['mean_output_tokens']:.0f} to {b['mean_output_tokens']:.0f} tokens.")
             small_rl=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("RL")
@@ -213,7 +217,9 @@ def detail_text(entries):
                 lines.append("Finish-only retains complete public histories at the final decision, "
                              "but removes tool-action prediction targets. It uses the same update limit, "
                              "not matched target-token compute, as the corresponding full-trajectory SFT.")
-    lines.append("All rows retain the fixed paper cohort, failure accounting and inference allowances. "
+    lines.append("RL and SFT+RL share the sampled-group budget, but differ in optimizer updates, reference policies and total training compute. "
+                 "Each setting uses one training seed, so these comparisons do not establish a general ranking of training methods. "
+                 "All rows retain the fixed paper cohort, failure accounting and inference allowances. "
                  "Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.")
     return "\n\n".join(lines)
 
