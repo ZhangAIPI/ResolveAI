@@ -31,7 +31,7 @@ def normalize_agent_record(trace, env):
 class Records:
     """Commit each result and its actual trace in one transaction."""
 
-    def __init__(self, output):
+    def __init__(self, output, arms=ARMS):
         self.store = TrajectoryStore(output / "pending-trace.jsonl")
         self.db = sqlite3.connect(output / "episodes.sqlite")
         self.db.execute(
@@ -41,7 +41,7 @@ class Records:
         self._summary = {"episodes": 0, "arms": {arm: {
             "episodes": 0, "finished": 0, "errors": 0, "requests": 0,
             "known_source_labels": 0, "source_label_matches": 0,
-        } for arm in ARMS}}
+        } for arm in arms}}
         for (raw,) in self.db.execute("SELECT result FROM episodes"):
             self._count(json.loads(raw))
 
