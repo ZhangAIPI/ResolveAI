@@ -27,22 +27,20 @@
 \begin{center}
 \resizebox{\textwidth}{!}{\input{figures/teaser}}
 \captionof{figure}{\textbf{Two tasks, one evidence-search problem.}
-(a) Recorded CO3D photographs~\cite{co3d} illustrate matching an item across views.
-(b) In the bottle episode, 2B SFT+RL requests its existing overview, while 8B requests the original.
-The inset shows unchanged source pixels from the marked rim region~\cite{mvtec}.
-The 8B policy answers Supported when the original is returned and Need more evidence when the same request fails.}
+CO3D views illustrate identity matching~\cite{co3d}.
+The bottle episode contrasts a repeated preview with requested original detail; its inset shows unchanged source pixels~\cite{mvtec}.}
 \label{fig:teaser}
 \end{center}
 }]
 
 \begin{abstract}
-Verifying a claim about an object may require a detail or viewpoint absent from the supplied photographs.
-We introduce \benchmark, an interactive benchmark in which vision-language models inspect and request photographs to check an object's condition or identity.
-Each case family keeps the claim and object state fixed while varying access to recorded photographs: supplied initially, obtainable on request, missing, or unavailable.
-These matched settings test how a model inspects images, requests further photographs, and responds when a request cannot be satisfied.
-We construct 478 families from public datasets and evaluate ten open-weight and five API models on 209 labeled families.
-Post-training improves interactive answer accuracy and efficiency, but the resulting policies can still repeat existing images or stop without requesting new ones.
-Policies with similar answer scores differ substantially in both the photographs they obtain and their stopping decisions after access failures.
+Verifying a claim about an object's identity or condition may require visual evidence absent from the initially supplied photographs.
+We introduce \benchmark, an interactive benchmark in which vision-language models inspect available photographs and request additional ones to verify object-level claims.
+Each case family holds the claim and underlying object state fixed while varying access to recorded photographs: initially supplied, obtainable on request, missing, or unavailable.
+These matched settings enable controlled comparisons of how models gather visual evidence, decide when to stop, and respond to failed requests.
+We construct 478 case families from public datasets and evaluate ten open-weight and five API-based models on a labeled subset of 209 families.
+Post-training improves verification accuracy and interaction efficiency, yet models may still request photographs they have already seen or stop before seeking additional evidence.
+Moreover, models with similar answer accuracy can exhibit substantially different evidence-gathering and stopping behaviors, suggesting that answer accuracy alone does not fully capture interactive verification capability.
 \end{abstract}
 
 

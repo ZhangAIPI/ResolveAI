@@ -1,4 +1,4 @@
-% Rich dual-task teaser; 17.4 cm x 6.15 cm. Uses unchanged source photographs.
+% Rich dual-task teaser; 17.4 cm x 5.73 cm. Uses unchanged source photographs.
 % Original inset: x=[200,480], y=[560,800] in the 900x900 source, origin top-left.
 \begingroup%
 \definecolor{raBlue}{RGB}{40,86,124}%
@@ -7,40 +7,40 @@
   fine/.style={line width=.55pt,draw=black!45},
   flow/.style={->,line width=.7pt},
   note/.style={font=\footnotesize,align=center}]
-\path[use as bounding box] (0,0) rectangle (17.4,6.15);
-\node[anchor=west,font=\small\bfseries] at (0,5.95) {(a) Match an object across views};
-\node[anchor=west,font=\footnotesize] at (0,5.48) {Do A and B show the same physical chair?};
-\node[inner sep=0pt] at (1.25,3.72)
-  {\includegraphics[height=2.9cm]{figures/chair-a.jpg}};
-\node[inner sep=0pt] at (4.08,3.72)
-  {\includegraphics[height=2.35cm]{figures/chair-b-preview.jpg}};
-\node[inner sep=0pt] at (6.9,3.72)
-  {\includegraphics[height=2.9cm]{figures/chair-a-new.jpg}};
+\path[use as bounding box] (0,0) rectangle (17.4,5.73);
+\node[anchor=west,font=\small\bfseries] at (0,5.53) {(a) Match an object across views};
+\node[anchor=west,font=\footnotesize] at (0,5.06) {Do A and B show the same physical chair?};
+\node[inner sep=0pt] at (1.25,3.51)
+  {\includegraphics[height=2.48cm]{figures/chair-a.jpg}};
+\node[inner sep=0pt] at (4.08,3.51)
+  {\includegraphics[height=2.15cm]{figures/chair-b-preview.jpg}};
+\node[inner sep=0pt] at (6.9,3.51)
+  {\includegraphics[height=2.48cm]{figures/chair-a-new.jpg}};
 \node[note] at (1.25,1.98) {View A};
 \node[note] at (4.08,1.98) {View B (preview)};
 \node[note] at (6.9,1.98) {Another view of A};
-\draw[flow,draw=raBlue] (5.05,3.72) -- (5.65,3.72);
-\node[font=\scriptsize,text=raBlue] at (5.35,4.17) {request};
+\draw[flow,draw=raBlue] (5.05,3.51) -- (5.65,3.51);
+\node[font=\scriptsize,text=raBlue] at (5.35,3.96) {request};
 \node[font=\footnotesize,align=left,anchor=west] at (.05,1.38)
   {Compare visible structure; request a more informative view.};
 \node[font=\scriptsize,text=black!60,anchor=west] at (.05,.98)
   {Task illustration using recorded CO3D photographs.};
-\draw[fine] (8.52,.9) -- (8.52,6.1);
-\node[anchor=west,font=\small\bfseries] at (8.85,5.95) {(b) Check a small defect};
-\node[anchor=west,font=\footnotesize] at (8.85,5.48) {Does the bottle have a chipped or broken rim?};
-\node[inner sep=0pt] at (9.8,3.72)
+\draw[fine] (8.52,.9) -- (8.52,5.68);
+\node[anchor=west,font=\small\bfseries] at (8.85,5.53) {(b) Check a small defect};
+\node[anchor=west,font=\footnotesize] at (8.85,5.06) {Does the bottle have a chipped or broken rim?};
+\node[inner sep=0pt] at (9.8,3.51)
   {\includegraphics[width=1.7cm]{figures/case-bottle-preview.png}};
-\node[inner sep=0pt] at (12.2,3.72)
+\node[inner sep=0pt] at (12.2,3.51)
   {\includegraphics[width=2.3cm]{figures/case-bottle-original.png}};
-\node[inner sep=0pt] at (15.6,3.72)
+\node[inner sep=0pt] at (15.6,3.51)
   {\includegraphics[width=2.55cm,trim=200bp 100bp 420bp 560bp,clip]{figures/case-bottle-original.png}};
 % Exact source-region mapping on the displayed original.
-\draw[draw=raBlue,line width=.7pt] (11.561,2.826) rectangle (12.277,3.439);
-\draw[draw=raBlue,line width=.45pt] (12.277,3.439) -- (14.325,4.813);
-\draw[draw=raBlue,line width=.45pt] (12.277,2.826) -- (14.325,2.627);
-\node[note] at (9.8,2.1) {Preview\\$48\times48$};
-\node[note] at (12.2,2.1) {Original\\$900\times900$};
-\node[note] at (15.6,2.1) {Original pixels\\at the rim};
+\draw[draw=raBlue,line width=.7pt] (11.561,2.616) rectangle (12.277,3.229);
+\draw[draw=raBlue,line width=.45pt] (12.277,3.229) -- (14.325,4.603);
+\draw[draw=raBlue,line width=.45pt] (12.277,2.616) -- (14.325,2.417);
+\node[note] at (9.8,1.95) {Preview\\$48\times48$};
+\node[note] at (12.2,1.95) {Original\\$900\times900$};
+\node[note] at (15.6,1.95) {Original pixels\\at the rim};
 \node[anchor=west,font=\footnotesize,text=black!75] at (8.85,1.38)
   {\textbf{2B SFT+RL:} request \texttt{overview} $\rightarrow$ same preview};
 \node[anchor=west,font=\footnotesize,text=raBlue] at (8.85,.98)
