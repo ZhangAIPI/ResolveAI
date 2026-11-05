@@ -7346,7 +7346,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 75
+        "interactive_agent": 114
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -7358,8 +7358,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 56,
-          "identity": 19
+          "state": 87,
+          "identity": 27
         }
       },
       "complete_three_arms": false,
@@ -7410,7 +7410,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 75,
+          "admitted_obtainable_rows": 114,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -7418,7 +7418,7 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 75
+          "raw_episodes": 114
         }
       ],
       "arms": {
@@ -7444,7 +7444,7 @@
         },
         "interactive_agent": {
           "complete": false,
-          "present": 75,
+          "present": 114,
           "expected": 209,
           "by_task": {
             "overall": null,
@@ -7929,7 +7929,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 18
+        "interactive_agent": 54
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -7941,8 +7941,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 14,
-          "identity": 4
+          "state": 42,
+          "identity": 12
         }
       },
       "complete_three_arms": false,
@@ -7993,7 +7993,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 18,
+          "admitted_obtainable_rows": 54,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -8001,7 +8001,7 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 18
+          "raw_episodes": 54
         }
       ],
       "arms": {
@@ -8027,7 +8027,7 @@
         },
         "interactive_agent": {
           "complete": false,
-          "present": 18,
+          "present": 54,
           "expected": 209,
           "by_task": {
             "overall": null,

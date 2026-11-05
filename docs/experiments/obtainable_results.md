@@ -35,11 +35,11 @@ Coverage by arm (initial / full / interactive):
 - SmolVLM2-2.2B: 209/209/209 of 209.
 - InternVL3.5-14B: 209/209/209 of 209.
 - Pixtral-12B: 209/209/209 of 209.
-- GPT-6.1 Sol: 0/0/75 of 209.
+- GPT-6.1 Sol: 0/0/114 of 209.
 - GPT-6.1 Terra: 144/144/209 of 209.
 - GPT-5.4 mini: 0/0/0 of 209.
 - GPT-4.1 mini: 0/0/0 of 209.
-- GPT-6 Luna: 0/0/18 of 209.
+- GPT-6 Luna: 0/0/54 of 209.
 - GPT-6 Luna (Decisions): 0/0/209 of 209.
 
 The Decisions row is an additional interface for GPT-6 Luna, not a sixteenth distinct model.
