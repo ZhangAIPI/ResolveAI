@@ -5,6 +5,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import sqlite3
@@ -158,6 +159,26 @@ def result_text(entries):
                     f"The 7B policy abstains in {abstained} of {old_rl['common_families']} initially sufficient cases.")
         else:
             parts.append("Direct RL gives "+"; ".join(direct)+".")
+    parts += [
+        r"\subsection{Finding Missing Evidence}",
+        r"\input{tables/search_behavior}",
+        r"\paragraph{Similar accuracy, different evidence access.}",
+        "The two 8B training routes differ by one correct answer in Sufficient, but behave differently once evidence is withheld. "
+        "In Obtainable, direct RL requests photographs in 15 families and receives a new image in 14. "
+        "SFT+RL requests and receives new images in 92 families, and finishes all 209 episodes rather than 194. "
+        r"\textbf{Similar answer accuracy can mask different evidence access.} "
+        "The paired Sufficient accuracy difference for SFT+RL minus RL is "
+        r"\(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). "
+        "The interval describes one pair of trained runs, rather than training-seed variation. "
+        "The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, "
+        "but corrects ten condition errors while losing sixteen. "
+        "The overall score alone therefore misses both the task trade-off and the difference in requests.",
+        r"\paragraph{The requested evidence differs by task.}",
+        "For 8B, direct RL retrieves new images in 9 of 153 condition families and 5 of 56 identity families. "
+        "SFT+RL retrieves originals in 92 condition families and no new identity views. "
+        "Its more frequent requests therefore concern recovering condition detail. "
+        "The observed behavior does not establish the same improvement in cross-view identity search.",
+    ]
     small=stages.get("Qwen/Qwen3-VL-2B-Instruct",{}).get("SFT+RL")
     large=stages.get("Qwen/Qwen3-VL-8B-Instruct",{}).get("SFT+RL")
     if small and large:
@@ -170,7 +191,7 @@ def result_text(entries):
             "Its 63 condition requests all ask for the overview already supplied in the initial evidence. "
             f"The 8B policy requests an original in {b['episodes_with_request']} cases and receives a new image in each; "
             "all of these requests concern condition, rather than another viewpoint for identity. "
-            "Figure~\\ref{fig:cases}(a) shows the difference on one bottle. "
+            "Figure~\\ref{fig:teaser} shows the difference on one bottle. "
             "Both policies spend one request, but only the request for the original changes the available detail."
         ]
     if large:
@@ -182,6 +203,16 @@ def result_text(entries):
             "When the same request returns unable to provide, all 92 answers change to Need more evidence. "
             "The 8B policy therefore responds to access feedback after making the request. "
             "Missing and Unavailable return the same failure message here, and produce the same stopping behavior."
+        ]
+    if large:
+        parts += [
+            r"\paragraph{Responding to failure is only part of stopping.}",
+            "The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, "
+            "but still gives definite answers in 116 of the 209 Unavailable episodes. "
+            "Those 116 are not failed-request cases: the policy stops without asking for the withheld photograph. "
+            "The 7B policy makes no requests in Unavailable and gives 209 definite answers. "
+            "These outcomes separate stopping after failed access from choosing to investigate in the first place. "
+            "Independent sufficiency review is needed to determine which unrequested cases already have adequate evidence in the preview.",
         ]
     return "\n\n".join(parts)
 
@@ -257,7 +288,7 @@ def publish_changes(repo,runtime,changes,message):
                 (stage/name.removeprefix("paper/")).write_bytes(content) if isinstance(content,bytes) else (stage/name.removeprefix("paper/")).write_text(content)
         environment = {**os.environ,"XDG_CACHE_HOME":str(runtime/"tools/tex/cache")}
         for source in ("main.tex","supplementary.tex"):
-            run([str(runtime/"tools/tex/tectonic"),"--outdir",temp,source],stage,environment)
+            run([str(runtime/"tools/tex/tectonic"),"--keep-intermediates","--outdir",temp,source],stage,environment)
         sys.path.insert(0,str(runtime/"tools/pdf"))
         import fitz
         for name in ("main.pdf","supplementary.pdf"):
@@ -265,9 +296,17 @@ def publish_changes(repo,runtime,changes,message):
                 text = "\n".join(p.get_text() for p in doc)
                 if name == "main.pdf":
                     references = next((i+1 for i,page in enumerate(doc) if "References" in page.get_text()),None)
-                    print("COMPILED_MAIN",len(doc),"REFERENCES_START",references,flush=True)
-                    if references is None or references > 8:
-                        raise ValueError("Main text exceeds the eight-page layout target")
+                    auxiliary=(Path(temp)/"main.aux").read_text()
+                    pages={label:int(page) for label,page in
+                           re.findall(r"\\newlabel\{([^}]+)\}\{\{[^}]*\}\{(\d+)\}",auxiliary)
+                           if not label.endswith("@cref")}
+                    if "resolveai-main-end" not in pages:
+                        raise ValueError("Main-text end marker is missing")
+                    body_end=max(pages.values())
+                    print("COMPILED_MAIN",len(doc),"BODY_END",body_end,
+                          "REFERENCES_START",references,flush=True)
+                    if references is None or body_end > 8:
+                        raise ValueError("Main text, figures or tables exceed eight pages")
                 if "[?]" in text or "??" in text or "\ufffd" in text or doc.metadata.get("author"):
                     raise ValueError("Compiled adaptation paper failed reference or anonymity checks")
         for name,content in changes.items():

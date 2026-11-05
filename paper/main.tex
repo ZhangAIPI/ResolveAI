@@ -21,30 +21,33 @@
 % Keep broad tables and photo examples from consuming the same page.
 \setcounter{dbltopnumber}{1}
 \begin{document}
+\twocolumn[{
+\renewcommand\twocolumn[1][]{#1}
 \maketitle
+\begin{center}
+\resizebox{\textwidth}{!}{\input{figures/teaser}}
+\captionof{figure}{\textbf{Two tasks, one evidence-search problem.}
+(a) Recorded CO3D photographs~\cite{co3d} illustrate matching an item across views.
+(b) In the bottle episode, 2B SFT+RL requests its existing overview, while 8B requests the original.
+The inset shows unchanged source pixels from the marked rim region~\cite{mvtec}.
+The 8B policy answers Supported when the original is returned and Need more evidence when the same request fails.}
+\label{fig:teaser}
+\end{center}
+}]
 
 \begin{abstract}
-Checking a claim about an object can require more than the photographs initially supplied.
-A closer view may reveal a small defect, while another angle may help distinguish two similar items.
-We introduce \benchmark to study these choices.
-Each case family keeps the claim and physical state fixed while changing access to photographs: enough evidence is supplied initially, further evidence can be requested, the needed photograph is missing, or it cannot be provided.
-We define separate measures for finding enough evidence and answering correctly once it is available.
-We construct 478 families from public condition and multi-view datasets and compare models on 209 source-labeled families.
-The interactive setting corrects 38 errors made by Qwen3-VL-8B without tools, but also loses 22 previously correct answers; the 2B model corrects 7 and loses 48.
-Training improves answer accuracy without consistently improving the search for evidence.
-After SFT followed by RL, Qwen2.5-VL-7B rises from 73.7\% to 77.5\%, yet makes no photograph requests in cases constructed to require additional evidence.
-In 92 matched families, the 8B policy gives definite answers when the requested original is returned and abstains when the same request fails.
+Checking an object claim may require a closer photograph or another viewpoint.
+We introduce \benchmark to study which evidence a model inspects, what it requests, and when it stops.
+Each case family fixes the claim and object state while changing access to photographs: supplied initially, obtainable on request, missing, or unavailable.
+The evaluation distinguishes finding sufficient evidence from using it correctly.
+We construct 478 families from public condition and multi-view datasets and evaluate models on 209 source-labeled families.
+Tools improve some answers and disrupt others: Qwen3-VL-8B corrects 38 direct-answer errors but loses 22 correct answers; the 2B model corrects 7 and loses 48.
+Post-training also separates answer accuracy from evidence access.
+The 8B RL and SFT+RL policies differ by one correct answer on initially sufficient cases, yet retrieve new photographs in 14 and 92 cases when evidence is withheld.
+In 92 matched families, SFT+RL gives definite answers when the requested original is returned and abstains when the same request fails.
 \end{abstract}
 
-\begin{figure*}[t]
-\centering
-\input{figures/overview}
-\caption{\textbf{One claim, different access to evidence.}
-A model can inspect the supplied images or request another recorded photograph.
-The four versions keep the claim and physical state fixed while changing access to potentially sufficient evidence.
-The CO3D photographs~\cite{co3d} illustrate the interface; the table defines the intended access conditions.}
-\label{fig:overview}
-\end{figure*}
+
 
 \section{Introduction}
 Do two photographs show the same chair?
@@ -70,7 +73,7 @@ A model may answer correctly from incomplete evidence, fail to inspect a useful 
 An unresolved answer is appropriate when no sufficient evidence can be obtained; the same answer stops too early when a useful photograph remains available.
 To distinguish these outcomes, we need to vary the opportunity to find evidence without changing the fact being checked.
 
-\benchmark does this through case families (Figure~\ref{fig:overview}).
+\benchmark does this through case families (Figure~\ref{fig:framework}).
 The claim and object state remain fixed across four versions, while the photograph needed to decide is supplied initially, available on request, missing, or unavailable.
 The resulting comparison asks whether a model can resolve a claim when the evidence is accessible and withhold a definite answer when it is not.
 We define sufficient evidence through the claim's parts, allow alternative sufficient image sets, and record what evidence the model actually sees.
@@ -90,6 +93,7 @@ We retain separate condition and identity tasks, but also vary which photographs
 
 \paragraph{Choosing what to observe.}
 OpenEQA includes both episodic-memory and active-exploration settings~\cite{openeqa}.
+ActiveVision tests repeated observation through distributed scanning, traversal and attribute matching~\cite{activevision}.
 ActiView restricts the visible part of an image and evaluates zooming or shifting the perceptual field~\cite{actiview}.
 V*, Visual Sketchpad and visual-tool benchmarks provide further ways to inspect image content~\cite{vstar,sketchpad,visualtoolbench,vtcbench}.
 These works establish observation choice as an evaluation target.
@@ -103,6 +107,16 @@ We use the same distinction between obtaining an observation and benefiting from
 Our focus is the evidence needed to check an object's identity or condition across photographs.
 Valid citations establish support for an answer; they do not, by themselves, prove that the model used the cited pixels.
 \section{The \benchmark Benchmark}
+
+\begin{figure*}[t]\centering
+\resizebox{\textwidth}{!}{\input{figures/framework}}
+\caption{\textbf{Public observations and private evaluation.}
+A family fixes the claim and object state while changing access to recorded photographs.
+Requests match object, time and view against the pool and release permissions, without using sufficiency labels.
+Only released content reaches the agent; the evaluator receives its trace and private annotations.}
+\label{fig:framework}
+\end{figure*}
+
 \subsection{One Claim, Four Evidence Settings}
 An episode starts with an object claim and a set of photographs.
 The model can inspect released images, crop regions, compare views, use grounding tools and request a recorded photograph of a specified object, time or view.
@@ -294,37 +308,24 @@ Mean episode time includes model and environment execution.
 Output tokens accumulate across calls, including end markers and API reasoning tokens; input prompts and image tokens are excluded.
 Failed and abstaining attempts remain in the efficiency statistics.
 
-\begin{figure*}[t]
-\centering
-\input{figures/action_examples}
-\caption{\textbf{Two examples from the recorded evaluations.}
-(a) Both SFT+RL models make one request on the same bottle case.
-The 2B model requests the overview and receives the existing preview again; the 8B model requests the original and receives more detail.
-Sizes denote returned images before model preprocessing.
-(b) The base 8B model describes the vehicle match but never submits a parseable final answer.
-Photographs are unchanged source images from MVTec AD~\cite{mvtec} and CO3D~\cite{co3d}; the supplement identifies the cases and exact calls.}
+\begin{figure}[t]\centering
+\input{figures/submission_case}
+\caption{\textbf{A correct description without a submitted answer.}
+Base Qwen3-VL-8B describes the same vehicle across these CO3D views~\cite{co3d}, but exhausts its turns with unparseable finish calls.}
 \label{fig:cases}
-\end{figure*}
+\end{figure}
 
 \input{tables/sft_results}
 
 \subsection{When Tools Help}
 \paragraph{Net gains hide reversals.}
 Qwen3-VL-8B improves from 74.6\% without tools to 82.3\% in the interactive setting.
-The paired cases show more than a uniform improvement: 38 direct errors become correct, while 22 previously correct answers are lost (Figure~\ref{fig:transitions}).
+The paired cases show more than a uniform improvement: 38 direct errors become correct, while 22 previously correct answers are lost.
 For Qwen3-VL-2B, only 7 errors are corrected and 48 correct answers are lost, lowering accuracy from 60.3\% to 40.7\%.
 Condition queries account for most of these changes: the 8B model corrects 35 and loses 21, while the 2B model corrects 6 and loses 40.
 The visual inputs alone therefore do not predict whether the complete interactive interface will help.
 
-\begin{figure}[t]
-\centering
-\input{figures/diagnosis}
-\caption{\textbf{Answers corrected and lost in the interactive setting.}
-Counts pair the same source-labeled cases under No tools and With tools for Qwen3-VL.
-A lost answer includes an incorrect answer, abstention or failure to finish.
-Output format and allowance also change between settings.}
-\label{fig:transitions}
-\end{figure}
+
 
 The direction of change can also differ by task.
 For Qwen3.5-9B, condition accuracy rises from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
@@ -334,7 +335,7 @@ Its improvement occurs while working with the initial evidence.
 These comparisons concern checking the supplied images, since the main table uses initially sufficient constructions; they do not establish an ability to choose missing evidence.
 
 \paragraph{A visual answer can fail at submission.}
-Figure~\ref{fig:cases}(b) shows two views of the same vehicle.
+Figure~\ref{fig:cases} shows two views of the same vehicle.
 Qwen3-VL-8B answers Supported directly.
 With tools, it first compares the photographs and describes the same vehicle from different angles, but then produces seven unparseable finish attempts and reaches the turn limit.
 The interactive run takes 100.5 seconds and receives zero, compared with 1.1 seconds for the direct answer.
@@ -380,14 +381,76 @@ Direct RL reaches 84.2\% for 8B, compared with 83.7\% after SFT+RL: 176 versus 1
 
 The smaller models respond differently. Direct RL gives 54.5\% for 2B and 3.3\% for 7B, below their SFT results. The 7B policy abstains in 200 of 209 initially sufficient cases.
 
+\subsection{Finding Missing Evidence}
+
+\input{tables/search_behavior}
+
+\paragraph{Similar accuracy, different evidence access.}
+
+The two 8B training routes differ by one correct answer in Sufficient, but behave differently once evidence is withheld. In Obtainable, direct RL requests photographs in 15 families and receives a new image in 14. SFT+RL requests and receives new images in 92 families, and finishes all 209 episodes rather than 194. \textbf{Similar answer accuracy can mask different evidence access.} The paired Sufficient accuracy difference for SFT+RL minus RL is \(-0.48\) percentage points, with a family-bootstrap 95\% interval of \([-5.74,4.78]\). The interval describes one pair of trained runs, rather than training-seed variation. The aggregate difference also hides a task trade-off: SFT+RL corrects five identity errors without losing a correct identity answer, but corrects ten condition errors while losing sixteen. The overall score alone therefore misses both the task trade-off and the difference in requests.
+
+\paragraph{The requested evidence differs by task.}
+
+For 8B, direct RL retrieves new images in 9 of 153 condition families and 5 of 56 identity families. SFT+RL retrieves originals in 92 condition families and no new identity views. Its more frequent requests therefore concern recovering condition detail. The observed behavior does not establish the same improvement in cross-view identity search.
+
 \paragraph{A request need not add an image.}
 
-The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:cases}(a) shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail.
+The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:teaser} shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail.
 
 \paragraph{Stopping changes when a request fails.}
 
 For the 92 families where 8B requests an original, we compare Obtainable, Missing and Unavailable. All 92 triples have identical public images, tool definitions and first requests up to the returned response. With the original provided, the policy answers Supported in 50 cases and Refuted in 42. When the same request returns unable to provide, all 92 answers change to Need more evidence. The 8B policy therefore responds to access feedback after making the request. Missing and Unavailable return the same failure message here, and produce the same stopping behavior.
+
+\paragraph{Responding to failure is only part of stopping.}
+
+The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, but still gives definite answers in 116 of the 209 Unavailable episodes. Those 116 are not failed-request cases: the policy stops without asking for the withheld photograph. The 7B policy makes no requests in Unavailable and gives 209 definite answers. These outcomes separate stopping after failed access from choosing to investigate in the first place. Independent sufficiency review is needed to determine which unrequested cases already have adequate evidence in the preview.
 % adaptation-results-end
+
+
+\subsection{Checking Alternative Explanations}
+\paragraph{Longer direct outputs do not change these answers.}
+The direct setting allows 96 output tokens, whereas each interactive turn allows 384.
+We repeat the direct setting with a 384-token allowance for Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B, retaining identical public prompts and image inputs.
+Accuracy remains 15.8\%, 74.6\% and 57.9\%, respectively, on the fixed initially sufficient set.
+The paired correctness vectors are unchanged, as are the full-access results.
+The short direct outputs therefore do not result from hitting the 96-token limit.
+This control changes one direct-call allowance; it does not match the structured response or cumulative generation budget of an interactive episode.
+
+\paragraph{Action targets change request behavior.}
+We also compare SFT on complete public histories with two target choices: only the final decision, or both actions and the final decision.
+\textbf{Action supervision changes whether the policy requests evidence.}
+With identity-only training, the fraction making a photograph request in Obtainable is 0\% with final-decision targets and 73.2\% with action targets.
+With mixed-task training, the corresponding fractions are 0\% and 39.2\% (Table~\ref{tab:action-targets}).
+All additional requests in both action-supervised settings concern condition originals; neither policy requests another identity view.
+Both comparisons use the same update cap, rather than matched target-token compute.
+The result distinguishes exposure to tool results in a history from supervision to issue the preceding call.
+It establishes a change in request behavior; choosing a new and sufficient view remains a separate test.
+
+\begin{table}[t]\centering\small
+\caption{\textbf{Action-target ablation for 8B SFT.}
+Fraction (\%) requesting a photograph in Obtainable.
+Public histories and the update cap are shared within each pair.}
+\label{tab:action-targets}
+\begin{tabular}{@{}lrr@{}}\toprule
+Training data & Final decision & Actions + final\\\midrule
+Identity & 0.0 & 73.2\\
+Mixed-task & 0.0 & 39.2\\
+\bottomrule\end{tabular}
+\end{table}
+
+\paragraph{All photographs are not an accuracy upper bound.}
+Providing every obtainable image initially changes Qwen3-VL-8B from 74.6\% to 75.1\% under direct answering.
+Identity accuracy rises from 87.5\% to 91.1\%, while condition accuracy changes from 69.9\% to 69.3\%.
+InternVL3.5-14B instead falls from 59.8\% to 53.1\% overall.
+Additional images do not consistently improve accuracy, even before a search policy is involved.
+The full-access reference thus checks whether more visual material helps the same answer format; it cannot be assumed to dominate every interactive policy.
+Complete task-wise results are in the supplement.
+
+\paragraph{Scope of the current evidence gaps.}
+Condition requests chiefly recover original image detail; identity requests expose additional recorded views.
+The source-derived labels and intended gaps still need independent visual review.
+We therefore report new-image access and stopping behavior separately from the grounded evaluation defined in Section~3.
+A correct source-label answer or a new image alone does not certify sufficient evidence.
 
 \section{Conclusion}
 \benchmark organizes object claims into families with different access to the photographs needed to check them.
@@ -395,8 +458,12 @@ Its evaluation distinguishes an unfinished search from a wrong answer after suff
 The experiments show why that distinction matters.
 Interactive settings both correct and lose answers, and submission errors can obscure otherwise correct visual descriptions.
 Training improves source-label accuracy, but the observed search behavior remains uneven: the 7B SFT+RL policy never requests a photograph in Obtainable, while the 2B policy repeatedly asks for a preview it already has.
-The 8B policy, in contrast, changes its stopping decision when a requested original cannot be supplied.
+The two 8B training routes achieve similar answer accuracy but retrieve new images in 14 and 92 Obtainable families.
+The SFT+RL policy changes its stopping decision when a requested original cannot be supplied.
+Similar answer scores can conceal whether a policy requests new pixels, repeats an old view, or stops without looking.
 
+\label{resolveai-main-end}
+\clearpage
 \section*{LLM Usage Statement}
 OpenAI Codex assisted with code, literature lookup, manuscript drafting and schematic figure code.
 Model outputs are not human annotations; photographic figure inputs retain their source pixels.

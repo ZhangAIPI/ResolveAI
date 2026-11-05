@@ -2337,19 +2337,19 @@
   ],
   "evaluation_progress": {
     "paper_cohort_complete": true,
-    "full_study_complete": false,
-    "observed_raw_episodes": 3937,
+    "full_study_complete": true,
+    "observed_raw_episodes": 5736,
     "planned_raw_episodes": 5736,
     "by_shard": [
       {
         "shard": 0,
-        "observed_episodes": 2651
+        "observed_episodes": 2868
       },
       {
         "shard": 1,
-        "observed_episodes": 1286
+        "observed_episodes": 2868
       }
     ],
-    "scope": "Scores use the unchanged complete paper cohort; remaining planned episodes continue independently"
+    "scope": "All planned evaluation episodes are complete; paper scores retain the unchanged fixed 209-family cohort."
   }
 }

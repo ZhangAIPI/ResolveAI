@@ -1,0 +1,40 @@
+% Fixed extent: 17.7 x 4.8 cm. Requires graphicx and the existing TikZ libraries.
+\begingroup
+\definecolor{raBlue}{RGB}{40,86,124}
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\footnotesize,
+ box/.style={draw=black!65,line width=.65pt,rectangle,align=center,inner sep=5pt,minimum height=1.05cm},
+ flow/.style={->,line width=.7pt},
+ info/.style={->,line width=.65pt,draw=black!60}]
+\path[use as bounding box] (0,0) rectangle (17.7,4.8);
+\node[anchor=west,font=\scriptsize\bfseries,text=raBlue] at (0,4.6) {PUBLIC INTERACTION};
+\node[box,text width=4.2cm] (obs) at (2.48,3.5)
+  {\textbf{Released evidence}\\Claim and photographs\\Tool responses};
+\node[box,text width=2.6cm] (agent) at (8.2,3.5)
+  {\textbf{Agent}\\Choose or answer};
+\node[box,text width=5.0cm] (tools) at (14.45,3.5)
+  {\textbf{Visual tools}\\Inspect / crop / compare\\Grounding / request photograph};
+\draw[flow] (obs.east) -- (agent.west) node[midway,above,font=\scriptsize] {observe};
+\draw[flow] (agent.east) -- (tools.west) node[midway,above,font=\scriptsize] {call};
+\draw[flow,draw=raBlue] (tools.north) -- ++(0,.3) -| (obs.north);
+\node[font=\scriptsize,text=raBlue] at (8.1,4.35) {image or tool response};
+\draw[dashed,draw=black!40,line width=.55pt] (0,2.6) -- (17.7,2.6);
+\node[anchor=west,fill=white,inner xsep=2pt,font=\scriptsize\bfseries,text=black!65]
+  at (.05,2.6) {PRIVATE ENVIRONMENT};
+\node[box,text width=4.2cm] (family) at (2.48,1.5)
+  {\textbf{Case family}\\Fixed claim and object state\\Sufficient / Obtainable\\Missing / Unavailable};
+\node[box,text width=4.0cm] (eval) at (8.2,1.5)
+  {\textbf{Evaluator}\\Answer and cited evidence\\Steps, tokens and latency};
+\node[box,text width=4.25cm] (release) at (14.45,1.5)
+  {\textbf{Evidence release}\\Match object, time and view\\Return an image or failure};
+\draw[info] (family.east) -- (eval.west)
+  node[midway,above,font=\scriptsize] {labels};
+\draw[info] (agent.south) -- (eval.north)
+  node[midway,right,font=\scriptsize] {trace};
+\draw[flow,draw=raBlue] ([xshift=-.8cm]release.north) -- ([xshift=-.8cm]tools.south)
+  node[midway,left,font=\scriptsize,text=raBlue] {image / failure};
+\draw[flow] ([xshift=.8cm]tools.south) -- ([xshift=.8cm]release.north)
+  node[midway,right,font=\scriptsize] {request};
+\draw[info] (family.south) -- ++(0,-.65) -| (release.south)
+  node[pos=.5,below,font=\scriptsize] {full recorded pool and release permissions};
+\end{tikzpicture}
+\endgroup

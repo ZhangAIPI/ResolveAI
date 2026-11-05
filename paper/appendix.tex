@@ -387,3 +387,17 @@ The additional audited screw case, \texttt{case-035e4ca9730fd6a3fcab-Sufficient}
 
 The released analysis JSON records case identifiers, exact tool arguments, source database locations, trace hashes and unchanged figure-image hashes. It can be regenerated from existing records without rerunning a model.
 % paired-case-analysis-end
+
+\section{Paired Answer Changes}
+\begin{figure}[t]\centering\input{figures/diagnosis}
+\caption{\textbf{Answers corrected and lost in the interactive setting.}
+Counts pair the same source-labeled cases without and with tools.
+A lost answer includes a wrong answer, abstention or failure to finish.
+Response format and generation allowances differ between the settings.}
+\label{fig:transitions}
+\end{figure}
+\section{Output-Allowance Control}
+Identical prompts and photographs are retained while increasing the direct-answer output allowance from 96 to 384 tokens.
+All 1,672 paired source-label responses per model are unchanged across four versions and both direct arms for Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B.
+This tests single-call output truncation, not multi-turn reasoning or finish-format matching.
+The released analysis records checked families, configuration matches and public-prompt comparisons.

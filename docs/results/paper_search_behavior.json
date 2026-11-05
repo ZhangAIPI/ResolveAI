@@ -1,0 +1,3647 @@
+{
+  "scope": "Observed actions and source-label agreement only. New image is new image_ref pixel hash relative to all prior observations, not reviewed sufficient evidence.",
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "family_ids": [
+    "case-0013955d31d3d1958ae4",
+    "case-008fddbd675adc4570ad",
+    "case-00bb48fa5a6b3e55662e",
+    "case-03415461c3ae41ab58f8",
+    "case-035e4ca9730fd6a3fcab",
+    "case-03cfc447c84672dba323",
+    "case-0491092a72058aac0ea9",
+    "case-04e33f6404ed5ae10513",
+    "case-050c440b3c0528140212",
+    "case-0687c95a9b01fa5c5bd9",
+    "case-06bd2e2c619173cd0e26",
+    "case-07af5dd50459cd1cebad",
+    "case-08da5fca484862c6a91d",
+    "case-094409637f3979c65dde",
+    "case-0b0848b8e7b8745990d1",
+    "case-0be3f37fb1d1a7e1ff03",
+    "case-0d15c862cc16bbe4c099",
+    "case-0e8fbed0931b991c25af",
+    "case-0ed00b56217ebb655b95",
+    "case-0fb42a8c2b7c8437ef8c",
+    "case-0fe3f5acad0e718287c1",
+    "case-10c99db3e69bc9972b3d",
+    "case-1171b0a231e8710764bf",
+    "case-13a2fed0403ff94d313e",
+    "case-14c2c9cfcfb0ee57927f",
+    "case-14fdadb344d83119c987",
+    "case-158a8df02f25f99f87e8",
+    "case-161136a9ec3cc64771f8",
+    "case-1704dbd0a5480d63465e",
+    "case-1736d455af2ed926f7db",
+    "case-198036c061f8860e137d",
+    "case-1b38372ab3a9c802472f",
+    "case-1d2273c2f03c0b1e3766",
+    "case-1d7591ee4eba4847495f",
+    "case-1e688e6208ebb40a4ab2",
+    "case-1f6755d1255c1b951af4",
+    "case-1fb073759024a879af6b",
+    "case-2188cca9dcb429a58d96",
+    "case-218d1dcffccb1edb0c4b",
+    "case-2238dd539b5b090ec4c5",
+    "case-2462de3af747832feb12",
+    "case-2580989ed62995f74c9a",
+    "case-2921ec601a7224865d46",
+    "case-2a0fffc202578b67463d",
+    "case-2c1a2e9300951599e5a1",
+    "case-2d8e0e473a213cb80cae",
+    "case-2deee0f03d49b3f2dcba",
+    "case-2f436ab6aeaa0b7b20a1",
+    "case-2fc44bf1dff7ba972c9f",
+    "case-306465647a99ee75ba24",
+    "case-33507d1bf22357977e87",
+    "case-374f6ae20a2cc9dee151",
+    "case-3816b0594bbd57f597dc",
+    "case-3a77f3fa43ae2ea19853",
+    "case-3ce617a2c9c23d8bf77d",
+    "case-3d45aca0f9331e9bc057",
+    "case-3d76ad32b1ae434e1008",
+    "case-3e356c47c66a1c95006d",
+    "case-3e74e410a110e150612c",
+    "case-3f6829fdbe913aaa7d8d",
+    "case-401c2a17d2ad647c820a",
+    "case-4075816a3e17dc65388c",
+    "case-422ae37eebd4196a1c88",
+    "case-4329c6fad6a0fe133467",
+    "case-44d34af477c63dbeadec",
+    "case-482d81c6b59e8b9e993d",
+    "case-4907473a0cb857f0290c",
+    "case-4beee846d0814a3edcdc",
+    "case-4ca0bdc9023fb6ddf0f7",
+    "case-4cbb34d919b6796dc3c6",
+    "case-4cd023a5d1cf1dfb5f3f",
+    "case-4d4c204a9a775f2eb945",
+    "case-4f6d9ad29d8928752244",
+    "case-505b0a13881bd0283930",
+    "case-511ee5c29083e3320780",
+    "case-519b31b53e05b9444226",
+    "case-527a794c9651d1527e1c",
+    "case-52a69b7c898d12a8e0a5",
+    "case-52bbfb6426b7a7e880dc",
+    "case-56ebf13312e918355e08",
+    "case-58d5dfa36b59e88b3264",
+    "case-5b4d10e649bbb741d641",
+    "case-5cbd8b31de7506a7b579",
+    "case-5d2f8f6f284da954b7d1",
+    "case-5ebe8ae572d5aab88e3e",
+    "case-5ed8ddd944db90518517",
+    "case-5f3570aff0075cfce6cb",
+    "case-600855f607d656065ab8",
+    "case-61298e2087460fff0b38",
+    "case-62466e732168dfaf8214",
+    "case-6392cfc01bb502fb9ea2",
+    "case-673ed71d240f5d142b82",
+    "case-6aaa1faab1e4de97ff49",
+    "case-6bb63cd0a32977fc8276",
+    "case-6bb901b72d1d9f36970b",
+    "case-6c98a14b04dc66a9a887",
+    "case-6d756f50b68d12061b4c",
+    "case-6e3bb1bb009b9408c877",
+    "case-6e617c52f117568663ec",
+    "case-6f48f4e2cb087a0f87d0",
+    "case-72b9852afb9370eb1e2f",
+    "case-744edc80b6d2d2866d9f",
+    "case-74920d6b31973fa69172",
+    "case-75629614a6bf5964d782",
+    "case-75af8f8edccb80ca46b5",
+    "case-76557903e96adaea78ae",
+    "case-76d243146dc40df1831d",
+    "case-76e046ab45ce352eb231",
+    "case-776ac4ef6bd4c68d9255",
+    "case-7897eb4a5dfb1eec5de4",
+    "case-79d971530ee82a51dd40",
+    "case-7b297d92a47b18846107",
+    "case-7bed7b97b72117d1a8a2",
+    "case-7cfd522af627f62da66b",
+    "case-7d53235c8442a2971e7f",
+    "case-7dc3561f55a0bc0bc5fe",
+    "case-7e03002a680778a4ab12",
+    "case-7e39b62471c03c73d995",
+    "case-7fc0077a4b1452489a00",
+    "case-8002ba7cfe4ee4425dc8",
+    "case-8021c25ae38ad5931e40",
+    "case-81e0e8f4cfa94f3deadd",
+    "case-8271cc372f24d3c5fe4d",
+    "case-8382554c6be762943bdd",
+    "case-83e1e69518d482ef4109",
+    "case-84726da18c39ea85a416",
+    "case-854c45c5f8ce31d14213",
+    "case-8606651323bb9a95aaa5",
+    "case-8802a95c8b66734a85f1",
+    "case-8902b3dfae78b07aabbb",
+    "case-89929c5660c3d8406f66",
+    "case-8a694ef7370ceb9c9bb2",
+    "case-8a720eb5cec384819027",
+    "case-8b5d4384ca7ef0be6cfe",
+    "case-8b7246d25a61c698312c",
+    "case-8cf68eec4936014dc689",
+    "case-8ea68576affa0184b654",
+    "case-8f00f840530fa8edeb8b",
+    "case-8f77c26785c28fc51d4c",
+    "case-919281c3b936a72161eb",
+    "case-91c4ea3c6210cc21aa35",
+    "case-91d211c82d2285480b29",
+    "case-9224f5fdbc8c158709b6",
+    "case-93dd02a172e3378a70e1",
+    "case-9473a070c17fccb32b55",
+    "case-94873a21bd4db2e983e7",
+    "case-9488eb02d53de8d64e4d",
+    "case-95fdc1ae76158756dc33",
+    "case-9602772422d7fad6e956",
+    "case-976734884edf1aaede77",
+    "case-995af3c4557049fb0e18",
+    "case-99b291151e0dc8c5fe77",
+    "case-9a2da1ff244329d9ba8b",
+    "case-9d0e6521f3dc955fcade",
+    "case-9f1340d3c2e87f62b537",
+    "case-a0005d8bd8d6d2c24edb",
+    "case-a183de3a0d6f799887a3",
+    "case-a278a66cccceb59dd30d",
+    "case-a2fc8c952def814bf0ca",
+    "case-a474e949667b6a8393be",
+    "case-a48f6a846280388313f9",
+    "case-a58b60a912dacc29a8ba",
+    "case-a5f95ce3ed0472ab9c58",
+    "case-a64d88e560addf16c7cd",
+    "case-a69cdab83dae7be217b6",
+    "case-a6ed346a1b92f57b56c7",
+    "case-a7e97245c5fffd3f7270",
+    "case-aa88b43fddefd22c3288",
+    "case-ac22f9611d7241c74b7b",
+    "case-acca9551f49d9a2feaa2",
+    "case-ade369acc373e1df4866",
+    "case-ae893e972e9357a6f87e",
+    "case-aebd42bd62d3bfa51533",
+    "case-afb2faf54f4d8b6c52d1",
+    "case-b07bf82071c4a6987827",
+    "case-b0e0d4a5462fd898ae13",
+    "case-b1d8df4efdfe8e6c01cd",
+    "case-b2b0065d37ffec6b63e9",
+    "case-b4f26464904e5d0bc975",
+    "case-b59331fa682194a251ad",
+    "case-b849fdd52b58a7c9763c",
+    "case-b92489441aa7de3bde40",
+    "case-bb0616e95c508e78f505",
+    "case-bd0d6da67c515870f9a2",
+    "case-bff8ff386e3183174825",
+    "case-c28519175996893e6e11",
+    "case-c43236afe044e25392c2",
+    "case-c496e7ec10a784f42b49",
+    "case-c66f319b9681bf706240",
+    "case-c6d3fb69a424b6fbf678",
+    "case-c81fc8a91afe9669aaa9",
+    "case-c9a7cef5c381e3b62b67",
+    "case-ca40775005dd65b7b5d7",
+    "case-cc1dcd4afe1b98c554c6",
+    "case-cc5be89c161bc0fd85a6",
+    "case-cd075280055a56377140",
+    "case-cd3a60a78b58aa3c819d",
+    "case-ce17d2b7a68c256b9fec",
+    "case-cefaf5825e0ee8436597",
+    "case-d03eb7a33f6f45ea03cc",
+    "case-d0e1b7e15938b69ef9b1",
+    "case-d1720f38cbfbe6a40804",
+    "case-d2f5466dfaee7ddc96dd",
+    "case-d5ee73ab73310dc8bf22",
+    "case-d6e0c906dd87b5bdb2ad",
+    "case-d98fd9dff55de259d6c8",
+    "case-db9a2e17f4eb09e61b4d",
+    "case-dc4ab08a27629d5e94df",
+    "case-dc8468196b97bba4df44"
+  ],
+  "policies": {
+    "2B Base": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 3,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 2,
+            "repeated_image_calls": 3,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 129,
+            "definite": 129,
+            "source_label_match": 85,
+            "episodes": 209,
+            "request_views": {
+              "original": 1,
+              "view-01": 1,
+              "view-02": 1,
+              "overview": 1
+            },
+            "request_status": {
+              "provided": 4
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "44e61671685f8f586b4862c5c195abe033c75e8e401dae5e88516cb6ea388d1d",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 2,
+            "recorded_request_responses": 2,
+            "requested": 2,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 81,
+            "definite": 81,
+            "source_label_match": 37,
+            "episodes": 153,
+            "request_views": {
+              "original": 1,
+              "overview": 1
+            },
+            "request_status": {
+              "provided": 2
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "62c805d1e0c99da3fd1c8240194c3c56ce9e7aa211e88cf86f6b0e41883db126",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 2,
+            "recorded_request_responses": 2,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 48,
+            "definite": 48,
+            "source_label_match": 48,
+            "episodes": 56,
+            "request_views": {
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 2
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "031f702f33c504f092fa81ee1f833ac28b29c5475557244b51276cbc29e20e29",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 2,
+            "novel_images": 2,
+            "repeated_image_request": 2,
+            "repeated_image_calls": 2,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 96,
+            "definite": 96,
+            "source_label_match": 56,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 2,
+              "overview": 1,
+              "view-01": 1
+            },
+            "request_status": {
+              "provided": 4
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "abececb7defec8c25ed009f954bb9945e450ad577c3770c58059346e1e923a53",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 1,
+            "recorded_request_responses": 1,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 57,
+            "definite": 57,
+            "source_label_match": 30,
+            "episodes": 153,
+            "request_views": {
+              "overview": 1
+            },
+            "request_status": {
+              "provided": 1
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "04b286ecdf2a0ee7760defa17902122028f330bfb12a8134a470ccef89589205",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 3,
+            "recorded_request_responses": 3,
+            "requested": 3,
+            "novel_image_request": 2,
+            "novel_images": 2,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 39,
+            "definite": 39,
+            "source_label_match": 26,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 2,
+              "view-01": 1
+            },
+            "request_status": {
+              "provided": 3
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "09a8d0ed38a7f28a06ab7fda7ffb5c8818a0bd83771f8854e215f65e9d28349a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 2,
+            "repeated_image_calls": 2,
+            "failed_request": 2,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 94,
+            "definite": 94,
+            "source_label_match": 54,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 2,
+              "overview": 1,
+              "view-01": 1
+            },
+            "request_status": {
+              "unable_to_provide": 2,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "663ccb9fee2515ba0f948fbdfa6867f7ced2d0859fda4339301d479923b9a41d",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 1,
+            "recorded_request_responses": 1,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 57,
+            "definite": 57,
+            "source_label_match": 30,
+            "episodes": 153,
+            "request_views": {
+              "overview": 1
+            },
+            "request_status": {
+              "provided": 1
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "941066582ef251004630a6321daf55fa20c04f761a593c60c9b4c73d857b8d01",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 3,
+            "recorded_request_responses": 3,
+            "requested": 3,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 2,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 37,
+            "definite": 37,
+            "source_label_match": 24,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 2,
+              "view-01": 1
+            },
+            "request_status": {
+              "unable_to_provide": 2,
+              "provided": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "6d8680507bb1ae986d7f6afb7b37bc8605e0501ede6f6bcbd9f173a0dcfd5217",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 2,
+            "repeated_image_calls": 2,
+            "failed_request": 2,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 94,
+            "definite": 94,
+            "source_label_match": 54,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 2,
+              "overview": 1,
+              "view-01": 1
+            },
+            "request_status": {
+              "unable_to_provide": 2,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "8829ab0af93e707ff02d02ceb77f2ad08e3dc9b87419241981e2bc377a557395",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 1,
+            "recorded_request_responses": 1,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 57,
+            "definite": 57,
+            "source_label_match": 30,
+            "episodes": 153,
+            "request_views": {
+              "overview": 1
+            },
+            "request_status": {
+              "provided": 1
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "1d673d41daf37e345cad0b7264b67514f45d2f75b9a307e514e2959a94f9951f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 3,
+            "recorded_request_responses": 3,
+            "requested": 3,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 2,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 37,
+            "definite": 37,
+            "source_label_match": 24,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 2,
+              "view-01": 1
+            },
+            "request_status": {
+              "unable_to_provide": 2,
+              "provided": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "fcc7081d2a020fecbecef61e03146985e85c011c1245c1d7ac6e2419271f3682",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "2B SFT": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 150,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "f0e3b435fc9a8c66ed4598196747035070cfaecefef344e32ef558f382e9321f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 94,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "ec9903702b9cc60a1c0f5f5fc3bd929dc7c23bce67a8f7f7e4ae9ca9fefa0d73",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 56,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "8b7b738a9bcc3ba78618766327760c4b43bf2ac3a1028f4a6dd88433a9a919c7",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 124,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "2950a471c57bc2a44fccdbc1e2f8d3c980ce6665717189417d26eec7c6fcb51b",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 83,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "af02db0afc5fb0a3cbad116786c667d5b1ee8dfc7ee571c0f80825a989079b2a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 41,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "0872e13552c16ede605229588d382e05a37a3c24efa7718b467442b11be23c8c",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 124,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "fa3d163891c0177e0845d52ed521b5759169acc3c10274937f1dd73d8be3b301",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 83,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "8797d42ffa550c91cd29d696fd922c57837fd424784ac5a1a9bf24e2624ae967",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 41,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "3a85a8daf0b4308873b3b4942fe2288a797b44cd4687c084c84b3b1b59277a75",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 124,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "4acb48d64359c2253b3fb4f61f293d04ad3bd597923c5363e1493f48b1f42c3b",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 83,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "4f02a202757a932aa613a2be5c7d00a81100d594203c605c6a748d1b6faec21d",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 41,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "8b667f6d75b52e7b227649cfe52c4eaadf7a5eeafa0f180950088eb333be5b82",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "2B SFT+RL": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 7,
+            "recorded_request_responses": 7,
+            "requested": 7,
+            "novel_image_request": 7,
+            "novel_images": 7,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 207,
+            "definite": 207,
+            "source_label_match": 152,
+            "episodes": 209,
+            "request_views": {
+              "overview": 7
+            },
+            "request_status": {
+              "provided": 7
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "d2c2a734f3006fa57c31d3eb8b2078f1360b1e1efdcc8a2e89091ef7d0b8c2a3",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 7,
+            "recorded_request_responses": 7,
+            "requested": 7,
+            "novel_image_request": 7,
+            "novel_images": 7,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 151,
+            "definite": 151,
+            "source_label_match": 97,
+            "episodes": 153,
+            "request_views": {
+              "overview": 7
+            },
+            "request_status": {
+              "provided": 7
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "fe7cca4dbda70027a84d6d5c40ecd466bf5d75dc64632039cb55bc825708a2dc",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 55,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "7d7b1cd7864babe01393771ccc94b863b756a05ef266fa3e1c37c363d35dd663",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 65,
+            "recorded_request_responses": 65,
+            "requested": 64,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 64,
+            "repeated_image_calls": 64,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 201,
+            "definite": 201,
+            "source_label_match": 118,
+            "episodes": 209,
+            "request_views": {
+              "overview": 63,
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 65
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "48d990203c1f9ec3e458332eb0771cae2c6185cba0dd6dc75dd43a8f99d0b90a",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 63,
+            "recorded_request_responses": 63,
+            "requested": 63,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 63,
+            "repeated_image_calls": 63,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 145,
+            "definite": 145,
+            "source_label_match": 77,
+            "episodes": 153,
+            "request_views": {
+              "overview": 63
+            },
+            "request_status": {
+              "provided": 63
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "7ab48f6e9c7c2330c02f68dcb75c65d4d179a766c4a2d8f37aea56ce6b1a1689",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 2,
+            "recorded_request_responses": 2,
+            "requested": 1,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 41,
+            "episodes": 56,
+            "request_views": {
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 2
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "8d2d8e8c6060b8865444d148a7777a50e2ceeb8ea39c9b370bc95d80b306c74b",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 65,
+            "recorded_request_responses": 65,
+            "requested": 64,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 64,
+            "repeated_image_calls": 64,
+            "failed_request": 1,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 201,
+            "definite": 200,
+            "source_label_match": 117,
+            "episodes": 209,
+            "request_views": {
+              "overview": 63,
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 64,
+              "unable_to_provide": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "3f0e93220a50910ec23ecf3c7b8c8275cad4d487389eaf4e6a2feecbacc03d47",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 63,
+            "recorded_request_responses": 63,
+            "requested": 63,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 63,
+            "repeated_image_calls": 63,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 145,
+            "definite": 145,
+            "source_label_match": 77,
+            "episodes": 153,
+            "request_views": {
+              "overview": 63
+            },
+            "request_status": {
+              "provided": 63
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "43644e0fd70c7ddd40d99c6c2d537e32a71cbf8a0b95ecc6261839635a90e7f4",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 2,
+            "recorded_request_responses": 2,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 1,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 40,
+            "episodes": 56,
+            "request_views": {
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 1,
+              "unable_to_provide": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "46ab829c06205f3bbfc58618ea8f22b254b5da4300d22ee247105ce170e4ab5f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 65,
+            "recorded_request_responses": 65,
+            "requested": 64,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 64,
+            "repeated_image_calls": 64,
+            "failed_request": 1,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 201,
+            "definite": 200,
+            "source_label_match": 117,
+            "episodes": 209,
+            "request_views": {
+              "overview": 63,
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 64,
+              "unable_to_provide": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "3efca2c8960493457a362a19bec506b4fc826d0c2acfa1462cf8ba012264fd1f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 63,
+            "recorded_request_responses": 63,
+            "requested": 63,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 63,
+            "repeated_image_calls": 63,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 145,
+            "definite": 145,
+            "source_label_match": 77,
+            "episodes": 153,
+            "request_views": {
+              "overview": 63
+            },
+            "request_status": {
+              "provided": 63
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "abc944b119360d8376e1a3a458f13d5f032e73352aa9153b3d005ce164b35445",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 2,
+            "recorded_request_responses": 2,
+            "requested": 1,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 1,
+            "failed_request": 1,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 40,
+            "episodes": 56,
+            "request_views": {
+              "view-01": 1,
+              "view-02": 1
+            },
+            "request_status": {
+              "provided": 1,
+              "unable_to_provide": 1
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "6d007ededf2c7cdc2f686004cfb2df896c52dbf2815ab7e03014b9496e053aa7",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "7B SFT+RL": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 1,
+            "recorded_request_responses": 1,
+            "requested": 1,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 162,
+            "episodes": 209,
+            "request_views": {
+              "view-01": 1
+            },
+            "request_status": {
+              "provided": 1
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "0babea96984db91a4975c3d146f7c9fd73bcb118b523d126715327c86098a182",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 106,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "7b9fa09656719d3b11df19ad05ae83a8f68da95ef68b0d3f9341adeed6c6e692",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 1,
+            "recorded_request_responses": 1,
+            "requested": 1,
+            "novel_image_request": 1,
+            "novel_images": 1,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 56,
+            "episodes": 56,
+            "request_views": {
+              "view-01": 1
+            },
+            "request_status": {
+              "provided": 1
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "b3747db339f415015655c090c3f484635162e674c28bcfe92c9cc0dcc68d2afd",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 116,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "f1ce85aa66cee98f831029fd3cee12ff2f6d6090282d2025f0bf8d204e4b436e",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 81,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "82f6d99ef5ba6f6d36778726467db7ebb248b44f53f834f39f6edebda589b1ee",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 35,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "14f0aa3fec0aab04c1265d6dc0b0b04192acff877392691ba630dc86559f9132",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 116,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "7106ab787d5a81e74513798795135bfaf9039ccafbf3f5bec349c3897a6f442b",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 81,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "45a7749c624f8c36a994f4bb899ac0ddb9f678474846c22d23013fec6f45b912",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 35,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "caf7b071f13aafb9977793752a516c23bd0439a2421ba5bc4b817677e360e1b9",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 116,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "696cf738115af5fc86f2c792ca56b85615f3d89680662d1dff34ee1aac5053bb",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 81,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "ac1e316a9bd1f8c35c609d83ba0e32e96f46e52875ca092acc615edaced64c08",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 35,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "02d2feb78863cd63d163ebc6ac1de165f9ba63c9a93d176c06dd570cb2bc5d46",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "8B Base": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 2,
+            "finished": 202,
+            "definite": 200,
+            "source_label_match": 172,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "a2c1bc7f600cc76a6ce1f6f4e7633d90fba098e11cfee4248290dacbae1f5805",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 2,
+            "finished": 147,
+            "definite": 145,
+            "source_label_match": 121,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "edd8275fece1fa05583daa7e659572ee30e18d9b44129705957a68d777885ebb",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 55,
+            "definite": 55,
+            "source_label_match": 51,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "b14d0f5ccea3e01910411e271e9b10b0732b547aac6362effbdde99e5ff71250",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 12,
+            "recorded_request_responses": 12,
+            "requested": 12,
+            "novel_image_request": 12,
+            "novel_images": 12,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 6,
+            "finished": 178,
+            "definite": 172,
+            "source_label_match": 110,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 4,
+              "original": 8
+            },
+            "request_status": {
+              "provided": 12
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "b946d449f1b2ed48805a00ac1addc008a46d60a70a4d28b602b8b5515c8e46fd",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 8,
+            "recorded_request_responses": 8,
+            "requested": 8,
+            "novel_image_request": 8,
+            "novel_images": 8,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 123,
+            "definite": 122,
+            "source_label_match": 70,
+            "episodes": 153,
+            "request_views": {
+              "original": 8
+            },
+            "request_status": {
+              "provided": 8
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "efe045885b6af6682bc097dc3d76d200fd6a306068818f329f08f9d637a9ffb5",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 4,
+            "novel_images": 4,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 5,
+            "finished": 55,
+            "definite": 50,
+            "source_label_match": 40,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 4
+            },
+            "request_status": {
+              "provided": 4
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "5a4818eb1c272bc7d75e954165b4d546ceefc0f0b8d2f7fb04395bc390e02a3a",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 12,
+            "recorded_request_responses": 12,
+            "requested": 12,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 12,
+            "failed_then_definite": 1,
+            "abstained": 15,
+            "finished": 182,
+            "definite": 167,
+            "source_label_match": 104,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 4,
+              "original": 8
+            },
+            "request_status": {
+              "unable_to_provide": 12
+            },
+            "failure_then_definite_fraction": 0.08333333333333333
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "fc327a1c4af65522fdf8f073f13fb6f4569e7020620146c394ece90d7ee1a763",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 8,
+            "recorded_request_responses": 8,
+            "requested": 8,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 8,
+            "failed_then_definite": 0,
+            "abstained": 7,
+            "finished": 127,
+            "definite": 120,
+            "source_label_match": 68,
+            "episodes": 153,
+            "request_views": {
+              "original": 8
+            },
+            "request_status": {
+              "unable_to_provide": 8
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "fcb41cc730950bf210dc934aa7be7bbb4be779b142e90449e09c5cf006c846c8",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 4,
+            "failed_then_definite": 1,
+            "abstained": 8,
+            "finished": 55,
+            "definite": 47,
+            "source_label_match": 36,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 4
+            },
+            "request_status": {
+              "unable_to_provide": 4
+            },
+            "failure_then_definite_fraction": 0.25
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "5e572d8b31291fea1160dc2337ad940dcda0f9e5725fe29995bad61d6ba6938d",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 12,
+            "recorded_request_responses": 12,
+            "requested": 12,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 12,
+            "failed_then_definite": 1,
+            "abstained": 15,
+            "finished": 182,
+            "definite": 167,
+            "source_label_match": 104,
+            "episodes": 209,
+            "request_views": {
+              "view-02": 4,
+              "original": 8
+            },
+            "request_status": {
+              "unable_to_provide": 12
+            },
+            "failure_then_definite_fraction": 0.08333333333333333
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "6a5dab7fc733deeae55ecee6f9273d7df4410402fac5161ec33df19eb7b1ff25",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 8,
+            "recorded_request_responses": 8,
+            "requested": 8,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 8,
+            "failed_then_definite": 0,
+            "abstained": 7,
+            "finished": 127,
+            "definite": 120,
+            "source_label_match": 68,
+            "episodes": 153,
+            "request_views": {
+              "original": 8
+            },
+            "request_status": {
+              "unable_to_provide": 8
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "d8237d8d077c7481ac41aa8b6a77b9ef3c8e3447779ea5635692efdc8efda601",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 4,
+            "recorded_request_responses": 4,
+            "requested": 4,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 4,
+            "failed_then_definite": 1,
+            "abstained": 8,
+            "finished": 55,
+            "definite": 47,
+            "source_label_match": 36,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 4
+            },
+            "request_status": {
+              "unable_to_provide": 4
+            },
+            "failure_then_definite_fraction": 0.25
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "6f1ace3ccfee102d8344a887e7fcf2739cc97bb68467e92f07b387818c9aee60",
+            "source_databases": [
+              "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "8B SFT": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 167,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "64e9a485bf82c25b062fe38fe4c2f7863faeee918b8eb1852984bcbf4198366c",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 112,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "bcebc317f006a99cd946bf2d93f0fdf9b15485e183db8a608eb129ebad5664ab",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 55,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "fc64c0de29e3613c53dadf93d513506dfedf33d632fe9042421304400ca1547e",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 82,
+            "novel_images": 82,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 209,
+            "definite": 208,
+            "source_label_match": 140,
+            "episodes": 209,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "provided": 82
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "02b34ed0e18a9ccd64dc3c7b3f5a99dd7b048d8b40b96532f045bd145ab05d9c",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 82,
+            "novel_images": 82,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 97,
+            "episodes": 153,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "provided": 82
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "0d9bd113adbaedf39cbc8968bc6d91fa34536dc2c77e376cb942612104ce28d8",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 43,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "874e9ac31e8842e44e4db24e559bc1e73c039a8cc3ece5508aa23f41d21bbc9c",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 82,
+            "failed_then_definite": 0,
+            "abstained": 83,
+            "finished": 209,
+            "definite": 126,
+            "source_label_match": 79,
+            "episodes": 209,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "unable_to_provide": 82
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "55d92b4f94d5034a7c02cb3aef74792830926bb0e8cfc3925e4f3ca6ee10b555",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 82,
+            "failed_then_definite": 0,
+            "abstained": 82,
+            "finished": 153,
+            "definite": 71,
+            "source_label_match": 36,
+            "episodes": 153,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "unable_to_provide": 82
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "6f7a1736c5f42f322cf46bbcb2e1a62c0c3a50c9e0013381c2b273905693821f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 43,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "5baec01a22a549955498dd5faf3c7c2d5bbc700865fd44beb6cb3f11a70d307d",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 82,
+            "failed_then_definite": 0,
+            "abstained": 83,
+            "finished": 209,
+            "definite": 126,
+            "source_label_match": 79,
+            "episodes": 209,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "unable_to_provide": 82
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "0145e385b564d6f3961336d30e6cc13c2522f0e32938b3d8377929e10f1e4dae",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 82,
+            "recorded_request_responses": 82,
+            "requested": 82,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 82,
+            "failed_then_definite": 0,
+            "abstained": 82,
+            "finished": 153,
+            "definite": 71,
+            "source_label_match": 36,
+            "episodes": 153,
+            "request_views": {
+              "original": 82
+            },
+            "request_status": {
+              "unable_to_provide": 82
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "fd412b587c04319775279adf2e15e5dd0f40541e28d91b5b060f6c642c534a84",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 43,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "c2dc64bce970aca16832ee11587c43abba66fa4f6ced4947199760d069b6fbc8",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "8B RL": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 208,
+            "definite": 208,
+            "source_label_match": 176,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "88328ccf0817152c55fa9a602565b48eb5b2ece9ffd0579d26eb84d0ce66c808",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 126,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "70c7be20708e3b6842b5f5f09e8e92222e8245ef4fc9db1b7ee1d9d13ac6d98b",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 55,
+            "definite": 55,
+            "source_label_match": 50,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "fe915b5e91df6760129b239e4a840e53944ee9ce67a8bd32c256bcfd8ec70069",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 16,
+            "recorded_request_responses": 16,
+            "requested": 15,
+            "novel_image_request": 14,
+            "novel_images": 14,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 20,
+            "finished": 194,
+            "definite": 174,
+            "source_label_match": 116,
+            "episodes": 209,
+            "request_views": {
+              "original": 9,
+              "view-02": 5,
+              "overview": 2
+            },
+            "request_status": {
+              "provided": 16
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "6ad89e9fceef7bf9ba1cbacfe0f66a046f21b1835503d6da0e60899a41db3836",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 11,
+            "recorded_request_responses": 11,
+            "requested": 10,
+            "novel_image_request": 9,
+            "novel_images": 9,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 8,
+            "finished": 141,
+            "definite": 133,
+            "source_label_match": 79,
+            "episodes": 153,
+            "request_views": {
+              "original": 9,
+              "overview": 2
+            },
+            "request_status": {
+              "provided": 11
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "38ccf943b7a0221a40ef5d03ff8db0689252d0258bc87c2473c3283bbcf710d0",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 5,
+            "recorded_request_responses": 5,
+            "requested": 5,
+            "novel_image_request": 5,
+            "novel_images": 5,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 12,
+            "finished": 53,
+            "definite": 41,
+            "source_label_match": 37,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 5
+            },
+            "request_status": {
+              "provided": 5
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "ba8f64f5651ca207f0ae8380d159f39814fa3b6e0f09bc7cc63343f9c80c564f",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 16,
+            "recorded_request_responses": 16,
+            "requested": 15,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 14,
+            "failed_then_definite": 1,
+            "abstained": 29,
+            "finished": 195,
+            "definite": 166,
+            "source_label_match": 109,
+            "episodes": 209,
+            "request_views": {
+              "original": 9,
+              "view-02": 5,
+              "overview": 2
+            },
+            "request_status": {
+              "unable_to_provide": 14,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.07142857142857142
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "425d6a025a1a23037c7c5ec511bacdc2febd941f3d0188a9468326b0e12e8b86",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 11,
+            "recorded_request_responses": 11,
+            "requested": 10,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 9,
+            "failed_then_definite": 1,
+            "abstained": 13,
+            "finished": 142,
+            "definite": 129,
+            "source_label_match": 76,
+            "episodes": 153,
+            "request_views": {
+              "original": 9,
+              "overview": 2
+            },
+            "request_status": {
+              "unable_to_provide": 9,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.1111111111111111
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "c9f9158331a6132ba287c2e8db4583557aa710991de8aab1e886fa6c2e756289",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 5,
+            "recorded_request_responses": 5,
+            "requested": 5,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 5,
+            "failed_then_definite": 0,
+            "abstained": 16,
+            "finished": 53,
+            "definite": 37,
+            "source_label_match": 33,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 5
+            },
+            "request_status": {
+              "unable_to_provide": 5
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "c0f42fe69ffb482a00cc09c5a8ad3d998cd9dd86bf52e425a23494efca07ec86",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 16,
+            "recorded_request_responses": 16,
+            "requested": 15,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 14,
+            "failed_then_definite": 1,
+            "abstained": 29,
+            "finished": 195,
+            "definite": 166,
+            "source_label_match": 109,
+            "episodes": 209,
+            "request_views": {
+              "original": 9,
+              "view-02": 5,
+              "overview": 2
+            },
+            "request_status": {
+              "unable_to_provide": 14,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.07142857142857142
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "d0c58841849bdb1e6e206fc6a8a340e7c30c17f903a6b2b5141467dcbb416572",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 11,
+            "recorded_request_responses": 11,
+            "requested": 10,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 1,
+            "repeated_image_calls": 2,
+            "failed_request": 9,
+            "failed_then_definite": 1,
+            "abstained": 13,
+            "finished": 142,
+            "definite": 129,
+            "source_label_match": 76,
+            "episodes": 153,
+            "request_views": {
+              "original": 9,
+              "overview": 2
+            },
+            "request_status": {
+              "unable_to_provide": 9,
+              "provided": 2
+            },
+            "failure_then_definite_fraction": 0.1111111111111111
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "a69c9294663a43f5877c4d91c5e16bfa6966558258401da71f29f6b26b2a10c2",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 5,
+            "recorded_request_responses": 5,
+            "requested": 5,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 5,
+            "failed_then_definite": 0,
+            "abstained": 16,
+            "finished": 53,
+            "definite": 37,
+            "source_label_match": 33,
+            "episodes": 56,
+            "request_views": {
+              "view-02": 5
+            },
+            "request_status": {
+              "unable_to_provide": 5
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "494b640cbd1196053cde4ebc2ec9a2d9c77562dcad689e2a748c247231a26e89",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    },
+    "8B SFT+RL": {
+      "Sufficient": {
+        "overall": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 209,
+            "definite": 209,
+            "source_label_match": 175,
+            "episodes": 209,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "ec613dcd1feef7244ebd004b38247d9337beede03bd91d14fd05efc6118ee830",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 120,
+            "episodes": 153,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "80ba0d9d1dfc0d33640b5bc1d59266203c3c71d60a0c3fe6abb27702117632bd",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 56,
+            "definite": 56,
+            "source_label_match": 55,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "fcce4f0d3a464e5eed7d3b4a6481473ba4553d76111094b98858bd2b2df45a49",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Obtainable": {
+        "overall": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 92,
+            "novel_images": 92,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 209,
+            "definite": 208,
+            "source_label_match": 148,
+            "episodes": 209,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "provided": 92
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "3003a5320973f1e438b611d29edcb6f6a0b0cd4ef0004f6c13f0c279fbd96d43",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 92,
+            "novel_images": 92,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 0,
+            "finished": 153,
+            "definite": 153,
+            "source_label_match": 101,
+            "episodes": 153,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "provided": 92
+            },
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "f59af14c20db2e098fd04df2b08eb12ce07318784d5250ee92b77d94e9649122",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 47,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "bfa531106e738c048a4a6653a79cf8706f1e9584ec52f78ef73d81631a009763",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Missing": {
+        "overall": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 92,
+            "failed_then_definite": 0,
+            "abstained": 93,
+            "finished": 209,
+            "definite": 116,
+            "source_label_match": 81,
+            "episodes": 209,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "unable_to_provide": 92
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "4e7a56f6cfbf7f96de646d9339f5606f83121d644cae6ba540a8ee0b77e645e0",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 92,
+            "failed_then_definite": 0,
+            "abstained": 92,
+            "finished": 153,
+            "definite": 61,
+            "source_label_match": 34,
+            "episodes": 153,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "unable_to_provide": 92
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "59e75775c6a348904403ce98da9388c9f3fa89ca637d467bd276b932dcb21ecc",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 47,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "8ef9782226356b6be2faa86348fce96b04327e476f12d71729faa36fd916bb32",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      },
+      "Unavailable": {
+        "overall": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 92,
+            "failed_then_definite": 0,
+            "abstained": 93,
+            "finished": 209,
+            "definite": 116,
+            "source_label_match": 81,
+            "episodes": 209,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "unable_to_provide": 92
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 209,
+            "ordered_family_trace_sha256": "9c09b92d65ae74049c16898df7b4a4d02d15d1f920ae2f803a41ad773b5e08bb",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "state": {
+          "totals": {
+            "request_calls": 92,
+            "recorded_request_responses": 92,
+            "requested": 92,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 92,
+            "failed_then_definite": 0,
+            "abstained": 92,
+            "finished": 153,
+            "definite": 61,
+            "source_label_match": 34,
+            "episodes": 153,
+            "request_views": {
+              "original": 92
+            },
+            "request_status": {
+              "unable_to_provide": 92
+            },
+            "failure_then_definite_fraction": 0.0
+          },
+          "provenance": {
+            "episodes": 153,
+            "ordered_family_trace_sha256": "02ff9f6c2f71f9db3f6fe092066eb84493b62e8c302efdec7c00f35fbcf5a5b6",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        },
+        "identity": {
+          "totals": {
+            "request_calls": 0,
+            "recorded_request_responses": 0,
+            "requested": 0,
+            "novel_image_request": 0,
+            "novel_images": 0,
+            "repeated_image_request": 0,
+            "repeated_image_calls": 0,
+            "failed_request": 0,
+            "failed_then_definite": 0,
+            "abstained": 1,
+            "finished": 56,
+            "definite": 55,
+            "source_label_match": 47,
+            "episodes": 56,
+            "request_views": {},
+            "request_status": {},
+            "failure_then_definite_fraction": null
+          },
+          "provenance": {
+            "episodes": 56,
+            "ordered_family_trace_sha256": "730ef32a664938277f2cec7491e704f690d50847fbaf0eaabc4a080fcaff5f1c",
+            "source_databases": [
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-0/episodes.sqlite",
+              "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/shard-1/episodes.sqlite"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "paired_8b_rl_to_sftrl": {
+    "overall": {
+      "families": 209,
+      "counts": {
+        "correct_correct": 160,
+        "wrong_wrong": 18,
+        "correct_wrong": 16,
+        "wrong_correct": 15
+      },
+      "difference_pp": -0.4784688995215311,
+      "bootstrap_95_ci_pp": [
+        -5.741626794258373,
+        4.784688995215311
+      ],
+      "seed": 20261105,
+      "resamples": 10000,
+      "direction": "SFT+RL minus direct RL"
+    },
+    "state": {
+      "families": 153,
+      "counts": {
+        "correct_correct": 110,
+        "wrong_wrong": 17,
+        "correct_wrong": 16,
+        "wrong_correct": 10
+      },
+      "difference_pp": -3.9215686274509802,
+      "bootstrap_95_ci_pp": [
+        -10.457516339869281,
+        2.6143790849673203
+      ],
+      "seed": 20261105,
+      "resamples": 10000,
+      "direction": "SFT+RL minus direct RL"
+    },
+    "identity": {
+      "families": 56,
+      "counts": {
+        "correct_correct": 50,
+        "wrong_correct": 5,
+        "wrong_wrong": 1
+      },
+      "difference_pp": 8.928571428571429,
+      "bootstrap_95_ci_pp": [
+        1.7857142857142856,
+        17.857142857142858
+      ],
+      "seed": 20261105,
+      "resamples": 10000,
+      "direction": "SFT+RL minus direct RL"
+    }
+  },
+  "text384_controls": {
+    "qwen25": {
+      "configuration_checks": {
+        "plan_sha256": true,
+        "dataset_sha256": true,
+        "source_sha256": true,
+        "model_id": true,
+        "revision": true,
+        "max_context_tokens": true,
+        "image_max_pixels": true,
+        "tool_adapter": true,
+        "assistant_prefix": true,
+        "shared_model_code": true
+      },
+      "controls_manifest": "evaluation/cvpr-20261102-controls/text384/qwen25/manifest.json",
+      "original_manifest": "evaluation/cvpr-20261101/qwen25/manifest.json",
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 33,
+          "correct384": 33,
+          "accuracy96": 15.789473684210526,
+          "accuracy384": 15.789473684210526,
+          "paired_changes": {
+            "wrong_wrong": 176,
+            "correct_correct": 33
+          },
+          "mean_output96": 3.8038277511961724,
+          "mean_output384": 3.8038277511961724,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 31,
+              "correct384": 31
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 2,
+              "correct384": 2
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 22,
+          "correct384": 22,
+          "accuracy96": 10.526315789473685,
+          "accuracy384": 10.526315789473685,
+          "paired_changes": {
+            "wrong_wrong": 187,
+            "correct_correct": 22
+          },
+          "mean_output96": 3.8803827751196174,
+          "mean_output384": 3.8803827751196174,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 22,
+              "correct384": 22
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 0,
+              "correct384": 0
+            }
+          }
+        }
+      },
+      "all_primary_direct_episodes": 1672,
+      "all_primary_predictions_identical": 1672
+    },
+    "qwen3": {
+      "configuration_checks": {
+        "plan_sha256": true,
+        "dataset_sha256": true,
+        "source_sha256": true,
+        "model_id": true,
+        "revision": true,
+        "max_context_tokens": true,
+        "image_max_pixels": true,
+        "tool_adapter": true,
+        "assistant_prefix": true,
+        "shared_model_code": true
+      },
+      "controls_manifest": "evaluation/cvpr-20261102-controls/text384/qwen3/manifest.json",
+      "original_manifest": "evaluation/cvpr-20261101/qwen3/manifest.json",
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 156,
+          "correct384": 156,
+          "accuracy96": 74.64114832535886,
+          "accuracy384": 74.64114832535886,
+          "paired_changes": {
+            "correct_correct": 156,
+            "wrong_wrong": 53
+          },
+          "mean_output96": 2.722488038277512,
+          "mean_output384": 2.722488038277512,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 107,
+              "correct384": 107
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 49,
+              "correct384": 49
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 157,
+          "correct384": 157,
+          "accuracy96": 75.11961722488039,
+          "accuracy384": 75.11961722488039,
+          "paired_changes": {
+            "correct_correct": 157,
+            "wrong_wrong": 52
+          },
+          "mean_output96": 2.736842105263158,
+          "mean_output384": 2.736842105263158,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 106,
+              "correct384": 106
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 51,
+              "correct384": 51
+            }
+          }
+        }
+      },
+      "all_primary_direct_episodes": 1672,
+      "all_primary_predictions_identical": 1672
+    },
+    "internvl35": {
+      "configuration_checks": {
+        "plan_sha256": true,
+        "dataset_sha256": true,
+        "source_sha256": true,
+        "model_id": true,
+        "revision": true,
+        "max_context_tokens": true,
+        "image_max_pixels": true,
+        "tool_adapter": true,
+        "assistant_prefix": true,
+        "shared_model_code": true
+      },
+      "controls_manifest": "evaluation/cvpr-20261102-controls/text384/internvl35/manifest.json",
+      "original_manifest": "evaluation/cvpr-20261101/internvl35/manifest.json",
+      "arms": {
+        "initial_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 121,
+          "correct384": 121,
+          "accuracy96": 57.89473684210526,
+          "accuracy384": 57.89473684210526,
+          "paired_changes": {
+            "correct_correct": 121,
+            "wrong_wrong": 88
+          },
+          "mean_output96": 2.909090909090909,
+          "mean_output384": 2.909090909090909,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 83,
+              "correct384": 83
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 38,
+              "correct384": 38
+            }
+          }
+        },
+        "full_available_text": {
+          "episodes": 209,
+          "identical_public_prompts": 209,
+          "identical_source_labels": 209,
+          "identical_predictions": 209,
+          "correct96": 124,
+          "correct384": 124,
+          "accuracy96": 59.33014354066986,
+          "accuracy384": 59.33014354066986,
+          "paired_changes": {
+            "correct_correct": 124,
+            "wrong_wrong": 85
+          },
+          "mean_output96": 2.8947368421052633,
+          "mean_output384": 2.8947368421052633,
+          "tasks": {
+            "state": {
+              "n": 153,
+              "correct96": 84,
+              "correct384": 84
+            },
+            "identity": {
+              "n": 56,
+              "correct96": 40,
+              "correct384": 40
+            }
+          }
+        }
+      },
+      "all_primary_direct_episodes": 1672,
+      "all_primary_predictions_identical": 1672
+    }
+  },
+  "analysis_configuration": {
+    "bootstrap_seed": 20261105,
+    "resamples": 10000,
+    "records_included": false,
+    "new_image_definition": "Returned image_ref pixel hash not present in any previous observation; includes repeated requests after crops or inspection.",
+    "annotation_status": "Unreviewed source labels; no access condition is automatically validated by this analysis."
+  },
+  "source_manifests": {
+    "2B Base": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_2b/manifest.json",
+      "sha256": "86c9875a818d88beb61558ac5862dc3d67fd4ef2e7188e029e648efe24561008",
+      "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+      "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "2B SFT": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_2b_mixed_sft/benchmark/manifest.json",
+      "sha256": "3719f14f27ef553f822b48018271de43c37ce2213421353b66bf739b27c830ec",
+      "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-acquisition-LoRA",
+      "revision": "e56f8d9a218d939dab6cda15629e532daa6b881eccd86671032854986eeb97d6",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "2B SFT+RL": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_2b_grpo_final/benchmark/manifest.json",
+      "sha256": "d06240e6d3000b01ec6d5493ba9776f8e432c80f3250115632cb9ffa7741dd66",
+      "model_id": "Qwen/Qwen3-VL-2B-Instruct+ResolveAI-GRPO",
+      "revision": "75e6cc962d58894471f35ef6a44e7ea453865cb441b70b6e5782f89c16c7b2b2",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "7B SFT+RL": {
+      "path": "evaluation/cvpr-paper-priority/qwen25_grpo_final/benchmark/manifest.json",
+      "sha256": "ec662f5b90fbcf3044bb04846c523245f288ded424c71125f94951a10e93c3fa",
+      "model_id": "Qwen/Qwen2.5-VL-7B-Instruct+ResolveAI-GRPO",
+      "revision": "6a0c8d19cac7314497925d8234f18a60495c6471666a9c51b860cc0649b7d299",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "8B Base": {
+      "path": "evaluation/cvpr-20261101/qwen3/manifest.json",
+      "sha256": "f0c6094c1d7e94018c0a4571337950ff02031c0982027a79ff4f279eef353f3d",
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "8B SFT": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_mixed_sft/benchmark/manifest.json",
+      "sha256": "75baccbcc31741d73d7aacab44d439e198644c7b87ddded0e2243708981e72a9",
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-acquisition-LoRA",
+      "revision": "af55d000d5e40d2a3943baf3c5f1d907f909e93068503a41d88d407bb00ef614",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "8B RL": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_8b_rl_only_final/benchmark/manifest.json",
+      "sha256": "7998b505e1f7e025ee397c66e53f7f48c6d27e2cdce8e75e3f3b297b9bbcb06f",
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+      "revision": "fee6e6a837d8741b1aac021a92e0b4b5a7a82b581af0a056857151cddce2b360",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    },
+    "8B SFT+RL": {
+      "path": "evaluation/cvpr-paper-priority/qwen3_8b_grpo_final/benchmark/manifest.json",
+      "sha256": "85a4a580515254142e71018a2dd02a941378aa95b04c09d57f5b96b34c969035",
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct+ResolveAI-GRPO",
+      "revision": "e2834c04bec82ce59f2325586bde4f39ac268137b0ddbbcfbfc2c0e03b3ac210",
+      "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260"
+    }
+  }
+}
