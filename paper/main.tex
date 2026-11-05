@@ -374,6 +374,8 @@ Qwen2.5-VL-7B changes from 73.7\% after SFT to 77.5\% after SFT+RL; Qwen3-VL-2B 
 
 The 7B gain is eight additional correct answers on the fixed initially sufficient set. In Obtainable, however, the same policy makes no photograph requests. It has improved its answers without checking the withheld photographs. Paired family bootstrap intervals, reported in the supplement, quantify the uncertainty of the single-run differences.
 
+Direct RL gives Qwen2.5-VL-7B: 3.3\%.
+
 \paragraph{A request need not add an image.}
 
 The 2B SFT+RL policy requests photographs in 64 Obtainable cases, but receives a new image in only 1. Its 63 condition requests all ask for the overview already supplied in the initial evidence. The 8B policy requests an original in 92 cases and receives a new image in each; all of these requests concern condition, rather than another viewpoint for identity. Figure~\ref{fig:cases}(a) shows the difference on one bottle. Both policies spend one request, but only the request for the original changes the available detail.
