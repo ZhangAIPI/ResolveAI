@@ -1,12 +1,11 @@
 \begin{table*}[t]
 \centering\small
 \caption{\textbf{Relationship to source datasets and related evaluations.}
-The comparisons describe task design, not a ranking of dataset quality.
-Recorded photographs and source annotations are credited to their original datasets.
-ResolveAI's sufficiency-based scoring requires the independent review described in this supplement.}
+ResolveAI reuses photographs and source annotations while adding object claims and matched access conditions.
+Evidence sufficiency remains subject to independent review.}
 \label{tab:related-comparison}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.32\textwidth}Y@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}Y@{}}
 \toprule
 Work & Original data or evaluation target & Relationship to ResolveAI\\
 \midrule
@@ -16,16 +15,16 @@ Supplies condition photographs and anomaly annotations. We construct defect clai
 CO3D~\cite{co3d} &
 Multi-view object reconstruction and novel-view synthesis. &
 Supplies recorded object views and sequence metadata. We construct cross-photograph identity queries and requestable views; sequence membership remains a source-derived label.\\
-BLINK / MMPerspective~\cite{blink,mmperspective} &
+BLINK / \mbox{MMPerspective}~\cite{blink,mmperspective} &
 Visual perception questions; perspective perception, reasoning and robustness. &
 Image reuse and controlled variants are established practices. Our versions change access to an evidence pool for an object claim, with requests and recorded outcomes.\\
-ActiView / ActiveVision~\cite{actiview,activevision} &
+ActiView / \mbox{ActiveVision}~\cite{actiview,activevision} &
 Restricted-field zoom and shift; repeated scanning, traversal and attribute comparison. &
 Observation choice is shared. Our requests release recorded photographs or return access failures while preserving the claim and object state.\\
-WebQA / AVerImaTeC~\cite{webqa,averimatec} &
+WebQA / \mbox{AVerImaTeC}~\cite{webqa,averimatec} &
 Multimodal source selection; image--text fact-checking with annotated web evidence and sufficiency checks. &
 Evidence selection and sufficiency are shared concerns. We focus on photographed objects and paired changes in the availability of relevant records.\\
-OpenEQA / AbstainEQA~\cite{openeqa,abstaineqa} &
+OpenEQA / \mbox{AbstainEQA}~\cite{openeqa,abstaineqa} &
 Embodied questions with memory or exploration; original questions paired with abstention variants. &
 Exploration and abstention are shared concerns. Our matched versions keep the object claim fixed while changing which photographs can be supplied.\\
 CounterCredit~\cite{countercredit} &
