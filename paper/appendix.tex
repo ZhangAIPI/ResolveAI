@@ -190,7 +190,7 @@ This historical completion-based subset is not a random sample of the candidate 
 It is distinct from admission after independent evidence review.
 
 Ten locally run model checkpoints cover the complete paper cohort: Qwen2.5-VL-7B, Qwen3-VL-2B/4B/8B, Qwen3.5-9B, InternVL3.5-8B/14B, LLaVA-OneVision-7B, SmolVLM2-2.2B and Pixtral-12B.
-All accuracy comparisons in the main paper use the same 209 Sufficient versions.
+The main comparison retains the same 209 families across its declared access versions.
 Complete raw evaluation runs cover all 478 families, four access versions and three decision settings, totaling 5,736 episodes per model.
 A checkpoint enters the result tables only when every fixed-cohort case has been evaluated in all three settings, even if the remaining raw-pool episodes are still running. Partial cohorts are excluded; cohort membership never changes when a new model arrives.
 The outcome partition uses submitted definite decisions that match or contradict the source label, submitted Need more evidence, and absence of a valid final decision.
@@ -429,3 +429,29 @@ Identical prompts and photographs are retained while increasing the direct-answe
 All 1,672 paired source-label responses per model are unchanged across four versions and both direct arms for Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B.
 This tests single-call output truncation, not multi-turn reasoning or finish-format matching.
 The released analysis records checked families, configuration matches and public-prompt comparisons.
+
+
+\section{Complete Obtainable Comparisons}
+\input{tables/obtainable_results}
+All arms retain the fixed 209 families. An arm is reported only after all of its expected episode keys are present.
+A new image is identified by its displayed RGB pixels and dimensions, independently of image identifiers and PNG encoding.
+The source-label comparison does not substitute for reviewed evidence sufficiency.
+The complete initially sufficient task and efficiency breakdown is retained below.
+\input{tables/sufficient_results}
+
+\section{Which Request Meets the Constructed Evidence Set?}
+We enumerate public object, time and view queries through the actual evidence-release function, using the constructed evidence sets only in an evaluator-side shortest-path search.
+Every Obtainable case has a one-request path to its annotated image-record requirements; Sufficient needs no request, and the corresponding required records are unreachable in Missing and Unavailable.
+For all 56 identity controls, the withheld required record shares its source photograph with an initial preview.
+A public preview-restoration rule selects exactly the same ordered request as this annotation-guided reference in all 209 Obtainable cases.
+The rule uses only the public preview's object, time and camera view, or the public original option.
+Consequently, these cases do not require choosing a sequence of previously unseen viewpoints.
+This is a structural property of the construction, rather than an independent judgment that the resulting pixels suffice.
+The released audit records the exact queries and their equality; no model generation is needed to establish that equality.
+
+\paragraph{Smaller models can use more interaction.}
+On initially sufficient cases, the 2B model makes 6.71 model calls and emits 449 output tokens per case, compared with 3.24 calls and 283 tokens for the 8B model.
+Both average about 17 seconds.
+Model size alone therefore gives a poor estimate of the cost of a complete interaction.
+Conversely, Qwen2.5-VL-7B emits fewer tokens but is correct in only 3.8\% of interactive cases.
+Latency and token counts need to be read together with completion and answer accuracy.

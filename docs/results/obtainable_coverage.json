@@ -1,0 +1,1470 @@
+{
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "family_ids": [
+    "case-0013955d31d3d1958ae4",
+    "case-008fddbd675adc4570ad",
+    "case-00bb48fa5a6b3e55662e",
+    "case-03415461c3ae41ab58f8",
+    "case-035e4ca9730fd6a3fcab",
+    "case-03cfc447c84672dba323",
+    "case-0491092a72058aac0ea9",
+    "case-04e33f6404ed5ae10513",
+    "case-050c440b3c0528140212",
+    "case-0687c95a9b01fa5c5bd9",
+    "case-06bd2e2c619173cd0e26",
+    "case-07af5dd50459cd1cebad",
+    "case-08da5fca484862c6a91d",
+    "case-094409637f3979c65dde",
+    "case-0b0848b8e7b8745990d1",
+    "case-0be3f37fb1d1a7e1ff03",
+    "case-0d15c862cc16bbe4c099",
+    "case-0e8fbed0931b991c25af",
+    "case-0ed00b56217ebb655b95",
+    "case-0fb42a8c2b7c8437ef8c",
+    "case-0fe3f5acad0e718287c1",
+    "case-10c99db3e69bc9972b3d",
+    "case-1171b0a231e8710764bf",
+    "case-13a2fed0403ff94d313e",
+    "case-14c2c9cfcfb0ee57927f",
+    "case-14fdadb344d83119c987",
+    "case-158a8df02f25f99f87e8",
+    "case-161136a9ec3cc64771f8",
+    "case-1704dbd0a5480d63465e",
+    "case-1736d455af2ed926f7db",
+    "case-198036c061f8860e137d",
+    "case-1b38372ab3a9c802472f",
+    "case-1d2273c2f03c0b1e3766",
+    "case-1d7591ee4eba4847495f",
+    "case-1e688e6208ebb40a4ab2",
+    "case-1f6755d1255c1b951af4",
+    "case-1fb073759024a879af6b",
+    "case-2188cca9dcb429a58d96",
+    "case-218d1dcffccb1edb0c4b",
+    "case-2238dd539b5b090ec4c5",
+    "case-2462de3af747832feb12",
+    "case-2580989ed62995f74c9a",
+    "case-2921ec601a7224865d46",
+    "case-2a0fffc202578b67463d",
+    "case-2c1a2e9300951599e5a1",
+    "case-2d8e0e473a213cb80cae",
+    "case-2deee0f03d49b3f2dcba",
+    "case-2f436ab6aeaa0b7b20a1",
+    "case-2fc44bf1dff7ba972c9f",
+    "case-306465647a99ee75ba24",
+    "case-33507d1bf22357977e87",
+    "case-374f6ae20a2cc9dee151",
+    "case-3816b0594bbd57f597dc",
+    "case-3a77f3fa43ae2ea19853",
+    "case-3ce617a2c9c23d8bf77d",
+    "case-3d45aca0f9331e9bc057",
+    "case-3d76ad32b1ae434e1008",
+    "case-3e356c47c66a1c95006d",
+    "case-3e74e410a110e150612c",
+    "case-3f6829fdbe913aaa7d8d",
+    "case-401c2a17d2ad647c820a",
+    "case-4075816a3e17dc65388c",
+    "case-422ae37eebd4196a1c88",
+    "case-4329c6fad6a0fe133467",
+    "case-44d34af477c63dbeadec",
+    "case-482d81c6b59e8b9e993d",
+    "case-4907473a0cb857f0290c",
+    "case-4beee846d0814a3edcdc",
+    "case-4ca0bdc9023fb6ddf0f7",
+    "case-4cbb34d919b6796dc3c6",
+    "case-4cd023a5d1cf1dfb5f3f",
+    "case-4d4c204a9a775f2eb945",
+    "case-4f6d9ad29d8928752244",
+    "case-505b0a13881bd0283930",
+    "case-511ee5c29083e3320780",
+    "case-519b31b53e05b9444226",
+    "case-527a794c9651d1527e1c",
+    "case-52a69b7c898d12a8e0a5",
+    "case-52bbfb6426b7a7e880dc",
+    "case-56ebf13312e918355e08",
+    "case-58d5dfa36b59e88b3264",
+    "case-5b4d10e649bbb741d641",
+    "case-5cbd8b31de7506a7b579",
+    "case-5d2f8f6f284da954b7d1",
+    "case-5ebe8ae572d5aab88e3e",
+    "case-5ed8ddd944db90518517",
+    "case-5f3570aff0075cfce6cb",
+    "case-600855f607d656065ab8",
+    "case-61298e2087460fff0b38",
+    "case-62466e732168dfaf8214",
+    "case-6392cfc01bb502fb9ea2",
+    "case-673ed71d240f5d142b82",
+    "case-6aaa1faab1e4de97ff49",
+    "case-6bb63cd0a32977fc8276",
+    "case-6bb901b72d1d9f36970b",
+    "case-6c98a14b04dc66a9a887",
+    "case-6d756f50b68d12061b4c",
+    "case-6e3bb1bb009b9408c877",
+    "case-6e617c52f117568663ec",
+    "case-6f48f4e2cb087a0f87d0",
+    "case-72b9852afb9370eb1e2f",
+    "case-744edc80b6d2d2866d9f",
+    "case-74920d6b31973fa69172",
+    "case-75629614a6bf5964d782",
+    "case-75af8f8edccb80ca46b5",
+    "case-76557903e96adaea78ae",
+    "case-76d243146dc40df1831d",
+    "case-76e046ab45ce352eb231",
+    "case-776ac4ef6bd4c68d9255",
+    "case-7897eb4a5dfb1eec5de4",
+    "case-79d971530ee82a51dd40",
+    "case-7b297d92a47b18846107",
+    "case-7bed7b97b72117d1a8a2",
+    "case-7cfd522af627f62da66b",
+    "case-7d53235c8442a2971e7f",
+    "case-7dc3561f55a0bc0bc5fe",
+    "case-7e03002a680778a4ab12",
+    "case-7e39b62471c03c73d995",
+    "case-7fc0077a4b1452489a00",
+    "case-8002ba7cfe4ee4425dc8",
+    "case-8021c25ae38ad5931e40",
+    "case-81e0e8f4cfa94f3deadd",
+    "case-8271cc372f24d3c5fe4d",
+    "case-8382554c6be762943bdd",
+    "case-83e1e69518d482ef4109",
+    "case-84726da18c39ea85a416",
+    "case-854c45c5f8ce31d14213",
+    "case-8606651323bb9a95aaa5",
+    "case-8802a95c8b66734a85f1",
+    "case-8902b3dfae78b07aabbb",
+    "case-89929c5660c3d8406f66",
+    "case-8a694ef7370ceb9c9bb2",
+    "case-8a720eb5cec384819027",
+    "case-8b5d4384ca7ef0be6cfe",
+    "case-8b7246d25a61c698312c",
+    "case-8cf68eec4936014dc689",
+    "case-8ea68576affa0184b654",
+    "case-8f00f840530fa8edeb8b",
+    "case-8f77c26785c28fc51d4c",
+    "case-919281c3b936a72161eb",
+    "case-91c4ea3c6210cc21aa35",
+    "case-91d211c82d2285480b29",
+    "case-9224f5fdbc8c158709b6",
+    "case-93dd02a172e3378a70e1",
+    "case-9473a070c17fccb32b55",
+    "case-94873a21bd4db2e983e7",
+    "case-9488eb02d53de8d64e4d",
+    "case-95fdc1ae76158756dc33",
+    "case-9602772422d7fad6e956",
+    "case-976734884edf1aaede77",
+    "case-995af3c4557049fb0e18",
+    "case-99b291151e0dc8c5fe77",
+    "case-9a2da1ff244329d9ba8b",
+    "case-9d0e6521f3dc955fcade",
+    "case-9f1340d3c2e87f62b537",
+    "case-a0005d8bd8d6d2c24edb",
+    "case-a183de3a0d6f799887a3",
+    "case-a278a66cccceb59dd30d",
+    "case-a2fc8c952def814bf0ca",
+    "case-a474e949667b6a8393be",
+    "case-a48f6a846280388313f9",
+    "case-a58b60a912dacc29a8ba",
+    "case-a5f95ce3ed0472ab9c58",
+    "case-a64d88e560addf16c7cd",
+    "case-a69cdab83dae7be217b6",
+    "case-a6ed346a1b92f57b56c7",
+    "case-a7e97245c5fffd3f7270",
+    "case-aa88b43fddefd22c3288",
+    "case-ac22f9611d7241c74b7b",
+    "case-acca9551f49d9a2feaa2",
+    "case-ade369acc373e1df4866",
+    "case-ae893e972e9357a6f87e",
+    "case-aebd42bd62d3bfa51533",
+    "case-afb2faf54f4d8b6c52d1",
+    "case-b07bf82071c4a6987827",
+    "case-b0e0d4a5462fd898ae13",
+    "case-b1d8df4efdfe8e6c01cd",
+    "case-b2b0065d37ffec6b63e9",
+    "case-b4f26464904e5d0bc975",
+    "case-b59331fa682194a251ad",
+    "case-b849fdd52b58a7c9763c",
+    "case-b92489441aa7de3bde40",
+    "case-bb0616e95c508e78f505",
+    "case-bd0d6da67c515870f9a2",
+    "case-bff8ff386e3183174825",
+    "case-c28519175996893e6e11",
+    "case-c43236afe044e25392c2",
+    "case-c496e7ec10a784f42b49",
+    "case-c66f319b9681bf706240",
+    "case-c6d3fb69a424b6fbf678",
+    "case-c81fc8a91afe9669aaa9",
+    "case-c9a7cef5c381e3b62b67",
+    "case-ca40775005dd65b7b5d7",
+    "case-cc1dcd4afe1b98c554c6",
+    "case-cc5be89c161bc0fd85a6",
+    "case-cd075280055a56377140",
+    "case-cd3a60a78b58aa3c819d",
+    "case-ce17d2b7a68c256b9fec",
+    "case-cefaf5825e0ee8436597",
+    "case-d03eb7a33f6f45ea03cc",
+    "case-d0e1b7e15938b69ef9b1",
+    "case-d1720f38cbfbe6a40804",
+    "case-d2f5466dfaee7ddc96dd",
+    "case-d5ee73ab73310dc8bf22",
+    "case-d6e0c906dd87b5bdb2ad",
+    "case-d98fd9dff55de259d6c8",
+    "case-db9a2e17f4eb09e61b4d",
+    "case-dc4ab08a27629d5e94df",
+    "case-dc8468196b97bba4df44"
+  ],
+  "task_counts": {
+    "overall": 209,
+    "state": 153,
+    "identity": 56
+  },
+  "models": [
+    {
+      "name": "qwen35",
+      "label": "Qwen3.5-9B",
+      "model_id": "Qwen/Qwen3.5-9B",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-20261101/qwen35/manifest.json",
+          "sha256": "88d26fdaf4857dc0fd36f8e4cfe7c6c0e561e6796beeb59c4e85b071dcc5a75b",
+          "source_commit": "9c9a99d7e3279c944f992933e47faaa62f75cb3a",
+          "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+          "configuration_sha256": "9592d840308e0177312c79292f054e9168b1eb86d5482fa59c383edc28d48c34",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "qwen3",
+      "label": "Qwen3-VL-8B",
+      "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-20261101/qwen3/manifest.json",
+          "sha256": "f0c6094c1d7e94018c0a4571337950ff02031c0982027a79ff4f279eef353f3d",
+          "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+          "model_revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+          "configuration_sha256": "69f3a71874794a274d3f15d4c11ebd2a62973d88db1ac618ac92c9de56918543",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "qwen25",
+      "label": "Qwen2.5-VL-7B",
+      "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-20261101/qwen25/manifest.json",
+          "sha256": "c6bbc0508cb5c6228321d3eb5bfb6bb4a4439a93ca51b374550a7d4eac0b3099",
+          "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+          "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+          "configuration_sha256": "6825e520b5dafdffa1b33cbd827cc85a6292c752f3db464bf7ac41fbff7053ef",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "internvl35",
+      "label": "InternVL3.5-8B",
+      "model_id": "OpenGVLab/InternVL3_5-8B-HF",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-20261101/internvl35/manifest.json",
+          "sha256": "13515018fdda33abb34741f7eb29a81d332bb1a5de15213e3e476d604ddcdd2a",
+          "source_commit": "9916cdaffd555cea942aa00a34c263fb4c461b44",
+          "model_revision": "741a7d03020411e666c6109218ab71e08151ef86",
+          "configuration_sha256": "5f872cd4f1be4f9199ebdfa2b5f97ad344e6f1045425a19c0334e1994d6280d6",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "qwen3_2b",
+      "label": "Qwen3-VL-2B",
+      "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/qwen3_2b/manifest.json",
+          "sha256": "86c9875a818d88beb61558ac5862dc3d67fd4ef2e7188e029e648efe24561008",
+          "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+          "model_revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+          "configuration_sha256": "40718895cecc6830c9ff47134edcf9a166c2d39963f8558281e629cfaec18c97",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "qwen3_4b",
+      "label": "Qwen3-VL-4B",
+      "model_id": "Qwen/Qwen3-VL-4B-Instruct",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/qwen3_4b/manifest.json",
+          "sha256": "eaa5982d9b15d785a483006108d87e90a2dc9a60bfdd2fc715ae4236d0ed8649",
+          "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+          "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+          "configuration_sha256": "387e1ee60e1ae032515361c3043fb437de2bdfe019232d8718aadf78ee907bdb",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "llava_onevision",
+      "label": "LLaVA-OneVision-7B",
+      "model_id": "llava-hf/llava-onevision-qwen2-7b-ov-hf",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/llava_onevision/manifest.json",
+          "sha256": "30f7072db197fcefec84af5d174e97ecf40602fadcf0b6c42134276f4f5fe08f",
+          "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+          "model_revision": "0d50680527681998e456c7b78950205bedd8a068",
+          "configuration_sha256": "0c7c3b48b4a32d2150564fabb3c4773c27b4d30721a5cc68eaf5b069df470035",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "smolvlm2",
+      "label": "SmolVLM2-2.2B",
+      "model_id": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/smolvlm2/manifest.json",
+          "sha256": "c0938b1a1cc5ff785e9faa1a1faeef1d997c268a2b94f9e4b44dfe7483b452e8",
+          "source_commit": "4b93eb6df85465b40c5417d839fe52f3182c6443",
+          "model_revision": "482adb537c021c86670beed01cd58990d01e72e4",
+          "configuration_sha256": "55cdce2d55ae897b54e757d0d1c563557bfe334aeee8dc6b0ae2c8c9722a8a60",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "internvl14",
+      "label": "InternVL3.5-14B",
+      "model_id": "OpenGVLab/InternVL3_5-14B-HF",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/internvl14/manifest.json",
+          "sha256": "dab96506b1e7524d03733fd4604bec771688d973b39108f1a19200851336dabd",
+          "source_commit": "4b93eb6df85465b40c5417d839fe52f3182c6443",
+          "model_revision": "226b96d5912e69159abc0384cefcbd51487fdce0",
+          "configuration_sha256": "110abbbcca3745e46a91eb54294db10f523d24ebe9e69416219ba8bc91ebd20d",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "pixtral",
+      "label": "Pixtral-12B",
+      "model_id": "mistral-experimental/pixtral-12b",
+      "group": "Open weights",
+      "coverage_by_arm": {
+        "initial_text": 209,
+        "full_available_text": 209,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "full_available_text": {
+          "state": 153,
+          "identity": 56
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": true,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/cvpr-paper-priority/pixtral/manifest.json",
+          "sha256": "88eb46a6f63d0086a61a63b37b9ca12cb5fdc2df07656ae44666451d6102c8ea",
+          "source_commit": "38f4a8bd05d3c9cb6cdeeb867ea9b9f769bb59af",
+          "model_revision": "c2756cbbb9422eba9f6c5c439a214b0392dfc998",
+          "configuration_sha256": "84a43c6cec79aeab2fd3bf8cf1d7c61863a7228db3b3cf698bfb0dcec6b341cd",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": 262144,
+            "decoding": {
+              "do_sample": false,
+              "text_max_new_tokens": 96,
+              "tool_max_new_tokens": 384
+            },
+            "tool_adapter": "auto",
+            "assistant_prefix": true
+          },
+          "admitted_obtainable_rows": 627,
+          "equivalent_replays": 0,
+          "configured_variants": null,
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 5736
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Missing:full_available_text": 209,
+        "Missing:initial_text": 209,
+        "Missing:interactive_agent": 209,
+        "Obtainable:full_available_text": 209,
+        "Obtainable:initial_text": 209,
+        "Obtainable:interactive_agent": 209,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209,
+        "Unavailable:full_available_text": 209,
+        "Unavailable:initial_text": 209,
+        "Unavailable:interactive_agent": 209
+      }
+    },
+    {
+      "name": "gpt61_sol",
+      "label": "GPT-6.1 Sol",
+      "model_id": "gpt-6.1-sol",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 0,
+        "full_available_text": 0,
+        "interactive_agent": 75
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "full_available_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "interactive_agent": {
+          "state": 56,
+          "identity": 19
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": false,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/openai/gpt61_sol/manifest.json",
+          "sha256": "97e18135ab33f96132bf2a09c86e374699c979bc8962cceef7ecaa0060f0fd17",
+          "source_commit": "a6eb124c7fd2d387cd28b00f149937c95f24375b",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "ef70c9905115166240a64dd20b982787f37c49bdc11419ee0b43452ef3660910",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 0,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient"
+          ],
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 627
+        },
+        {
+          "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt61_sol/manifest.json",
+          "sha256": "6f3bd829385e31aeca4355e1917733fa0f869ba10378b9b06b9418ce39e969aa",
+          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "166a4461f54a9d78b64390857ab5ac1cb9efcdd8ea9a157a8c25ac29f4b5f049",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 75,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 75
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Obtainable:interactive_agent": 75,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209
+      }
+    },
+    {
+      "name": "terra-eval",
+      "label": "GPT-6.1 Terra",
+      "model_id": "gpt-6.1-terra",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 144,
+        "full_available_text": 144,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 105,
+          "identity": 39
+        },
+        "full_available_text": {
+          "state": 105,
+          "identity": 39
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 143,
+      "manifests": [
+        {
+          "path": "evaluation/openai/terra-eval/manifest.json",
+          "sha256": "d5d22780540c723818ea7a3c5f4e4ef444ff2fd4f5e62acc6c7815b5ffbea1aa",
+          "source_commit": "dc70d0c91b1516c7f41c59664b084d98a1a70716",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "9e401b035ffffede6cdfcc963e56e267ef3b7172720ea8153b0985c06b50347a",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 431,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient",
+            "Obtainable",
+            "Missing",
+            "Unavailable"
+          ],
+          "configured_arms": null,
+          "raw_episodes": 1058
+        },
+        {
+          "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/terra-eval/manifest.json",
+          "sha256": "88c83c079394acedf38c94af8a337779fcd69bf8af06c272aefc446b238b48f6",
+          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "3656c00e8808437a2d904140589c7d55177110b429550c9fd612f43a3d8e40c4",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 209,
+          "equivalent_replays": 143,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 209
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Obtainable:full_available_text": 144,
+        "Obtainable:initial_text": 144,
+        "Obtainable:interactive_agent": 352,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209
+      }
+    },
+    {
+      "name": "gpt54_mini",
+      "label": "GPT-5.4 mini",
+      "model_id": "gpt-5.4-mini-2026-03-17",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 0,
+        "full_available_text": 0,
+        "interactive_agent": 0
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "full_available_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "interactive_agent": {
+          "state": 0,
+          "identity": 0
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": false,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/openai/gpt54_mini/manifest.json",
+          "sha256": "64420de6ecb9a5aa1b222c756b50bf4b270486056e32f3644523da7322a1a274",
+          "source_commit": "0b5f4d23774f725d7834f1dd5f423bd73ef8fd7f",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "8a4a10a0b7e1f81306922aa4f6779090638e2c8d7a13e081e5328c23b3e3b0bd",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 0,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient"
+          ],
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 627
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209
+      }
+    },
+    {
+      "name": "gpt41_mini",
+      "label": "GPT-4.1 mini",
+      "model_id": "gpt-4.1-mini-2025-04-14",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 0,
+        "full_available_text": 0,
+        "interactive_agent": 0
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "full_available_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "interactive_agent": {
+          "state": 0,
+          "identity": 0
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": false,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/openai/gpt41_mini/manifest.json",
+          "sha256": "18529b9a76f3a107c9f65f7a0582dce61a5aba002bb43112e8970b7e48443a5d",
+          "source_commit": "92b084e9e12cbfcc0cce0b4cd2daa644b876d221",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "472e5809d8dca745cb7dec3060f6caa0466b8f41d82d16438cfc79c9f2963a7f",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 0,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient"
+          ],
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 627
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209
+      }
+    },
+    {
+      "name": "luna",
+      "label": "GPT-6 Luna",
+      "model_id": "gpt-6-luna",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 0,
+        "full_available_text": 0,
+        "interactive_agent": 18
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "full_available_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "interactive_agent": {
+          "state": 14,
+          "identity": 4
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": false,
+      "equivalent_replay_duplicates": 0,
+      "manifests": [
+        {
+          "path": "evaluation/openai/luna/manifest.json",
+          "sha256": "931b1f7d03eb542b501467bd82af52b4ff64f0498663aa415f89fef1ab796320",
+          "source_commit": "0b5f4d23774f725d7834f1dd5f423bd73ef8fd7f",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "a44ae6c0bfa729f2b7493fcb5275071926b6cffd5781df79956e7d6205632e74",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 0,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient"
+          ],
+          "configured_arms": [
+            "initial_text",
+            "full_available_text",
+            "interactive_agent"
+          ],
+          "raw_episodes": 627
+        },
+        {
+          "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/luna/manifest.json",
+          "sha256": "ca2e53192718c291ec8344b7797d0541d476fe351a1ef4e97ce8318799856968",
+          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "acb6ff2f4c9df82e85e1eec85eca39954c377feda18c41d6e925aa830fbeb80a",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 18,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 18
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Obtainable:interactive_agent": 18,
+        "Sufficient:full_available_text": 209,
+        "Sufficient:initial_text": 209,
+        "Sufficient:interactive_agent": 209
+      }
+    },
+    {
+      "name": "luna_decisions_tools",
+      "label": "GPT-6 Luna (Decisions)",
+      "model_id": "gpt-6-luna",
+      "group": "API",
+      "coverage_by_arm": {
+        "initial_text": 0,
+        "full_available_text": 0,
+        "interactive_agent": 209
+      },
+      "task_coverage_by_arm": {
+        "initial_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "full_available_text": {
+          "state": 0,
+          "identity": 0
+        },
+        "interactive_agent": {
+          "state": 153,
+          "identity": 56
+        }
+      },
+      "complete_three_arms": false,
+      "complete_interactive": true,
+      "equivalent_replay_duplicates": 11,
+      "manifests": [
+        {
+          "path": "evaluation/openai/luna_decisions_tools/manifest.json",
+          "sha256": "d2443d850506477bfb5ed4e1b32e37cc6eaea57ba7e2f80ef83c7c55d2346929",
+          "source_commit": "bbb4b640cab26d9c0a61a65bc5058f964d0eac3e",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "1206cf1f3808a487d98a0f4338dca8412c5eccdef754b78b70706f7d0e11a85a",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 0,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Sufficient"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 209
+        },
+        {
+          "path": "evaluation/openai/luna_decisions_tools-obtainable/manifest.json",
+          "sha256": "23ca9b3e40702ae1923e7cb076986543979d368366aee899f2d8ad7c2ca92630",
+          "source_commit": "bbb4b640cab26d9c0a61a65bc5058f964d0eac3e",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "fda03e9cae656d7d399ce20caea6d8786c5cad01f844a995e71240cd6745a574",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 11,
+          "equivalent_replays": 0,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 11
+        },
+        {
+          "path": "evaluation/openai/luna_decisions_tools-obtainable-resume1/manifest.json",
+          "sha256": "f785bce92109e938c42e46292df3a4a8812119c9688cb33a6f1608a279dde93e",
+          "source_commit": "bbb4b640cab26d9c0a61a65bc5058f964d0eac3e",
+          "model_revision": "API service alias; actual returned model retained per call",
+          "configuration_sha256": "1e9b67d37bbf083d746268bf7d4564e4e9a08151ad1abe76f24c7ae678f60c02",
+          "public_evaluation_settings": {
+            "budget": 12,
+            "max_turns": 8,
+            "max_assistant_turns": null,
+            "max_context_tokens": 8192,
+            "image_max_pixels": null,
+            "decoding": null,
+            "tool_adapter": null,
+            "assistant_prefix": null
+          },
+          "admitted_obtainable_rows": 209,
+          "equivalent_replays": 11,
+          "configured_variants": [
+            "Obtainable"
+          ],
+          "configured_arms": [
+            "interactive_agent"
+          ],
+          "raw_episodes": 209
+        }
+      ],
+      "recorded_variant_arm_counts_including_replays": {
+        "Obtainable:interactive_agent": 220,
+        "Sufficient:interactive_agent": 209
+      }
+    }
+  ]
+}

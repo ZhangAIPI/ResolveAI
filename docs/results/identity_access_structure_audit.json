@@ -1,0 +1,16 @@
+{
+  "scope": "Structural audit of source-derived, unreviewed evidence sets; not human sufficiency labels",
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "cohort_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+  "source_metadata_sha256": "6041b342dac372ff405c9614256e69dc9740bf9aef495d80a6f96308cd5e4126",
+  "identity_families": 56,
+  "source_constructions": {
+    "source-positive": 29,
+    "easy-negative": 27
+  },
+  "hidden_required_sources_already_initial": 56,
+  "families_with_new_source_frames_in_source_minsets": 0,
+  "families_with_other_new_recorded_frames_available": 56,
+  "families_with_available_camera_orientation_change_over_5deg": 53,
+  "caveat": "Different camera orientation can include roll. Available new frames do not establish that a claim needs them."
+}

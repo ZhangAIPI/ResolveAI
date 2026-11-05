@@ -1,0 +1,4621 @@
+{
+  "scope": "Provisional annotation image-record coverage, not reviewed visual sufficiency",
+  "dataset_sha256": "eb878d106b6a4b144844641be15ec43be50813bbf1466130d20da661b9788260",
+  "cohort_sha256": "d37c474e6be685c3bad2d358bdcfb7b6cc0af49027025c1dddc18626de14d1b2",
+  "controller_sha256": "88226b0f8f490582318a83355c827e054027a27b59cf8826a41bae2eacb4ecd4",
+  "audit_script_sha256": "7ac0c624de18f082fd98464755ec732bb605e7e004e92c09662f83fd1dfe62da",
+  "families": 209,
+  "cases": 836,
+  "counts": [
+    {
+      "budget": 12,
+      "task": "identity",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 12,
+      "task": "identity",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 56
+    },
+    {
+      "budget": 12,
+      "task": "identity",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 56
+    },
+    {
+      "budget": 12,
+      "task": "identity",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 12,
+      "task": "state",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    },
+    {
+      "budget": 12,
+      "task": "state",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 153
+    },
+    {
+      "budget": 12,
+      "task": "state",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 153
+    },
+    {
+      "budget": 12,
+      "task": "state",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    },
+    {
+      "budget": 3,
+      "task": "identity",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 3,
+      "task": "identity",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 56
+    },
+    {
+      "budget": 3,
+      "task": "identity",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 56
+    },
+    {
+      "budget": 3,
+      "task": "identity",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 3,
+      "task": "state",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    },
+    {
+      "budget": 3,
+      "task": "state",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 153
+    },
+    {
+      "budget": 3,
+      "task": "state",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 153
+    },
+    {
+      "budget": 3,
+      "task": "state",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    },
+    {
+      "budget": 6,
+      "task": "identity",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 6,
+      "task": "identity",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 56
+    },
+    {
+      "budget": 6,
+      "task": "identity",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 56
+    },
+    {
+      "budget": 6,
+      "task": "identity",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 56
+    },
+    {
+      "budget": 6,
+      "task": "state",
+      "variant": "Missing",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    },
+    {
+      "budget": 6,
+      "task": "state",
+      "variant": "Obtainable",
+      "reachable": true,
+      "minimum_requests": 1,
+      "cases": 153
+    },
+    {
+      "budget": 6,
+      "task": "state",
+      "variant": "Sufficient",
+      "reachable": true,
+      "minimum_requests": 0,
+      "cases": 153
+    },
+    {
+      "budget": 6,
+      "task": "state",
+      "variant": "Unavailable",
+      "reachable": false,
+      "minimum_requests": null,
+      "cases": 153
+    }
+  ],
+  "obtainable_call_equivalence": [
+    {
+      "task": "identity",
+      "byte_identical_calls": true,
+      "cases": 56
+    },
+    {
+      "task": "state",
+      "byte_identical_calls": true,
+      "cases": 153
+    }
+  ],
+  "serialization_witnesses": {
+    "state": {
+      "family_id": "case-7d53235c8442a2971e7f",
+      "actual_input_bytes_equal": true,
+      "actual_input_sha256": "f7d49461bdbe63eb43f42552fbbc6ad2ba4edaa7e816e4577cf6c72191018849",
+      "model_inference_calls": 0
+    },
+    "identity": {
+      "family_id": "case-db9a2e17f4eb09e61b4d",
+      "actual_input_bytes_equal": true,
+      "actual_input_sha256": "74bbbeb44b6be54a5cbb12e7a86db45bdb497699bc1b4540cc8a786ee2263264",
+      "model_inference_calls": 0
+    }
+  },
+  "obtainable_records": [
+    {
+      "family_id": "case-7d53235c8442a2971e7f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-035e4ca9730fd6a3fcab",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-91c4ea3c6210cc21aa35",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8802a95c8b66734a85f1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3a77f3fa43ae2ea19853",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-c43236afe044e25392c2",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a7e97245c5fffd3f7270",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-9a2da1ff244329d9ba8b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-cd075280055a56377140",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-094409637f3979c65dde",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1f6755d1255c1b951af4",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8ea68576affa0184b654",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d1720f38cbfbe6a40804",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4d4c204a9a775f2eb945",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0491092a72058aac0ea9",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-505b0a13881bd0283930",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6d756f50b68d12061b4c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-95fdc1ae76158756dc33",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-9d0e6521f3dc955fcade",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d6e0c906dd87b5bdb2ad",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-10c99db3e69bc9972b3d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3816b0594bbd57f597dc",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8f00f840530fa8edeb8b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-ce17d2b7a68c256b9fec",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-919281c3b936a72161eb",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8002ba7cfe4ee4425dc8",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4329c6fad6a0fe133467",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-b4f26464904e5d0bc975",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4cd023a5d1cf1dfb5f3f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6aaa1faab1e4de97ff49",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-75629614a6bf5964d782",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-07af5dd50459cd1cebad",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a0005d8bd8d6d2c24edb",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7dc3561f55a0bc0bc5fe",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a5f95ce3ed0472ab9c58",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-5d2f8f6f284da954b7d1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-5ebe8ae572d5aab88e3e",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0be3f37fb1d1a7e1ff03",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0fe3f5acad0e718287c1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-9473a070c17fccb32b55",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7897eb4a5dfb1eec5de4",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6bb63cd0a32977fc8276",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-03cfc447c84672dba323",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1d7591ee4eba4847495f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-33507d1bf22357977e87",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d2f5466dfaee7ddc96dd",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-218d1dcffccb1edb0c4b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1fb073759024a879af6b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-2462de3af747832feb12",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-bff8ff386e3183174825",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-c496e7ec10a784f42b49",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6e617c52f117568663ec",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-cc5be89c161bc0fd85a6",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-00bb48fa5a6b3e55662e",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a474e949667b6a8393be",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-93dd02a172e3378a70e1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-c81fc8a91afe9669aaa9",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-aebd42bd62d3bfa51533",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-306465647a99ee75ba24",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1b38372ab3a9c802472f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4cbb34d919b6796dc3c6",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1704dbd0a5480d63465e",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-06bd2e2c619173cd0e26",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-995af3c4557049fb0e18",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-9488eb02d53de8d64e4d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0d15c862cc16bbe4c099",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-79d971530ee82a51dd40",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1e688e6208ebb40a4ab2",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-5f3570aff0075cfce6cb",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1171b0a231e8710764bf",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-161136a9ec3cc64771f8",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0fb42a8c2b7c8437ef8c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-ade369acc373e1df4866",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0e8fbed0931b991c25af",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-74920d6b31973fa69172",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a64d88e560addf16c7cd",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d03eb7a33f6f45ea03cc",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7e03002a680778a4ab12",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4075816a3e17dc65388c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-89929c5660c3d8406f66",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-374f6ae20a2cc9dee151",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-2fc44bf1dff7ba972c9f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-58d5dfa36b59e88b3264",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-aa88b43fddefd22c3288",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-ca40775005dd65b7b5d7",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-04e33f6404ed5ae10513",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0ed00b56217ebb655b95",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4ca0bdc9023fb6ddf0f7",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3d45aca0f9331e9bc057",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-ae893e972e9357a6f87e",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-99b291151e0dc8c5fe77",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-76e046ab45ce352eb231",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-c66f319b9681bf706240",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7b297d92a47b18846107",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6e3bb1bb009b9408c877",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6c98a14b04dc66a9a887",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3f6829fdbe913aaa7d8d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7fc0077a4b1452489a00",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a278a66cccceb59dd30d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-7cfd522af627f62da66b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4907473a0cb857f0290c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-0b0848b8e7b8745990d1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-776ac4ef6bd4c68d9255",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-2c1a2e9300951599e5a1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1d2273c2f03c0b1e3766",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-bd0d6da67c515870f9a2",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-673ed71d240f5d142b82",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d98fd9dff55de259d6c8",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-976734884edf1aaede77",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-b849fdd52b58a7c9763c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8a720eb5cec384819027",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d0e1b7e15938b69ef9b1",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-519b31b53e05b9444226",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-1736d455af2ed926f7db",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a69cdab83dae7be217b6",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6bb901b72d1d9f36970b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-cefaf5825e0ee8436597",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8902b3dfae78b07aabbb",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-94873a21bd4db2e983e7",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-ac22f9611d7241c74b7b",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-dc4ab08a27629d5e94df",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-13a2fed0403ff94d313e",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-527a794c9651d1527e1c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a183de3a0d6f799887a3",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-cd3a60a78b58aa3c819d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-b0e0d4a5462fd898ae13",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6f48f4e2cb087a0f87d0",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-6392cfc01bb502fb9ea2",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3e74e410a110e150612c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8271cc372f24d3c5fe4d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-dc8468196b97bba4df44",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-401c2a17d2ad647c820a",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-08da5fca484862c6a91d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-d5ee73ab73310dc8bf22",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-81e0e8f4cfa94f3deadd",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-600855f607d656065ab8",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-9224f5fdbc8c158709b6",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-61298e2087460fff0b38",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-158a8df02f25f99f87e8",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "cable",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "94f8e5ce4b479668b8e69aca5b83fdafda2c333523e5382b562b6a9127b63416",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-744edc80b6d2d2866d9f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "zipper",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "208d1d66222e731be9fdfac059dc7fc200087acaa8f459ef705088514f8397f7",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-72b9852afb9370eb1e2f",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-a58b60a912dacc29a8ba",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-75af8f8edccb80ca46b5",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "hazelnut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "b2dc31f9c59505a2d18b40268018b2fa8e4d8c61db4b12dd09bcb7eb89a15231",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-2deee0f03d49b3f2dcba",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-8f77c26785c28fc51d4c",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "screw",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "ef0b36a9f15c6adae7d196ef879b7be44c919e0ee5b2e38794bd005d0f7ac39f",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-4beee846d0814a3edcdc",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-3e356c47c66a1c95006d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-52a69b7c898d12a8e0a5",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "bottle",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "0b61ebcd7b5651ed38e779b2027d65a84d43a2af199acca7eb00d881677a3002",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-008fddbd675adc4570ad",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "capsule",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "07dcc2fa7125a459b3316eb8086b6a0c5b6cfe19d4ef04d51027f646e149822c",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-62466e732168dfaf8214",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "transistor",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "4f356bdf881abdf9825383175e5192534c7c4c4796dcca3a96f854775d81791d",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-198036c061f8860e137d",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "pill",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "de271deb90189bfa6173ebb87b13354308d37dc3aac3af20667bccb48fc14da3",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-c6d3fb69a424b6fbf678",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "metal nut",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "447f98c75d5258b36b0df576a64df916f3c72dbbb792ae1ef3bdc653c4378127",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-2580989ed62995f74c9a",
+      "task": "state",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "toothbrush",
+              "time": "capture",
+              "view": "original"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "42ce7b4dc09b3eff3ec2d55d68fa2e7c3b055aaf46a6860bfd51bcd090c88fcd",
+      "resolved_record_ids": [
+        "original"
+      ]
+    },
+    {
+      "family_id": "case-db9a2e17f4eb09e61b4d",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-ace8ce5cd6a353d1672b"
+      ]
+    },
+    {
+      "family_id": "case-03415461c3ae41ab58f8",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-f5695bd4e2bebbbeb566"
+      ]
+    },
+    {
+      "family_id": "case-52bbfb6426b7a7e880dc",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-458838fdeee142596719"
+      ]
+    },
+    {
+      "family_id": "case-8606651323bb9a95aaa5",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-62c034bb9a3ea402c3a9"
+      ]
+    },
+    {
+      "family_id": "case-83e1e69518d482ef4109",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-6a4484324b4b4b3c6a97"
+      ]
+    },
+    {
+      "family_id": "case-b2b0065d37ffec6b63e9",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-0a79f3148c6f7adf7798"
+      ]
+    },
+    {
+      "family_id": "case-2188cca9dcb429a58d96",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-c83e5d7aff1edfa523ac"
+      ]
+    },
+    {
+      "family_id": "case-511ee5c29083e3320780",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-45d080ff058ffbd58a6e"
+      ]
+    },
+    {
+      "family_id": "case-0687c95a9b01fa5c5bd9",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8dc22ff11471be9896d3"
+      ]
+    },
+    {
+      "family_id": "case-7e39b62471c03c73d995",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-842ecd6e3158ff474b87"
+      ]
+    },
+    {
+      "family_id": "case-afb2faf54f4d8b6c52d1",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-1f3ea2d2253835f48a64"
+      ]
+    },
+    {
+      "family_id": "case-bb0616e95c508e78f505",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-62c034bb9a3ea402c3a9"
+      ]
+    },
+    {
+      "family_id": "case-b1d8df4efdfe8e6c01cd",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-458838fdeee142596719"
+      ]
+    },
+    {
+      "family_id": "case-84726da18c39ea85a416",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-3615906440868ef50a2c"
+      ]
+    },
+    {
+      "family_id": "case-2a0fffc202578b67463d",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8eb90041f5c0af658f60"
+      ]
+    },
+    {
+      "family_id": "case-2238dd539b5b090ec4c5",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-6b370aa84300b693365a"
+      ]
+    },
+    {
+      "family_id": "case-c9a7cef5c381e3b62b67",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-0314d6244dbefa40234f"
+      ]
+    },
+    {
+      "family_id": "case-a48f6a846280388313f9",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-c53caae13c6fdbd74696"
+      ]
+    },
+    {
+      "family_id": "case-5cbd8b31de7506a7b579",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8eb90041f5c0af658f60"
+      ]
+    },
+    {
+      "family_id": "case-050c440b3c0528140212",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9bd60e001e055c07b992"
+      ]
+    },
+    {
+      "family_id": "case-76557903e96adaea78ae",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-18820f181ca98504cb73"
+      ]
+    },
+    {
+      "family_id": "case-8b7246d25a61c698312c",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-30d64b36593755f4a197"
+      ]
+    },
+    {
+      "family_id": "case-8cf68eec4936014dc689",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-dbe3e31e3bf1c1ec1912"
+      ]
+    },
+    {
+      "family_id": "case-44d34af477c63dbeadec",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-0314d6244dbefa40234f"
+      ]
+    },
+    {
+      "family_id": "case-5b4d10e649bbb741d641",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-efbf7746b1ffca5416a3"
+      ]
+    },
+    {
+      "family_id": "case-0013955d31d3d1958ae4",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-221cb091292c26d025be"
+      ]
+    },
+    {
+      "family_id": "case-76d243146dc40df1831d",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-676f8c9585561597033c"
+      ]
+    },
+    {
+      "family_id": "case-2921ec601a7224865d46",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-221977cc13862a399108"
+      ]
+    },
+    {
+      "family_id": "case-14c2c9cfcfb0ee57927f",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-45d080ff058ffbd58a6e"
+      ]
+    },
+    {
+      "family_id": "case-a6ed346a1b92f57b56c7",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-c83e5d7aff1edfa523ac"
+      ]
+    },
+    {
+      "family_id": "case-14fdadb344d83119c987",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8c7a4381e4cd1dd0d802"
+      ]
+    },
+    {
+      "family_id": "case-acca9551f49d9a2feaa2",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9660a5fabdbdc9d3ae20"
+      ]
+    },
+    {
+      "family_id": "case-8382554c6be762943bdd",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-18820f181ca98504cb73"
+      ]
+    },
+    {
+      "family_id": "case-a2fc8c952def814bf0ca",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-24e717c903fd58ca2672"
+      ]
+    },
+    {
+      "family_id": "case-3d76ad32b1ae434e1008",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9dae17426a6d8197cb87"
+      ]
+    },
+    {
+      "family_id": "case-cc1dcd4afe1b98c554c6",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-0a79f3148c6f7adf7798"
+      ]
+    },
+    {
+      "family_id": "case-9f1340d3c2e87f62b537",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-6a4484324b4b4b3c6a97"
+      ]
+    },
+    {
+      "family_id": "case-91d211c82d2285480b29",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-1f3ea2d2253835f48a64"
+      ]
+    },
+    {
+      "family_id": "case-8b5d4384ca7ef0be6cfe",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-842ecd6e3158ff474b87"
+      ]
+    },
+    {
+      "family_id": "case-5ed8ddd944db90518517",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-f5695bd4e2bebbbeb566"
+      ]
+    },
+    {
+      "family_id": "case-854c45c5f8ce31d14213",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9660a5fabdbdc9d3ae20"
+      ]
+    },
+    {
+      "family_id": "case-8021c25ae38ad5931e40",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8c7a4381e4cd1dd0d802"
+      ]
+    },
+    {
+      "family_id": "case-4f6d9ad29d8928752244",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-f7bbe4d91ffed5a8a073"
+      ]
+    },
+    {
+      "family_id": "case-482d81c6b59e8b9e993d",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9dae17426a6d8197cb87"
+      ]
+    },
+    {
+      "family_id": "case-b92489441aa7de3bde40",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-1c77baea2f2ab714a752"
+      ]
+    },
+    {
+      "family_id": "case-b59331fa682194a251ad",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-8eb90041f5c0af658f60"
+      ]
+    },
+    {
+      "family_id": "case-422ae37eebd4196a1c88",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-c53caae13c6fdbd74696"
+      ]
+    },
+    {
+      "family_id": "case-2d8e0e473a213cb80cae",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-221cb091292c26d025be"
+      ]
+    },
+    {
+      "family_id": "case-8a694ef7370ceb9c9bb2",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-efbf7746b1ffca5416a3"
+      ]
+    },
+    {
+      "family_id": "case-b07bf82071c4a6987827",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-221977cc13862a399108"
+      ]
+    },
+    {
+      "family_id": "case-c28519175996893e6e11",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-14f3d3e16673681034f1"
+      ]
+    },
+    {
+      "family_id": "case-7bed7b97b72117d1a8a2",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-0314d6244dbefa40234f"
+      ]
+    },
+    {
+      "family_id": "case-9602772422d7fad6e956",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-dbe3e31e3bf1c1ec1912"
+      ]
+    },
+    {
+      "family_id": "case-2f436ab6aeaa0b7b20a1",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-30d64b36593755f4a197"
+      ]
+    },
+    {
+      "family_id": "case-3ce617a2c9c23d8bf77d",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-9bd60e001e055c07b992"
+      ]
+    },
+    {
+      "family_id": "case-56ebf13312e918355e08",
+      "task": "identity",
+      "byte_identical_calls": true,
+      "calls": [
+        {
+          "name": "request_photo",
+          "arguments": {
+            "query": {
+              "object": "subject-B",
+              "time": "capture",
+              "view": "view-02"
+            }
+          }
+        }
+      ],
+      "query_bytes_sha256": "abfa14c6b44f58f590e968fb83ae1b28f2e4147b4e1b934e63e1cb88a0560bcb",
+      "resolved_record_ids": [
+        "photo-6f84cbe0657aef2671e3"
+      ]
+    }
+  ],
+  "reuse_scope": "Identical request actions with the same environment and terminal prompt imply identical model inputs. Restoration outputs can serve as the annotation-guided action reference. Oracle controller wall time is not independently measured by that reuse."
+}

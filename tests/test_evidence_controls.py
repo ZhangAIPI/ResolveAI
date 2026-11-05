@@ -14,11 +14,14 @@ from types import SimpleNamespace
 from PIL import Image
 
 from scripts.evaluate_evidence_controls import (
-    ARMS, controlled_episode, request_schedule, select_cases, validate_records, main,
+    controlled_episode, request_schedule, select_cases, validate_records, main,
 )
 from scripts.evaluate_study import Records
 from resolveai.conversation import Conversation
 from resolveai.environment import Environment
+
+# These regressions exercise the original public baseline interface.
+ARMS = ("adaptive", "finish_only", "fixed_original", "fixed_order", "random_order")
 
 
 class NoOCR:
@@ -249,7 +252,7 @@ class EvidenceControlTests(unittest.TestCase):
         (grounding / "manifest.json").write_text('{"test":true}')
         argv = ["controls", str(plan_path), str(model), str(output),
                 "--cohort", str(cohort_path), "--model-id", "test/model",
-                "--revision", "0" * 40, "--grounding-root", str(grounding)]
+                "--revision", "0" * 40, "--grounding-root", str(grounding), "--arms", *ARMS]
         target = "scripts.evaluate_evidence_controls."
         with patch.dict("os.environ", {"SLURM_JOB_ID": "test"}), \
              patch("sys.argv", argv), patch(target + "RapidOCRBackend", NoOCR), \

@@ -215,7 +215,7 @@ We also record requests, tool cost, tokens and running time.
 The environment also supports replaying a shared history before alternative actions, following shared-history comparisons of visual calls~\cite{countercredit}.
 Action-value definitions and content controls are given in the supplement.
 \section{Experiments}
-We examine three questions: when the interactive setting changes an answer, which failures account for the change, and whether training improves decisions or the search for missing evidence.
+We compare models when the supplied photographs suffice and when an image is withheld, then examine how post-training changes answers, requests and stopping.
 
 \input{tables/benchmark_results}
 
@@ -225,8 +225,8 @@ Condition queries ask whether a photographed item has a named defect; identity q
 The fixed evaluation set contains 209 source-labeled families: 153 condition queries and 56 identity controls, with 103 supported and 106 refuted claims.
 It was fixed at the first cross-model comparison and retained for subsequent models and training.
 The 226 identity candidates without established source labels are excluded.
-The main accuracy tables use each family's constructed Sufficient version.
-We analyze requests separately in Obtainable, where the construction withholds potentially useful photographs.
+Table~\ref{tab:benchmark} pairs each family's Sufficient and Obtainable versions.
+Obtainable withholds a full-resolution photograph while retaining its preview; requests can restore the original or return another recorded view.
 
 \paragraph{Models and settings.}
 Table~\ref{tab:benchmark} covers ten open-weight models: Qwen2.5-VL-7B~\cite{qwen25}; Qwen3-VL at 2B, 4B and 8B~\cite{qwen3}; Qwen3.5-9B~\cite{qwen35}; InternVL3.5 at 8B and 14B~\cite{internvl35}; LLaVA-OneVision-7B~\cite{llavaonevision}; SmolVLM2-2.2B~\cite{smolvlm2}; and Pixtral-12B.
@@ -275,22 +275,26 @@ Base Qwen3-VL-8B describes the same vehicle across these CO3D views~\cite{co3d},
 
 \input{tables/sft_results}
 
-\subsection{When Tools Help}
-\paragraph{Net gains hide reversals.}
-Qwen3-VL-8B improves from 74.6\% without tools to 82.3\% in the interactive setting.
-The paired cases show more than a uniform improvement: 38 direct errors become correct, while 22 previously correct answers are lost.
-For Qwen3-VL-2B, only 7 errors are corrected and 48 correct answers are lost, lowering accuracy from 60.3\% to 40.7\%.
-Condition queries account for most of these changes: the 8B model corrects 35 and loses 21, while the 2B model corrects 6 and loses 40.
-The visual inputs alone therefore do not predict whether the complete interactive interface will help.
+\subsection{When an Image Is Withheld}
+\paragraph{The same interface can conceal a missing-image gap.}
+Qwen3-VL-8B reaches 82.3\% on Sufficient but only 52.6\% on Obtainable, with the same interactive interface and underlying claims.
+The corresponding changes are 40.7\% to 26.8\% for 2B and 63.2\% to 35.9\% for Qwen3.5-9B.
+For 8B, directly supplying all available photographs gives 72.7\% on Obtainable, compared with 34.9\% from the initial images.
+The model can therefore answer more of these claims with additional visual input, while its interactive policy retrieves a new image in only 5.7\% of episodes.
+The task-wise breakdown in Table~\ref{tab:benchmark} separates condition detail from identity matching.
 
+\paragraph{Higher interactive accuracy need not come from requested images.}
+The 8B model gains 37 net correct answers over direct answering in Obtainable.
+Of these, 36 occur among the 197 episodes in which the agent never requests a photograph; the 12 requesting episodes contribute a net gain of one.
+These groups describe the observed policy, rather than randomized interventions.
+\textbf{Most of the observed gain occurs while working with existing evidence.}
+For 2B, interaction loses 63 initially correct answers and corrects 12 errors; 55 of the 63 losses end without a valid final answer.
+Thus, the lower score also reflects difficulty completing the interaction.
 
-
-The direction of change can also differ by task.
-For Qwen3.5-9B, condition accuracy rises from 47.7\% to 65.4\%, while identity accuracy falls from 85.7\% to 57.1\%.
-The API models vary as well: GPT-5.4 mini improves from 50.7\% to 75.1\%, whereas GPT-4.1 mini falls from 80.9\% to 67.5\%.
-GPT-5.4 mini makes only 0.51 non-terminal calls per case on average and no photograph requests.
-Its improvement occurs while working with the initial evidence.
-These gains concern checking the supplied images; photograph requests are examined separately below.
+The initially sufficient comparison shows the same distinction.
+8B corrects 38 direct-answer errors but loses 22 correct answers; 2B corrects 7 and loses 48.
+These complete-interface comparisons include both reasoning and response formatting.
+The output-allowance control below tests one possible source of that difference.
 
 \paragraph{A visual answer can fail at submission.}
 Figure~\ref{fig:cases} shows two views of the same vehicle.
@@ -299,20 +303,11 @@ With tools, it first compares the photographs and describes the same vehicle fro
 The interactive run takes 100.5 seconds and receives zero, compared with 1.1 seconds for the direct answer.
 The score records failure to complete the task, but the trace does not support calling this a failure to recognize the object.
 
-This distinction matters across models.
+This distinction also matters across models in Sufficient.
 Qwen2.5-VL-7B explicitly chooses Need more evidence in 82.8\% of cases; InternVL3.5-8B submits no valid final answer in 81.8\%.
-LLaVA-OneVision never submits one on this set, and 91.9\% of its attempts reach the context limit.
+LLaVA-OneVision never submits one on the initially sufficient set, and 91.9\% of its attempts reach the context limit.
 An abstention, a wrong visual judgment and a malformed submission require different remedies.
 The supplement reports these outcomes separately, including Pixtral and SmolVLM2.
-
-\paragraph{Smaller models can use more interaction.}
-The 2B model makes 6.71 model calls and emits 449 output tokens per case, compared with 3.24 calls and 283 tokens for the 8B model.
-Both average about 17 seconds.
-Model size alone therefore gives a poor estimate of the cost of a complete interaction.
-Conversely, Qwen2.5-VL-7B emits fewer tokens but is correct in only 3.8\% of interactive cases.
-Latency and token counts need to be read together with completion and answer accuracy.
-
-
 
 \subsection{Effects of Post-training}
 \label{sec:sft}
@@ -398,7 +393,12 @@ All additional requests in both action-supervised settings concern condition ori
 Both comparisons use the same update cap, rather than matched target-token compute.
 The result distinguishes exposure to tool results in a history from supervision to issue the preceding call.
 
-Identity-only action supervision produces requests in every condition case but none of the identity cases. Mixed-task supervision changes this behavior selectively: requests for condition originals fall from 153 to 82, while requests for identity views remain at zero. The additional calls reflect transfer of the request operation to condition images. The task breakdown exposes behavior hidden by the overall request rate: these policies retrieve finer detail from originals, while leaving the available identity views unexplored.
+\paragraph{One request reaches the constructed evidence set.}
+An evaluator-side search finds a one-request path to the annotated image-record requirements for every Obtainable case.
+For all 56 identity controls, the required record restores an initial preview to its original resolution.
+A public rule using only the preview metadata selects exactly the same queries as this annotation-guided search.
+Other recorded viewpoints are accessible, but the current construction admits a fixed solution to image selection.
+The supplement lists the exact request comparison.
 
 
 \begin{table}[t]\centering\small
@@ -414,7 +414,7 @@ Mixed-task & 0.0 & 39.2\\
 \end{table}
 
 \paragraph{All photographs are not an accuracy upper bound.}
-Providing every obtainable image initially changes Qwen3-VL-8B from 74.6\% to 75.1\% under direct answering.
+On Sufficient, providing every obtainable image initially changes Qwen3-VL-8B from 74.6\% to 75.1\% under direct answering.
 Identity accuracy rises from 87.5\% to 91.1\%, while condition accuracy changes from 69.9\% to 69.3\%.
 InternVL3.5-14B instead falls from 59.8\% to 53.1\% overall.
 Additional images do not consistently improve accuracy, even before a search policy is involved.
@@ -429,11 +429,10 @@ Source groups and image hashes are disjoint between post-training and evaluation
 The public photographs may nevertheless have appeared in base-model pretraining, which limits conclusions about unseen-image generalization.
 
 \section{Conclusion}
-\benchmark evaluates visual evidence search by varying access to photographs for a fixed object claim.
-Recorded interactions distinguish image selection, responses to access failures and final-answer submission.
-Across models, tools improve some answers and disrupt others; SFT and RL change completion, cost and request behavior in different ways.
-The two 8B training routes reach similar answer accuracy but obtain new photographs in 14 and 92 families with withheld images.
-The more frequent requests recover condition detail without producing additional identity views.
+\benchmark pairs fixed object claims with different photograph access.
+Interactions separate answer errors, failed submissions and requests that add no pixels.
+SFT and RL improve completion and change search differently.
+The current cases primarily test restoration of withheld detail; their constructed evidence requirements also admit a fixed one-request solution.
 
 \label{resolveai-main-end}
 \clearpage

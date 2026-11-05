@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photo evidence review / 图片证据判断</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:1100px;margin:24px auto;padding:0 18px;color:#18232c;background:#fafafa}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ccd3d8;padding-bottom:14px}
+h1{font-size:23px;margin:0}h2{font-size:21px;margin:18px 0 8px}.muted{color:#586774;font-size:14px}.images{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:18px 0}
+figure{margin:0;padding:12px;background:white;border:1px solid #d5dce1}figcaption{font-size:14px;margin-bottom:8px}.photo{display:inline-block;position:relative;max-width:100%;line-height:0}.photo img{display:block;max-width:100%;max-height:370px;width:auto;height:auto;user-select:none;touch-action:none}
+.mark{position:absolute;border:2px solid #246a9a;box-sizing:border-box;pointer-events:none}.target{border:2px dashed #b37928}.image-controls{display:flex;gap:12px;align-items:center;margin-top:9px;font-size:14px}
+fieldset{border:0;border-top:1px solid #d5dce1;margin:14px 0;padding:14px 0 0}legend{font-weight:650;padding:0 8px 0 0}label.option{display:inline-block;margin:6px 20px 6px 0}input{margin-right:6px}textarea{display:block;width:96%;height:65px;font:inherit;padding:8px}
+button{font:inherit;border:1px solid #798d9a;background:white;border-radius:3px;padding:8px 13px;cursor:pointer}button.primary{background:#234e6a;color:white;border-color:#234e6a}nav{display:flex;gap:12px;align-items:center;margin:22px 0}.warning{color:#a33d22;font-weight:600}.success{color:#2f6f57}
+a{color:#1f5b80}details{font-size:14px;margin:10px 0}
+</style>
+<header><h1 id="title"></h1><button id="language">English</button></header>
+<div id="app"></div><script>
+const DATA=__PACKET_DATA__;
+let lang='zh',index=0,started=Date.now(),answers={};
+const KEY='resolveai-blind-review-'+DATA.package_id+'-'+DATA.packet_id;
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){answers=saved.answers||{};index=saved.index||0;lang=saved.lang||'zh';}}catch(e){}
+const T={
+zh:{title:'图片证据判断',intro:'请独立判断，只依据本页图片。每份约8题，预计5–10分钟；没有时间或操作限制。看不清可以打开大图，拖动图片可标出细节（可选）。请勿查看其他编号的材料或讨论答案。',basis:'作为判断依据',large:'查看大图',clear:'清除我的框',clarity:'这个声明是否清楚？',yes:'清楚',no:'不清楚',suff:'这些图片是否足以支持一个确定判断？',sufficient:'足够',insufficient:'不足',uncertain:'我不能确定',answer:'仅依据这些图片，应该怎样回答？',Supported:'支持声明',Refuted:'反驳声明','Need more evidence':'需要更多证据',note:'补充说明（可选）',previous:'上一题',next:'保存并下一题',export:'下载我的结果',saved:'结果保存在本机浏览器；完成后请下载JSON文件交给研究者。',finish:'你已完成这份判断。请下载结果文件。',error:'请回答三个问题。确定支持或反驳时，请选中至少一张作为依据的图片，并将证据充分性选为“足够”。',independent:'我已独立完成，未查看其他编号的材料或参考答案。',check:'请勾选独立完成后再下载。',targets:'橙色虚线仅指出题目目标；蓝框是你可选标注的细节。正常参考来自另一个实物，不能当作目标的之前照片。',count:'题',suffix:'不需要猜测缺少材料中的内容，也不判断责任归属。'},
+en:{title:'Photo evidence review',intro:'Judge independently using only the photographs on this page. Each packet has about 8 questions and should take 5–10 minutes, without a timer or action limit. Open an image to inspect it; optionally drag to mark a detail. Do not inspect other packets or discuss answers.',basis:'Use as evidence',large:'Open image',clear:'Clear my box',clarity:'Is the claim clear?',yes:'Clear',no:'Unclear',suff:'Do these images allow a definite judgment?',sufficient:'Sufficient',insufficient:'Insufficient',uncertain:'I am uncertain',answer:'What do these images justify?',Supported:'Supported',Refuted:'Refuted','Need more evidence':'Need more evidence',note:'Comment (optional)',previous:'Previous',next:'Save and continue',export:'Download my responses',saved:'Progress is saved in this browser. Download the JSON file after finishing and return it to the researcher.',finish:'You have completed this packet. Please download your responses.',error:'Please answer all three questions. A definite Supported/Refuted answer requires at least one cited image and a Sufficient judgment.',independent:'I completed this independently without viewing other packets or reference answers.',check:'Confirm independent completion before downloading.',targets:'Orange dashed outlines identify the target only; blue boxes are your optional detail marks. A normal reference is a different specimen, not a before photograph of the target.',count:'Question',suffix:'Do not guess the content of missing photographs or assign responsibility.'}};
+function escape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function tr(k){return T[lang][k]||k;}
+function save(){localStorage.setItem(KEY,JSON.stringify({answers,index,lang}));}
+function capture(){
+ if(index>=DATA.units.length)return;
+ const u=DATA.units[index],old=answers[u.unit_id]||{};
+ const picked=n=>document.querySelector('input[name="'+n+'"]:checked');
+ const c=picked('clarity'),s=picked('suff'),v=picked('answer');
+ answers[u.unit_id]={unit_id:u.unit_id,claim_clear:c?c.value==='true':null,sufficiency:s?s.value:null,answer:v?v.value:null,citations:Array.from(document.querySelectorAll('input.evidence:checked')).map(x=>x.value),regions:old.regions||[],comment:(document.getElementById('comment')||{}).value||'',seconds:(old.seconds||0)+(Date.now()-started)/1000};
+ started=Date.now();save();
+}
+function valid(){
+ const u=DATA.units[index],a=answers[u.unit_id];
+ return a&&a.claim_clear!==null&&a.sufficiency&&a.answer&&((a.answer==='Need more evidence'&&a.sufficiency!=='sufficient')||(a.answer!=='Need more evidence'&&a.sufficiency==='sufficient'&&a.citations.length>0));
+}
+function addMark(frame,box,cls){
+ const m=document.createElement('div');m.className='mark '+(cls||'');
+ Object.assign(m.style,{left:box[0]*100+'%',top:box[1]*100+'%',width:(box[2]-box[0])*100+'%',height:(box[3]-box[1])*100+'%'});frame.appendChild(m);
+}
+function render(){
+ document.documentElement.lang=lang;document.getElementById('title').textContent=tr('title');document.getElementById('language').textContent=lang==='zh'?'English':'中文';
+ if(index>=DATA.units.length){
+ document.getElementById('app').innerHTML='<h2>'+tr('finish')+'</h2><p><label><input type="checkbox" id="independent">'+tr('independent')+'</label></p><button class="primary" id="export">'+tr('export')+'</button><p id="error" class="warning"></p><p class="muted">'+tr('saved')+'</p>';
+ document.getElementById('export').onclick=download;return;
+ }
+ const u=DATA.units[index],a=answers[u.unit_id]||{},checked=(key,v)=>a[key]===v?' checked':'';
+ let html='<p class="muted">'+tr('intro')+'</p><p class="muted">'+tr('count')+' '+(index+1)+' / '+DATA.units.length+' · '+escape(DATA.packet_id)+'</p><h2>'+escape(u.claim[lang])+'</h2><p>'+escape(u.context[lang])+'</p><div class="images">';
+ u.images.forEach(im=>{
+ html+='<figure><figcaption><strong>'+escape(im.id)+'</strong> · '+escape(im.label[lang])+' <span class="muted">('+im.width+' × '+im.height+')</span></figcaption><div class="photo" data-image="'+im.id+'"><img draggable="false" src="'+escape(im.src)+'" alt="'+escape(im.id)+'"></div><div class="image-controls"><label><input class="evidence" type="checkbox" value="'+escape(im.id)+'"'+((a.citations||[]).includes(im.id)?' checked':'')+'>'+tr('basis')+'</label><a target="_blank" rel="noopener" href="'+escape(im.src)+'">'+tr('large')+'</a></div><button class="clear" data-image="'+im.id+'">'+tr('clear')+'</button></figure>';
+ });
+ html+='</div><details><summary>'+tr('targets')+'</summary><p>'+tr('suffix')+'</p></details><fieldset><legend>'+tr('clarity')+'</legend><label class="option"><input type="radio" name="clarity" value="true"'+checked('claim_clear',true)+'>'+tr('yes')+'</label><label class="option"><input type="radio" name="clarity" value="false"'+checked('claim_clear',false)+'>'+tr('no')+'</label></fieldset><fieldset><legend>'+tr('suff')+'</legend>';
+ ['sufficient','insufficient','uncertain'].forEach(v=>html+='<label class="option"><input type="radio" name="suff" value="'+v+'"'+checked('sufficiency',v)+'>'+tr(v)+'</label>');
+ html+='</fieldset><fieldset><legend>'+tr('answer')+'</legend>';
+ ['Supported','Refuted','Need more evidence'].forEach(v=>html+='<label class="option"><input type="radio" name="answer" value="'+v+'"'+checked('answer',v)+'>'+tr(v)+'</label>');
+ html+='</fieldset><label>'+tr('note')+'<textarea id="comment">'+escape(a.comment||'')+'</textarea></label><p id="error" class="warning"></p><nav><button id="previous">'+tr('previous')+'</button><button id="next" class="primary">'+tr('next')+'</button></nav><p class="muted">'+tr('saved')+'</p>';
+ document.getElementById('app').innerHTML=html;
+ document.getElementById('previous').disabled=index===0;
+ document.getElementById('previous').onclick=()=>{capture();index=Math.max(0,index-1);save();render();window.scrollTo(0,0);};
+ document.getElementById('next').onclick=()=>{capture();if(!valid()){document.getElementById('error').textContent=tr('error');return;}index++;save();render();window.scrollTo(0,0);};
+ document.querySelectorAll('.photo').forEach(frame=>{
+  const im=u.images.find(x=>x.id===frame.dataset.image);
+  if(im.target_box)addMark(frame,im.target_box,'target');
+  (a.regions||[]).filter(x=>x.image_id===im.id).forEach(x=>addMark(frame,x.bbox));
+  let start=null;
+  frame.onpointerdown=e=>{if(e.target.tagName!=='IMG')return;const r=frame.getBoundingClientRect();start=[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height];frame.setPointerCapture(e.pointerId);};
+  frame.onpointerup=e=>{if(!start)return;const r=frame.getBoundingClientRect(),end=[Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];if(Math.abs(start[0]-end[0])>.015&&Math.abs(start[1]-end[1])>.015){capture();const box=[Math.min(start[0],end[0]),Math.min(start[1],end[1]),Math.max(start[0],end[0]),Math.max(start[1],end[1])];answers[u.unit_id].regions=(answers[u.unit_id].regions||[]).filter(x=>x.image_id!==im.id).concat([{image_id:im.id,bbox:box}]);save();render();}start=null;};
+ });
+ document.querySelectorAll('button.clear').forEach(b=>b.onclick=()=>{capture();answers[u.unit_id].regions=(answers[u.unit_id].regions||[]).filter(x=>x.image_id!==b.dataset.image);save();render();});
+ started=Date.now();
+}
+function download(){
+ if(!document.getElementById('independent').checked){document.getElementById('error').textContent=tr('check');return;}
+ const payload={format:'resolveai-blind-sufficiency-v1',package_id:DATA.package_id,packet_id:DATA.packet_id,reviewer_id:DATA.packet_id,reviewer_type:'human',independent_review:true,answers:DATA.units.map(x=>answers[x.unit_id])};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='review-'+DATA.packet_id+'.json';a.click();URL.revokeObjectURL(a.href);
+}
+document.getElementById('language').onclick=()=>{capture();lang=lang==='zh'?'en':'zh';save();render();};
+render();
+</script></html>
