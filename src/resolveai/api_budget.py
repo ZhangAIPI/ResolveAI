@@ -1,4 +1,6 @@
 """Persistent, shared USD reservations; unknown charges block further requests."""
+from contextlib import closing
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -143,6 +145,48 @@ class ApiBudget:
             self.db.execute("UPDATE calls SET charge=?,response=? WHERE key=?",
                             (used,json.dumps(descriptor),key))
         return descriptor
+
+    def import_paid_cache(self, source_path):
+        """Reuse settled responses from a sealed allocation, without charging twice.
+
+        The source ledger remains immutable and still accounts for the payment.
+        New calls continue to require reservations in this prefunded allocation.
+        """
+        source_path = Path(source_path).resolve()
+        target_path = Path(self.db.execute("PRAGMA database_list").fetchone()[2]).resolve()
+        if source_path == target_path:
+            raise ValueError("Cache source and destination must differ")
+        source_hash = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        with closing(sqlite3.connect(source_path.as_uri()+"?mode=ro", uri=True)) as source:
+            if not source.execute("SELECT 1 FROM sealed").fetchone():
+                raise BudgetStop("Cache source must be a sealed allocation")
+            if source.execute("SELECT 1 FROM calls WHERE charge IS NULL OR response IS NULL").fetchone():
+                raise BudgetStop("Unresolved source responses cannot be imported")
+            rows = source.execute("SELECT key,response FROM calls ORDER BY key").fetchall()
+        imported = 0
+        with self.db:
+            self.db.execute("BEGIN IMMEDIATE")
+            if self.db.execute("SELECT 1 FROM sealed").fetchone():
+                raise BudgetStop("Cache destination is sealed")
+            if self.db.execute("SELECT 1 FROM calls WHERE charge IS NULL").fetchone():
+                raise BudgetStop("Unresolved destination request blocks cache import")
+            for key, response in rows:
+                json.loads(response)
+                existing = self.db.execute("SELECT response,charge FROM calls WHERE key=?", (key,)).fetchone()
+                if existing is not None:
+                    if existing[0] != response or existing[1] is None:
+                        raise ValueError("Conflicting cached API response")
+                    continue
+                self.db.execute("INSERT INTO calls VALUES (?,?,?,?,?,?)",
+                    (uuid.uuid4().hex, key, "previously-paid-cache", 0, 0, response))
+                imported += 1
+        if hashlib.sha256(source_path.read_bytes()).hexdigest() != source_hash:
+            raise ValueError("Sealed cache source changed")
+        payload = [(key, hashlib.sha256(response.encode()).hexdigest()) for key, response in rows]
+        return {"source_ledger": str(source_path), "source_sha256": source_hash,
+                "settled_responses": len(rows), "imported_responses": imported,
+                "imported_charge_usd": 0,
+                "response_digest_sha256": hashlib.sha256(json.dumps(payload).encode()).hexdigest()}
 
     def close(self):
         self.db.close()
