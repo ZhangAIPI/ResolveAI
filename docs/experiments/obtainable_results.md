@@ -19,7 +19,7 @@ Grounded accuracy, evidence-found rate, correct-evidence-use rate and unsupporte
 | GPT-6.1 Sol | -- | -- | 81.7 | 53.6 | 74.2 | 100.0 | 100.0 | 0.5 | 100.0 |
 | GPT-6.1 Terra | -- | -- | 75.8 | 67.9 | 73.7 | 100.0 | 100.0 | 0.5 | 100.0 |
 | GPT-5.4 mini | -- | -- | 42.5 | 51.8 | 45.0 | 4.3 | 4.3 | 0.0 | 100.0 |
-| GPT-4.1 mini | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| GPT-4.1 mini | -- | -- | 28.1 | 55.4 | 35.4 | 11.5 | 11.5 | 0.0 | 55.5 |
 | GPT-6 Luna | -- | -- | 57.5 | 82.1 | 64.1 | 99.0 | 99.0 | 1.0 | 100.0 |
 | GPT-6 Luna (Decisions) | -- | -- | 49.7 | 23.2 | 42.6 | 79.9 | 78.0 | 23.9 | 99.5 |
 
@@ -38,7 +38,7 @@ Coverage by arm (initial / full / interactive):
 - GPT-6.1 Sol: 0/0/209 of 209.
 - GPT-6.1 Terra: 144/144/209 of 209.
 - GPT-5.4 mini: 0/0/209 of 209.
-- GPT-4.1 mini: 0/0/97 of 209.
+- GPT-4.1 mini: 0/0/209 of 209.
 - GPT-6 Luna: 0/0/209 of 209.
 - GPT-6 Luna (Decisions): 0/0/209 of 209.
 

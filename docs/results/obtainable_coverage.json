@@ -1236,7 +1236,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 97
+        "interactive_agent": 209
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1248,12 +1248,12 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 73,
-          "identity": 24
+          "state": 153,
+          "identity": 56
         }
       },
       "complete_three_arms": false,
-      "complete_interactive": false,
+      "complete_interactive": true,
       "equivalent_replay_duplicates": 0,
       "manifests": [
         {
@@ -1300,7 +1300,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 97,
+          "admitted_obtainable_rows": 209,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -1308,11 +1308,11 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 97
+          "raw_episodes": 209
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
-        "Obtainable:interactive_agent": 97,
+        "Obtainable:interactive_agent": 209,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209

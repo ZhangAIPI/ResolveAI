@@ -8181,7 +8181,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 97
+        "interactive_agent": 209
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -8193,12 +8193,12 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 73,
-          "identity": 24
+          "state": 153,
+          "identity": 56
         }
       },
       "complete_three_arms": false,
-      "complete_interactive": false,
+      "complete_interactive": true,
       "equivalent_replay_duplicates": 0,
       "manifests": [
         {
@@ -8245,7 +8245,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 97,
+          "admitted_obtainable_rows": 209,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -8253,7 +8253,7 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 97
+          "raw_episodes": 209
         }
       ],
       "arms": {
@@ -8278,13 +8278,172 @@
           }
         },
         "interactive_agent": {
-          "complete": false,
-          "present": 97,
+          "complete": true,
+          "present": 209,
           "expected": 209,
           "by_task": {
-            "overall": null,
-            "state": null,
-            "identity": null
+            "overall": {
+              "episodes": 209,
+              "counts": {
+                "source_label_correct": 74,
+                "finished": 116,
+                "abstained": 5,
+                "definite": 111,
+                "episodes_with_request": 24,
+                "request_calls": 24,
+                "request_responses": 24,
+                "episodes_with_new_pixels": 24,
+                "new_pixel_images": 24,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 35.4066985645933,
+              "finished_pct": 55.50239234449761,
+              "abstained_pct": 2.3923444976076556,
+              "definite_pct": 53.110047846889955,
+              "request_pct": 11.483253588516746,
+              "new_pixel_image_pct": 11.483253588516746,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "view-02": 3,
+                "view-01": 17,
+                "original": 4
+              },
+              "request_status": {
+                "provided": 24
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 209,
+                "mean_episode_wall_s": 16.183372567946417,
+                "mean_input_tokens": 22687.191387559807,
+                "mean_output_tokens": 284.20574162679424,
+                "mean_model_calls": 7.22488038277512,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "fd69ff8ebfc2ea01be024122142db939e6eb3b83a0883ebd409ea74df82629f8",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt41_mini/episodes.sqlite"
+                ],
+                "trace_count": 209,
+                "unique_episode_count": 209
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "counts": {
+                "source_label_correct": 43,
+                "finished": 80,
+                "abstained": 1,
+                "definite": 79,
+                "episodes_with_request": 4,
+                "request_calls": 4,
+                "request_responses": 4,
+                "episodes_with_new_pixels": 4,
+                "new_pixel_images": 4,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 28.104575163398692,
+              "finished_pct": 52.287581699346404,
+              "abstained_pct": 0.6535947712418301,
+              "definite_pct": 51.63398692810458,
+              "request_pct": 2.6143790849673203,
+              "new_pixel_image_pct": 2.6143790849673203,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "original": 4
+              },
+              "request_status": {
+                "provided": 4
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 153,
+                "mean_episode_wall_s": 15.81001268426912,
+                "mean_input_tokens": 22035.843137254902,
+                "mean_output_tokens": 260.01960784313724,
+                "mean_model_calls": 7.196078431372549,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "cba3b0308e553e1e6527a1c967a0cfdb79055f89721edc269c6c308d48f57659",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt41_mini/episodes.sqlite"
+                ],
+                "trace_count": 153,
+                "unique_episode_count": 153
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "counts": {
+                "source_label_correct": 31,
+                "finished": 36,
+                "abstained": 4,
+                "definite": 32,
+                "episodes_with_request": 20,
+                "request_calls": 20,
+                "request_responses": 20,
+                "episodes_with_new_pixels": 20,
+                "new_pixel_images": 20,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 55.357142857142854,
+              "finished_pct": 64.28571428571429,
+              "abstained_pct": 7.142857142857143,
+              "definite_pct": 57.142857142857146,
+              "request_pct": 35.714285714285715,
+              "new_pixel_image_pct": 35.714285714285715,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "view-02": 3,
+                "view-01": 17
+              },
+              "request_status": {
+                "provided": 20
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 56,
+                "mean_episode_wall_s": 17.20344510727903,
+                "mean_input_tokens": 24466.76785714286,
+                "mean_output_tokens": 350.2857142857143,
+                "mean_model_calls": 7.303571428571429,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "3b26a7f37b8bb854947e9dc798b9cb9db67b430107bcf44187f6ae0d22f3a28a",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt41_mini/episodes.sqlite"
+                ],
+                "trace_count": 56,
+                "unique_episode_count": 56
+              }
+            }
           }
         }
       },
