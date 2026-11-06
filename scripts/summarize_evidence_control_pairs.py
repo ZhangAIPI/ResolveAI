@@ -4,6 +4,7 @@ Usage: python summarize_evidence_control_pairs.py REPO RUNTIME OUTPUT_JSON
 No model inference or publication. Requires complete V1 (8,360) and V2 (1,254).
 """
 import argparse
+from collections import Counter
 import hashlib
 import importlib
 import json
@@ -186,6 +187,18 @@ def main():
                     [indexed[model, "restore_preview", f]["source_label_match"] for f in selected],
                     [indexed[model, "adaptive", f]["source_label_match"] for f in selected],
                     selected, args.seed, args.bootstrap)
+        transitions = Counter()
+        for family in families:
+            before = indexed[model, "adaptive", family]
+            after = indexed[model, "adaptive_no_new_photo", family]
+            transitions[(before["verdict"], after["verdict"],
+                         bool(before["source_label_match"]),
+                         bool(after["source_label_match"]))] += 1
+        results["blocked_photo_answer_transitions"] = [
+            {"from": before, "to": after, "source_match_before": matched_before,
+             "source_match_after": matched_after, "families": count}
+            for (before, after, matched_before, matched_after), count
+            in sorted(transitions.items(), key=lambda item: repr(item[0]))]
         report["models"][model] = results
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

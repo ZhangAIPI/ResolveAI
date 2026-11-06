@@ -1710,7 +1710,7 @@
         "obtainable_rows_sha256": "40f81f1f670d89f555a403c384668492d5c0b448be784c12dbcd77705b625bc3"
       }
     },
-    "script_sha256": "c64a4db64a44662e22586b9b3bad92a24e38c852614f483ef6a9a4098105c095"
+    "script_sha256": "0724289330e7b5ef726e5e7ad4c450236a621b145e030a1a06ff9349d9dbf374"
   },
   "interpretation": {
     "no_new_photo": "Matched initial prompt/tools; access-permission intervention also changes request feedback.",
@@ -1978,6 +1978,43 @@
           ]
         }
       },
+      "blocked_photo_answer_transitions": [
+        {
+          "families": 101,
+          "from": "Need more evidence",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 29,
+          "from": "Refuted",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Refuted"
+        },
+        {
+          "families": 57,
+          "from": "Refuted",
+          "source_match_after": true,
+          "source_match_before": true,
+          "to": "Refuted"
+        },
+        {
+          "families": 2,
+          "from": "Supported",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Supported"
+        },
+        {
+          "families": 20,
+          "from": "Supported",
+          "source_match_after": true,
+          "source_match_before": true,
+          "to": "Supported"
+        }
+      ],
       "restore_minus_adaptive_by_observed_request": {
         "false": {
           "a_correct": 144,
@@ -3019,6 +3056,71 @@
           ]
         }
       },
+      "blocked_photo_answer_transitions": [
+        {
+          "families": 3,
+          "from": "Need more evidence",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 4,
+          "from": "Refuted",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 23,
+          "from": "Refuted",
+          "source_match_after": false,
+          "source_match_before": true,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 27,
+          "from": "Refuted",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Refuted"
+        },
+        {
+          "families": 52,
+          "from": "Refuted",
+          "source_match_after": true,
+          "source_match_before": true,
+          "to": "Refuted"
+        },
+        {
+          "families": 12,
+          "from": "Supported",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 29,
+          "from": "Supported",
+          "source_match_after": false,
+          "source_match_before": true,
+          "to": "Need more evidence"
+        },
+        {
+          "families": 18,
+          "from": "Supported",
+          "source_match_after": false,
+          "source_match_before": false,
+          "to": "Supported"
+        },
+        {
+          "families": 41,
+          "from": "Supported",
+          "source_match_after": true,
+          "source_match_before": true,
+          "to": "Supported"
+        }
+      ],
       "restore_minus_adaptive_by_observed_request": {
         "false": {
           "a_correct": 108,

@@ -408,11 +408,12 @@ Fixed preview restoration & 66.7 & 98.2 & 100.0\\
 
 \paragraph{Condition answers depend on photograph access.}
 We repeat Obtainable with a common cost budget of three, eight turns and 384 tokens per call (Table~\ref{tab:photo-access}).
-Preventing the trained policy from obtaining new photographs lowers accuracy from 69.4\% to 44.5\%.
-Exactly 52 correct answers become incorrect, with no changes in the opposite direction: a 24.9-point drop (paired 95\% CI: 19.1--30.6).
-All 52 changes concern condition; identity answers are unchanged.
+Preventing the trained policy from obtaining new photographs lowers source-label agreement from 69.4\% to 44.5\%, a 24.9-point difference (paired 95\% CI: 19.1--30.6).
+The 52 lost matches comprise 29 Supported and 23 Refuted answers that become Need more evidence, with no changes in the opposite direction.
+All concern condition; identity answers are unchanged.
+Abstention can be appropriate after denial.
 \textbf{The trained policy responds to whether original detail is accessible.}
-This intervention changes photo access and request feedback while preserving the initial prompt and tools.
+This comparison retains the original source labels while changing photo access and request feedback; it does not measure the correctness of abstention under the blocked access.
 
 \paragraph{A fixed request remains competitive.}
 A public rule restoring the initial previews to their recorded originals reaches 75.1\% for SFT+RL and 68.9\% for Base.
