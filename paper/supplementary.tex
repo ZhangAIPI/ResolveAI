@@ -47,6 +47,13 @@ The main tables pair decisions with and without tools and separately compare the
 These are the same 209 families and source-label metric as the main table.
 Additional photographs do not guarantee better decisions.
 \input{tables/full_access_reference}
+\paragraph{All photographs are not an accuracy upper bound.}
+On Sufficient, providing every obtainable image initially changes Qwen3-VL-8B from 74.6\% to 75.1\% under direct answering.
+Identity accuracy rises from 87.5\% to 91.1\%, while condition accuracy changes from 69.9\% to 69.3\%.
+InternVL3.5-14B instead falls from 59.8\% to 53.1\% overall.
+Additional images do not consistently improve accuracy, even before a search policy is involved.
+The full-access reference thus checks whether more visual material helps the same answer format; it cannot be assumed to dominate every interactive policy.
+Complete task-wise results are in the supplement.
 \input{tables/agent_responses}
 \input{tables/efficiency_reference}
 

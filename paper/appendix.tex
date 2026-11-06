@@ -369,6 +369,25 @@ Qwen3-VL-8B with direct GRPO starts from the pretrained base without SFT, for 64
 RL and SFT+RL share the sampled-group budget, but differ in optimizer updates, reference policies and total training compute. Each setting uses one training seed, so these comparisons do not establish a general ranking of training methods. All rows retain the fixed paper cohort, failure accounting and inference allowances. Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.
 % adaptation-results-end
 
+\paragraph{Action targets change request behavior.}
+SFT on full public histories can predict only the final decision or both actions and the final decision.
+With identity-only training, photograph requests rise from 0\% to 73.2\% when action targets are included; with mixed-task training, they rise from 0\% to 39.2\%.
+All additional requests concern condition originals, with no new identity views.
+The update cap is shared within each pair; target-token compute is not matched.
+The supplement gives the complete comparison.
+
+\begin{table}[t]\centering\small
+\caption{\textbf{Action-target ablation for 8B SFT.}
+Fraction (\%) requesting a photograph in Obtainable.
+Public histories and the update cap are shared within each pair.}
+\label{tab:action-targets}
+\begin{tabular}{@{}lrr@{}}\toprule
+Training data & Final decision & Actions + final\\\midrule
+Identity & 0.0 & 73.2\\
+Mixed-task & 0.0 & 39.2\\
+\bottomrule\end{tabular}
+\end{table}
+
 % rl-final-diagnostics-start
 \section{Final-Checkpoint Diagnostics}
 The main GRPO results use the fixed endpoint at group 64. Validation selection also includes the initial policy as a candidate. We separately evaluate the fixed final checkpoint at group 64 for both backbones to examine the policies after actual optimization. The endpoint evaluations were specified before their scoring. We adopted endpoint reporting for the main table on November 4 after inspecting both checkpoint variants for 2B and 8B; both variants remain reported here. Remaining RL runs follow the same endpoint rule regardless of their test scores. The data, tools, inference allowances and fixed paper cohort remain unchanged.
@@ -467,3 +486,14 @@ These comparisons use the same frozen 209 families and four access versions. All
 % evidence-interventions-complete
 \section{Controlling Photo Access}
 \input{tables/evidence_interventions}
+
+
+
+\paragraph{Paired uncertainty and cases.}
+We resample the 209 case families in pairs, using 20,000 bootstrap replicates with seed 20261106 and central 95\% percentile intervals.
+The released comparison records both directions of answer changes, including failures and abstentions.
+Request-based groups reflect the adaptive policy's choices and are descriptive.
+For \texttt{case-008fddbd675adc4570ad-Obtainable}, the claim concerns a squeezed or deformed capsule body.
+The adaptive and blocked-photo policies answer Refuted from the initial images.
+Fixed restoration returns the $1000\!\times\!1000$ original corresponding to the $48\!\times\!48$ preview and answers Supported, matching the source annotation \texttt{squeeze}.
+All three runs submit a valid final response.

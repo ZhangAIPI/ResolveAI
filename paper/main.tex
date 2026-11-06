@@ -385,42 +385,51 @@ The paired correctness vectors are unchanged, as are the full-access results.
 The short direct outputs therefore do not result from hitting the 96-token limit.
 This control isolates the per-call output allowance under direct answering.
 
-\paragraph{Action targets change request behavior.}
-We also compare SFT on complete public histories with two target choices: only the final decision, or both actions and the final decision.
-\textbf{Action supervision changes whether the policy requests evidence.}
-With identity-only training, the fraction making a photograph request in Obtainable is 0\% with final-decision targets and 73.2\% with action targets.
-With mixed-task training, the corresponding fractions are 0\% and 39.2\% (Table~\ref{tab:action-targets}).
-All additional requests in both action-supervised settings concern condition originals; neither policy requests another identity view.
-Both comparisons use the same update cap, rather than matched target-token compute.
-The result distinguishes exposure to tool results in a history from supervision to issue the preceding call.
-
-\paragraph{One request reaches the constructed evidence set.}
-An evaluator-side search finds a one-request path to the annotated image-record requirements for every Obtainable case.
-For all 56 identity controls, the required record restores an initial preview to its original resolution.
-A public rule using only the preview metadata selects exactly the same queries as this annotation-guided search.
-Other recorded viewpoints are accessible, but the current construction admits a fixed solution to image selection.
-The supplement lists the exact request comparison.
-
-
 \begin{table}[t]\centering\small
-\caption{\textbf{Action-target ablation for 8B SFT.}
-Fraction (\%) requesting a photograph in Obtainable.
-Public histories and the update cap are shared within each pair.}
-\label{tab:action-targets}
-\begin{tabular}{@{}lrr@{}}\toprule
-Training data & Final decision & Actions + final\\\midrule
-Identity & 0.0 & 73.2\\
-Mixed-task & 0.0 & 39.2\\
+\caption{\textbf{Does obtaining another photograph help?}
+Obtainable cases, cost budget three.
+Source-label accuracy and new-image rates are percentages.
+Blocking retains the adaptive prompt and tools.
+Fixed restoration ends with an immediate answer.}
+\label{tab:photo-access}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Policy & Condition & Identity & New image\\\midrule
+\multicolumn{4}{l}{\emph{Qwen3-VL-8B Base}}\\
+Adaptive & 28.1 & 60.7 & 0.0\\
+New photos blocked & 28.1 & 60.7 & 0.0\\
+Fixed preview restoration & 59.5 & 94.6 & 100.0\\
+\midrule
+\multicolumn{4}{l}{\emph{Qwen3-VL-8B SFT+RL}}\\
+Adaptive & 64.7 & 82.1 & 32.5\\
+New photos blocked & 30.7 & 82.1 & 0.0\\
+Fixed preview restoration & 66.7 & 98.2 & 100.0\\
 \bottomrule\end{tabular}
 \end{table}
 
-\paragraph{All photographs are not an accuracy upper bound.}
-On Sufficient, providing every obtainable image initially changes Qwen3-VL-8B from 74.6\% to 75.1\% under direct answering.
-Identity accuracy rises from 87.5\% to 91.1\%, while condition accuracy changes from 69.9\% to 69.3\%.
-InternVL3.5-14B instead falls from 59.8\% to 53.1\% overall.
-Additional images do not consistently improve accuracy, even before a search policy is involved.
-The full-access reference thus checks whether more visual material helps the same answer format; it cannot be assumed to dominate every interactive policy.
-Complete task-wise results are in the supplement.
+\paragraph{Condition answers depend on photograph access.}
+We repeat Obtainable with a common cost budget of three, eight turns and 384 tokens per call (Table~\ref{tab:photo-access}).
+Preventing the trained policy from obtaining new photographs lowers accuracy from 69.4\% to 44.5\%.
+Exactly 52 correct answers become incorrect, with no changes in the opposite direction: a 24.9-point drop (paired 95\% CI: 19.1--30.6).
+All 52 changes concern condition; identity answers are unchanged.
+\textbf{The trained policy responds to whether original detail is accessible.}
+This intervention changes photo access and request feedback while preserving the initial prompt and tools.
+
+\paragraph{A fixed request remains competitive.}
+A public rule restoring the initial previews to their recorded originals reaches 75.1\% for SFT+RL and 68.9\% for Base.
+Its 5.7-point difference from trained adaptive search has a paired 95\% CI of $[-0.5,12.4]$.
+The rule selects the same queries as an annotation-guided search in all 209 cases.
+For all 56 identity controls, the required record restores an initial preview rather than exposing a new frame.
+Unlike adaptive search, this reference is asked to answer immediately after the scheduled request.
+\textbf{The current cases reward detail recovery without requiring a sequence of new viewpoints.}
+Complete policies and task-wise results are in the supplement.
+
+\paragraph{A correctable error can remain unexamined.}
+For one capsule, SFT+RL rejects the claim that its body is squeezed or deformed from a $48\!\times\!48$ preview, then stops without requesting an image.
+Fixed restoration retrieves the $1000\!\times\!1000$ original and returns Supported, matching the MVTec annotation.
+Across the 141 families where the adaptive policy makes no request, restoration corrects 24 errors but loses nine correct answers.
+Among the 68 requesting families, it corrects six and loses nine.
+The fixed rule's net gain thus comes from cases where the learned policy stops without requesting.
+These groups describe the policy's choices, with the same final-interface difference noted above.
 
 \paragraph{Limitations.}
 Condition queries chiefly test recovery of original image detail, while identity queries permit additional recorded viewpoints.
