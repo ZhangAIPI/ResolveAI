@@ -347,8 +347,8 @@ The 7B and 2B SFT policies make no photograph requests.
 In contrast, 8B SFT obtains new images in 82 cases, all concerning condition detail.
 
 \paragraph{Action supervision.}
-We train 8B SFT on the same public histories with either final-answer targets alone or both actions and final answers.
-Including action targets raises photograph requests from 0\% to 73.2\% with identity training, and from 0\% to 39.2\% with mixed-task training.
+For 8B SFT, the same public histories supervise final answers alone or both actions and answers.
+Across all 209 test families, action targets raise requests from 0\% to 73.2\% after identity-only training, and from 0\% to 39.2\% after mixed-task training.
 The added requests recover condition originals; none obtains a new identity view.
 Thus, action supervision changes whether the policy asks for a photograph, but does not produce identity-view search on these cases.
 The paired runs share an update cap, rather than matched target-token compute; complete results are in the supplement.
