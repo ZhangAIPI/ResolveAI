@@ -1146,7 +1146,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 7
+        "interactive_agent": 209
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1158,12 +1158,12 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 5,
-          "identity": 2
+          "state": 153,
+          "identity": 56
         }
       },
       "complete_three_arms": false,
-      "complete_interactive": false,
+      "complete_interactive": true,
       "equivalent_replay_duplicates": 0,
       "manifests": [
         {
@@ -1196,10 +1196,10 @@
         },
         {
           "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/manifest.json",
-          "sha256": "01da05b3f831d1415a2764424910ce63fd87e0c59e748008e9c654c755696731",
-          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "sha256": "e6572bfcbe739cccc72831b82a576781bc992dc923beb2e382fe77f1b930392f",
+          "source_commit": "b08f5930b7470a52cc555fc1c1dbf6654b4d2702",
           "model_revision": "API service alias; actual returned model retained per call",
-          "configuration_sha256": "9b0437a26b792e8210ea4de9961991e805a775303482b2b6a969747c27e9d83a",
+          "configuration_sha256": "abb48af2c125bc3997b9aabb59c74dfe37ba0640a9bf2018cea55fc7a189fb4d",
           "public_evaluation_settings": {
             "budget": 12,
             "max_turns": 8,
@@ -1210,7 +1210,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 7,
+          "admitted_obtainable_rows": 209,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -1218,11 +1218,11 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 7
+          "raw_episodes": 209
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
-        "Obtainable:interactive_agent": 7,
+        "Obtainable:interactive_agent": 209,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209
@@ -1236,7 +1236,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 44
+        "interactive_agent": 97
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -1248,8 +1248,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 34,
-          "identity": 10
+          "state": 73,
+          "identity": 24
         }
       },
       "complete_three_arms": false,
@@ -1286,10 +1286,10 @@
         },
         {
           "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt41_mini/manifest.json",
-          "sha256": "067fa1b4a7b319695b856356ebd1d88e5a8485eba998a9abf28f627ffbba7768",
-          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "sha256": "f4a4e211fe98abcb502493462a182f974eda0cee831a1d882a80ce1a655fb6bc",
+          "source_commit": "b08f5930b7470a52cc555fc1c1dbf6654b4d2702",
           "model_revision": "API service alias; actual returned model retained per call",
-          "configuration_sha256": "3b620eae4e3cfeace17457b9a0e48b5583add99e685584be6754cb9f0483818c",
+          "configuration_sha256": "1530fbf71c840b6784a7c97ecdf14a5d5da6496f564b8b9585c1755744dbcebe",
           "public_evaluation_settings": {
             "budget": 12,
             "max_turns": 8,
@@ -1300,7 +1300,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 44,
+          "admitted_obtainable_rows": 97,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -1308,11 +1308,11 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 44
+          "raw_episodes": 97
         }
       ],
       "recorded_variant_arm_counts_including_replays": {
-        "Obtainable:interactive_agent": 44,
+        "Obtainable:interactive_agent": 97,
         "Sufficient:full_available_text": 209,
         "Sufficient:initial_text": 209,
         "Sufficient:interactive_agent": 209

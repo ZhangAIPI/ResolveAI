@@ -7906,7 +7906,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 7
+        "interactive_agent": 209
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -7918,12 +7918,12 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 5,
-          "identity": 2
+          "state": 153,
+          "identity": 56
         }
       },
       "complete_three_arms": false,
-      "complete_interactive": false,
+      "complete_interactive": true,
       "equivalent_replay_duplicates": 0,
       "manifests": [
         {
@@ -7956,10 +7956,10 @@
         },
         {
           "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/manifest.json",
-          "sha256": "01da05b3f831d1415a2764424910ce63fd87e0c59e748008e9c654c755696731",
-          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "sha256": "e6572bfcbe739cccc72831b82a576781bc992dc923beb2e382fe77f1b930392f",
+          "source_commit": "b08f5930b7470a52cc555fc1c1dbf6654b4d2702",
           "model_revision": "API service alias; actual returned model retained per call",
-          "configuration_sha256": "9b0437a26b792e8210ea4de9961991e805a775303482b2b6a969747c27e9d83a",
+          "configuration_sha256": "abb48af2c125bc3997b9aabb59c74dfe37ba0640a9bf2018cea55fc7a189fb4d",
           "public_evaluation_settings": {
             "budget": 12,
             "max_turns": 8,
@@ -7970,7 +7970,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 7,
+          "admitted_obtainable_rows": 209,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -7978,7 +7978,7 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 7
+          "raw_episodes": 209
         }
       ],
       "arms": {
@@ -8003,13 +8003,170 @@
           }
         },
         "interactive_agent": {
-          "complete": false,
-          "present": 7,
+          "complete": true,
+          "present": 209,
           "expected": 209,
           "by_task": {
-            "overall": null,
-            "state": null,
-            "identity": null
+            "overall": {
+              "episodes": 209,
+              "counts": {
+                "source_label_correct": 94,
+                "finished": 209,
+                "abstained": 60,
+                "definite": 149,
+                "episodes_with_request": 9,
+                "request_calls": 9,
+                "request_responses": 9,
+                "episodes_with_new_pixels": 9,
+                "new_pixel_images": 9,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 44.97607655502392,
+              "finished_pct": 100.0,
+              "abstained_pct": 28.708133971291865,
+              "definite_pct": 71.29186602870813,
+              "request_pct": 4.30622009569378,
+              "new_pixel_image_pct": 4.30622009569378,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "original": 8,
+                "view-02": 1
+              },
+              "request_status": {
+                "provided": 9
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 209,
+                "mean_episode_wall_s": 7.16823453060407,
+                "mean_input_tokens": 7489.760765550239,
+                "mean_output_tokens": 137.64593301435406,
+                "mean_model_calls": 2.875598086124402,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "dc8acc8a0a20eaeebce359f4b5ecc568c40b1528337b3f390045f9142f9a4022",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/episodes.sqlite"
+                ],
+                "trace_count": 209,
+                "unique_episode_count": 209
+              }
+            },
+            "state": {
+              "episodes": 153,
+              "counts": {
+                "source_label_correct": 65,
+                "finished": 153,
+                "abstained": 38,
+                "definite": 115,
+                "episodes_with_request": 8,
+                "request_calls": 8,
+                "request_responses": 8,
+                "episodes_with_new_pixels": 8,
+                "new_pixel_images": 8,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 42.48366013071895,
+              "finished_pct": 100.0,
+              "abstained_pct": 24.836601307189543,
+              "definite_pct": 75.16339869281046,
+              "request_pct": 5.228758169934641,
+              "new_pixel_image_pct": 5.228758169934641,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "original": 8
+              },
+              "request_status": {
+                "provided": 8
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 153,
+                "mean_episode_wall_s": 7.710003237282626,
+                "mean_input_tokens": 8182.398692810458,
+                "mean_output_tokens": 118.45751633986929,
+                "mean_model_calls": 3.1699346405228757,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "cb1e07dc0bc9d72a2492507add77156155b1a6473072ba5dbb3c07af457742bf",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/episodes.sqlite"
+                ],
+                "trace_count": 153,
+                "unique_episode_count": 153
+              }
+            },
+            "identity": {
+              "episodes": 56,
+              "counts": {
+                "source_label_correct": 29,
+                "finished": 56,
+                "abstained": 22,
+                "definite": 34,
+                "episodes_with_request": 1,
+                "request_calls": 1,
+                "request_responses": 1,
+                "episodes_with_new_pixels": 1,
+                "new_pixel_images": 1,
+                "episodes_with_repeated_image_request": 0,
+                "repeated_image_request_calls": 0
+              },
+              "source_label_accuracy_pct": 51.785714285714285,
+              "finished_pct": 100.0,
+              "abstained_pct": 39.285714285714285,
+              "definite_pct": 60.714285714285715,
+              "request_pct": 1.7857142857142858,
+              "new_pixel_image_pct": 1.7857142857142858,
+              "repeated_image_request_pct": 0.0,
+              "request_views": {
+                "view-02": 1
+              },
+              "request_status": {
+                "provided": 1
+              },
+              "reviewed_metrics": {
+                "grounded_accuracy_pct": null,
+                "evidence_found_rate_pct": null,
+                "correct_evidence_use_rate_pct": null,
+                "unsupported_decision_rate_pct": null
+              },
+              "efficiency": {
+                "episodes": 56,
+                "mean_episode_wall_s": 5.68804502842873,
+                "mean_input_tokens": 5597.375,
+                "mean_output_tokens": 190.07142857142858,
+                "mean_model_calls": 2.0714285714285716,
+                "mean_rejected_calls": 0.0,
+                "token_counts_applicable": true,
+                "accounting": "All expected episodes, including failures and abstentions. API replay timing follows score_api_results.api_usage; API latency is not an equal-hardware GPU comparison."
+              },
+              "trace_provenance": {
+                "ordered_family_trace_digest": "bb3217a63aed14da0e27bd761bbf4fd21e184b330fd4b2c260c414f9a2e6ab8b",
+                "source_databases": [
+                  "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt54_mini/episodes.sqlite"
+                ],
+                "trace_count": 56,
+                "unique_episode_count": 56
+              }
+            }
           }
         }
       },
@@ -8024,7 +8181,7 @@
       "coverage_by_arm": {
         "initial_text": 0,
         "full_available_text": 0,
-        "interactive_agent": 44
+        "interactive_agent": 97
       },
       "task_coverage_by_arm": {
         "initial_text": {
@@ -8036,8 +8193,8 @@
           "identity": 0
         },
         "interactive_agent": {
-          "state": 34,
-          "identity": 10
+          "state": 73,
+          "identity": 24
         }
       },
       "complete_three_arms": false,
@@ -8074,10 +8231,10 @@
         },
         {
           "path": "evaluation/cvpr-paper-priority/reviewer-api-obtainable/gpt41_mini/manifest.json",
-          "sha256": "067fa1b4a7b319695b856356ebd1d88e5a8485eba998a9abf28f627ffbba7768",
-          "source_commit": "528ec1384b87a1d5c3b7255d5f16f99068a23199",
+          "sha256": "f4a4e211fe98abcb502493462a182f974eda0cee831a1d882a80ce1a655fb6bc",
+          "source_commit": "b08f5930b7470a52cc555fc1c1dbf6654b4d2702",
           "model_revision": "API service alias; actual returned model retained per call",
-          "configuration_sha256": "3b620eae4e3cfeace17457b9a0e48b5583add99e685584be6754cb9f0483818c",
+          "configuration_sha256": "1530fbf71c840b6784a7c97ecdf14a5d5da6496f564b8b9585c1755744dbcebe",
           "public_evaluation_settings": {
             "budget": 12,
             "max_turns": 8,
@@ -8088,7 +8245,7 @@
             "tool_adapter": null,
             "assistant_prefix": null
           },
-          "admitted_obtainable_rows": 44,
+          "admitted_obtainable_rows": 97,
           "equivalent_replays": 0,
           "configured_variants": [
             "Obtainable"
@@ -8096,7 +8253,7 @@
           "configured_arms": [
             "interactive_agent"
           ],
-          "raw_episodes": 44
+          "raw_episodes": 97
         }
       ],
       "arms": {
@@ -8122,7 +8279,7 @@
         },
         "interactive_agent": {
           "complete": false,
-          "present": 44,
+          "present": 97,
           "expected": 209,
           "by_task": {
             "overall": null,
