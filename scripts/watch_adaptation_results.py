@@ -20,6 +20,7 @@ from scripts.sync_api_paper import synchronize
 
 START = "% adaptation-results-start"
 END = "% adaptation-results-end"
+REVIEWED = "% adaptation-analysis-reviewed"
 
 
 def complete_cohort(directory, families):
@@ -268,15 +269,18 @@ def publish(repo,runtime,entries):
                "paper/tables/training_ablation.tex":render_training_ablation([report for _,report in entries])}
     for entry,report in entries:
         changes[entry["public_report"]] = json.dumps(report,indent=2)+"\n"
-    body = result_text(entries)
     access_report=repo/"docs/results/adaptation_obtainable_results.json"
     if access_report.exists():
         from scripts.render_adaptation_access import render as render_access, revise_text
         changes["paper/tables/sft_results.tex"]=render_access(repo,json.loads(access_report.read_text()))
-        body=revise_text(body)
-    if body:
-        changes["paper/main.tex"] = replace_block((repo/"paper/main.tex").read_text(),body)
-        changes["paper/appendix.tex"] = replace_block((repo/"paper/appendix.tex").read_text(),detail_text(entries))
+    main_text=(repo/"paper/main.tex").read_text()
+    if REVIEWED not in main_text:
+        body=result_text(entries)
+        if access_report.exists():
+            body=revise_text(body)
+        if body:
+            changes["paper/main.tex"]=replace_block(main_text,body)
+            changes["paper/appendix.tex"]=replace_block((repo/"paper/appendix.tex").read_text(),detail_text(entries))
     publish_changes(repo,runtime,changes,"Update Table 2 with complete paired adaptation measurements")
 
 

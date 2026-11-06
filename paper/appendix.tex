@@ -497,3 +497,54 @@ For \texttt{case-008fddbd675adc4570ad-Obtainable}, the claim concerns a squeezed
 The adaptive and blocked-photo policies answer Refuted from the initial images.
 Fixed restoration returns the $1000\!\times\!1000$ original corresponding to the $48\!\times\!48$ preview and answers Supported, matching the source annotation \texttt{squeeze}.
 All three runs submit a valid final response.
+
+\section{Conditional and Overall Stopping Rates}
+\paragraph{Responding to failure is only part of stopping.}
+
+The 8B SFT+RL policy abstains in all 92 episodes where a requested photograph is denied, but gives definite answers in 116 of the 209 Unavailable episodes.
+Let \(U\) denote the Unavailable episodes and \(F\subseteq U\) those containing a failed photograph request.
+The observed abstention rates are
+\begin{equation}
+\Pr(\hat y=\Nme\mid F)=1,\qquad
+\Pr(\hat y=\Nme\mid U)=0.445.
+\label{eq:failed-request}
+\end{equation}
+The first rate is conditioned on the policy choosing to ask.
+All 92 requested episodes concern condition; among the other 117 episodes, one identity case ends in abstention and 116 end in definite answers.
+The 7B policy makes no requests and gives 209 definite answers in Unavailable.
+These outcomes distinguish responding to access feedback from initiating a search.
+A policy can consistently change its answer after denial while leaving other photographs unrequested.
+
+\section{Illustrative Submission Failure}
+\begin{figure}[t]\centering
+\input{figures/submission_case}
+\caption{\textbf{A failed final submission.}
+The model recognizes the vehicle across views but does not submit a valid answer.}
+\label{fig:cases}
+\end{figure}
+
+
+\section{Returned-Image Content Probe}
+We select all 68 budget-three SFT+RL histories with a request that returned new pixels.
+These all concern condition and place the request in the first assistant turn.
+The source photograph, initial preview and reference images remain unchanged on disk.
+For each recorded prefix we vary only the newly returned image: original RGB, a uniform gray image with identical dimensions, or a deterministic joint permutation of RGB pixel triplets.
+The permutation preserves the color histogram and dimensions while removing spatial structure.
+No condition name enters the public text.
+The request status remains provided.
+
+All three conditions use one prediction with the same finish-only tools, terminal instruction, greedy decoding, 384-token output cap and 8192-token context limit.
+Invalid or missing finish calls count as failures without retries.
+Audits verify identical non-pixel public inputs, processor tensors, token counts and image grids within every triplet.
+The earlier image blocks stay byte-identical after processing, and only the returned-image block changes.
+The three conditions each contain 68 valid final submissions.
+
+Source-label agreement is 49/68 for original images and 35/68 for both altered conditions.
+Each original-versus-altered comparison has 25 gained and 11 lost matches, with 24 matches and eight non-matches shared.
+The paired family bootstrap uses 20,000 replicates and seed 20261106; its central 95\% interval is $[4.41,36.76]$ percentage points.
+Both altered conditions give 68 Refuted answers, matching the 35 negative source labels.
+Their answer labels agree in all 68 histories, although full outputs and citations agree in only 48.
+
+This probe measures content sensitivity at selected request histories, rather than complete search-policy performance or independently reviewed evidence sufficiency.
+The native denial control permits further tool use, whereas all content-probe arms share a terminal-only continuation.
+Consequently, comparing abstention under denial with rejection under altered pixels does not by itself isolate the causal effect of feedback across the two experiments.

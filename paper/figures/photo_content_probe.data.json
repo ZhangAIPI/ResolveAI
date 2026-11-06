@@ -1,0 +1,72 @@
+{
+  "report": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/photo-content-probe-v1/results.json",
+  "report_sha256": "5a02c361c6c19294f88c034650b32d5eb0569f78c4a5e5278cfd9e3094cc51a0",
+  "scope": "Selected-history synthetic image-content probe; not native benchmark scores.",
+  "caption": "Responses to Changed Image Content.",
+  "histories_per_condition": 68,
+  "conditions": [
+    "real",
+    "gray",
+    "shuffled"
+  ],
+  "categories": [
+    "Supported",
+    "Refuted"
+  ],
+  "counts": [
+    [
+      36,
+      32
+    ],
+    [
+      0,
+      68
+    ],
+    [
+      0,
+      68
+    ]
+  ],
+  "zero_categories_omitted": [
+    "Need more evidence",
+    "Invalid finish"
+  ],
+  "paired_answer_changes": {
+    "gray": {
+      "changed_answers": 36,
+      "changed_answer_pct": 52.94117647058823,
+      "answer_transitions": {
+        "Refuted -> Refuted": 32,
+        "Supported -> Refuted": 36
+      }
+    },
+    "shuffled": {
+      "changed_answers": 36,
+      "changed_answer_pct": 52.94117647058823,
+      "answer_transitions": {
+        "Refuted -> Refuted": 32,
+        "Supported -> Refuted": 36
+      }
+    }
+  },
+  "source_label_matches_for_body_only": {
+    "real": 49,
+    "gray": 35,
+    "shuffled": 35
+  },
+  "source_label_agreement_pct_for_body_only": {
+    "real": 72.05882352941177,
+    "gray": 51.470588235294116,
+    "shuffled": 51.470588235294116
+  },
+  "body_note": "All conditions replay the same selected public history with one finish-only call. Only the newly returned photograph is replaced. Gray and shuffled versions both produce 68 Refuted responses, with no abstention or invalid output. These artificial images have no independently adjudicated expected answers. The figure shows final response distributions; it does not report native benchmark accuracy.",
+  "figure_size_inches": [
+    3.34,
+    2.0
+  ],
+  "font": "Nimbus Roman",
+  "colors": [
+    "#547b93",
+    "#414141"
+  ]
+}

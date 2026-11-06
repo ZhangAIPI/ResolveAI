@@ -39,18 +39,14 @@ def render(repo,report):
     policies={(p["model"],p["policy"]):p for p in report["policies"]}
     if set(policies)!={(m,t) for m in MODELS for t in METHODS}:raise ValueError("Expected twelve policies")
     lines=[
-      r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
-      r"\begin{minipage}{.94\textwidth}\centering",
-      r"\caption{\textbf{Training with supplied and withheld evidence.}",
-      r"SFT uses mixed-task trajectories; RL starts from the base model; SFT+RL applies GRPO after SFT.",
-      r"RL checkpoints follow 64 training groups. All accuracy columns use source labels and retain failed and abstaining attempts.",
-      r"Obtainable uses the interactive setting; New image counts requests returning new pixels.",
-      r"Time and output tokens describe these Obtainable interactions. Best accuracy is bold within each model and column.}",
-      r"\label{tab:sft}",
-      r"\begin{tabular}{@{}llrrrrrrrr@{}}\toprule",
-      r" & & \multicolumn{2}{c}{Sufficient accuracy} & \multicolumn{3}{c}{Obtainable accuracy} & \multicolumn{3}{c}{Obtainable agent}\\",
-      r"\cmidrule(lr){3-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}",
-      r"Model & Training & Direct & Agent & Cond. & Identity & Overall & New image (\%) & Time (s) & Output tokens\\\midrule"
+      '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{3pt}',
+      '\\begin{minipage}{.94\\textwidth}\\centering',
+      '\\caption{\\textbf{Effect of post-training.} Bold marks the best accuracy within each model.}',
+      '\\label{tab:sft}',
+      '\\begin{tabular}{@{}llrrrrrrrr@{}}\\toprule',
+      ' & & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy with tools} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
+      '\\cmidrule(lr){3-4}\\cmidrule(lr){5-7}\\cmidrule(l){8-10}',
+      'Model & Training & No tools & With tools & Condition & Identity & Overall & New image (\\%) & Time (s) & Output tokens\\\\\\midrule',
     ]
     for index,model in enumerate(MODELS):
         all_values=[]
@@ -71,6 +67,8 @@ def render(repo,report):
 
 def revise_text(text):
     """Keep the author analysis consistent when the legacy training block refreshes."""
+    if "% adaptation-analysis-reviewed" in text:
+        return text
     text=text.replace("Qwen2.5-VL-7B rises from 3.8\\% to 73.7\\% with tools.",
                       "On Sufficient, Qwen2.5-VL-7B rises from 3.8\\% to 73.7\\% with tools.")
     a=text.index(r"\textbf{SFT improves completion and efficiency.}")

@@ -32,6 +32,36 @@ DIRS={
  '8B RL':P/'qwen3_8b_rl_only_final/benchmark',
  '8B SFT+RL':P/'qwen3_8b_grpo_final/benchmark',
 }
+def render_main_search_behavior(result):
+    """Render the representative policies from the recorded behavior totals."""
+    rows=(
+        ("2B SFT+RL","Qwen3-VL-2B","SFT+RL"),
+        ("7B SFT+RL","Qwen2.5-VL-7B","SFT+RL"),
+        ("8B Base","Qwen3-VL-8B","Base"),
+        ("8B RL","Qwen3-VL-8B","RL"),
+        ("8B SFT+RL","Qwen3-VL-8B","SFT+RL"),
+    )
+    lines=[
+      '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{5pt}',
+      '\\begin{minipage}{.84\\textwidth}\\centering',
+      '\\caption{\\textbf{Photograph requests and stopping.}}',
+      '\\label{tab:search-behavior}',
+      '\\begin{tabular}{@{}llrrrrr@{}}\\toprule',
+      ' & & \\multicolumn{3}{c}{Obtainable (\\%)} & \\multicolumn{2}{c}{Unavailable (\\%)}\\\\',
+      '\\cmidrule(lr){3-5}\\cmidrule(l){6-7}',
+      'Model & Training & Requests & New image & Finished & Definite & Need more\\\\\\midrule',
+    ]
+    for name,model,training in rows:
+        obtainable=result["policies"][name]["Obtainable"]["overall"]["totals"]
+        unavailable=result["policies"][name]["Unavailable"]["overall"]["totals"]
+        values=[100*obtainable[key]/obtainable["episodes"]
+                for key in ("requested","novel_image_request","finished")]
+        values += [100*unavailable[key]/unavailable["episodes"]
+                   for key in ("definite","abstained")]
+        lines.append(model+" & "+training+" & "+" & ".join(f"{v:.1f}" for v in values)+r"\\")
+    return "\n".join(lines+[r"\bottomrule\end{tabular}\end{minipage}\end{table*}"])+"\n"
+
+
 def load(d,only_interactive=True):
     files=[d/'episodes.sqlite'] if (d/'episodes.sqlite').exists() else sorted(d.glob('shard-*/episodes.sqlite'))
     assert files,d
@@ -217,6 +247,7 @@ for name in DIRS:
     values=[o[k] for k in ['requested','novel_image_request','repeated_image_request','abstained','finished']]
     lines.append(name+' & '+' & '.join(map(str,values))+ ' & '+frac+r'\\')
 lines += [r'\bottomrule',r'\end{tabular}',r'\end{table*}']
-(OUT/'search_behavior_table.tex').write_text('\n'.join(lines)+'\n')
+(OUT/'search_behavior_counts_table.tex').write_text('\n'.join(lines)+'\n')
+(OUT/'search_behavior_table.tex').write_text(render_main_search_behavior(result))
 print(json.dumps({'output':str(out),'table':str(OUT/'search_behavior_table.tex'),
  'bytes':out.stat().st_size,'paired8b':result['paired_8b_rl_to_sftrl'],'text384_identical':{name:value['all_primary_predictions_identical'] for name,value in result['text384_controls'].items()}},indent=2))

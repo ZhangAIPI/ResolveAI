@@ -1,15 +1,11 @@
 \begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
 \begin{minipage}{.84\textwidth}\centering
-\caption{\textbf{Behavior when additional evidence is withheld.}
-Percentages use all attempted families in each version.
-Requests counts episodes with a photograph request; New image counts the return of previously unseen pixels.
-Finished includes definite answers and explicit abstentions.
-Definite and Abstained report final responses in Unavailable.}
+\caption{\textbf{Photograph requests and stopping.}}
 \label{tab:search-behavior}
 \begin{tabular}{@{}llrrrrr@{}}\toprule
- & & \multicolumn{3}{c}{Obtainable} & \multicolumn{2}{c}{Unavailable}\\
+ & & \multicolumn{3}{c}{Obtainable (\%)} & \multicolumn{2}{c}{Unavailable (\%)}\\
 \cmidrule(lr){3-5}\cmidrule(l){6-7}
-Model & Training & Requests & New image & Finished & Definite & Abstained\\\midrule
+Model & Training & Requests & New image & Finished & Definite & Need more\\\midrule
 Qwen3-VL-2B & SFT+RL & 30.6 & 0.5 & 96.2 & 95.7 & 0.5\\
 Qwen2.5-VL-7B & SFT+RL & 0.0 & 0.0 & 100.0 & 100.0 & 0.0\\
 Qwen3-VL-8B & Base & 5.7 & 5.7 & 85.2 & 79.9 & 7.2\\

@@ -32,20 +32,15 @@ def render(sufficient, closed, obtainable):
         ORDER.index(m["model_id"]) if m["group"]=="Open weights" else
         ["gpt61_sol","terra-eval","gpt54_mini","gpt41_mini","luna","luna_decisions_tools"].index(m["name"])))
     lines=[
-      r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{3.3pt}",
-      r"\begin{minipage}{.98\textwidth}\centering",
-      r"\caption{\textbf{Answering with supplied evidence and searching when an image is withheld.}",
-      r"Sufficient and Obtainable use the same families and source labels. Accuracy (\%) counts abstentions and missing final answers as errors.",
-      r"New image counts requests returning previously unseen RGB pixels within each task (153 condition, 56 identity), not independently verified sufficient evidence. Finish includes valid abstentions.",
-      r"Time and generated tokens average all Obtainable agent attempts; input tokens are excluded.",
-      r"Local runs use RTX A6000; API time includes network and CPU tools.",
-      r"$^{\dagger}$Decisions selects supplied action and citation parameters; generated-text counts are inapplicable. -- indicates an incomplete or inapplicable measurement.}",
-      r"\label{tab:benchmark}",
-      r"\begin{tabular}{@{}lrrrrrrrrrr@{}}\toprule",
-      r" & \multicolumn{2}{c}{Sufficient accuracy} & \multicolumn{3}{c}{Obtainable accuracy} & \multicolumn{2}{c}{New image} & \multicolumn{3}{c}{Obtainable agent}\\",
-      r"\cmidrule(lr){2-3}\cmidrule(lr){4-6}\cmidrule(lr){7-8}\cmidrule(l){9-11}",
-      r" & \multicolumn{2}{c}{Overall} & \multicolumn{3}{c}{Agent} & \multicolumn{2}{c}{(\%)} & & &\\",
-      r"Model & Direct & Agent & Cond. & Identity & Overall & Cond. & Identity & Finish (\%) & Time (s) & Tokens\\\midrule"
+      '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{2.2pt}',
+      '\\begin{minipage}{.98\\textwidth}\\centering',
+      '\\caption{\\textbf{Zero-shot model comparison.} Search and cost refer to Obtainable.}',
+      '\\label{tab:benchmark}',
+      '\\begin{tabular}{@{}lrrrrrrrrrr@{}}\\toprule',
+      ' & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy} & \\multicolumn{2}{c}{New image} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
+      '\\cmidrule(lr){2-3}\\cmidrule(lr){4-6}\\cmidrule(lr){7-8}\\cmidrule(l){9-11}',
+      ' & \\multicolumn{2}{c}{Overall} & \\multicolumn{3}{c}{With tools} & \\multicolumn{2}{c}{(\\%)} & & &\\\\',
+      'Model & No tools & With tools & Condition & Identity & Overall & Condition & Identity & Finished (\\%) & Time (s) & Output tokens\\\\\\midrule',
     ]
     previous=None
     for model in models:

@@ -1,17 +1,12 @@
-\begin{table*}[t]\centering\small\setlength{\tabcolsep}{3.3pt}
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{2.2pt}
 \begin{minipage}{.98\textwidth}\centering
-\caption{\textbf{Answering with supplied evidence and searching when an image is withheld.}
-Sufficient and Obtainable use the same families and source labels. Accuracy (\%) counts abstentions and missing final answers as errors.
-New image counts requests returning previously unseen RGB pixels within each task (153 condition, 56 identity), not independently verified sufficient evidence. Finish includes valid abstentions.
-Time and generated tokens average all Obtainable agent attempts; input tokens are excluded.
-Local runs use RTX A6000; API time includes network and CPU tools.
-$^{\dagger}$Decisions selects supplied action and citation parameters; generated-text counts are inapplicable. -- indicates an incomplete or inapplicable measurement.}
+\caption{\textbf{Zero-shot model comparison.} Search and cost refer to Obtainable.}
 \label{tab:benchmark}
 \begin{tabular}{@{}lrrrrrrrrrr@{}}\toprule
- & \multicolumn{2}{c}{Sufficient accuracy} & \multicolumn{3}{c}{Obtainable accuracy} & \multicolumn{2}{c}{New image} & \multicolumn{3}{c}{Obtainable agent}\\
+ & \multicolumn{2}{c}{Sufficient accuracy} & \multicolumn{3}{c}{Obtainable accuracy} & \multicolumn{2}{c}{New image} & \multicolumn{3}{c}{Obtainable interaction}\\
 \cmidrule(lr){2-3}\cmidrule(lr){4-6}\cmidrule(lr){7-8}\cmidrule(l){9-11}
- & \multicolumn{2}{c}{Overall} & \multicolumn{3}{c}{Agent} & \multicolumn{2}{c}{(\%)} & & &\\
-Model & Direct & Agent & Cond. & Identity & Overall & Cond. & Identity & Finish (\%) & Time (s) & Tokens\\\midrule
+ & \multicolumn{2}{c}{Overall} & \multicolumn{3}{c}{With tools} & \multicolumn{2}{c}{(\%)} & & &\\
+Model & No tools & With tools & Condition & Identity & Overall & Condition & Identity & Finished (\%) & Time (s) & Output tokens\\\midrule
 \multicolumn{11}{l}{\emph{Open weights}}\\
 Qwen2.5-VL-7B & 15.8 & 3.8 & 0.0 & 0.0 & 0.0 & 0.0 & 1.8 & 76.6 & 15.4 & 280\\
 Qwen3-VL-2B & 60.3 & 40.7 & 19.6 & 46.4 & 26.8 & 0.0 & 3.6 & 45.9 & 13.4 & 409\\
