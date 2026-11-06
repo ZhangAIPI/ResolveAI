@@ -1,0 +1,30 @@
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}
+\caption{\textbf{Photo-access controls on Obtainable cases.} Accuracy and new-image rates are percentages.
+New images are identified from decoded RGB pixels. All attempts remain in denominators.
+Input counts include offered tokens in rejected context-limit calls.
+No-new-photo preserves the native initial prompt and tool schema but blocks additional photographs.
+Full available is a privileged access reference.
+Restore preview matches the provisional annotation-guided requests; no separate oracle inference or timing is reported.}
+\label{tab:evidence-interventions}
+\begin{tabular}{@{}llrrrrrrrr@{}}\toprule
+& & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{New image} & & & &\\
+Model & Policy & Cond. & Ident. & Cond. & Ident. & Finish & Time (s) & Input & Output\\\midrule
+8B Base & Adaptive & 28.1 & 60.7 & 0.0 & 0.0 & 100.0 & 13.3 & 14350 & 264\\
+ & Adaptive, no new photo & 28.1 & 60.7 & 0.0 & 0.0 & 100.0 & 13.3 & 14350 & 264\\
+ & Finish only & 2.6 & 33.9 & 0.0 & 0.0 & 100.0 & 4.7 & 2616 & 120\\
+ & Request original & 59.5 & 33.9 & 100.0 & 0.0 & 100.0 & 8.9 & 3052 & 206\\
+ & Fixed order & 7.2 & 30.4 & 0.0 & 0.0 & 100.0 & 7.5 & 5100 & 180\\
+ & Random order & 32.0 & 73.2 & 48.4 & 82.1 & 100.0 & 9.6 & 4405 & 226\\
+ & Restore preview & 59.5 & 94.6 & 100.0 & 100.0 & 100.0 & 10.2 & 3209 & 233\\
+ & Full available & 35.3 & 92.9 & 0.0 & 0.0 & 99.0 & 8.6 & 3868 & 191\\
+\midrule
+8B SFT+RL & Adaptive & 64.7 & 82.1 & 44.4 & 0.0 & 100.0 & 8.6 & 4475 & 144\\
+ & Adaptive, no new photo & 30.7 & 82.1 & 0.0 & 0.0 & 100.0 & 7.1 & 4352 & 126\\
+ & Finish only & 41.2 & 83.9 & 0.0 & 0.0 & 100.0 & 5.9 & 1644 & 111\\
+ & Request original & 66.7 & 83.9 & 100.0 & 0.0 & 100.0 & 8.1 & 1971 & 132\\
+ & Fixed order & 22.2 & 14.3 & 0.0 & 0.0 & 100.0 & 3.7 & 2501 & 63\\
+ & Random order & 38.6 & 69.6 & 48.4 & 82.1 & 98.6 & 7.9 & 2490 & 138\\
+ & Restore preview & 66.7 & 98.2 & 100.0 & 100.0 & 100.0 & 8.2 & 2092 & 133\\
+ & Full available & 69.9 & 100.0 & 0.0 & 0.0 & 100.0 & 7.4 & 2215 & 124\\
+\bottomrule
+\end{tabular}\end{table*}
