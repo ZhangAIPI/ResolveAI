@@ -167,7 +167,8 @@ Direct decisions permit at most 96 output tokens; interactive turns permit 384.
 Input images are capped at \(512\times512\) pixels, without additional InternVL tiling.
 Checkpoint-native preprocessing and any architecture-specific behavior remain recorded in manifests.
 
-Direct and interactive output caps differ, so their score gap cannot isolate the effect of finding more evidence. Capability attribution requires replaying final decisions with matched output allowance and formatting, auditing presented images and resolution, and reporting truncation separately. This control has not been run.
+Direct and interactive settings differ in output allowance and response format.
+The controls below test the token cap, scheduled requests and returned-image content separately; they do not fully match the original direct and interactive interfaces.
 
 Qwen3.5 uses a separate Transformers 5.3.0 environment with thinking disabled.
 The remaining reported models use Transformers 4.57.6.

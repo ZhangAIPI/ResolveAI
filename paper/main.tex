@@ -302,9 +302,9 @@ A dash denotes an incomplete or inapplicable measurement.
 
 \input{tables/sft_results}
 
-\subsection{Baseline Performance}
+\subsection{Main Results}
 
-\paragraph{Withheld photographs expose a performance gap.}
+\paragraph{Effect of withheld evidence.}
 The same interactive Qwen3-VL-8B policy reaches 82.3\% in Sufficient and 52.6\% in Obtainable (Table~\ref{tab:benchmark}).
 For direct answering on Obtainable, supplying all obtainable photographs initially raises accuracy from 34.9\% to 72.7\% (supplement), yet the interactive policy retrieves a new image in only 5.7\% of episodes.
 The available photographs can improve answers, but the policy rarely obtains them.
@@ -313,7 +313,7 @@ Sol reaches 81.7\% on condition and 53.6\% on identity; Luna reaches 57.5\% and 
 Both retrieve new images in nearly every episode.
 Their reversed task ranking shows why overall accuracy alone gives an incomplete comparison.
 
-\paragraph{Interaction can fail before visual judgment is submitted.}
+\paragraph{Completion errors.}
 Giving a model tools changes more than its access to images.
 Qwen3-VL-2B loses 63 answers that were correct without tools in Obtainable; 55 of those episodes end without a valid final submission.
 An initially sufficient identity case illustrates the distinction for 8B.
@@ -322,59 +322,63 @@ The interaction takes 100.5 seconds and receives zero, compared with 1.1 seconds
 This is a failure to complete the interface, despite a correct object description.
 The supplement shows this case and separates malformed submissions, explicit abstentions and wrong definite answers for every model.
 
-\paragraph{Higher tool-enabled accuracy need not reflect new evidence.}
+\paragraph{Accuracy and evidence requests.}
 The 8B model gains 37 net correct answers over direct answering in Obtainable.
 Of these, 36 occur among the 197 episodes with no photograph request; requesting episodes contribute a net gain of one.
 These are groups chosen by the policy, so the comparison is descriptive.
 Nevertheless, the traces show that \textbf{most of this accuracy gain occurs while working with existing images}.
 We therefore examine requests and their outcomes alongside final answers.
 
-\paragraph{Shorter episodes need not be more efficient solutions.}
+\paragraph{Interaction efficiency.}
 The 2B model averages 13.4 seconds in Obtainable, compared with 20.5 seconds for 8B, but finishes only 45.9\% of episodes rather than 85.2\%.
-A failed submission remains in both the accuracy and timing denominators.
-Consequently, a short interaction can reflect an early failure, rather than a cheaper route to a correct answer.
-The completion and accuracy columns make this distinction visible alongside token and time costs.
-We use these end-to-end measures when comparing the adapted policies, rather than interpreting model size or generation speed alone as interaction efficiency.
+An early failure can shorten the interaction without making a correct answer cheaper.
+Time and tokens therefore need to be read together with accuracy and completion.
+All four measures include failed and abstaining attempts.
 
-\subsection{Effects of Post-training}
+\subsection{Post-training Results}
 \label{sec:sft}
 % adaptation-results-start
 % adaptation-analysis-reviewed
-\paragraph{SFT improves completion and efficiency.}
+\paragraph{Supervised fine-tuning.}
 Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools in Sufficient.
 For 2B in Obtainable, valid completion increases from 45.9\% to 100\%, mean time falls from 13.4 to 6.2 seconds, and output falls from 409 to 139 tokens.
 These improvements make the adapted policy easier to run as an agent, but do not establish that it has learned to request evidence.
 The 7B and 2B SFT policies make no photograph requests.
 In contrast, 8B SFT obtains new images in 82 cases, all concerning condition detail.
 
-\paragraph{Supplied-evidence gains do not consistently transfer to search.}
+\paragraph{Action supervision.}
+We train 8B SFT on the same public histories with either final-answer targets alone or both actions and final answers.
+Including action targets raises photograph requests from 0\% to 73.2\% with identity training, and from 0\% to 39.2\% with mixed-task training.
+The added requests recover condition originals; none obtains a new identity view.
+Thus, action supervision changes whether the policy asks for a photograph, but does not produce identity-view search on these cases.
+The paired runs share an update cap, rather than matched target-token compute; complete results are in the supplement.
+
+\paragraph{Reinforcement learning.}
 SFT+RL improves Sufficient accuracy over SFT for all three models.
 Its Obtainable effects differ: 8B rises from 67.0\% to 70.8\%, while 7B falls from 57.9\% to 55.5\% and 2B from 59.3\% to 56.5\%.
 The distinction matters because the claims are unchanged; only photograph access differs.
 \textbf{Training that improves answers from supplied images need not improve answers when an image must be requested.}
 These single-run comparisons characterize the tested policies rather than establish a general ranking of SFT and RL.
 
-\paragraph{Task-wise changes locate the improvement.}
-For 7B, adding RL after SFT improves condition accuracy by 1.3 points but lowers identity accuracy by 12.5 points.
-The overall decrease therefore combines two different effects.
-For 8B, identity accuracy instead rises from 76.8\% to 83.9\%, even though neither SFT nor SFT+RL requests an additional identity image.
-That gain concerns decisions from the available views.
-\textbf{An identity-score improvement is not necessarily an improvement in multi-view search.}
-The separate task and new-image columns prevent a change in visual judgment from being mistaken for better evidence selection.
+\paragraph{Task-wise performance.}
+Adding RL after SFT improves 7B condition accuracy by 1.3 points but lowers identity accuracy by 12.5 points.
+For 8B, identity instead rises from 76.8\% to 83.9\%, although neither policy obtains additional identity images.
+\textbf{Better identity answers do not necessarily mean better multi-view search.}
+Here the gain concerns decisions based on the supplied views.
 
-\paragraph{Similar answer scores can hide different search policies.}
+\paragraph{RL versus SFT+RL.}
 For 8B, RL and SFT+RL differ by one correct answer in Sufficient: 84.2\% versus 83.7\%.
 In Obtainable, SFT+RL is more accurate (70.8\% versus 55.5\%) and uses less time (9.2 versus 23.1 seconds) and output (153 versus 395 tokens).
 It retrieves new images in 92 families, compared with 14 for RL, and finishes all episodes rather than 194.
-The requested material differs as well: RL retrieves new images in nine condition and five identity cases, whereas all 92 SFT+RL retrievals concern condition originals.
-Thus, the increase in requests comes from detail recovery, rather than additional identity views.
+RL retrieves nine condition and five identity images; SFT+RL retrieves only condition originals.
+Its extra requests therefore recover detail rather than additional identity views.
 % adaptation-results-end
 
-\subsection{Evidence Requests and Stopping}
+\subsection{Behavior Analysis}
 
 \input{tables/search_behavior}
 
-\paragraph{Requesting is not the same as obtaining new information.}
+\paragraph{Request outcomes.}
 Table~\ref{tab:search-behavior} separates requests, new images and completion in Obtainable from final responses in Unavailable.
 The 2B SFT+RL policy requests photographs in 64 cases but receives a new image in only one.
 Its 63 condition requests ask for the overview already supplied.
@@ -383,16 +387,18 @@ Figure~\ref{fig:teaser} shows the difference on a bottle: an overview request re
 Enlarging or cropping the repeated preview cannot restore the discarded detail.
 \textbf{The content of a request matters even when two policies spend the same number of calls.}
 
-\paragraph{Responding to denial does not ensure that a search begins.}
+\paragraph{Stopping after failed requests.}
 For the 92 families where 8B SFT+RL requests an original, Obtainable, Missing and Unavailable have identical public histories up to the response.
 When the original is provided, the policy gives a definite answer.
 When it cannot be supplied, all 92 responses change to Need more evidence.
 Yet it gives definite answers in 116 of all 209 Unavailable cases.
-The apparent difference comes from the denominator: successful abstention after denial concerns cases in which the policy chose to ask, while the overall rate also includes cases where it never requested the missing photograph.
-A policy can respond consistently to a failed request and still stop too early elsewhere.
+The apparent difference comes from the denominator: observed abstention after denial concerns cases in which the policy chose to ask, while the overall rate also includes cases where it never requested the missing photograph.
+Consistent abstention after denial does not establish that the policy reliably decides when a request is needed.
+
+\subsection{Ablation Studies}
 
 \begin{table}[t]\centering\small
-\caption{\textbf{Photo-access controls.}}
+\caption{\textbf{Photo-request controls.}}
 \label{tab:photo-access}
 \begin{tabular}{@{}lrrr@{}}\toprule
  & \multicolumn{2}{c}{Accuracy (\%)} & \\
@@ -401,66 +407,74 @@ Policy & Condition & Identity & New image (\%)\\\midrule
 \multicolumn{4}{l}{\emph{Qwen3-VL-8B Base}}\\
 Adaptive & 28.1 & 60.7 & 0.0\\
 New photos blocked & 28.1 & 60.7 & 0.0\\
+Fixed order & 7.2 & 30.4 & 0.0\\
+Random order & 32.0 & 73.2 & 57.4\\
 Fixed restoration & 59.5 & 94.6 & 100.0\\
 \midrule
 \multicolumn{4}{l}{\emph{Qwen3-VL-8B SFT+RL}}\\
 Adaptive & 64.7 & 82.1 & 32.5\\
 New photos blocked & 30.7 & 82.1 & 0.0\\
+Fixed order & 22.2 & 14.3 & 0.0\\
+Random order & 38.6 & 69.6 & 57.4\\
 Fixed restoration & 66.7 & 98.2 & 100.0\\
 \bottomrule\end{tabular}
 \end{table}
 
-\paragraph{Controlled access changes condition answers.}
+\paragraph{Photograph availability.}
 Table~\ref{tab:photo-access} uses the same 209 Obtainable families with a common tool-cost limit of three, eight turns and 384 output tokens per call.
 Adaptive retains the original agent interface.
 New photos blocked preserves that initial prompt and tool menu, but denies additional photographs.
-Fixed preview restoration uses public metadata to request each preview's original, then asks for an immediate final answer.
+Fixed and random order select the first public request in listed or family-seeded shuffled order.
+Fixed restoration uses public metadata to request each preview's original.
+All three schedules share a finish-only continuation; Adaptive retains intermediate tools.
 
-Blocking new photographs changes 52 previously source-matching answers to Need more evidence: 29 Supported and 23 Refuted.
+For SFT+RL, blocking photographs changes 52 source-matching answers to Need more evidence: 29 Supported and 23 Refuted.
 All changes concern condition; identity answers are unchanged.
 Agreement with the original source labels falls from 69.4\% to 44.5\%, a 24.9-point difference (paired 95\% CI: 19.1--30.6).
 These abstentions can be appropriate under blocked access.
 The comparison therefore demonstrates a response to access and failure feedback, rather than by itself establishing use of the returned pixels.
 
-\begin{figure}[t]\centering
-\includegraphics[width=\linewidth]{figures/photo_content_probe.pdf}
-\caption{\textbf{Responses to changed image content.}}
-\label{fig:content}
-\end{figure}
-
-\paragraph{Image content changes the final answer.}
-From the cost-three Adaptive run in Table~\ref{tab:photo-access}, we replay the 68 condition histories in which 8B SFT+RL requests an original photograph.
-Each history ends with one finish-only prediction using either the real returned image, a same-size gray image or shuffled RGB pixels.
+\paragraph{Returned-image content.}
+We replay 68 condition histories where 8B SFT+RL requests an original under the cost-three limit.
+Each history ends with one finish-only prediction using the real image, a same-size gray image or shuffled RGB pixels.
 Earlier photographs, request metadata and the successful provided status remain identical.
-The three conditions give 204 single-decision trials under a shared terminal interface.
+These 204 trials separate returned-image content from request success.
 
-The real images produce 49 source-matching answers, compared with 35 for each altered-image condition: 72.1\% versus 51.5\%, a 20.6-point paired difference (95\% CI: 4.4--36.8).
-All submissions are valid.
-Yet both altered-image conditions produce Refuted in every case, while the real images produce 36 Supported and 32 Refuted answers (Figure~\ref{fig:content}).
-Neither alteration induces abstention.
-\textbf{Removing the new image's structure produces rejection rather than abstention.}
-The 35 matches under altered images are exactly the negative cases.
-The shuffled condition preserves the original color histogram while destroying spatial structure.
-Its identical all-Refuted response shows that preserving global image statistics does not preserve the policy's decisions.
-These altered inputs are deliberately uninformative controls; their source-label agreement is not a second benchmark score.
-This is a single-decision probe on policy-selected histories, separate from the native-agent scores.
+Real images yield 49 source-matching answers, compared with 35 for either alteration: 72.1\% versus 51.5\%, a 20.6-point paired difference (95\% CI: 4.4--36.8).
+All 204 outputs satisfy the finish schema.
+Both alterations produce Refuted in every case, accounting for all 35 negative source labels; neither induces abstention.
+Shuffling preserves the color histogram but destroys spatial structure.
+\textbf{The answer depends on the returned pixels, yet uninformative pixels produce rejection rather than abstention.}
+This probe concerns selected histories under a shared terminal interface, separately from native-agent performance.
 
-\paragraph{A simple restoration rule remains competitive.}
-Fixed restoration reaches 75.1\% for SFT+RL and 68.9\% for Base.
-The trained policy's 5.7-point gap has a paired 95\% CI of $[-0.5,12.4]$.
+\paragraph{Request selection.}
+For SFT+RL, random order returns new images in 57.4\% of episodes but reaches 38.6\% condition accuracy, compared with 66.7\% for fixed restoration under the same scheduled finish interface.
+Fixed order returns no new images and reaches 22.2\%.
+A request can consume the entire cost allowance without exposing any new detail.
+The result depends on which photograph is requested, not simply on adding a tool call.
+
+\paragraph{Fixed restoration.}
+Fixed restoration raises SFT+RL from 69.4\% to 75.1\% (5.7 points; paired 95\% CI: $[-0.5,12.4]$).
+For Base, it reaches 68.9\%.
 On a squeezed capsule, the adaptive policy rejects the claim from a $48\!\times\!48$ preview and stops without requesting.
 Restoring its $1000\!\times\!1000$ original changes the answer to Supported, matching the source annotation.
 The fixed rule also restricts the final interface, so its score difference includes that change.
+Its net gain consists of three condition answers and nine identity answers.
+Most of the improvement therefore comes from identity, where the adaptive policy never requests another image.
+Even restoring an existing identity frame remains a useful operation that the learned policy leaves to the fixed rule.
+The net gain includes 30 corrected and 18 lost answers.
+Among cases where Adaptive asks for no photograph, restoration corrects 24 and loses nine; among requesting cases, it corrects six and loses nine.
+These policy-selected groups locate most of the fixed rule's gain in cases where adaptive search never begins.
 Across the complete construction, this public rule selects the same requests as annotation-guided search.
 All 56 identity controls can meet their recorded evidence requirements by restoring an existing frame.
 \textbf{The current cases admit a fixed detail-recovery strategy without requiring a sequence of new viewpoints.}
 
-\paragraph{Interface controls and scope.}
-Increasing the direct output limit from 96 to 384 tokens leaves every paired answer unchanged for Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B.
-Output truncation therefore does not explain their direct-answer scores; response formatting and multi-turn completion remain separate factors.
-The supplement reports this control, action-target training, fixed and random request policies, full-access results and paired confidence intervals.
-Our quantitative tables use source labels and observed interactions; evidence sufficiency has not been independently adjudicated.
-The source groups and image hashes used for post-training are disjoint from evaluation, although the public photographs may have appeared in base-model pretraining.
+\paragraph{Evaluation controls and limitations.}
+For Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B, increasing the direct output limit from 96 to 384 tokens leaves every paired answer unchanged.
+Truncation does not explain their direct scores, although format and completion effects remain.
+The supplement reports full-access results, action-target ablations and interface controls.
+The quantitative tables measure source-label agreement, without independent sufficiency adjudication.
+Post-training and evaluation are disjoint in source groups and image hashes; base-model pretraining overlap cannot be excluded.
 
 \section{Conclusion}
 \benchmark pairs fixed object claims with different photograph access.
