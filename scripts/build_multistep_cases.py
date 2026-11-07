@@ -7,10 +7,13 @@ import argparse
 from collections import defaultdict
 from copy import deepcopy
 import hashlib
+from io import BytesIO
 from itertools import combinations, permutations, product
 import json
+import os
 from pathlib import Path
 import random
+import tempfile
 
 from PIL import Image
 
@@ -78,19 +81,51 @@ def validate_render_bank(bank_path, raw):
             raise ValueError("A hidden change alters public RGB pixels")
 
 
+def _atomic_write_if_changed(path, data):
+    if path.exists() and path.read_bytes() == data:
+        return
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix="." + path.name + ".",
+                                         suffix=".tmp", delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.chmod(temporary, path.stat().st_mode & 0o777 if path.exists() else 0o644)
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 def canonicalize(bank_path, raw):
-    """Strip PNG metadata before freezing file hashes and public observations."""
-    for row in raw["images"].values():
+    """Strip PNG metadata atomically; already canonical banks are never rewritten."""
+    updated, prepared = deepcopy(raw), []
+    # Validate every input before changing any file or the caller's manifest.
+    for row in updated["images"].values():
         path = bank_path.parent / row["path"]
-        old_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-        with Image.open(path) as opened:
+        original = path.read_bytes()
+        old_hash = hashlib.sha256(original).hexdigest()
+        if old_hash != row["sha256"]:
+            raise ValueError("Rendered asset file checksum changed before canonicalization")
+        with Image.open(BytesIO(original)) as opened:
             image = opened.convert("RGB")
-        image.save(path, format="PNG")
+        if (list(image.size) != row["size"]
+                or hashlib.sha256(image.tobytes()).hexdigest() != row["decoded_rgb_sha256"]):
+            raise ValueError("Rendered RGB changed before canonicalization")
+        encoded = BytesIO()
+        image.save(encoded, format="PNG")
+        prepared.append((path, encoded.getvalue()))
         row.setdefault("renderer_file_sha256", old_hash)
-        row["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        row["sha256"] = hashlib.sha256(encoded.getvalue()).hexdigest()
         row["size"] = list(image.size)
-    raw["png_canonicalization"] = "RGB PNG without EXIF or text metadata"
-    bank_path.write_text(json.dumps(raw, indent=2) + "\n")
+    updated["png_canonicalization"] = "RGB PNG without EXIF or text metadata"
+    for path, encoded in prepared:
+        _atomic_write_if_changed(path, encoded)
+    _atomic_write_if_changed(bank_path, (json.dumps(updated, indent=2) + "\n").encode())
+    raw.clear()
+    raw.update(updated)
 
 
 def selected_rows(raw, permutation, states):
