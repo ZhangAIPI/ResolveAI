@@ -538,3 +538,125 @@ Their answer labels agree in all 68 histories, although full outputs and citatio
 This probe measures content sensitivity at selected request histories, rather than complete search-policy performance or independently reviewed evidence sufficiency.
 The native denial control permits further tool use, whereas all content-probe arms share a terminal-only continuation.
 Consequently, comparing abstention under denial with rejection under altered pixels does not by itself isolate the causal effect of feedback across the two experiments.
+
+
+\section{Controlled Two-step Scene Construction}
+The procedural subset is distinct from the 478 public-data candidate families and their fixed 209-family labelled evaluation.
+There are 66 scene banks and two case families per bank, with four evidence-access versions per family.
+The two-request experiments use the Obtainable versions.
+Scene seeds 71000--71007 form the 16-case development set; seeds 71008--71065 form the 116-case held-out set.
+No seed is selected by model performance.
+The full 132-family cohort balances target positions (44 per position) and source labels (66 per label).
+Both members of each pair share the initial RGB images and public request options.
+They differ in the front texture assignment, target position and opposite claim label, while the available inspection positions remain the same.
+All statistics resample a complete two-family scene, rather than treating its members as independent.
+
+\paragraph{Rendered observations.}
+Blender produces reference, overview, front-survey and three rear-view photographs.
+The crate front textures provide identity information. Rear panels vary independently in the enumerated worlds; each evaluated pair retains one common mixed rear-state configuration.
+Opaque guards hide the identity and condition in the overview.
+The original request repeats this recorded overview at its existing resolution.
+A front view never exposes a rear state, and a rear view never exposes the front identity.
+Inspection positions and camera labels are public and fixed.
+The task therefore requires selecting a position after observing the front survey, without claiming unrestricted correspondence between freely moving objects.
+
+\paragraph{Sufficiency certificates.}
+For each bank, six front-identity permutations and eight rear-state assignments define 48 worlds.
+The constructor checks exact RGB and public-metadata compatibility after zero, one and the required two requests.
+Opposite claim labels remain possible after every single request.
+Both labels occur across the compatible worlds until the target rear state and its identity connection have been exposed.
+We separately render 198 counterfactual checks and verify the expected RGB equality.
+The agent never reads the world enumeration, visibility masks, unreleased images or source labels.
+Certificate validation uses the pixels actually returned by the environment, rather than the requested view name alone.
+
+\paragraph{Grounded scoring.}
+A source-label match can receive zero grounded credit.
+Definite answers require sufficient observed pixels, a valid reference-to-front identity link, a valid front-to-rear link and a diagnostic-region citation.
+Every submitted identity link must be correct; adding a false link cannot be repaired by also citing a correct one.
+All endpoints refer to released images with source-coordinate boxes.
+Identity regions require IoU at least 0.5.
+A scratch citation must cover at least 0.5 of the visible diagnostic mask, with IoU and precision at least 0.25.
+An intact-panel citation must cover at least 0.9 of the visible panel, with IoU and precision at least 0.5.
+Strict localization additionally requires one diagnostic box to cover at least 0.5 of the annotated scratch rectangle, or 0.9 of the intact-panel rectangle.
+These thresholds reject an entire-scene box used in place of a localized defect.
+First-hit masks account for actual visibility rather than projecting occluded scene geometry.
+These are exact checks of the constructed finite worlds, not independent human judgments about natural photographs.
+
+\section{Programmed View-selection Control}
+The RGB program uses the same public images as the models.
+Brown connected components supply candidate object boxes.
+To locate the reference, it compares normalized front textures after a ten-percent inner crop, resizing to $128^2$, Gaussian smoothing with $\sigma=3$ and normalized cross-correlation.
+A margin below 0.002 produces abstention.
+It requests the front survey first; its second request uses the predicted target position.
+The common terminal reader detects a scratch component at least four pixels large and twelve brightness units above the panel median, padding its box by two pixels.
+Intact panels are localized by a color-distance threshold of five.
+The program's parameters and source hashes were frozen after development and retained unchanged for all held-out runs.
+Private labels, masks and world certificates enter only scoring.
+The privileged comparison uses the true target position for request scheduling, but retains this same imperfect RGB reader.
+
+Adaptive requests find and correctly localize the evidence in 106/116 cases.
+The remaining cases contain six texture-margin abstentions and four wrong identity matches.
+The privileged selector exposes sufficient evidence in all 116 cases, but the common reader abstains on ten and also scores 106/116.
+This reference separates selection failures from reading failures; it is not an idealized perfect-answer upper bound.
+Five policies produce 580 complete episodes.
+All requests, failures and abstentions remain in their respective denominators.
+Grounded-accuracy uncertainty uses 10,000 paired-scene bootstrap samples with seed 20261107.
+The adaptive-minus-fixed difference is 62.1 percentage points with a 95\% interval of $[54.3,69.8]$.
+This experiment establishes feasibility under the specified renderer, texture and camera assumptions.
+It does not demonstrate learning, real-photo transfer or independently reviewed natural-image sufficiency.
+
+\section{Assisted Model Selection Diagnostic}
+Free-form native calls and the finite-choice diagnostic are reported separately.
+The latter supplies boxes from public RGB components and complete candidate chains, then scores the model's choice among them.
+These automatic links are interface assistance and do not constitute model-predicted grounding.
+A restricted next-token letter argmax prevents invalid call syntax.
+Adaptive requests use two model selections, whereas scheduled policies supply their two requests without model computation.
+Every arm then makes one terminal selection from the same observation-dependent candidate format.
+Model efficiency within this diagnostic therefore includes three calls for adaptive selection and one terminal call for scheduled policies.
+It must not be ranked against the native benchmark's unrestricted text output.
+The public instruction, options, images, token accounting, source fingerprints and complete episodes are retained for audit.
+
+\input{tables/multistep_models}
+
+\paragraph{Complete cohort and held-out comparison.}
+Each of the four tested policies completes 132 cases under five request strategies (660 episodes each; 2,640 overall).
+The held-out report first verifies all original episode keys, assets, manifests and trace hashes, then excludes the same 16 development cases used by the RGB program.
+No excluded case is permitted to hide a missing or corrupt source episode.
+The resulting 116-case comparison has 58 paired-scene bootstrap units and uses 20,000 resamples with seed 20261107.
+For Base, evidence-found rates are 34.5\% adaptive, zero restoration, 32.8\% fixed order, 10.3\% random and 100\% privileged.
+For SFT+RL, adaptive evidence found is 1.7\%, with the other four rates unchanged.
+The adaptive-minus-fixed difference is 1.7 points for Base (95\% CI: $[0,4.3]$) and $-31.0$ points for SFT+RL ($[-37.1,-25.0]$).
+Only one of 58 Base pairs receives sufficient evidence in both members; SFT+RL receives it in no pair.
+Thus, Base's improvement over restoration is largely reproduced by a fixed front-then-left schedule.
+Both models make valid choices and finish in every held-out episode.
+This completion control does not validate the content of their choices.
+
+\paragraph{Native-call pilot.}
+A separate 16-case pilot retains free-form native request and finish calls, with two request-selection stages followed by a fresh public terminal observation.
+Across the five request policies, Base submits no valid final answer in 80 episodes; RL submits eight, SFT submits 78 and SFT+RL submits 77.
+None of the 320 attempts receives strict grounded credit.
+Failure to finish is not a visual-recognition error.
+For adaptive selection, Base finds sufficient evidence in six cases, RL in three, and both SFT routes in zero.
+The Base policy never changes its second request across the eight matched pairs.
+These pilot runs expose native interface and evidence-chain failures; they are not pooled with the finite-choice scores.
+
+
+\paragraph{Fixed-option interface audit.}
+We independently reconstruct the first two case IDs in the adaptive and privileged arms for both Base and SFT+RL.
+All eight saved public-input hashes match the actual generation payload.
+CPU processor reconstruction matches every recorded input-token count and contains all image blocks, including both requested views in the privileged arms.
+Option letters map correctly to their displayed answers.
+The audit finds no missing-image, truncation or letter-mapping error in these records.
+It does not remove possible response-order bias: the unresolved answer is always option A.
+Restricted next-token scores are not calibrated answer confidence.
+The native pilot further shows that adapters can match some scene labels under a different terminal format, even when their complete grounded score is zero.
+Accordingly, finite-choice answer accuracy is a property of this specified interface and is not interpreted as a format-independent measure of visual understanding.
+
+\paragraph{Additional models.}
+Qwen3.5-9B and InternVL3.5-8B are evaluated through the same finite-choice interface and complete both 330-episode shards.
+Qwen3.5 finds sufficient evidence in six of 116 adaptive episodes, compared with 38 under fixed front-then-left requests; InternVL finds it in 35.
+Neither succeeds on both members of any held-out pair.
+Qwen3.5's adaptive-minus-fixed evidence difference is $-27.6$ points (paired-scene 95\% CI: $[-34.5,-19.8]$); InternVL's is $-2.6$ ($[-6.0,0]$).
+With privileged views, Qwen3.5 matches 58/116 scene labels, whereas InternVL matches two.
+Finite-choice validity is perfect for all arms.
+The adapters receive no procedural-case training; these runs evaluate existing policies under the specified interface rather than the effect of training on this new task.

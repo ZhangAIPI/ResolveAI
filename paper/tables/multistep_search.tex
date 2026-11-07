@@ -1,0 +1,24 @@
+\begin{table}[t]\centering\small
+\caption{\textbf{Two-step search.}
+The RGB program shares one reader across request policies.
+Grounded requires a correct answer, identity links and localized references.
+The lower block measures MLLM evidence found with assisted choices.
+All rates use the same held-out cases.}
+\label{tab:multistep}
+\begin{tabular}{@{}lrr@{}}\toprule
+RGB request policy & Found (\%) & Grounded (\%)\\\midrule
+Restore original & 0.0 & 0.0\\
+Fixed front $\rightarrow$ left & 32.8 & 29.3\\
+Random two views & 10.3 & 9.5\\
+Adaptive second view & 91.4 & \textbf{91.4}\\
+Privileged view selector & 100.0 & 91.4\\
+\midrule
+\multicolumn{3}{@{}l}{\emph{MLLM evidence found (\%)}}\\
+ & Adaptive & Front $\rightarrow$ left\\
+Qwen3-VL-8B Base & 34.5 & 32.8\\
+Qwen3-VL-8B SFT+RL & 1.7 & 32.8\\
+Qwen3.5-9B & 5.2 & 32.8\\
+InternVL3.5-8B & 30.2 & 32.8\\
+\bottomrule
+\end{tabular}
+\end{table}

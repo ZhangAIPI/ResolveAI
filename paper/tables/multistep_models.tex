@@ -1,0 +1,18 @@
+\begin{table*}[t]\centering\small
+\caption{\textbf{Complete assisted model diagnostic.}
+Found denotes sufficient observed pixels; Answer denotes scene-label agreement, including unsupported guesses.
+All 116 held-out cases remain in every arm.
+Regions and identity links are supplied candidates, so these are not native grounding scores.
+All choices and submissions are valid; privileged scheduling supplies the correct views but retains each model's own terminal reader.}
+\label{tab:multistep-models}
+\begin{tabular}{@{}lrrrrrrrr@{}}\toprule
+& \multicolumn{2}{c}{Qwen3-VL-8B Base} & \multicolumn{2}{c}{Qwen3-VL-8B SFT+RL} & \multicolumn{2}{c}{Qwen3.5-9B} & \multicolumn{2}{c}{InternVL3.5-8B}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Request policy & Found & Answer & Found & Answer & Found & Answer & Found & Answer\\\midrule
+Adaptive & 34.5 & 0.0 & 1.7 & 3.4 & 5.2 & 14.7 & 30.2 & 0.0\\
+Restore original & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0\\
+Front $\rightarrow$ left & 32.8 & 0.0 & 32.8 & 2.6 & 32.8 & 44.8 & 32.8 & 0.0\\
+Random two & 10.3 & 2.6 & 10.3 & 12.9 & 10.3 & 34.5 & 10.3 & 9.5\\
+Privileged views & 100.0 & 0.0 & 100.0 & 6.0 & 100.0 & 50.0 & 100.0 & 1.7\\
+\bottomrule\end{tabular}
+\end{table*}
