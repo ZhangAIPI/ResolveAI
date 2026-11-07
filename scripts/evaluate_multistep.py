@@ -32,6 +32,7 @@ ACQUISITION_INSTRUCTION = (
     "using the public request_options. You have two request slots, including any "
     "repeated or unhelpful requests. A final-answer phase follows the requests.\n"
 )
+TERMINAL_INPUT = "fresh-public-observation-and-public-request-feedback-v2"
 TERMINAL_INSTRUCTION = (
     "\nAcquisition has ended. For this final response, call finish exactly once "
     "using only the images and observations already supplied. No further requests "
@@ -179,6 +180,32 @@ def parsed_call(answer, name):
     return call
 
 
+
+def terminal_conversation(env, acquisition, executed, selection_error):
+    """One common readout serializer, using only actually released evidence.
+
+    The acquisition transcript remains trainer-side audit. A fresh conversation
+    prevents its tool menu or phase instruction from leaking into the readout.
+    Public request responses retain actual status, budget and returned IDs.
+    """
+    terminal = Conversation(env)
+    terminal.tools = [tool for tool in terminal.tools
+                      if tool["function"]["name"] == "finish"]
+    terminal.messages[0]["content"] += TERMINAL_INSTRUCTION
+    observed = env.observation()
+    observed["request_feedback"] = [{
+        "query": deepcopy(item["call"]["arguments"]["query"]),
+        "response": deepcopy(item["feedback"]),
+        "returned_image_ids": list(item["image_ids"]),
+    } for item in executed]
+    observed["selection_error"] = selection_error
+    terminal.messages[1]["content"] = content_for(observed)
+    # This is a fresh model input, not a fresh episode: retain actual accounting.
+    terminal.turns = acquisition.turns
+    terminal.errors = acquisition.errors
+    return terminal
+
+
 def run_episode(case, data_directory, client, policy, args, observation_token, evaluate):
     started = time.perf_counter()
     env = Environment(case, case.get("asset_root", data_directory), args.budget,
@@ -197,6 +224,7 @@ def run_episode(case, data_directory, client, policy, args, observation_token, e
     seen_rgb = {token["rgb_sha256"] for token in tokens}
     new_image_requests, new_pixel_images = 0, 0
     generations, executed = [], []
+    acquisition_session = session
     selection_error = None
     runtime_error = None
     schedule = None if policy == "adaptive_acquisition" else scheduled_views(case, policy, args.seed)
@@ -234,14 +262,14 @@ def run_episode(case, data_directory, client, policy, args, observation_token, e
             tokens.extend(returned)
             executed.append({"call": deepcopy(call), "status": result.get("status"),
                              "error": result.get("error"),
+                             "feedback": {k: deepcopy(v) for k, v in result.items() if k != "images"},
                              "image_ids": [image["image_id"] for image in result.get("images", [])]})
             if result.get("error"):
                 selection_error = result["error"]
                 break
-        # No prior final answer is generated or replayed. All policies use this
-        # same instruction, canonical finish schema and one terminal model call.
-        session.tools = [t for t in all_tools if t["function"]["name"] == "finish"]
-        session.messages[0]["content"] += TERMINAL_INSTRUCTION
+        # Every arm gets a fresh, identical serializer over its actual public
+        # evidence and request feedback, never an acquisition transcript replay.
+        session = terminal_conversation(env, acquisition_session, executed, selection_error)
         terminal_public_sha256 = sha_value(session.public())
         answer = offered_call(client, session, "terminal", args, generations)
         try:
@@ -265,6 +293,8 @@ def run_episode(case, data_directory, client, policy, args, observation_token, e
     wall_latency_s = time.perf_counter() - started
     score = evaluate(case, env.decision if env.finished else None, tokens)
     trace.update(
+        acquisition_messages=deepcopy(acquisition_session.messages),
+        terminal_input=TERMINAL_INPUT,
         generation=generations, wall_latency_s=wall_latency_s,
         observation_tokens=tokens, multistep_evaluation=deepcopy(score),
         native_evaluation=deepcopy(trace["evaluation"]),
@@ -296,7 +326,14 @@ def run_episode(case, data_directory, client, policy, args, observation_token, e
 
 
 def save_record(db, store, row, trace):
-    saved = store.write(trace)
+    # Reuse the native content-addressed store for both model-input phases.
+    # The pending JSONL is temporary and is removed only after SQLite commits.
+    record = deepcopy(trace)
+    terminal_count = len(record["messages"])
+    record["messages"].extend(record.pop("acquisition_messages", []))
+    saved = store.write(record)
+    saved["acquisition_messages"] = saved["messages"][terminal_count:]
+    saved["messages"] = saved["messages"][:terminal_count]
     row["trace_sha256"] = sha_value(saved)
     with db:
         db.execute("INSERT INTO episodes VALUES (?,?,?,?)",
@@ -313,7 +350,7 @@ def validate_saved(db, expected, cases, output, evaluate):
             raise ValueError("Unexpected saved episode")
         if sha_value(trace) != row["trace_sha256"]:
             raise ValueError("A saved trace changed")
-        for message in trace["messages"]:
+        for message in [*trace["messages"], *trace.get("acquisition_messages", [])]:
             if not isinstance(message.get("content"), list):
                 continue
             for part in message["content"]:
@@ -413,7 +450,7 @@ def main():
     indexed = {case["case_id"]: case for case in selected}
     expected = {(case["case_id"], policy) for case in selected for policy in args.policies}
     config = {
-        "experiment": "procedural-multistep-two-request-v1",
+        "experiment": "procedural-multistep-two-request-v2",
         "dataset": str(source), "dataset_sha256": sha_file(source),
         "assets": asset_fingerprint(all_cases, source.parent),
         "model": model_fingerprint(args.model, args.adapter),
@@ -430,6 +467,7 @@ def main():
         "random_rule": "SHA256(seed|paired_history_id) first 64 bits; uniform ordered sample of two distinct public views",
         "acquisition_instruction": ACQUISITION_INSTRUCTION,
         "terminal_instruction": TERMINAL_INSTRUCTION,
+        "terminal_input": TERMINAL_INPUT,
         "terminal_calls": 1, "oracle_privileged": True,
         "acquisition_assistant_text": "withheld-for-all-policies",
         "accounting": "Scheduled actions count as tool calls but generate no model tokens; adaptive selector calls remain in total compute.",

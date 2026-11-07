@@ -3,7 +3,9 @@
 The small fake grader exercises data flow and accounting. Certificate and region
 semantics are covered separately by test_multistep.py.
 """
+import base64
 from copy import deepcopy
+import io
 import json
 from pathlib import Path
 import sqlite3
@@ -136,6 +138,16 @@ class MultistepRunnerTests(unittest.TestCase):
         self.assertTrue(row["multistep_evaluation"]["chain_grounded_correct"])
         self.assertEqual(row["new_image_requests"], 2)
         self.assertNotIn("SELECTOR_PROSE", json.dumps(client.inputs[-1]))
+        self.assertNotIn(runner.ACQUISITION_INSTRUCTION,
+                         client.inputs[-1]["messages"][0]["content"])
+        self.assertIn(runner.TERMINAL_INSTRUCTION,
+                      client.inputs[-1]["messages"][0]["content"])
+        self.assertEqual(row["assistant_turns"], 3)
+        self.assertEqual(trace["metadata"]["turns"], 3)
+        self.assertEqual(len(trace["acquisition_messages"]), 6)
+        self.assertIn(runner.ACQUISITION_INSTRUCTION,
+                      trace["acquisition_messages"][0]["content"])
+        self.assertEqual(trace["terminal_input"], runner.TERMINAL_INPUT)
         self.assertIn("PRIVATE_SELECTOR_PROSE", json.dumps(trace["generation"]))
         self.assertEqual(
             [tool["function"]["name"] for tool in client.inputs[-1]["tools"]], ["finish"])
@@ -161,6 +173,60 @@ class MultistepRunnerTests(unittest.TestCase):
             self.assertTrue(row["selection_complete"])
             self.assertEqual(row["new_image_requests"], 2)
             self.assertNotIn("multistep_certificate", json.dumps(client.inputs[-1]))
+
+    def test_all_policies_share_fresh_finish_only_serializer(self):
+        systems, schemas = [], []
+        for policy in runner.POLICIES:
+            with self.subTest(policy=policy):
+                answers = [finish()]
+                if policy == "adaptive_acquisition":
+                    answers = [request("front_survey"), request("rear_left"), *answers]
+                client, row, trace = self.run_arm(policy, answers)
+                terminal = client.inputs[-1]
+                systems.append(terminal["messages"][0])
+                schemas.append(terminal["tools"])
+                self.assertEqual([m["role"] for m in terminal["messages"]],
+                                 ["system", "user"])
+                self.assertNotIn(runner.ACQUISITION_INSTRUCTION,
+                                 terminal["messages"][0]["content"])
+                self.assertIn(runner.TERMINAL_INSTRUCTION,
+                              terminal["messages"][0]["content"])
+                self.assertEqual([t["function"]["name"] for t in terminal["tools"]],
+                                 ["finish"])
+                self.assertEqual([g["phase"] for g in trace["generation"]].count("terminal"), 1)
+                self.assertEqual(row["assistant_turns"], 3)
+                self.assertEqual((row["requests"], row["request_cost"]), (2, 6))
+        self.assertTrue(all(system == systems[0] for system in systems))
+        self.assertTrue(all(schema == schemas[0] for schema in schemas))
+
+    def test_terminal_contains_only_actual_observations_and_public_feedback(self):
+        client, _, trace = self.run_arm("fixed_restoration", [finish()])
+        terminal = client.inputs[-1]
+        content = terminal["messages"][1]["content"]
+        public = json.loads(content[0]["text"])
+        metadata = [json.loads(item["text"]) for item in content[1:]
+                    if item["type"] == "text"]
+        self.assertEqual([item["image_id"] for item in metadata],
+                         ["reference", "initial", "original"])
+        pixels = [item for item in content if item["type"] == "image"]
+        self.assertEqual(len(pixels), len(metadata))
+        for info, item in zip(metadata, pixels):
+            image = Image.open(io.BytesIO(base64.b64decode(item["image_png"]))).convert("RGB")
+            expected = Image.open(self.root / (info["image_id"] + ".png")).convert("RGB")
+            self.assertEqual((image.size, image.tobytes()),
+                             (expected.size, expected.tobytes()))
+        self.assertEqual(public["budget"], 0)
+        self.assertEqual(public["request_feedback"], [{
+            "query": deepcopy(item["call"]["arguments"]["query"]),
+            "response": deepcopy(item["feedback"]),
+            "returned_image_ids": item["image_ids"],
+        } for item in trace["acquisition"]["executed_requests"]])
+        self.assertEqual([item["response"]["status"]
+                          for item in public["request_feedback"]], ["provided", "provided"])
+        self.assertNotIn("multistep_certificate", json.dumps(terminal))
+        self.assertNotIn("target_rear_view", json.dumps(terminal))
+        self.assertNotIn("world_id", json.dumps(terminal))
+        self.assertNotIn("rear_left", [item["image_id"] for item in metadata])
 
     def test_paired_random_has_no_replacement(self):
         first = runner.scheduled_views(self.case, "random_request", 7)
@@ -200,6 +266,10 @@ class MultistepRunnerTests(unittest.TestCase):
             runner.save_record(
                 db, TrajectoryStore(output / "pending-trace.jsonl"), row, trace)
             expected = {(self.case["case_id"], "fixed_restoration")}
+            saved_trace = json.loads(db.execute("SELECT trace FROM episodes").fetchone()[0])
+            self.assertIn("acquisition_messages", saved_trace)
+            self.assertNotIn("image_png", json.dumps(saved_trace))
+            self.assertIn("image_ref", json.dumps(saved_trace["acquisition_messages"]))
             saved, _ = runner.validate_saved(
                 db, expected, {self.case["case_id"]: self.case}, output, fake_score)
             self.assertEqual(saved, expected)
