@@ -1,0 +1,220 @@
+{
+  "scope": "Renderer-specific public-RGB program; mechanism sanity check, not a learned/general vision model.",
+  "comparison_scope": "Same CV terminal readout and exactly two Environment request_photo calls per arm. Only oracle scheduling uses the private target; all readout predictions use public RGB.",
+  "development": {
+    "banks": 8,
+    "families": 16,
+    "episodes": 80,
+    "parameter_tuning": "Pilot only"
+  },
+  "heldout": {
+    "banks": 58,
+    "families": 116,
+    "episodes": 580,
+    "seed_first": 71008,
+    "seed_last": 71065
+  },
+  "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+  "code_fingerprints": {
+    "scripts/evaluate_multistep_sanity.py": "95a51d9578bdfcaaf0794e9afafba0f70e725c16316a0f411bfe5f93778b191b",
+    "scripts/evaluate_multistep_choice.py": "1f3e3a3866ecbdb8fc466df3c40fb6fbb1932e5627960837d398dca590dc1d81",
+    "scripts/evaluate_multistep.py": "823c4d5bfd2a70e760929c727e32afe5a2698e8b4822ffbde9d1ac2a7821d0d1",
+    "src/resolveai/multistep.py": "404ca58ed246bf17e669f8ab31ba3b2eda6201e0f6e2005a32cebc16f1b3840c"
+  },
+  "frozen_pilot_manifest_sha256": "84ab3daaf3837c5763c4053213a28117339a1805f5bdd514aee406404e64789c",
+  "policy_parameters": {
+    "texture_inner_fraction": 0.1,
+    "texture_size": 128,
+    "texture_gaussian_sigma": 3,
+    "NCC_minimum_margin": 0.002,
+    "scratch_brightness_above_median": 12,
+    "scratch_component_pixels": 4,
+    "scratch_bbox_padding": 2,
+    "panel_color_distance": 5
+  },
+  "policies": {
+    "adaptive_acquisition": {
+      "privileged_reference": false,
+      "counts": {
+        "attempted": 116,
+        "source_label_correct": 107,
+        "procedural_evidence_sufficient": 106,
+        "chain_grounded_correct": 106,
+        "localized_grounded_correct": 106,
+        "simulator_grounded_correct": 106,
+        "unsupported_decision": 4,
+        "abstained": 6
+      },
+      "rates_pct": {
+        "source_label_correct": 92.24137931034483,
+        "procedural_evidence_sufficient": 91.37931034482759,
+        "chain_grounded_correct": 91.37931034482759,
+        "localized_grounded_correct": 91.37931034482759,
+        "simulator_grounded_correct": 91.37931034482759,
+        "unsupported_decision": 3.4482758620689653,
+        "abstained": 5.172413793103448
+      },
+      "identity_prediction_assessable": 110,
+      "identity_prediction_correct": 106,
+      "mean_episode_wall_s": 1.1068371004487212
+    },
+    "fixed_restoration": {
+      "privileged_reference": false,
+      "counts": {
+        "attempted": 116,
+        "source_label_correct": 0,
+        "procedural_evidence_sufficient": 0,
+        "chain_grounded_correct": 0,
+        "localized_grounded_correct": 0,
+        "simulator_grounded_correct": 0,
+        "unsupported_decision": 0,
+        "abstained": 116
+      },
+      "rates_pct": {
+        "source_label_correct": 0.0,
+        "procedural_evidence_sufficient": 0.0,
+        "chain_grounded_correct": 0.0,
+        "localized_grounded_correct": 0.0,
+        "simulator_grounded_correct": 0.0,
+        "unsupported_decision": 0.0,
+        "abstained": 100.0
+      },
+      "identity_prediction_assessable": 0,
+      "identity_prediction_correct": 0,
+      "mean_episode_wall_s": 0.5863524381571112
+    },
+    "fixed_view_order": {
+      "privileged_reference": false,
+      "counts": {
+        "attempted": 116,
+        "source_label_correct": 34,
+        "procedural_evidence_sufficient": 38,
+        "chain_grounded_correct": 34,
+        "localized_grounded_correct": 34,
+        "simulator_grounded_correct": 34,
+        "unsupported_decision": 2,
+        "abstained": 80
+      },
+      "rates_pct": {
+        "source_label_correct": 29.310344827586206,
+        "procedural_evidence_sufficient": 32.758620689655174,
+        "chain_grounded_correct": 29.310344827586206,
+        "localized_grounded_correct": 29.310344827586206,
+        "simulator_grounded_correct": 29.310344827586206,
+        "unsupported_decision": 1.7241379310344827,
+        "abstained": 68.96551724137932
+      },
+      "identity_prediction_assessable": 110,
+      "identity_prediction_correct": 106,
+      "mean_episode_wall_s": 0.7701704390517613
+    },
+    "random_request": {
+      "privileged_reference": false,
+      "counts": {
+        "attempted": 116,
+        "source_label_correct": 12,
+        "procedural_evidence_sufficient": 12,
+        "chain_grounded_correct": 11,
+        "localized_grounded_correct": 11,
+        "simulator_grounded_correct": 11,
+        "unsupported_decision": 1,
+        "abstained": 104
+      },
+      "rates_pct": {
+        "source_label_correct": 10.344827586206897,
+        "procedural_evidence_sufficient": 10.344827586206897,
+        "chain_grounded_correct": 9.482758620689655,
+        "localized_grounded_correct": 9.482758620689655,
+        "simulator_grounded_correct": 9.482758620689655,
+        "unsupported_decision": 0.8620689655172413,
+        "abstained": 89.65517241379311
+      },
+      "identity_prediction_assessable": 48,
+      "identity_prediction_correct": 44,
+      "mean_episode_wall_s": 0.6622802311191255
+    },
+    "oracle": {
+      "privileged_reference": true,
+      "counts": {
+        "attempted": 116,
+        "source_label_correct": 106,
+        "procedural_evidence_sufficient": 116,
+        "chain_grounded_correct": 106,
+        "localized_grounded_correct": 106,
+        "simulator_grounded_correct": 106,
+        "unsupported_decision": 0,
+        "abstained": 10
+      },
+      "rates_pct": {
+        "source_label_correct": 91.37931034482759,
+        "procedural_evidence_sufficient": 100.0,
+        "chain_grounded_correct": 91.37931034482759,
+        "localized_grounded_correct": 91.37931034482759,
+        "simulator_grounded_correct": 91.37931034482759,
+        "unsupported_decision": 0.0,
+        "abstained": 8.620689655172415
+      },
+      "identity_prediction_assessable": 110,
+      "identity_prediction_correct": 106,
+      "mean_episode_wall_s": 0.9267728331745683
+    }
+  },
+  "paired_scene_bootstrap": {
+    "groups": 58,
+    "cases_per_group": 2,
+    "resamples": 10000,
+    "seed": 20261107,
+    "metric": "simulator_grounded_correct",
+    "comparisons": {
+      "fixed_restoration": {
+        "adaptive_minus_comparator_percentage_points": 91.37931034482759,
+        "paired_scene_bootstrap_95CI_percentage_points": [
+          84.48275862068965,
+          98.27586206896551
+        ]
+      },
+      "fixed_view_order": {
+        "adaptive_minus_comparator_percentage_points": 62.06896551724138,
+        "paired_scene_bootstrap_95CI_percentage_points": [
+          54.310344827586206,
+          69.82758620689656
+        ]
+      },
+      "random_request": {
+        "adaptive_minus_comparator_percentage_points": 81.89655172413794,
+        "paired_scene_bootstrap_95CI_percentage_points": [
+          73.27586206896551,
+          89.65517241379311
+        ]
+      },
+      "oracle": {
+        "adaptive_minus_comparator_percentage_points": 0.0,
+        "paired_scene_bootstrap_95CI_percentage_points": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "invariants": {
+    "complete_policy_case_keys": true,
+    "all_two_requests": true,
+    "all_finished": true,
+    "all_procedural_certificates_valid": true,
+    "same_initial_public_inputs": true,
+    "code_unchanged_after_pilot": true,
+    "trace_digests_verified": 580,
+    "model_calls": 0
+  },
+  "library_versions": {
+    "opencv": "5.0.0",
+    "numpy": "2.3.2",
+    "Pillow": "12.2.0"
+  },
+  "limits": [
+    "Procedural renderer-specific texture, palette and camera assumptions.",
+    "No learned policy, natural-photo generalization, or native MLLM grounding claim.",
+    "The first requested view is scripted front_survey; only the second request depends on the observed texture match.",
+    "Private sufficient-evidence certificates evaluate the output but do not enter the RGB policy."
+  ]
+}

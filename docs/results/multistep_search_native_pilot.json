@@ -1,0 +1,2584 @@
+{
+  "schema_version": "multistep-native-pilot-v1",
+  "scope": "Standalone procedural identity-condition search; Obtainable only",
+  "interface_track": "native",
+  "complete": true,
+  "independent_human_review": false,
+  "cohort": {
+    "dataset_sha256": "db0028f046b15fbc70a9ba9bbf0b3e547d2ae37edea405b29cd9276bdc744399",
+    "manifest_sha256": "899325abad82b175da594254e6218507c622567c9d1911e967a16db2200f1a5c",
+    "episodes_per_policy": 16,
+    "paired_banks": 8,
+    "case_ids": [
+      "sim-search-10a3fa04cc8a69299fee-Obtainable",
+      "sim-search-2680892b8f892dbf5ef5-Obtainable",
+      "sim-search-2bf59d8a11a3aa87dad4-Obtainable",
+      "sim-search-2f9c32bda4ab6a1abefe-Obtainable",
+      "sim-search-387d8a3f3395c5dd748e-Obtainable",
+      "sim-search-4e6c29be2b0380bf9da3-Obtainable",
+      "sim-search-514ff6d77acdf793899c-Obtainable",
+      "sim-search-5a90fd2a079790246f5f-Obtainable",
+      "sim-search-603c0371115b11a8672b-Obtainable",
+      "sim-search-6c2e9045b4c0cb39ae62-Obtainable",
+      "sim-search-7251b391b736eef97f74-Obtainable",
+      "sim-search-8a58a2585c6cd0284221-Obtainable",
+      "sim-search-cf409364e63c24a70891-Obtainable",
+      "sim-search-d1fcbca1a08c45291aed-Obtainable",
+      "sim-search-d7518ef96abf7f5801c2-Obtainable",
+      "sim-search-f8f83fea98682fe273d1-Obtainable"
+    ],
+    "renderer_source_sha256": "3310b14b6b5a4d7fad23009f4bbb03692140f07508c0ff713772265db7044ed4"
+  },
+  "bootstrap": {
+    "unit": "paired_history_id / scene bank",
+    "replicates": 20000,
+    "seed": 20261107,
+    "method": "Paired percentile cluster bootstrap, central 95%; no multiplicity adjustment"
+  },
+  "denominator": "Every planned attempted episode, including invalid selections, failed submissions and abstentions",
+  "definitions": {
+    "chain_grounded_correct": "Correct source label, finite-world evidence identification and localized identity chain with diagnostic visible-mask coverage",
+    "localized_grounded_correct": "Chain-correct with the additional diagnostic rectangle IoU/precision thresholds",
+    "evidence_found": "Actual observed view hashes identify one source label in the finite world bank",
+    "duplicate_requests": "Executed requests beyond the first request for each public view in the same episode",
+    "efficiency": "All-attempt means; adaptive selector model calls count, scripted selectors generate no model tokens",
+    "tokens": "Offered native input tokens and all generated tokens; unavailable if any transport accounting is incomplete"
+  },
+  "analysis_script_sha256": "12a4d68b80d1356b7df91d7dcdaacb9bebe99e1fc6428bfc121df5d0d053f2a0",
+  "analysis_source_commit": "09d8d4ab72a45c0f239e0555a5ebb7ec73b57b59",
+  "settings": {
+    "budget": 6,
+    "max_new_tokens": 768,
+    "max_context_tokens": 8192,
+    "seed": 20261107,
+    "request_slots": 2,
+    "terminal_input": "fresh-public-observation-and-public-request-feedback-v2",
+    "terminal_calls": 1,
+    "source_sha256": "8bd227df9ed8d635773a33e836fda1f78f2ce356d45afe844c4257c3f2e49659",
+    "script_sha256": "823c4d5bfd2a70e760929c727e32afe5a2698e8b4822ffbde9d1ac2a7821d0d1"
+  },
+  "models": {
+    "Base": {
+      "complete": true,
+      "completed_episodes": 80,
+      "expected_episodes": 80,
+      "ordered_episode_sha256": "fc31f2e5fbf8c8777084ea558279175c201fffed861589082056ea9f972ad359",
+      "manifest_sha256": [
+        "2b43048b73ab86a1dd8faa0dab94dedd5d59a5c66315a5313b7e1a03997150a0"
+      ],
+      "model_configuration_sha256": "eef6e358a94ddb3d5e33c511524ab3004ae640d0d225c9fe03e4d6f6693ca32c",
+      "policies": {
+        "adaptive_acquisition": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 6,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 6,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 37.5,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 37.5,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 6720.0,
+            "output_tokens": 296.0,
+            "wall_latency_s": 12.650283480652433,
+            "model_calls": 3.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 16
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_restoration": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 16,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2595.0,
+            "output_tokens": 56.875,
+            "wall_latency_s": 2.930709842010401,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "request_photo": 14,
+              "compare": 2
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "original -> original": 16
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_view_order": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 6,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 6,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 37.5,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 37.5,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 220.0,
+            "wall_latency_s": 9.209899064124329,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 16
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "random_request": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2960.375,
+            "output_tokens": 208.1875,
+            "wall_latency_s": 8.753113350139756,
+            "model_calls": 1.0,
+            "new_image_requests": 1.625,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 2,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 15,
+              "request_photo": 1
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_right": 2,
+              "front_survey -> rear_left": 2,
+              "rear_center -> rear_left": 2,
+              "original -> front_survey": 4,
+              "rear_center -> rear_right": 2,
+              "rear_left -> rear_center": 2,
+              "original -> rear_right": 2
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "oracle": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 16,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 16,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 16,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 220.0,
+            "wall_latency_s": 9.212780581619882,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 8,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 8,
+              "both_second_requests_match_observed_targets": 8
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 6,
+              "front_survey -> rear_right": 5,
+              "front_survey -> rear_center": 5
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 37.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              18.75,
+              50.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 37.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              18.75,
+              50.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        }
+      },
+      "totals": {
+        "valid_finishes": 0,
+        "source_label_correct": 0,
+        "strict_grounded_correct": 0
+      }
+    },
+    "SFT": {
+      "complete": true,
+      "completed_episodes": 80,
+      "expected_episodes": 80,
+      "ordered_episode_sha256": "cfbbeb481de922334470bbe8459fd7568ef6c39395f046c35e96c78b744e9dba",
+      "manifest_sha256": [
+        "f5ea71a4b819fdb198050e9f98f484f8be8c6708635cb9bdee4d513a3636dc4e"
+      ],
+      "model_configuration_sha256": "c620d6245be03b86d131f9d9983cbb1f16064794dbb034cd2258a5594a878db7",
+      "policies": {
+        "adaptive_acquisition": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 8,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 0,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 50.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 0.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 1.0,
+            "input_tokens": 6331.0,
+            "output_tokens": 692.5,
+            "wall_latency_s": 35.980788319597195,
+            "model_calls": 3.0,
+            "new_image_requests": 1.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "invalid_request_photo": 16
+            },
+            "request_sequence_counts": {
+              "rear_center": 16
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 8,
+              "Supported": 8
+            },
+            "valid_finish_label_agreement": {
+              "correct": 8,
+              "valid_finishes": 16,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_restoration": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 8,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 16,
+            "selection_complete": 16,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 50.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2595.0,
+            "output_tokens": 173.0,
+            "wall_latency_s": 9.656934734419337,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "original -> original": 16
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 8,
+              "valid_finishes": 16,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_view_order": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 6,
+            "source_label_correct": 4,
+            "source_label_accuracy_pct": 66.66666666666667,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 15,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 9,
+            "finished": 15,
+            "front_then_target_rear": 6,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 15
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 37.5,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 56.25,
+            "finished": 93.75,
+            "front_then_target_rear": 37.5,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 93.75
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 307.875,
+            "wall_latency_s": 16.65759547048947,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 15,
+              "invalid_terminal": 1
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 1,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 16
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 14,
+              "Supported": 1,
+              "no_valid_finish": 1
+            },
+            "valid_finish_label_agreement": {
+              "correct": 9,
+              "valid_finishes": 15,
+              "pct": 60.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {
+              "link_requires_distinct_images": 1
+            }
+          }
+        },
+        "random_request": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 8,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 50.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2960.375,
+            "output_tokens": 275.75,
+            "wall_latency_s": 15.150380772145581,
+            "model_calls": 1.0,
+            "new_image_requests": 1.625,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 2,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_right": 2,
+              "front_survey -> rear_left": 2,
+              "rear_center -> rear_left": 2,
+              "original -> front_survey": 4,
+              "rear_center -> rear_right": 2,
+              "rear_left -> rear_center": 2,
+              "original -> rear_right": 2
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 10,
+              "Supported": 6
+            },
+            "valid_finish_label_agreement": {
+              "correct": 8,
+              "valid_finishes": 16,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "oracle": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 16,
+            "source_label_correct": 11,
+            "source_label_accuracy_pct": 68.75,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 15,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 16,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 11,
+            "finished": 15,
+            "front_then_target_rear": 16,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 15
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 68.75,
+            "finished": 93.75,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 93.75
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 298.75,
+            "wall_latency_s": 16.22916854205687,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 8,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 8,
+              "both_second_requests_match_observed_targets": 8
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 15,
+              "invalid_terminal": 1
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 1,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 6,
+              "front_survey -> rear_right": 5,
+              "front_survey -> rear_center": 5
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 12,
+              "Supported": 3,
+              "no_valid_finish": 1
+            },
+            "valid_finish_label_agreement": {
+              "correct": 11,
+              "valid_finishes": 15,
+              "pct": 73.33333333333333,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {
+              "link_requires_distinct_images": 1
+            }
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -37.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              -50.0,
+              -18.75
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": -6.25,
+            "paired_bank_bootstrap_ci95_pp": [
+              -18.75,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 6.25,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              18.75
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        }
+      },
+      "totals": {
+        "valid_finishes": 78,
+        "source_label_correct": 44,
+        "strict_grounded_correct": 0
+      }
+    },
+    "RL": {
+      "complete": true,
+      "completed_episodes": 80,
+      "expected_episodes": 80,
+      "ordered_episode_sha256": "fe52041c76a161a9595f192a5fcbc212114abc3b92c05bb12e8fc2931398275e",
+      "manifest_sha256": [
+        "628923b756fe1b92fc99f4a39ff8b9a094985643ae9c048454f222dbb5c8a3e6"
+      ],
+      "model_configuration_sha256": "1baa387fbbde77f91d6b6cb9078b35992a400c0d965b98028a26281bc08b930d",
+      "policies": {
+        "adaptive_acquisition": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 3,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 2,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 3,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 1,
+            "finished": 2,
+            "front_then_target_rear": 3,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 13,
+            "unsupported_decisions": 2
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 18.75,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 6.25,
+            "finished": 12.5,
+            "front_then_target_rear": 18.75,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 81.25,
+            "unsupported_decisions": 12.5
+          },
+          "mean": {
+            "requests": 1.8125,
+            "input_tokens": 6645.8125,
+            "output_tokens": 424.4375,
+            "wall_latency_s": 25.58002850611956,
+            "model_calls": 3.0,
+            "new_image_requests": 1.8125,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 7,
+              "second_views_differ": 1,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 14,
+              "finished": 2
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 14,
+              "finish_call_syntax_valid": 2
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 13,
+              "finish": 2,
+              "request_photo": 1
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "parse_error": 2,
+              "none": 13,
+              "request_not_in_public_options": 1
+            },
+            "request_sequence_counts": {
+              "front_survey": 3,
+              "front_survey -> rear_left": 9,
+              "rear_center -> rear_left": 2,
+              "front_survey -> rear_center": 2
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 14,
+              "Refuted": 2
+            },
+            "valid_finish_label_agreement": {
+              "correct": 1,
+              "valid_finishes": 2,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_restoration": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 16,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2595.0,
+            "output_tokens": 56.25,
+            "wall_latency_s": 4.360282378678676,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 2,
+              "request_photo": 14
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "original -> original": 16
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_view_order": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 6,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 6,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 37.5,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 37.5,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 220.5625,
+            "wall_latency_s": 13.415896086829889,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 16
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "random_request": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 6,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 3,
+            "finished": 6,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 6
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 18.75,
+            "finished": 37.5,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 37.5
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2960.375,
+            "output_tokens": 220.9375,
+            "wall_latency_s": 13.412386092735687,
+            "model_calls": 1.0,
+            "new_image_requests": 1.625,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 2,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 10,
+              "finished": 6
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 10,
+              "finish_call_syntax_valid": 6
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 8,
+              "finish": 6,
+              "request_photo": 2
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_right": 2,
+              "front_survey -> rear_left": 2,
+              "rear_center -> rear_left": 2,
+              "original -> front_survey": 4,
+              "rear_center -> rear_right": 2,
+              "rear_left -> rear_center": 2,
+              "original -> rear_right": 2
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 10,
+              "Refuted": 6
+            },
+            "valid_finish_label_agreement": {
+              "correct": 3,
+              "valid_finishes": 6,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "oracle": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 16,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": 0.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 0,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": null
+          },
+          "episodes": 16,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 16,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 0,
+            "finished": 0,
+            "front_then_target_rear": 16,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 0.0,
+            "finished": 0.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 220.0,
+            "wall_latency_s": 12.936098949881853,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 8,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 8,
+              "both_second_requests_match_observed_targets": 8
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "invalid_terminal": 16
+            },
+            "terminal_call_parse_counts": {
+              "invalid_finish": 16
+            },
+            "terminal_emitted_action_counts": {
+              "compare": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 6,
+              "front_survey -> rear_right": 5,
+              "front_survey -> rear_center": 5
+            },
+            "submitted_verdict_counts": {
+              "no_valid_finish": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 0,
+              "valid_finishes": 0,
+              "pct": null,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 18.75,
+            "paired_bank_bootstrap_ci95_pp": [
+              6.25,
+              37.5
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 6.25,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              18.75
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 12.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              37.5
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -18.75,
+            "paired_bank_bootstrap_ci95_pp": [
+              -37.5,
+              -6.25
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 6.25,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              18.75
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 12.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              37.5
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 18.75,
+            "paired_bank_bootstrap_ci95_pp": [
+              6.25,
+              37.5
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": -12.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              -31.25,
+              12.5
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": -25.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              -62.5,
+              25.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        }
+      },
+      "totals": {
+        "valid_finishes": 8,
+        "source_label_correct": 4,
+        "strict_grounded_correct": 0
+      }
+    },
+    "SFT+RL": {
+      "complete": true,
+      "completed_episodes": 80,
+      "expected_episodes": 80,
+      "ordered_episode_sha256": "f17a4988c786395ed9b9fd0665f70422aabcc0441ced4e610bb8f9869adf2c31",
+      "manifest_sha256": [
+        "685d1e13df6b97622fbe50a6e7158592f14ebff035c39734e415a9bfc5822b97"
+      ],
+      "model_configuration_sha256": "2827a704e4ec479ab44762d6aa94c14f9153f1cd5795b0b55f575fabf12ae72e",
+      "policies": {
+        "adaptive_acquisition": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 8,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 0,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 50.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 0.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 1.0,
+            "input_tokens": 6331.0,
+            "output_tokens": 723.0,
+            "wall_latency_s": 36.532985868929245,
+            "model_calls": 3.0,
+            "new_image_requests": 1.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "invalid_request_photo": 16
+            },
+            "request_sequence_counts": {
+              "rear_center": 16
+            },
+            "submitted_verdict_counts": {
+              "Supported": 14,
+              "Refuted": 2
+            },
+            "valid_finish_label_agreement": {
+              "correct": 8,
+              "valid_finishes": 16,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_restoration": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 8,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 16,
+            "selection_complete": 16,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 50.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2595.0,
+            "output_tokens": 173.0,
+            "wall_latency_s": 9.410501271377143,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "original -> original": 16
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 16
+            },
+            "valid_finish_label_agreement": {
+              "correct": 8,
+              "valid_finishes": 16,
+              "pct": 50.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "fixed_view_order": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 6,
+            "source_label_correct": 4,
+            "source_label_accuracy_pct": 66.66666666666667,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 14,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 9,
+            "finished": 14,
+            "front_then_target_rear": 6,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 14
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 37.5,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 56.25,
+            "finished": 87.5,
+            "front_then_target_rear": 37.5,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 87.5
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 363.0625,
+            "wall_latency_s": 18.753587293700548,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 14,
+              "invalid_terminal": 2
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 14,
+              "parse_error": 2
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 14,
+              "unparsed_output": 2
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 16
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 9,
+              "Supported": 5,
+              "no_valid_finish": 2
+            },
+            "valid_finish_label_agreement": {
+              "correct": 9,
+              "valid_finishes": 14,
+              "pct": 64.28571428571429,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "random_request": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 0,
+            "source_label_correct": 0,
+            "source_label_accuracy_pct": null,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 16,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 10,
+            "finished": 16,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 16
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 62.5,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 100.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2960.375,
+            "output_tokens": 321.375,
+            "wall_latency_s": 16.84364974850905,
+            "model_calls": 1.0,
+            "new_image_requests": 1.625,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 0,
+              "same_first_request": 8,
+              "both_first_front": 2,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 16
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 16
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 16
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_right": 2,
+              "front_survey -> rear_left": 2,
+              "rear_center -> rear_left": 2,
+              "original -> front_survey": 4,
+              "rear_center -> rear_right": 2,
+              "rear_left -> rear_center": 2,
+              "original -> rear_right": 2
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 6,
+              "Supported": 10
+            },
+            "valid_finish_label_agreement": {
+              "correct": 10,
+              "valid_finishes": 16,
+              "pct": 62.5,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        },
+        "oracle": {
+          "decision_when_evidence_found": {
+            "evidence_found_episodes": 16,
+            "source_label_correct": 12,
+            "source_label_accuracy_pct": 75.0,
+            "scope": "Conditional source-label agreement, not reliable grounded correctness"
+          },
+          "identity_links": {
+            "definite_finished_episodes": 15,
+            "valid_complete_identity_chains": 0,
+            "valid_pct_given_definite_finish": 0.0
+          },
+          "episodes": 16,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 16,
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0,
+            "source_label_correct": 12,
+            "finished": 15,
+            "front_then_target_rear": 16,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 16,
+            "unsupported_decisions": 15
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "chain_grounded_correct": 0.0,
+            "localized_grounded_correct": 0.0,
+            "source_label_correct": 75.0,
+            "finished": 93.75,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 93.75
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2961.0,
+            "output_tokens": 322.0,
+            "wall_latency_s": 16.819393759818922,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 8,
+              "both_members_evidence_found": 8,
+              "same_first_request": 8,
+              "both_first_front": 8,
+              "second_views_differ": 8,
+              "both_second_requests_match_observed_targets": 8
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          },
+          "failure_audit": {
+            "termination_counts": {
+              "finished": 15,
+              "invalid_terminal": 1
+            },
+            "terminal_call_parse_counts": {
+              "finish_call_syntax_valid": 15,
+              "parse_error": 1
+            },
+            "terminal_emitted_action_counts": {
+              "finish": 15,
+              "unparsed_output": 1
+            },
+            "terminal_environment_rejections": 0,
+            "selection_error_counts": {
+              "none": 16
+            },
+            "request_sequence_counts": {
+              "front_survey -> rear_left": 6,
+              "front_survey -> rear_right": 5,
+              "front_survey -> rear_center": 5
+            },
+            "submitted_verdict_counts": {
+              "Refuted": 8,
+              "Supported": 7,
+              "no_valid_finish": 1
+            },
+            "valid_finish_label_agreement": {
+              "correct": 12,
+              "valid_finishes": 15,
+              "pct": 80.0,
+              "scope": "Conditional agreement among valid submissions, not grounded correctness"
+            },
+            "terminal_submission_feedback_errors": {}
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -37.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              -50.0,
+              -18.75
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": -6.25,
+            "paired_bank_bootstrap_ci95_pp": [
+              -18.75,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 12.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              31.25
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "chain_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "localized_grounded_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "source_label_correct": {
+            "difference_pp": -12.5,
+            "paired_bank_bootstrap_ci95_pp": [
+              -31.25,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 8,
+            "episodes": 16
+          }
+        }
+      },
+      "totals": {
+        "valid_finishes": 77,
+        "source_label_correct": 47,
+        "strict_grounded_correct": 0
+      }
+    }
+  },
+  "interpretation": {
+    "no_finish_is_not_visual_error": true,
+    "completion_vs_grounding": "A valid finish is reported separately from physical-label agreement, acquired evidence, and complete localized identity chains.",
+    "training_scope": "Existing checkpoints are evaluated on a new procedural pilot; these results do not establish a general harmful effect of post-training.",
+    "small_pilot": "16 cases from eight paired scene banks, not the 116-case program holdout.",
+    "interface_separation": "The RGB program and finite-choice assisted interfaces are not included in these native scores.",
+    "terminal_action_mismatch": "A request_photo or compare call at the required final-answer stage is a terminal action mismatch, not necessarily malformed JSON or a visual error."
+  }
+}
