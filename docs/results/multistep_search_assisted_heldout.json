@@ -1,0 +1,4277 @@
+{
+  "complete": true,
+  "scope": "Standalone procedural identity-condition search; Obtainable only",
+  "independent_human_review": false,
+  "interface_track": "assisted_finite_choice",
+  "native_grounding_claim": false,
+  "analysis_script_sha256": "12a4d68b80d1356b7df91d7dcdaacb9bebe99e1fc6428bfc121df5d0d053f2a0",
+  "numpy_version": "2.3.2",
+  "settings": {
+    "experiment": "procedural-multistep-interface-assisted-choice-v1",
+    "interface_scope": "interface-assisted-finite-choice-diagnostic",
+    "native_grounding_claim": false,
+    "automatic_identity_links": true,
+    "candidate_generation": "public-rgb-saturation-connected-components-v1",
+    "opencv_version": "5.0.0",
+    "cv_rule": {
+      "saturation_min": 0.22,
+      "red_green_ratio_min": 1.04,
+      "green_blue_ratio_min": 1.04,
+      "value_min": 20,
+      "component_area_fraction": [
+        0.015,
+        0.95
+      ],
+      "connectivity": 8
+    },
+    "source": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/multistep-hard-v2/benchmark/cases.json",
+    "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+    "assets": [
+      [
+        "0003f9e571ecc7b0ed5e1d502d0d5ee132f6abc47a126ec71fea06c67d144baf",
+        55962
+      ],
+      [
+        "0085e19b8a18d9ff32670efe654045e5587ac5627da4bd93711b8b2687413f70",
+        9615
+      ],
+      [
+        "00922d5ed437cb0544f82babc9d381c570cc0d1509880a2c2cd33df8cc878086",
+        54991
+      ],
+      [
+        "0092c1e3d6496b53598a675d2303e05dd2e7799225d173f0cb9ee9482f59ce3c",
+        57260
+      ],
+      [
+        "00b338024838896e08b52373070cf0983b0567e0d122496bb0eea4279c6359e6",
+        10540
+      ],
+      [
+        "00c5424176491ebc74159508af66b7ff78b5c33d99e9248ebb1f78d0853d19b9",
+        7067
+      ],
+      [
+        "0210c9ee51fb369960cab9bf8d57a3e5079373dcfa81394e8d31f3a469395e13",
+        118172
+      ],
+      [
+        "027485e6bf52b36788cecd7f779ddcfab6e5d2a0aadc68f807cb91f6b1ff77fb",
+        10758
+      ],
+      [
+        "02a6c7f6120c1520a4737eb21e13f0a4d389fe07d8d30913d747d6c6440ad50b",
+        10356
+      ],
+      [
+        "03967cf293f077ed9c079af382c6da1d3b8792adf04c487daee23df3339d5648",
+        118406
+      ],
+      [
+        "03bc0a838515003f829b7f374292581cabccbefb0fc09ac8a77ac6fa2aa97ea1",
+        54908
+      ],
+      [
+        "046ef24b3497114f251d2fb81d14aea6cfb38e64719b7457848b3c09acd1f6d4",
+        119036
+      ],
+      [
+        "05002bf2907c980773b526f5b3b903607c71dccdad386e18b50813e4b20b6f30",
+        9509
+      ],
+      [
+        "057b28d495c7ebe5e0ad254dd3d06a00892e40c91e95b606bf6cecf98b57efc4",
+        10899
+      ],
+      [
+        "05aec151ecf3851fce0a78af12f04823bbb49df22fe8296587ea33d571ce34b6",
+        55745
+      ],
+      [
+        "0697673742b67cebff82299bfc791b959a8370bfae8fbadb28dfa355427e8ade",
+        56272
+      ],
+      [
+        "06f4ec409e60566580bd59bd3c86a6163b8b133554227c5a6291ccd100b19f64",
+        10192
+      ],
+      [
+        "0755f8f58af8d21cea955187b38cf554a7a1c85a992048b1643e5113f97aaedc",
+        10625
+      ],
+      [
+        "090fd29dfdcd244802c938195f7a4c884c7d320a5b742221d13d674f0b3c11bc",
+        7149
+      ],
+      [
+        "0a383416d24aed7bd03228a6aa3110e958918b9198f84645ed4f5dfcd347c427",
+        7255
+      ],
+      [
+        "0ac4c9a36c25cafc108a817590a4d6b169245369c4f12d88fb6bb86bd5cee3a3",
+        56105
+      ],
+      [
+        "0b06e375879c4550fa087979cd9630089696bf4bf2d03455f7b5bd706b7891e6",
+        56315
+      ],
+      [
+        "0b3f29ceff16304552c32e37fd00692a34e23efbf4362e4f187bd8bcf466cc35",
+        10380
+      ],
+      [
+        "0b59e08c85220e07f7ae80f0c98faca17e2b02d4448e06dbf03592803fbc7029",
+        7180
+      ],
+      [
+        "0b70a4db00c7856a0c5be78c4f8ea91cf6a49f2e70f895fbbbaee4e96e302cca",
+        7157
+      ],
+      [
+        "0be63e601096a756e3ac35e5e251ba99bbb590f573e89b633b5a6f45444c284f",
+        9756
+      ],
+      [
+        "0c35b3fe19e1e1bcf9c700b70e9cb7fae9e6f00cb958c0139b4befa16779b4d2",
+        55947
+      ],
+      [
+        "0d9e8b8642ff5ba15c23a453a1512c26b393fbc25d4ebc442ca65d0e571b5b6c",
+        10659
+      ],
+      [
+        "0db818acd30a5f7d0e633355beefc087b8f04078ffbd7648ed3fa901a40020c9",
+        116229
+      ],
+      [
+        "0e71202d15b6ae7daa6bc31cacdea3a02ffda97a8c4b7d236f1a71049c155e9a",
+        7102
+      ],
+      [
+        "0e792eca9ee960f5ea2b21831f85aba8a1598e4370a684d53af7f3e1003bdcb8",
+        10959
+      ],
+      [
+        "100617418aa69daf93f48e302a16bcedd3e485b2bf5a4178fabbb623964a38c9",
+        119131
+      ],
+      [
+        "10574371052b5f61e9ad91cd5437dcdf391e8b0e58dce1cbe0d43aa1439a961d",
+        54734
+      ],
+      [
+        "107f43ecc368198ee91ea769c10c6f3371f08b99e3846252c811c9346046a04b",
+        116346
+      ],
+      [
+        "10addfad829d4775569aefa13ca9df339fe1e0160e72e974f751aaf05f486b6c",
+        7130
+      ],
+      [
+        "10eb7a2b90602f1e59d8b2d33d14978a41c3fb3f48a1955674fb0575658d46cd",
+        116492
+      ],
+      [
+        "122a76f1c6a92e539b48accacbe66a4f4ce4ec14d79106b37a299f359461f473",
+        55205
+      ],
+      [
+        "12b36d0b1d0bdd1ec15e19143f8c731bf0a987995e93a1b48f22125bf3d4a2e3",
+        7153
+      ],
+      [
+        "1344761bdcdda823633a05c24e3fd45a201f4ba87f8cba86f91242c52915d89a",
+        10692
+      ],
+      [
+        "1389a91dfdfc604741a511517e6588973055a38fc85be33a8a9db8e78161dfeb",
+        117914
+      ],
+      [
+        "13b80570d99a557a8d2317f442ff06dd695aa95122dae96cbba73f7e3452aff4",
+        55991
+      ],
+      [
+        "13c7abbbf9da15d98005d5b0e47a7dae9b6bf9ade22566b42fec48adf0d7ce1b",
+        10682
+      ],
+      [
+        "14157ddc3b389f8f96147cc24d29cfb4dec61850887072552fee922965da71e6",
+        118523
+      ],
+      [
+        "1559c869b60f90bc633e3191b918ff9cb243b3df357376e16d7cc33be7c8bef3",
+        116936
+      ],
+      [
+        "15762c48e81bd3d2ab22e11463a10a7e35cdf5c94f8d32afeb470efddc653893",
+        55294
+      ],
+      [
+        "15b28871ddaf2c1d87814062c8f14a3e2fcf00124cad1caeb75bac91247df508",
+        9824
+      ],
+      [
+        "166d162165b070d06c6392854616f5018624a20b9b47ee7dc37f697ec409f650",
+        7124
+      ],
+      [
+        "16e45388874ebf540ffdd65655545b21fe412394ebaad547d1989136b5ec802e",
+        9614
+      ],
+      [
+        "176e68e6350a1da9bf28c4331d49acdf6bb8793e07388fea1a3acc5d1f1573b1",
+        9415
+      ],
+      [
+        "17dc821f18badc108418a9cdf57d129177d774b6dc6c44ac140d56904194ab82",
+        9700
+      ],
+      [
+        "18be52cec41cee9994fb891fc2b0e4a6abd306af4d7000ca77883d43d4499f37",
+        10940
+      ],
+      [
+        "1991e52c507f6afe9e32cf2027ddf864726f7d35c2f6e147bba5aad6f13ce08d",
+        9826
+      ],
+      [
+        "1ae4d2e6e668a191117ced87cbe06ba4a9eb984c1939ea023068296dd1eacacd",
+        55342
+      ],
+      [
+        "1ae810719ff1850c943f5fc6177c4936ea5db307e61dccdfb44a9c7da3db7d09",
+        56668
+      ],
+      [
+        "1c55b0c4c2c0ffe301540f456e2e037a7b41089030ea492eceb674a4f5f4fcae",
+        9702
+      ],
+      [
+        "1d10121ae427d8eac87de6b3e0acb5d06b814c7824d1384fe937ba0bac65a267",
+        9638
+      ],
+      [
+        "1d14a2f92c0304120ac9dc81b111aa802e39d7ed6883c615299be43c05d7b295",
+        10682
+      ],
+      [
+        "1d7fa6b185d68a7558eb7d1f781c14a37ee172aeb67614e96170d41adf92fa85",
+        9746
+      ],
+      [
+        "1e7c287bd682571af326194292b348416fddc3ba5c8de12fc454020b574dd813",
+        116735
+      ],
+      [
+        "203f72fd7c334cb0a2d658be3aefbe4f4a3dcb54f6dd1ca903217229016b67ad",
+        116558
+      ],
+      [
+        "210ad1e1d5d8a99f255a0405535dbb4fa08104ca2ac9b8a5524c32b402f1a173",
+        10766
+      ],
+      [
+        "222506c62159e04f4fb26e39be98c4e6dfc2eeabbc6a7444e9ab5bf7a5b975d9",
+        9685
+      ],
+      [
+        "22ec79ae32e7dba33331a98941cc57983800fcd30cbff75dd66267124a124d39",
+        9682
+      ],
+      [
+        "238d912689c051fb1b322e0622ae426b4f7fc8e97a5d2985de70bd62a71f1c91",
+        7136
+      ],
+      [
+        "242ebed06b6ce963c5e696799815ce986a3acf59300370613c384c499d19d984",
+        9864
+      ],
+      [
+        "24ae289b2a9facc02d27e79e51c2e92fd78f9e73880422d08540fc9d0831b012",
+        10852
+      ],
+      [
+        "24f3adeaf8d47ef9595461c1d933b90996c7070bb7bd95b8fa7c333e081b0ed0",
+        118237
+      ],
+      [
+        "25837a558d654e8a9daa0912e6893bf0e4bcf72f3784f212f31d69e712a7279b",
+        10754
+      ],
+      [
+        "25a1572c76aba2d98ee4a35d5c08b21968845d6f228092b3a6a48e05ffabf0b6",
+        56856
+      ],
+      [
+        "264a0f92096239787bbfcb9215eb66aa74d133ac2fdfc32d897e985bcabd9ef1",
+        6937
+      ],
+      [
+        "268c63eeb546bf31901fad2763e63ca0c7897f658811c9a49ef4eb2d01aeb185",
+        9586
+      ],
+      [
+        "2745e31762188aef09f01697985a5bd27e2d044c6b8f0dbcbd9fd24c7f67a45b",
+        10364
+      ],
+      [
+        "286e6727113dc0d6afe145d1b9957f93e6e2061a46bd11137ecdef6dad64e0d9",
+        9763
+      ],
+      [
+        "29181534d8cb256874bb1a90bda8995ab315be3b0f7f4fa790cb927002577e00",
+        7299
+      ],
+      [
+        "298b6eeb38b83aa94065d7d7d946bcc82fe55a4cc76bb6af6a628e9c482bb6f5",
+        9622
+      ],
+      [
+        "29c1bfc436b3425ec8a6cb485b6c72d7a28f7509057b1dc94e12d0ae448433ad",
+        10753
+      ],
+      [
+        "2a1a3fddaa36dd301d477e3ac22a5ea4576db250b39cd5e7226d5961273ce760",
+        10980
+      ],
+      [
+        "2c38b6c6215f27684f7fb53730432b21fa24fc4a44697f99d24a12e9a7a9a1b7",
+        118159
+      ],
+      [
+        "2c69ba584e18b55156bcc69b5825438d4224865dfa38b75b064f478d13b1126e",
+        54526
+      ],
+      [
+        "2cb4a37742f17982c0a06c803b8d1d5c02d1fce412ef76d91106a69f8fa20214",
+        7207
+      ],
+      [
+        "2f7405f50d3e06814c624dcbdb2b373f275da7440d45d820b2a0562c46190c15",
+        55603
+      ],
+      [
+        "2f7f06d7d4da415a3851528fd84bbd61013362ee0e654e771be774471f9ff19a",
+        55051
+      ],
+      [
+        "2fe9b9f0678ba92d45050497d2e21e0fbf52c9e0ee7ccfbdcc0c48fdbf3fa8e3",
+        117172
+      ],
+      [
+        "302bbe73cfe963f2632a88c299ac2ca2e8fe8ae4bc384f00990d317f19c0b1f6",
+        117826
+      ],
+      [
+        "30d32881c0a43d952cddc346a53c6820f16d510360e6b667e57953a552675ae6",
+        10637
+      ],
+      [
+        "3192a96e69565cdce1bbc5ad45699d0e558dbea02a27988c84e955ffd0697ce2",
+        7088
+      ],
+      [
+        "31b40ed60993a59e72a9274b3dbb888ed5856a21adf6501048e885d422e77662",
+        6984
+      ],
+      [
+        "31c20b184852407dbb94ed87ff3fcf6719cddc5a4dc4e035e9e03759bc177582",
+        7021
+      ],
+      [
+        "32336f37f732bc3b31a47cf6ad4556754a21817aed18291bbde99dd1d1d4f4fd",
+        10668
+      ],
+      [
+        "3260709848d5160872aa63c681f0ecf4ab2e8ae74f13613685c820b96dcd5047",
+        9717
+      ],
+      [
+        "328e0fa6123cda994d875a6c14f4f4e99e1e294baae1716695d86fb592966744",
+        118363
+      ],
+      [
+        "3381e0324bd056f12c23a34ca54508aef9c50f7d6080d16cfd877c6010a32f6d",
+        57026
+      ],
+      [
+        "339e58f24c5d4de87af69b979952772d037cc166142c80b822f25f02b652c0d9",
+        55844
+      ],
+      [
+        "33dce7b97dd736ed78a444d74dfd2521d2e4ef5c49507d69da0af885cfde1f2b",
+        10341
+      ],
+      [
+        "33dd9432db5a57ab2d6bb21eeb370fd76a8d1380026ca8e77914a91a7aebbed3",
+        9664
+      ],
+      [
+        "33e52fd2c1367ff2d83d85126dd81ab98d12ddd5dcebed96e93e93450a544757",
+        56600
+      ],
+      [
+        "3405a90b6896d61315ab911a5f35ed10c35322889d3f434d2a4491020791757f",
+        9665
+      ],
+      [
+        "341206a9894a9229bf0e1c514438bea1b82e0173fd412d719dee34e3af301413",
+        10196
+      ],
+      [
+        "356113f282d43c06619f892fd53bb55403c6c852f7d14daf1341167f79b55ecf",
+        9568
+      ],
+      [
+        "3726be34cca68c7bbe8ee5107f9736f275d769cadc8a426b42fbc598747090d7",
+        118785
+      ],
+      [
+        "3a251c9969c6f8633a864a96f0d4ff4269c16966f99f2fe6521cd96547fe9aae",
+        7078
+      ],
+      [
+        "3ad4673615e0c5390fa82a57cfe67f87e5192c9e31ccd8ad07b4f357c5fe98c1",
+        7144
+      ],
+      [
+        "3bc231860a8230d88ca1caa17338a8a145b3dfaeb6b8cf16560edfaf230056f9",
+        55958
+      ],
+      [
+        "3bc30449648e36861413ec155b25f1e86e15ffca87fe27aa44b78ee878234283",
+        118554
+      ],
+      [
+        "3c472199ca33041ae9b5fd2f626b1c456a8f28775ba9c588a2518a37b2b9870b",
+        54504
+      ],
+      [
+        "3caae532fa92b94220d14e6407563fcdc9ee613f3115db059d95d91371d31460",
+        118372
+      ],
+      [
+        "3cf02b21851232a3e701c11c72f164e88f0669e0e61d8ba65b6386bb8594b95b",
+        56987
+      ],
+      [
+        "3d7128f3e83794b644463debeb53215626bd533f814b0d69b82e662468bafd20",
+        10924
+      ],
+      [
+        "3daa343ebc7e4eb7ce716449b7d6aa745b6e9e135fb2f0c99d2d75a2155c24f2",
+        7118
+      ],
+      [
+        "3ece646e4b5e7d7710d20a33828b5842b024a8cfc6edd757273593722c3e000e",
+        7129
+      ],
+      [
+        "40061436c4093ae7497f505bf6a43de71b38283367f16481a6b22ee8629c1529",
+        6981
+      ],
+      [
+        "401ca9ea7b1f0089230106b9fce4af407be4fdf5352eda6014ae218124fd4dca",
+        117648
+      ],
+      [
+        "40848ad28fdacb601a6d1b5ee6462a151d66249e73f98d73a040a12f968427d6",
+        56635
+      ],
+      [
+        "4106d2c62805569326ebed5d97a62617b253b1155ed495f13c83e46210d66651",
+        56832
+      ],
+      [
+        "4147f2a067e04afb42d98de28a42e59b1dddd5aaa5b4acf7fd6a69f5ee077890",
+        7222
+      ],
+      [
+        "4164eec2625df51f67d1dbf04e1e3507e76942459c8203ba8e8b4a938e3ace87",
+        10752
+      ],
+      [
+        "42871f906f42695ce225222e0af6775db9c1ebc87c8a982b8e5aaea1bffc199f",
+        118266
+      ],
+      [
+        "42c9d06d7657efcf22247fc031157b5b3264400f77ec76c53f12a3bfef34ea18",
+        116358
+      ],
+      [
+        "42ecf03e00ff06f11d90942b9bf4e140712b39324f8fca5a896dee5ff07a0890",
+        7137
+      ],
+      [
+        "44cb9f47415e05eafa9da4f2784d1c2cc54195c48f94e37e4078d63320e8ad34",
+        9691
+      ],
+      [
+        "456aa462aa2c3f7b6610af68805231b149dca304a28affdb6da2f2df2cb3fb3b",
+        9649
+      ],
+      [
+        "45c9959f8a94f6017ac31b07050c9b3412258901ed3eacf9cf6e8e3147a1b61e",
+        55813
+      ],
+      [
+        "4619bc67bf96320f7e974352e5c0d05a3b4249fa391f41ac54844ee19e1c59f0",
+        10951
+      ],
+      [
+        "467d82c777f6a61663c46d28dfdf572b19ba1149c54c2f933505540b541af5fa",
+        6978
+      ],
+      [
+        "4755142a1f76561cfdb5f1cb5ad007f780647d9141e9749d0262aad11443d012",
+        55548
+      ],
+      [
+        "4771b16f6502ae001da4bbeb0f40d12b193c8aa92c57fbe2a26e933f8a766052",
+        118573
+      ],
+      [
+        "48836d949ba2bb652d9a5c97fea2862e51ccefa41245b662f6a9141b12b42ee2",
+        7097
+      ],
+      [
+        "48fbb1663432d22d0f35ae162aa41858db5815c1cfb9e0d766832ad6293d7a94",
+        118683
+      ],
+      [
+        "49a3c5e51207715ff818625496933fe362393ee2d170307f99d34c3ead8e60c8",
+        57086
+      ],
+      [
+        "4a18cc903e059574dc041b9fa6e501c2b56d1cbfbd1b0e6f52516fa84f85d9a6",
+        10725
+      ],
+      [
+        "4b1f52969bfd23816cea91fe5be2cd6b9cc523d548e70cdfdf66ed6f61a8cb40",
+        56058
+      ],
+      [
+        "4b20689fe13f9070d39784d79abb673a56a5358f911818890445a9851be72036",
+        7134
+      ],
+      [
+        "4b28491e4e1b190d4b877042e2b06fbf62eca1da0949d0fd64a6526d062a6c86",
+        119103
+      ],
+      [
+        "4c0d625b74255bdc4f3c0799d51bacfde6cfcb57eff0554114619ee0d8cd98c0",
+        7094
+      ],
+      [
+        "4c9ca4a9f2605d371c2ada93d521cfb92ec50a0bb5c505655c56de64bc711604",
+        10566
+      ],
+      [
+        "4e0f8e9e4de3915e5f8293629b4f2152c68c1e65f6c386635ed1b98247fc3004",
+        10684
+      ],
+      [
+        "4f609a7401a89d6731a6d3ca90f12bdfc4a937324ebf65f787f86ee0fbe50e1a",
+        9675
+      ],
+      [
+        "4fd44f667f9ed687dfff84f1847a302429ad8f9bd3d910f2579cdb3b11845d56",
+        7125
+      ],
+      [
+        "500cb9d1b4ce0fbe15ef4fa228009caec312ab6b7e53163bfd4ea21f2b192626",
+        118055
+      ],
+      [
+        "5050e3aa0f0c4d7efc42386d31d140960ae841bea2521b6093259b503c8ce974",
+        57133
+      ],
+      [
+        "505eb8d0d77f23df7805cfb62ca5e7cfccecbc082a760eaa2c4f3761aad061e0",
+        10657
+      ],
+      [
+        "506b36d3c03dcab431c9756b972f1ca640f7deb9a22c158521f69772a9297b18",
+        10465
+      ],
+      [
+        "51602a855b5eab9ef3598fbdb7e243099d3a92bd6912c6df6299940bf97050d0",
+        11043
+      ],
+      [
+        "51832077156c5a8b2bb88ab1551e167902966e828834d175f512d715626591c7",
+        119043
+      ],
+      [
+        "529279704298e55d6b1209d896fa8a829583f48ccdb6ce0bbcfa25f0dff0e71e",
+        118999
+      ],
+      [
+        "529579354314727fada081a9f0af9eebaa7ccf6743cc1d164bbdbfed93d00cea",
+        7142
+      ],
+      [
+        "529579354314727fada081a9f0af9eebaa7ccf6743cc1d164bbdbfed93d00cea",
+        7142
+      ],
+      [
+        "52a7c6eae92ea321e3ae5aded5afba007656846a45b2c7f20e16d85e955f3da1",
+        9585
+      ],
+      [
+        "52b040c27f15426396d50ca3b9b3f3005df1d4620a6ae85e6a121165609ebed6",
+        9626
+      ],
+      [
+        "52d27078d7eab2fe6ad420fdbee5735f60a2c3e53e432e1d82f654a7d9e3561d",
+        10543
+      ],
+      [
+        "53b4d6f248cff08d685dd376bf7482d639c5bdd6825b68af198cf6c5bb50627a",
+        10733
+      ],
+      [
+        "54b3fee0a6e5e45738fbed535668ced78591fb82c84cc543bc1e62ae6c86c6bf",
+        10666
+      ],
+      [
+        "54b437f9e41941d335b9a414dc457a8246da0ef8a59d22759cf2ccbb7033edeb",
+        10670
+      ],
+      [
+        "5583334020e3bea336a162cc061775622f2b086053033c6a80583b2fe77e841e",
+        55915
+      ],
+      [
+        "55c9e811bae84157fd887b818e6d632843c5fd3508bfc06411ed2a78a88ddd3d",
+        7129
+      ],
+      [
+        "56923b8cbff2da0d83934b89e0816cb0b6524ff9ca7efd268801ea7ae48ebcba",
+        9649
+      ],
+      [
+        "56d64604421a2b3e95144c8a7d6a1bd7d273197c123e4abdf3a22a368def0f7e",
+        55604
+      ],
+      [
+        "57fb0e6d05b495a7778578ce63c59ebf2146774bc93b9733b9b37a0140114ac1",
+        57082
+      ],
+      [
+        "58c3a2dd953df233cc2a2ef0df0b4f9b4e3968fae72427b0752e89a7b69581b0",
+        11046
+      ],
+      [
+        "5922ecf1c035dd47367068bc531988ba23a575f0927bde2fb3d0d01973fd78eb",
+        118205
+      ],
+      [
+        "599252ec744c651b0afdfc666080216e97149455c195925d53ede1715a2f3151",
+        54736
+      ],
+      [
+        "59a15747f0d326827f230c696c6d2ad5717bf39c595834786bbd0eaebe5b9c98",
+        9571
+      ],
+      [
+        "59a789b00f4b6b1bd7c5b360d70f13d9d3eb7a08b07b2c8f00adc90fb4a0dbcd",
+        57118
+      ],
+      [
+        "5ab84aff6ede8ae5f422fa44b024701a0927f58e649e325734b99f5cbff625a6",
+        117759
+      ],
+      [
+        "5ac939d4d8e410a356dab5dd8d14d151613218790b9ec6699b5a76e794b54e93",
+        55994
+      ],
+      [
+        "5af565b0ecb0af4ce9e2f92e0aa0219c1162df0eb416899b90a7b54dc254ec51",
+        7064
+      ],
+      [
+        "5b9d56d856844200db27d7ad93c2e3fd08435deb48b3a4a473557aacfa5c1575",
+        9725
+      ],
+      [
+        "5d454d5551dd36a84ca4be3a47a811f5151181353a41b95d73b19e8110dc49fe",
+        116691
+      ],
+      [
+        "5e4b6f06c3b2cec9568f3cdaa29ee3e92b68f77b2ba4ea1d4775972fe9a085fb",
+        117883
+      ],
+      [
+        "5ef78b6461f9636c6e5437585f1589a2d4d43598a3c748aac44f9250fd423e62",
+        9705
+      ],
+      [
+        "5fe343517ec678ed356f004732aad5415a0cace3b1859f93b296ec2872e3a473",
+        56023
+      ],
+      [
+        "5fe427c0fd027469d0a0abe4f7632c2cb8f64b817602db36bd7e51b712170f9e",
+        55291
+      ],
+      [
+        "5fe9947e041f2580edeb55b6748760c64d2adc745f7119a9a3036b5ae1e171ca",
+        55958
+      ],
+      [
+        "603932638da464503ee66c101e844642ecb8334221a5f84883b2c443ccfd239a",
+        57602
+      ],
+      [
+        "60f4a0482a0552eff161c1512989ea3117a94b7907ec241271230a573d2c50c2",
+        9750
+      ],
+      [
+        "612cac7bec05f9243db30894a679e561e8507f3472d86ff06c9bda49b8f9a95b",
+        7259
+      ],
+      [
+        "613c6f0b2a9497964a540cb4ce0d0577eb1bfc6bf4f2a1e34b57e3749ebe691e",
+        118494
+      ],
+      [
+        "6149a72bd986d8f800f8e3b5c7eeeddedf8471c945431c1b17a1b0528ac95b52",
+        10617
+      ],
+      [
+        "61c8f86c43ff40a6f4d5cc17afafd13b433d1ec05e7bd41029ea52a7f591982b",
+        55002
+      ],
+      [
+        "62fd40ffaeb0d0d471d38b1cee94c03c43234d297ae8ed5e5d81f03d2162d709",
+        56356
+      ],
+      [
+        "632013de52b120ba039008df3a535f6a4668226b4d2e9d2afee548ccaea518a6",
+        56186
+      ],
+      [
+        "65a6ceed92147da1eca33b72e9f0f3c668d5e92e5372b14e7aabec6be3deb04c",
+        7030
+      ],
+      [
+        "662f085043ce12366a792a42422a94d421c2fcc3945d0df96aca51cdbfc31ad7",
+        57012
+      ],
+      [
+        "66fe396ef11e37ad469871341c9cc47e5b09827c43ef9d350d365219d2d42c2c",
+        56082
+      ],
+      [
+        "6774e0a4213066956e553afe32736cd4c357584ce6b850722254add11edf05a0",
+        10582
+      ],
+      [
+        "68865ccaf33c5bd69a8acdb35eb3c50e17accd00beaa10b1eec2bf594eff586a",
+        56649
+      ],
+      [
+        "697c46d8b600d55bd68d3e15c0134b7820ae08d577ef64d0e69f1957161513af",
+        10082
+      ],
+      [
+        "6bedffdf03742485ef531e12c643cb217b0dedb073c456ad5eb2135fb08e795f",
+        9632
+      ],
+      [
+        "6c50262d593438ff99cb5572df30215369ce8440ae2fc670fd275662c4833de5",
+        55541
+      ],
+      [
+        "6c96d2592d93d3b00557058e2f63a63e86620012d319162c0198b7529fa2decf",
+        10979
+      ],
+      [
+        "6ce6c1bc1781c160081b1b7ee7b701cb02f008c568bddd11e3c78ae11f7644c8",
+        10664
+      ],
+      [
+        "6ce8cf914c41020196c7e9b36a20f2072c2842e0dbdade34e865edd5985796c7",
+        56019
+      ],
+      [
+        "6d709349224e5ba2bd877cffca592c00dad7435151ee403c7447c118ab69e15e",
+        118179
+      ],
+      [
+        "6dc7c3bd88efde05d212d8e83571cd00c2272e8f66859b84d8f950783b4625d2",
+        118862
+      ],
+      [
+        "6eda5ee403cc98f4962ae9581c4c6f7d71dba21c5cecfc6499e64ce290d23371",
+        7121
+      ],
+      [
+        "6eda5ee403cc98f4962ae9581c4c6f7d71dba21c5cecfc6499e64ce290d23371",
+        7121
+      ],
+      [
+        "6f194c7f3656165fa46f25b24d7e7c656982322765b3ef0b0952f98a4e3fd907",
+        9726
+      ],
+      [
+        "6f3e1364f1ef54d2724807881dfd23ba7d713f07d15f0cfb848390da54cf7d39",
+        117665
+      ],
+      [
+        "705c0d34cfc178a367e7f4799cef81a25d16c604027d24461cbb4c417b3790db",
+        10479
+      ],
+      [
+        "7194d7c9517749d8b27c991fdc7057115267e9a4f896b8c6375438892a0c9f0b",
+        55324
+      ],
+      [
+        "71ac45389dc7ee5a79916485b9918b665baaab8cc5cecf40bc29f3affc488fcf",
+        9706
+      ],
+      [
+        "71bf25f8979a7719eb5e16ed9e3a507a941cc51acab7a98f5759040c96a96684",
+        118092
+      ],
+      [
+        "728a7231f5a5aeb1aa4a7bd59ec0706370dbf21ff0699e4ba2db640d9ef5e74f",
+        9669
+      ],
+      [
+        "73a9f74fa529aec42360fbf21be03c36befd6d4d60076a598578d86a82aa1876",
+        118921
+      ],
+      [
+        "747e15ccdd328a525e70651a3330e60317d63d733b14af8b16bb14dff12e9788",
+        9619
+      ],
+      [
+        "74e72a194de057186a3a5a3b4e27ac57763f96beda8025f2d1c4804bf143be62",
+        7136
+      ],
+      [
+        "7599f1dc5a868d78f177fd8e2d895a3b6cff12e66fb3470ac26be400d47699c8",
+        7082
+      ],
+      [
+        "759aaa970474ba280d6ad2eea78f0237f9f4596d680647a28eda0b81e8c880c7",
+        117455
+      ],
+      [
+        "759f95e596b3284db42d4a81c8a0e0b366c076993460f73517b7ae2bc684738b",
+        7043
+      ],
+      [
+        "759f95e596b3284db42d4a81c8a0e0b366c076993460f73517b7ae2bc684738b",
+        7043
+      ],
+      [
+        "75e0ea263d04d2c35e7bd3deb865bc11cea1971de76267b16c65a8e7b708fac7",
+        7142
+      ],
+      [
+        "76fd204c8841efb05a3a92d17e9f4507abf9f90b9191a4092de8b6ccefffef61",
+        7129
+      ],
+      [
+        "77b53d50e5abe4eb6bab8f54ee23c16d12a6cb70e5991e0fc7281f35e3e13494",
+        10730
+      ],
+      [
+        "795712c1cf49ff6c52fdfa52f9c9cbb549deafd5b315a7fdbbc36ee9ab351367",
+        56608
+      ],
+      [
+        "7a58c28080f8b0ac1d08639a121a169500d2f3df2e57dc95c1175a3e3ecbfc71",
+        9650
+      ],
+      [
+        "7a6af473a5e7a4b150b9e701f795e4d77374c0dfdbe85b763c787246c7c28fd0",
+        56701
+      ],
+      [
+        "7aa193e76c0359dd0889e67c83e58dca7ab6761bd69714d5c352bde3d7bd188a",
+        7291
+      ],
+      [
+        "7abcf3aabfc7b15ff7fca1bd6475207e724fd3aedb477c8088aca7fe13225458",
+        56123
+      ],
+      [
+        "7b4ea5d42194d1f7e2f9557069fdf17f1aaed672a90d1909ba838fd3f3b87bc6",
+        10609
+      ],
+      [
+        "7ca640cc17c9f3c38e2281db76fbaf313712d04fd598d03347f72cab5d273a09",
+        56703
+      ],
+      [
+        "7d9ac649ad6b1b9232edd1b270149a3d2645ab53cde1c65fef69c24937412802",
+        119008
+      ],
+      [
+        "7dd5b8dcbe5e91672e9088e7cf2a5236660a2dc75b084e3370ea53e970d4ac8c",
+        57088
+      ],
+      [
+        "7e35b464d1e9e324a09685ce3d98b30ffe35ab84c1347fe53b4da9ba85f87a05",
+        7092
+      ],
+      [
+        "7e5f435d71120f03c35f5d6290217c02cdcab827d829def21d448a1f781c10bb",
+        55647
+      ],
+      [
+        "7e95dc1ed390dcfca0b9724cd223613607469ddd6197adec52b5e34b987265ea",
+        57212
+      ],
+      [
+        "7ebbfd2fe1e0c465a3c5c79702bec10a65738ecc39eb11e49c486b3ca7166787",
+        7202
+      ],
+      [
+        "7f14e2f7104923c40d5cc94d72ddde9c2437fc763cc445435f07159c3d6bee81",
+        10816
+      ],
+      [
+        "7f2e9e052e141031d4a5bf7caf713cd79334412bb839240a931d3406b8ac10c7",
+        7151
+      ],
+      [
+        "7f8fe2d7cd50ae961df300ff6d935b30e34a98d21ea2624e8d7c64019755252d",
+        10604
+      ],
+      [
+        "7fcb497e00c599cd4e907a83e1f128cc671bbbb7c23326f1e2f5eea7479fac2b",
+        10400
+      ],
+      [
+        "804bd8b8f2469b81bee167cfc624e84d1e0020a00c86b60a5ead3b7f3525eeec",
+        56297
+      ],
+      [
+        "808e9aad55fe9b0e7bd9886e278a921a3cc42a745a1778fd8e67389eaf144a5b",
+        55954
+      ],
+      [
+        "80c57de9458cafec5ea42427f02ececabd8e333a888006ef9d43af33d2e92bd4",
+        9601
+      ],
+      [
+        "818ee76d969a6018ce91e02d557702e040503d7d578f1882d7cbd3f2517cc880",
+        56495
+      ],
+      [
+        "81e18aa4d93052378985f4f02c72c80f4bf5bcd72f35c82272d5622cd551edb6",
+        10519
+      ],
+      [
+        "83665e55985d459d68d70c2a9571e5cb586d464f66f1d807b9c3d4ed607e4599",
+        7135
+      ],
+      [
+        "83c29abd01d24692e36f6236db979a691af193a59f5c4dcb1d67b6b19a4934fd",
+        54984
+      ],
+      [
+        "841614cc9c55198bdc2e78690d453dbaeb144a4994bb363bcb799be815947860",
+        7198
+      ],
+      [
+        "84a3c280201d9ee3e7aee4abf9f50e4de51d0772703769d355e6e1b5087212d8",
+        7014
+      ],
+      [
+        "8518d75469d09b6674093628125d34a3feaefe68d8835e95097e3f20f1de2cae",
+        118080
+      ],
+      [
+        "86ad79fcba403ba7d23011825b035dfc1026191b65479cb297117ab72c44d656",
+        6975
+      ],
+      [
+        "8731f61e5c7c610811b444d7327591cd1f3aa9adb73b59ba95269201772242b2",
+        55498
+      ],
+      [
+        "874265dad2ee4ae5a52134c7d715c17b747212b2d77b1540fcea2975a2e0a8a4",
+        9674
+      ],
+      [
+        "875b27a30cea1fb31c936271a8d0693f9e0a841b5158769e4ba05052aff5213f",
+        117179
+      ],
+      [
+        "877451bedc507657460a0b6aef5355ea09ec8b923dce6f2f5a2459b763eb4b32",
+        55642
+      ],
+      [
+        "8777dd654cc177f079ba907cc71fb6ad1434dcf1d69b41b0f375a7e552f2f5a1",
+        55968
+      ],
+      [
+        "8800246eedb7348edd182fa189401936c8f94cb63ee4e92c70b067b8e95ff4c2",
+        56608
+      ],
+      [
+        "883adca4509cc12dfd3b7ded56cc27cf94402c37bc4d0af2a8afb447521e7e7c",
+        118848
+      ],
+      [
+        "8888f0fde756e4879aee2b08103970333b4d0eb113e2f1624c10a416d4023213",
+        55424
+      ],
+      [
+        "88f0f874e5fda4c78119fbeff4124ca8f949b3dba54ff299117568702649e7bb",
+        7081
+      ],
+      [
+        "89edb49cdd15566d048bbf2318d90502b26e8d78622ab78cb3c8d9a9d9e1a2c9",
+        56234
+      ],
+      [
+        "8aab6d27512c55f39a433c64fb7025c824744120a0982ac924e829d7e9e6fcea",
+        9518
+      ],
+      [
+        "8abf3c3d2bb0cd9d788bc1860a8b524b6e420f1ee41288629898bcda85c511da",
+        10843
+      ],
+      [
+        "8b851e37e60ee3f8fe2294cdfa5c8b97d30da422e5bc4bfa3b1b6c6d02b29dde",
+        119156
+      ],
+      [
+        "8c10a2ba3c9f908e68d8e7bc633f222285798626ba43c68ba6f48f23fb4e5337",
+        55754
+      ],
+      [
+        "8c583461e4131640d0418b168f4418e9da398042f4971db19b91e2526963002f",
+        9541
+      ],
+      [
+        "8d4d8e009540b80ac4a44ac551586f2f071b2caf13b9ea1dca77b3fd5fbb3c8c",
+        9683
+      ],
+      [
+        "8da1eac02279494fb6fd6b800637a7b6aacb5f37b15c60dd0f3391e09daa49ba",
+        118891
+      ],
+      [
+        "8de0a88311e87d4a7247becb4ad1eaa8b31a2802f0b46734f667feb1784a0d9d",
+        54238
+      ],
+      [
+        "8e070837af455faf3b8f743b93acfbf74c6d10c68c16a7c6277ba85bf8c7ad53",
+        7156
+      ],
+      [
+        "8fc298198e8bcdf1fd861ae2b75fb882f872f39e15ca0f671bf7b355615c8f5e",
+        55897
+      ],
+      [
+        "902cc0ee75083d36075b876cddaa804b7e76c21becf1034971540e000ed6cb37",
+        6985
+      ],
+      [
+        "909920a207bba23fb4f0f2bbb6c3b41659107c9d1261911d07c73713d56c6b30",
+        118060
+      ],
+      [
+        "912e42ac282904742672ad6c324ec825d5975c2eb52fd39222256638d45df41a",
+        9668
+      ],
+      [
+        "93019d5a0ce4b1fc5fbdf8d3ad05bda603282973b35f2fd8194cdb8287a55ff1",
+        56629
+      ],
+      [
+        "94af8ef1a8f7b31657bd10139cbac2145a3594c749650bc04acfa4bb238540f7",
+        117855
+      ],
+      [
+        "94df2026f7825050d3cdc92c7097d50f8e87cacff35ede0680e8d1830ec7bc83",
+        116656
+      ],
+      [
+        "96c792dcd4d2ba83dfe9bbdeb3c62bcfab067ce0ef047836705c63077db12f10",
+        10790
+      ],
+      [
+        "97369e94f295243b0359d547d711b4b601ce66dbe48bd0785435cb64d1629c8a",
+        56474
+      ],
+      [
+        "97d9748c9f2e94355442e43da60c57ef73584ae6863812d690d8800d24396c5e",
+        10911
+      ],
+      [
+        "99db4d59a1b85e6e3c83f851ee3d415aa4a0d9be90e382f51eaacb6888fc8648",
+        117671
+      ],
+      [
+        "9a5aa8ebb77e7f82ee4bfa4c02acbcf602f5b5bdb798e3a3ef65a52590a45e60",
+        9637
+      ],
+      [
+        "9afe058a63ed43646d6035e8559ab9595a563321b35390380a96cefc925b519d",
+        57060
+      ],
+      [
+        "9dac55e3f1db929391004a4d9575103229685dc27900840e465702ecc3b6de98",
+        54830
+      ],
+      [
+        "9eaf3ba5cc1a83f2e3a95b32c91b70369e1964e39c07e0149460f4a83f868139",
+        7097
+      ],
+      [
+        "9ecede843e49b1b7d73a8678e93a6be077654ea10967b630919d58698e5a5745",
+        10415
+      ],
+      [
+        "9f0e6b9cff048f9b7d8165fd2443ea600d7d68fb4a3848cf6668679e000f15dd",
+        10627
+      ],
+      [
+        "9fa32b169b53778a274bb582741715eeabdcc975d08d2ac3ff352c6165eb0ca7",
+        11073
+      ],
+      [
+        "9ff2ac8096e92caf0a8cd0d5a0dd62778ad7a37ae5f11af7b43e0cc439328482",
+        10637
+      ],
+      [
+        "a0320cc3c2395a0ba50f1203174c7b15e3edb3af9ede32d38843ef95f709e204",
+        10883
+      ],
+      [
+        "a052e4733d30c3b6aa84c3d03e170eb41660ea477aa3c11981f38562108f1ad5",
+        55556
+      ],
+      [
+        "a0705fa1b65bdbadc335b929fcde138a83efcd8ad3076b3a7e3112a1df916570",
+        55492
+      ],
+      [
+        "a0733854dd235c059a2ae119cac94fb32208e9453c6f9b7943f77f33ac80c806",
+        57692
+      ],
+      [
+        "a074231a9caa62328e2a390f52a9ad78208b97156ad2c50e4436eb06c0ae8aa8",
+        7019
+      ],
+      [
+        "a0b52ef3f41b585c16b7e584adf4a6d3380e44d58ed089986ad8b8adf5eb6ff8",
+        56799
+      ],
+      [
+        "a0f9376d81da4accf1c548bbac285c688afec3c71118a8a1da1e8b74acb567cf",
+        6968
+      ],
+      [
+        "a355aab60ebbdc6ff4175ae4422b45ac2fab03e13c0547dd65877e7e19fd46a5",
+        9676
+      ],
+      [
+        "a43ce8f7ac23ddc5af99e749ef30db00df22dfbdf7c71f83de41772278622565",
+        55795
+      ],
+      [
+        "a4f03c87f6424ebf865ed849c73b77d670ce1ae48da6b1e337f6fb85328c9fa5",
+        9653
+      ],
+      [
+        "a509303a82579ef1540c8316d20f4c1f40d895f8c283268358f1bf81c251edd4",
+        55159
+      ],
+      [
+        "a50c0107b1a59aff6808b876503fc85e4824acab16534c5b747d4700a745c95e",
+        55882
+      ],
+      [
+        "a700821d845ac9320b44d91669de820ebea0e018ea459c0fc78b04e4ef3f5761",
+        10327
+      ],
+      [
+        "a78ba3f9caeeec81c5d1d2dddda0e4f03e52a61044db6802b592cf3ff57781c0",
+        10584
+      ],
+      [
+        "a8c06c15a27c1ee0cb49726100b7f948a3842521eab82f7e5c3b83239efcc158",
+        10654
+      ],
+      [
+        "a9659feefebb8b762456e9f5ae791cd890ca66238e6f8ff2da617574d65e441f",
+        10554
+      ],
+      [
+        "a965c8e4123d04d1aca2baa8db2f83c834d230627a64d0accfbdbf784b36dc06",
+        9681
+      ],
+      [
+        "a9b8ac012e14fe11fd73888ba0f87c178753b10d373d3b8b94b68e70e9149d4f",
+        55134
+      ],
+      [
+        "a9cebd04723be4ebb8093215c30eb7ed7cfcfbf66c0cac79129de003db4908c0",
+        10480
+      ],
+      [
+        "ab5682644ca3991306a622c78d295f307063978643171ae0c0ddec8bd7f8aefb",
+        54931
+      ],
+      [
+        "abd154a629d4c4058513f35ce0c103aea4cc69bdec3e7eaf898a4cdb866138b8",
+        7193
+      ],
+      [
+        "ad1bc803d34610102defebdbca11e6469e329da561b8d13f079cbb00a4cac936",
+        55655
+      ],
+      [
+        "ae4d3bf5bc7b35bc33e1cda2b98adab097d51e80fe1eefda54c9472cafab5e83",
+        7087
+      ],
+      [
+        "aeaac7ac75a467da9e55c7170cb77da9108cfbf9b78fc0efc8f2cdc5d4ddb4de",
+        55766
+      ],
+      [
+        "aec23513e7976311c4cf841da70a0982e35a814ca3d25a974c59c9decad6301b",
+        55986
+      ],
+      [
+        "af5c91d46b5f80e58b08d9c42ca6678c33fdaf31ce05991c2b654a11c5e2d7a4",
+        10475
+      ],
+      [
+        "afa6ef531089233e6494058afacb78a42298475095fdebad86e43ac56e1fc316",
+        7158
+      ],
+      [
+        "afa6ef531089233e6494058afacb78a42298475095fdebad86e43ac56e1fc316",
+        7158
+      ],
+      [
+        "afedcb57240320cdb8d2ddb517b0c5683b36fba353bf3e3de42f2cc7d9c885b8",
+        56219
+      ],
+      [
+        "b063bf170e1b2e692d55449af3da9a834a745d4f55dc3f4d4d85db99e52977fa",
+        6998
+      ],
+      [
+        "b06d6686481461999afae6d610337edab86b1b99b42ab0b146e4d841c67e15e4",
+        7126
+      ],
+      [
+        "b06d6686481461999afae6d610337edab86b1b99b42ab0b146e4d841c67e15e4",
+        7126
+      ],
+      [
+        "b208c38742a369e1f75070f3fc5da2f32b243274fcfe6d9f2a71224f305d1597",
+        10999
+      ],
+      [
+        "b225463c3dc9b231fd2f4d7f31fde9ba4e5f5c531492d82c6d7598b8f07cc466",
+        118054
+      ],
+      [
+        "b2aea387c4203b761c60be8bdb00a225016f6589c68dbb9d4b8c140504a6fb3f",
+        9667
+      ],
+      [
+        "b347ca003bb380fc5c79ae0b9b57af40af636e3f8eb685ae49c8645620f15dce",
+        56704
+      ],
+      [
+        "b4a79f2536760ef78dff2fc9ee50e2feb00b5cf2105fff0ef3f98190ae144b07",
+        117779
+      ],
+      [
+        "b625bee5079bfa435b8a9285f3642e5bd02db9de781d55aa61c45b0a19ca8186",
+        6916
+      ],
+      [
+        "b6a383d99b02cd5fdde1ff32e9adb8211f1f02d908471601b49c23d8ec780c2b",
+        57277
+      ],
+      [
+        "b74f974680464b451b5bd2282531dc4a214d64e35548d952fcbd62eb9a7b5e7c",
+        118553
+      ],
+      [
+        "b7ade6bc1faaba64913951a8fd1a72c1da2437cfb0363ce691732a7248159cd9",
+        9719
+      ],
+      [
+        "b86f559dacb45723d507c1bfef88a4b1ef99ce13f3e454f274461e23d0b9238e",
+        7040
+      ],
+      [
+        "b9060792a3f0cce8337233defa60a3bbfbec989914af62ef8c0b85719a48adb2",
+        7076
+      ],
+      [
+        "b95cf66af7f22bc3835249ed986cc3d05c22ffa52088e4eaeb86b434c380f5a7",
+        118289
+      ],
+      [
+        "b987185dd4c1f841cb251c0457546c4ec0aed90f07c52d0f3fba99ca7578ae35",
+        10589
+      ],
+      [
+        "ba4fe4d7e66222b73be82a87fd96e62929c05a8a26eb6d53bda730d5b5a97b3e",
+        10629
+      ],
+      [
+        "ba8ff8fb8235053e89cbb2ca9ec52dfb117184bd2b6071269f6d381a7ba30462",
+        56370
+      ],
+      [
+        "bb936fff4fd071aa588ffecc0ba7ebdb0b768f414dfac1a7c029a301fdda339c",
+        57090
+      ],
+      [
+        "bbc87758e6eb1e8e15d8ecc9a1dc47683a24dc4e201d8c2e0dc2574d06c8e77b",
+        55038
+      ],
+      [
+        "bc4953790d55093c2db0b04173c9f7035025c4d3efba341ccb20515c433920fa",
+        55983
+      ],
+      [
+        "bc5fb1c287ba528d950a1242efc1cfa5665a7478db439e8dec75214c64e36f87",
+        119332
+      ],
+      [
+        "bceead779bb0e9cea555dd9b32c47453474c6040fa39798f667ef147d7bdf90a",
+        7266
+      ],
+      [
+        "bcfc0701870ecc7a6fe179133532ae3608aa9143a69ec5bca5fd6e9c2e2b96eb",
+        7037
+      ],
+      [
+        "bd75d7da0a6f763c9f6f09ff8218ba37a120e06ee2ec733058693eda071245d9",
+        10430
+      ],
+      [
+        "be8ab7e02190018e48f11088a2c3b67775fa7ce9edd29974a7de1e4208df7457",
+        115907
+      ],
+      [
+        "bea7517721a324271e40fc27c321da9c78ab5926e5ae812e13b90c35470b5468",
+        10702
+      ],
+      [
+        "c00d5470ddce315c814387640b3628ba85e6e1b27ca745555bbd1f8d4f472214",
+        55935
+      ],
+      [
+        "c1dce587c51bd63eb76b97c75b97f3fc64f61969d754fea906cc886d39609e87",
+        10663
+      ],
+      [
+        "c25e0ce8f135a2555a112fce6d7152fde480c0af49c646dd9689d7554b02945e",
+        10734
+      ],
+      [
+        "c2d9ff8f575ce34168c1a86e7083e640bcea69fb0d0d6aebe8808364cc31fd9b",
+        10288
+      ],
+      [
+        "c328f3cc6dac6517fd097b300906eb90a2ca4a49a2cdee04e9eb5b1bd1c49e6a",
+        55245
+      ],
+      [
+        "c3d7b0962badc6fc8c82e92f8e65f81bacdc1c2c32e538f0a60c027ee4ee2cd5",
+        118967
+      ],
+      [
+        "c438f02c7cb08c58e4d82fcbed0689ca2c629cb5fafbb84912e5ee14c62b8575",
+        10450
+      ],
+      [
+        "c43cc87435b86946e208ca24de7d8b31488f462b62b26671b03e5a2ab404d131",
+        6966
+      ],
+      [
+        "c491c5ad5d5634447dfbed44d9743d41f881ad147af463d24482360362f9306d",
+        7108
+      ],
+      [
+        "c4d8c8b268454988b02bb9e5e8d8f1fd0dff77074de0a8b168b913e904a9258f",
+        56010
+      ],
+      [
+        "c5205a981efad3cbf67b07cd282f34c15d85529bfbbec1e225083c797a8912be",
+        9622
+      ],
+      [
+        "c5554addf7cc8e2d8d190950b9d59d9501c8522128ea499bd063ddb1f74aa872",
+        118084
+      ],
+      [
+        "c71a045da0fe90286dff5f4f4ff88ec0852e21257c9bcd33ddf89b26311da555",
+        9732
+      ],
+      [
+        "c71d76a437f9a1a332925881e9d5a953db7c20d0d9f0d9b94efdf7bd7346991c",
+        55338
+      ],
+      [
+        "c76ff6fc857b6fbcec5760039193cd0700616923e0f58e00187b9e31005f5b39",
+        7109
+      ],
+      [
+        "c7a391eedc491546b10a76a3f2ec0ab8eb11959bda97547c7544a072aa97e268",
+        7140
+      ],
+      [
+        "c7a391eedc491546b10a76a3f2ec0ab8eb11959bda97547c7544a072aa97e268",
+        7140
+      ],
+      [
+        "c7cf5bdd203fcac62f9dac68c9af2b269cebc64b1bbdf80a7b7df3dbfdbd2644",
+        11380
+      ],
+      [
+        "c7ea928f31ed2a254cf813b6ec86667ace1eaebad5ba936e185eec6847b935e0",
+        10655
+      ],
+      [
+        "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+        9695
+      ],
+      [
+        "c9cdb8998d727de2f7b28c15403f1037b6034cec5220815e7f731ab7c2390206",
+        55833
+      ],
+      [
+        "c9cdd05197e402fadab9e5b0a37fff6b5032e6870904f0d17b45ec0fbd5c475c",
+        9567
+      ],
+      [
+        "ca443ed5e20e0440f42830017a389ec2413adc62c99d4265635967e3d00a1160",
+        7224
+      ],
+      [
+        "ca443ed5e20e0440f42830017a389ec2413adc62c99d4265635967e3d00a1160",
+        7224
+      ],
+      [
+        "ca51198ee22c5a66c0d8a4ed115f454dad0c5506e7d467afdf0316ecb1594246",
+        55216
+      ],
+      [
+        "ca64388dee3aeea6592c82b0e467314a874b41f1e38fb71c749c6472631ee334",
+        55366
+      ],
+      [
+        "ca8d8d4e9a179ff93597524c382e6e61862299d9c196b9ce5827c6714d9e1602",
+        10867
+      ],
+      [
+        "cae12992a43b88c2c8c6ca444682013db8b3c7e6068bd812962a30e0211bc5f9",
+        7128
+      ],
+      [
+        "cae27216cc7462394c187f6de00ede0e46b9da411cd9e0228cdb29af0553a86f",
+        55765
+      ],
+      [
+        "cb0a12f3c6e4b8479804064e378170678c946296063be378740116437b740489",
+        7097
+      ],
+      [
+        "cb0a12f3c6e4b8479804064e378170678c946296063be378740116437b740489",
+        7097
+      ],
+      [
+        "cbe88d27a500cf6a25120c5804326e193cd914e27b020c637cb858eaea137185",
+        118737
+      ],
+      [
+        "cc9efaa44c4e0835d8a8f43c713c0a638a025bacffd1722823f4b2d008142f03",
+        56742
+      ],
+      [
+        "cdd9c19a8266790786fede7cc3a95b85d80ded48be97db794b9a337962c2f387",
+        119867
+      ],
+      [
+        "cf5bd731798b3ea3d465bb2af0ce38f3b5dac10d760ed76c8d13ecb752541ee6",
+        9563
+      ],
+      [
+        "cf606936b776981153029afb28c375a65893a14fcc3f02fd297e0bef77580fde",
+        10376
+      ],
+      [
+        "cfdaf3d1859a502689e7655f48a0e00e3f32afe1464b032e28969167c0c4347a",
+        55642
+      ],
+      [
+        "d0532500140980c7aef1998049680640ab046cff2bd39bc9d682476c3dfb8452",
+        9710
+      ],
+      [
+        "d0ed23ab08fcb8a9ba04a57f33ea4589173e48457d4231e515add0bb661a3b85",
+        54655
+      ],
+      [
+        "d17322bbcfbbdcbd4f937196d5e03060680f205088989c7b45a8c68ba196eaa1",
+        7061
+      ],
+      [
+        "d1e4c1e36f2e285fadb8114a5f7acb0d3236855178d046d843346e18d16953d8",
+        56012
+      ],
+      [
+        "d1f91085774dfa94d56ed0f376a170313619cc8fb65cc39907303379bc09ff95",
+        56399
+      ],
+      [
+        "d21319550574cb75d6ba7559f229961adbee09838d0f63533794dd90c7100789",
+        55476
+      ],
+      [
+        "d239c62ec37f07e3b9c95013a24f91c465ab9ae43576c361158fa3844913fc06",
+        10920
+      ],
+      [
+        "d24690d4f2e5760bdd444e10dd59a306fa2160b541fac7f1cc55fabc4fecbcb6",
+        7156
+      ],
+      [
+        "d2ede832653fcc0a338b829c8f6b55ee07fbc5f0296e2054f728d59c16e64b5c",
+        55191
+      ],
+      [
+        "d4163c9daf0c128f6303c85e63ab31f6cbb71bbbebd80f45ca8c97d3a2a1e0a3",
+        55612
+      ],
+      [
+        "d4c2b3dea56bb3a4a3ddfc48cdbabc1f9604d7a0fc55477cc5c3fcaf8419b14c",
+        55599
+      ],
+      [
+        "d5a4b1493726b1c35f94fb443f22650115641f57c146dea9fa7300054b3cc84e",
+        10940
+      ],
+      [
+        "d5b0096c64df9b81b643b57cf3b6cf065ce3341cf529f8e9807f384ec0a8aad3",
+        11081
+      ],
+      [
+        "d5dd786fae90cfb61b9b75190b34eb3e2b3419e6848449d0e5ad255753e26474",
+        54452
+      ],
+      [
+        "d6046bbc862610e354afc82c4b4ee0c24ab2f04be49072a942303b71803180d0",
+        56723
+      ],
+      [
+        "d610ce7997e5ea5d63b023aabeb16ae3ae722c3b0da1564100298fa1b7a05d9a",
+        7112
+      ],
+      [
+        "d668270178e9cfaa8cca150872758227f2c30f80d5c4a8e74dac72869b00082f",
+        11152
+      ],
+      [
+        "d66dc147dc31ba1bee3e0c30a46acf8dda1283a02e4ee871874d39d3274e88c9",
+        10409
+      ],
+      [
+        "d6d358b81d9d77eb5b9891d1c1e1b56b1d09932ebdc7c983e896ef96a5868a97",
+        56164
+      ],
+      [
+        "d86b1d37adb4153742b847cf357a5409a8dce0a8c4b212a052289273a537be62",
+        55163
+      ],
+      [
+        "d96e3311964e398ab4454cac45136d12c1c90848747c1a91d60589abde6222b3",
+        10805
+      ],
+      [
+        "daae2eb718d4d39f4ab4eeb1caf510a705a9df34263aeafacdeb4df70ab2bc4a",
+        116437
+      ],
+      [
+        "dae4a51c951ffe5d6ca477afae010d6b60ecba8d5af3b8e487f4c3e0a6addae8",
+        55727
+      ],
+      [
+        "db74a1c095799eba7d0313270b9bf74f686cf5f85bff5c78162b325370ee8b8b",
+        7038
+      ],
+      [
+        "dba8af67caf32f4f7c9e81110a9cd12cd95e65d6a51fb107a2d84a2e8aef348a",
+        55828
+      ],
+      [
+        "dc6e3f1586c419d47cdabb2d15884e3eb4281bae01faa785bae9c8beaccdffbd",
+        7113
+      ],
+      [
+        "ddb44498303ecc914fc8ce1903fb8a88514b8acb73df28e4d2ce8e5ad01717b9",
+        10895
+      ],
+      [
+        "de6d7f2b2fc206d42df340130de4a2bbb991c237f097a6050a12546daba604f9",
+        7019
+      ],
+      [
+        "deaaecac7c47c1cc192600493e88f2d1df140012b36859fa14ecd23f64203bb7",
+        7155
+      ],
+      [
+        "dfa72a2a4d1ed7128d3f916fdade9123bb2da931e0e8e65d92e7304198a7de31",
+        55610
+      ],
+      [
+        "e00c629ba1fa11f60233cb4685ee2fa76a8c663faf6ce8fc3df570cc5a0028ec",
+        10281
+      ],
+      [
+        "e17c670199a89369d781a796d68b2511c84d7d52cb03ef27b08e3673bb94fb61",
+        55759
+      ],
+      [
+        "e28b6c528ed8c99b3d89b0dfe3e12c7560c78a917b02b2e878542950686b11c7",
+        9695
+      ],
+      [
+        "e2f1e6c97f05369a205f0150daf1f28d64a87fe8669b8aa6a2ecc964b34373b9",
+        9663
+      ],
+      [
+        "e39a4f5ac60f689dab7b9fd43259273284c1169d70be398e59829df82137eef5",
+        11056
+      ],
+      [
+        "e3ab9ff4ff0b79c7819b52a3f9da114672f382e87b0d25508e67211e1f02012f",
+        9699
+      ],
+      [
+        "e3ad51a736bb9853174b9b959df01570522cbe8f2f9004b15e2bda2217dbaf3e",
+        55714
+      ],
+      [
+        "e4872d2d5b01816bc00d7960d2539b896a2a0f877b246b45182964ca9154adaa",
+        117156
+      ],
+      [
+        "e5434fbcef4a91d8d0b809b67239eecfa5d781bfc674b9d7b399c7db74f12ae0",
+        9717
+      ],
+      [
+        "e561be70a9eb157c025310ce45689f9a3f2e8f5ffce8457faedcc188e736970f",
+        11024
+      ],
+      [
+        "e5ddd24b7b066fe338bbf4a9bdf917da792961faf3d6d7473286e806cb5c0122",
+        55777
+      ],
+      [
+        "e673a2e415c28327bff5bfba25e4ecc9817392b04171691cff4da2c35208e3f1",
+        7134
+      ],
+      [
+        "e6bfe1f56efe2dfaf02d7c19a3c22f01a00a46e9f82f6689b7ce21b8efe8d936",
+        55710
+      ],
+      [
+        "e6caebae4d46601416e0af2c7d9eadd00706df7547589a6d3158cdcaac812c61",
+        56071
+      ],
+      [
+        "e78b793c17d406b263b88e64cefa6ada2da9d8a3f2cdd8dc6816a14eea533a9c",
+        55098
+      ],
+      [
+        "e91ae1ab444a848b7e4758b80a9f043acb473383c95fedb3d42f41fa3d45ac93",
+        57003
+      ],
+      [
+        "ea032eb012a37b10c9466b954825e609c6e42f42310f5b9f195cd5fadbe5e2e8",
+        7099
+      ],
+      [
+        "ea032eb012a37b10c9466b954825e609c6e42f42310f5b9f195cd5fadbe5e2e8",
+        7099
+      ],
+      [
+        "ea711885faeb4f5ad0077d74801b17bf27500cb9b6d78ee8e1c1057072d9eab5",
+        9656
+      ],
+      [
+        "eb00dc4593e640b68a88c68228955dc3f7ad59988dfdbb687b9d0e25ca3d6554",
+        118569
+      ],
+      [
+        "eb4908d179792fab2a77969584727f18273ad074b9c9b47159ac5db440cb946b",
+        10827
+      ],
+      [
+        "ec51084f682383045589120de8b44a233022a1fb3a7aea4f7e069c6c84442857",
+        7107
+      ],
+      [
+        "ed31de8434aec9d29ff32ce768ad93ff9763bd721784144ef7df2e473d77675d",
+        118385
+      ],
+      [
+        "edec2176ae36cbabd9be262e2926ff062b221d545e68252a066a3d080f8f65b1",
+        55165
+      ],
+      [
+        "ef81aeb2cdb8bf674a34cae51c6f5ac95739046fbc2062d15c628cbd015061bf",
+        10654
+      ],
+      [
+        "f1725f00d6939efabf6279f963c58d9688dcd2c6254c2d73f189cb5e80b11367",
+        10717
+      ],
+      [
+        "f2848d8ff611e92eeda958b41db8bdecc98a304d59f5a6eff00cc510964e25b2",
+        55859
+      ],
+      [
+        "f2cefaa0234aa19ad3297a19d315aa15321e393a4e579e22af568bc908988a6d",
+        54254
+      ],
+      [
+        "f306fd0818265eac32e9ad4da35e2c8a63656c2dfd573476fb1b249d459b1b81",
+        7142
+      ],
+      [
+        "f34fcab62f98440d11d23ed37c8cff67d6d081a243aad1a7d43923c4f364dfe5",
+        56553
+      ],
+      [
+        "f4ba134a58c58346f1ad774b525d4735d81b58716335d5fad342bfb910209079",
+        9607
+      ],
+      [
+        "f4e66ddbad95b20fe17e807932b57d916d7b71dd7805ad0dabd2de41ee8cf52e",
+        10470
+      ],
+      [
+        "f602219532556dd14be757901bf0d538c9fcc0cf12b6444ee9a4830264fa8d86",
+        10862
+      ],
+      [
+        "f68ee40cb2f50cb8fc260de478970219b807bb3e5b095ff3203559bb1f055e0d",
+        117678
+      ],
+      [
+        "f748885ff7dc848b72341085818524e1aa89c11130a6c4c4b1d1839598212093",
+        10825
+      ],
+      [
+        "f77d1e645f24251e43aed17184131f9ec06614f60643575d484a0b1ae72a8cb0",
+        10422
+      ],
+      [
+        "f7b812b8c1507152930725d45da53595d2c04ef5a158ca37284c31eb0d8d398e",
+        7089
+      ],
+      [
+        "f7e7a23e7a1b17f757f73401b6d25fff37d29fd4aa14660d33e7818ec1841aee",
+        10629
+      ],
+      [
+        "f8cb58a935a5b021f623cada1e3decc8ce7e1d3f67c2de07534ccd1f18310a4b",
+        9632
+      ],
+      [
+        "f944b972da3de6965838bed70a72fa047db8d430b1c2cc5321433f6044060fb1",
+        10492
+      ],
+      [
+        "f95677f5031e7c36b32ec30c6b800e06bdf854189deda19ebbfad2949ecb5268",
+        10232
+      ],
+      [
+        "fa111f3a903fd32b6d12314016dda0ffc3a5c11db0513d2195def3f5be44da48",
+        7247
+      ],
+      [
+        "fa111f3a903fd32b6d12314016dda0ffc3a5c11db0513d2195def3f5be44da48",
+        7247
+      ],
+      [
+        "fa25bc2fbe2ac3f277e6199e6b5eb7909c55406e1b8bcf4692586aee7f351f4a",
+        9633
+      ],
+      [
+        "fafd6828d75cad89bc3127ab55940f5b51cdafe0f11ecb8977753c5482e5ae11",
+        57067
+      ],
+      [
+        "fb1e4e391fdc74df58d6837f21102799defabf9cf09a31878defa83c6a5e021d",
+        9537
+      ],
+      [
+        "fb21043e8e2e755a45c8f90d54ed27672425d1878d9f337a33a9c1435f4fc363",
+        7039
+      ],
+      [
+        "fc5d0ce388f1605a5a20fed423fcdb30552a11d6829e379309ee61f9a1f2fa7a",
+        9676
+      ],
+      [
+        "fd775772b9e9707459c3e91e38578c5700f31fe0787bc5e2324a909a2056ce7c",
+        10452
+      ],
+      [
+        "fe3f475672e6011757181a8eb3131de15e90d450fd594a8db43ff97b6158f33d",
+        7094
+      ],
+      [
+        "fe3f475672e6011757181a8eb3131de15e90d450fd594a8db43ff97b6158f33d",
+        7094
+      ],
+      [
+        "fe571f6a3152369efa6c78f7248106b0d0f21aaf5c8f454f2b0d799697708a00",
+        10469
+      ],
+      [
+        "fe5a96c4ebc4cdcdee06de1cbf422bf66ba79c1a4920c3b6828eaebfab33790b",
+        10995
+      ],
+      [
+        "fee987f93cf3ffdb0da8504e52c9837fdd862203ad08398df05e59f5bb079c84",
+        6976
+      ],
+      [
+        "ff034d73b78a6f27889d99b96091fc003932c285614751c1012b14220fcce740",
+        117839
+      ],
+      [
+        "ff2acbde7378dbe9f029fea1911be012145b1ca88df3a39e7375f8b19077b404",
+        7177
+      ],
+      [
+        "ff5a80b2234bd7d5e51a2285e6fca1c5a1b3322a2865af2d7167e89cb1e75a66",
+        55314
+      ],
+      [
+        "ff6c7f073487c64af09cb57eed089b3c6bf54f819afe548df5f2cefb9ac0ab16",
+        9555
+      ],
+      [
+        "ff867cc412f6496598303df4492be8e420650204d891300ba7ad82a5071612aa",
+        9547
+      ],
+      [
+        "ffac4ed7e58be6d5dc2137e821782d535774d8770a153ba98c309f3870a8cf71",
+        55426
+      ]
+    ],
+    "source_sha256": "8bd227df9ed8d635773a33e836fda1f78f2ce356d45afe844c4257c3f2e49659",
+    "script_sha256": "1f3e3a3866ecbdb8fc466df3c40fb6fbb1932e5627960837d398dca590dc1d81",
+    "shared_native_script_sha256": "823c4d5bfd2a70e760929c727e32afe5a2698e8b4822ffbde9d1ac2a7821d0d1",
+    "policies": [
+      "adaptive_acquisition",
+      "fixed_restoration",
+      "fixed_view_order",
+      "random_request",
+      "oracle"
+    ],
+    "variants": [
+      "Obtainable"
+    ],
+    "seed": 20261107,
+    "budget": 6,
+    "request_slots": 2,
+    "request_views": [
+      "original",
+      "front_survey",
+      "rear_left",
+      "rear_center",
+      "rear_right"
+    ],
+    "random_seed_group": "paired_history_id",
+    "max_context_tokens": 8192,
+    "max_new_tokens": 1,
+    "do_sample": false,
+    "decoder": "restricted-next-token-letter-argmax",
+    "system_instruction": "Verify the visual claim using only the released photographs and public request feedback. Select exactly one displayed option. Candidate rectangles are supplied by an image-processing helper; they do not establish identity or condition. Need more evidence is appropriate when the visible photographs cannot justify a definite conclusion. Reply with the option letter.",
+    "acquisition_instruction": "Choose the photograph to request next. There are two request slots in total, including repeats. The five options name public inspection views. Use the visible evidence to decide which next photograph is useful.",
+    "terminal_instruction": "No requests remain. Choose one complete answer and evidence chain below. Each definite option states its conclusion and the supplied source-pixel regions and identity links it will cite. Select the chain only if the photographs justify both the identity and condition. These boxes and links are interface assistance, not your own region predictions.",
+    "terminal_calls": 1,
+    "terminal_input": "fresh-public-observation-and-public-request-feedback",
+    "scope": "Interface-assisted finite-choice diagnostic; separate from native results."
+  },
+  "cohort": {
+    "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+    "manifest_sha256": "9c0e2b6a77120e0ba7fc168bcea9f5dc9c57c83a4e691ec251ef775da20b87c5",
+    "episodes_per_policy": 116,
+    "paired_banks": 58,
+    "case_ids": [
+      "sim-search-01f3321419a73ac2135d-Obtainable",
+      "sim-search-03a97c35daf7a69eaca2-Obtainable",
+      "sim-search-046285a2b17c7cf7c1c4-Obtainable",
+      "sim-search-09606ce2bc7bcc05e310-Obtainable",
+      "sim-search-0cb644587baa6f1ee89f-Obtainable",
+      "sim-search-0cbf75e26f7151ba8abf-Obtainable",
+      "sim-search-1089f3398ed6fe8b2565-Obtainable",
+      "sim-search-133726c38468eca25ca8-Obtainable",
+      "sim-search-177a2b3f6a861113bd35-Obtainable",
+      "sim-search-18786ad4a7d3577eaebe-Obtainable",
+      "sim-search-1952428925d81a3ddb62-Obtainable",
+      "sim-search-1f6c0fd274aa2b93766f-Obtainable",
+      "sim-search-1ffa5916a634393772ba-Obtainable",
+      "sim-search-228120056c8531da8979-Obtainable",
+      "sim-search-258c8545ede1587fc468-Obtainable",
+      "sim-search-26750131f3e8f94f5248-Obtainable",
+      "sim-search-275004eacbab8bcff4ef-Obtainable",
+      "sim-search-27a13aa9de9bbce8a48d-Obtainable",
+      "sim-search-2b3ae6dbfbe826f00391-Obtainable",
+      "sim-search-2fcd0934aa1e6679d3a3-Obtainable",
+      "sim-search-30aab618949d55bb829e-Obtainable",
+      "sim-search-320077ceaeb5702e40f0-Obtainable",
+      "sim-search-3373d96632a3ec58b99f-Obtainable",
+      "sim-search-33d7b32f8d914f7425a3-Obtainable",
+      "sim-search-345665c5d7e7eef04a21-Obtainable",
+      "sim-search-35bd6a1e8458f898ab8c-Obtainable",
+      "sim-search-3ecaac7e24e7dcfb2e80-Obtainable",
+      "sim-search-3f54206d0c0b11bf69a3-Obtainable",
+      "sim-search-3fdbc1e1fbd2736a5188-Obtainable",
+      "sim-search-40b9b697fb77594985fe-Obtainable",
+      "sim-search-43fbef01995d6ebcde58-Obtainable",
+      "sim-search-46e1856f34730284fb07-Obtainable",
+      "sim-search-49be419292e9a43d6e0e-Obtainable",
+      "sim-search-49f40a3c8f22fa0534bb-Obtainable",
+      "sim-search-4b3a78351e748755e16c-Obtainable",
+      "sim-search-4cc7f02b4f3f9a88a00a-Obtainable",
+      "sim-search-4df14c0cefdb7d099cf8-Obtainable",
+      "sim-search-5251afe09cc1022c59e2-Obtainable",
+      "sim-search-52604c887273ab0ea9fd-Obtainable",
+      "sim-search-52b7518ec49240f43884-Obtainable",
+      "sim-search-549178fef2644d34b79e-Obtainable",
+      "sim-search-5576ee58e5fbfeb11dec-Obtainable",
+      "sim-search-56d425bf49797c8eccde-Obtainable",
+      "sim-search-57703beca0bbaf9209f5-Obtainable",
+      "sim-search-5d44d7a580d4c5ee425d-Obtainable",
+      "sim-search-5d841d7e09b6975fcf1f-Obtainable",
+      "sim-search-5df1b75379fa8bcd2ae9-Obtainable",
+      "sim-search-613f3610f778259724ff-Obtainable",
+      "sim-search-62411c5faa10d1dc62c4-Obtainable",
+      "sim-search-62ce2686825241750ec8-Obtainable",
+      "sim-search-65b32c5e4b597549aa42-Obtainable",
+      "sim-search-66be11b46eddd746fc47-Obtainable",
+      "sim-search-67537c1c0d3803dd6ec0-Obtainable",
+      "sim-search-6944a7e2a5aeced854b2-Obtainable",
+      "sim-search-6b39dc51a0c81f2aafb6-Obtainable",
+      "sim-search-6baa3130ed44c0c83f83-Obtainable",
+      "sim-search-6efc84efd401c2e94999-Obtainable",
+      "sim-search-718ea7c8640137c064a6-Obtainable",
+      "sim-search-734a3650aa4b0fe5b20d-Obtainable",
+      "sim-search-735bf0ed45bd8d8b42ed-Obtainable",
+      "sim-search-7590082b829ed0852709-Obtainable",
+      "sim-search-78227b42b7ccf6a0e5f2-Obtainable",
+      "sim-search-78ac662a3000766b5e8f-Obtainable",
+      "sim-search-7d159f500a094d1836bf-Obtainable",
+      "sim-search-8085cdeaff31143eb56e-Obtainable",
+      "sim-search-813e1ace6b4d6e3e7f10-Obtainable",
+      "sim-search-8174272ba6fd8eb51314-Obtainable",
+      "sim-search-825158449145796b6c0c-Obtainable",
+      "sim-search-83de636d4277d156d951-Obtainable",
+      "sim-search-88170f3c5e401807b327-Obtainable",
+      "sim-search-8a75e323a5bdf0adb62b-Obtainable",
+      "sim-search-8b7435a026216a121a91-Obtainable",
+      "sim-search-90e3469cfe7cba780942-Obtainable",
+      "sim-search-91146425f2d6788f6910-Obtainable",
+      "sim-search-9544dbdffecaafce83f5-Obtainable",
+      "sim-search-97e81c7fe5bcd428405f-Obtainable",
+      "sim-search-9adbd9a83e2b22941f34-Obtainable",
+      "sim-search-9b398945493e130eebb9-Obtainable",
+      "sim-search-9c209f221f61b3bbafc0-Obtainable",
+      "sim-search-a38a1bf85016d61f3f7a-Obtainable",
+      "sim-search-a5a335accd939713c1c6-Obtainable",
+      "sim-search-a62ab0fc459aac21ebc1-Obtainable",
+      "sim-search-a634242496b132102e89-Obtainable",
+      "sim-search-a80c640f7cec1066d20e-Obtainable",
+      "sim-search-aba21d19d3a190d4bba0-Obtainable",
+      "sim-search-ad12b6ebbf56583aecd8-Obtainable",
+      "sim-search-af086009e46af3197b19-Obtainable",
+      "sim-search-afd4b5a1c48e1ebb4fdd-Obtainable",
+      "sim-search-b14438c4902da76d9168-Obtainable",
+      "sim-search-b2b1d6037d0714505e49-Obtainable",
+      "sim-search-b382f744b18f82959e1b-Obtainable",
+      "sim-search-b754757a3b81122fd62f-Obtainable",
+      "sim-search-ba8acc274b99fcaa3d46-Obtainable",
+      "sim-search-bc1665c7deb827cb196e-Obtainable",
+      "sim-search-bda136885707af70a8e6-Obtainable",
+      "sim-search-c71197672cc1653c25d1-Obtainable",
+      "sim-search-c77668a234451f4e602a-Obtainable",
+      "sim-search-c7ea576f5e851306fb7d-Obtainable",
+      "sim-search-ce686726f9b9cf4d2ab1-Obtainable",
+      "sim-search-ce757f8c8d3730d09bcf-Obtainable",
+      "sim-search-d37c32f8556028f8e50f-Obtainable",
+      "sim-search-d3b6964b7ec89cd3e803-Obtainable",
+      "sim-search-d51093e3e4ec3d3c9218-Obtainable",
+      "sim-search-d5468365167cfb22a079-Obtainable",
+      "sim-search-d5f40c1888201485fe6d-Obtainable",
+      "sim-search-d6153cdae5405ad84d92-Obtainable",
+      "sim-search-d70e085785222aa193f1-Obtainable",
+      "sim-search-d9c9d94af71b58cdef32-Obtainable",
+      "sim-search-ec73aa2f2c5b8ccbae2e-Obtainable",
+      "sim-search-ed8c85364aed8c61b798-Obtainable",
+      "sim-search-f368d426d6d1656b111e-Obtainable",
+      "sim-search-f49dfc85552e9aef18b4-Obtainable",
+      "sim-search-f623b4112521ed1de87a-Obtainable",
+      "sim-search-f9835d0de36599c1b816-Obtainable",
+      "sim-search-fa956060620e7ef98b88-Obtainable",
+      "sim-search-fb08847aa9def0e6fd17-Obtainable"
+    ],
+    "renderer_source_sha256": "3310b14b6b5a4d7fad23009f4bbb03692140f07508c0ff713772265db7044ed4",
+    "selection": "Full frozen cohort minus the separately frozen development paired banks",
+    "case_ids_sha256": "e29b298a576aa47395b62b652fb6233a3162bb620d1b7c3c94a74c65af9b5042"
+  },
+  "bootstrap": {
+    "unit": "paired_history_id / scene bank",
+    "replicates": 20000,
+    "seed": 20261107,
+    "method": "Paired percentile cluster bootstrap, central 95%; no multiplicity adjustment"
+  },
+  "denominator": "Every planned attempted episode, including invalid selections, failed submissions and abstentions",
+  "definitions": {
+    "chain_grounded_correct": "Correct source label, finite-world evidence identification and localized identity chain with diagnostic visible-mask coverage",
+    "localized_grounded_correct": "Chain-correct with the additional diagnostic rectangle IoU/precision thresholds",
+    "evidence_found": "Actual observed view hashes identify one source label in the finite world bank",
+    "duplicate_requests": "Executed requests beyond the first request for each public view in the same episode",
+    "efficiency": "All-attempt means; adaptive selector model calls count, scripted selectors generate no model tokens",
+    "tokens": "Offered native input tokens and all generated tokens; unavailable if any transport accounting is incomplete"
+  },
+  "partial_scores_withheld": false,
+  "cross_model_comparison_ready": true,
+  "completion_rule": "Each model reports scores only after its entire five-policy cohort is complete; cross-model comparison waits for all requested models",
+  "models": {
+    "Base": {
+      "complete": true,
+      "completed_episodes": 580,
+      "expected_episodes": 580,
+      "ordered_episode_sha256": "b21d9eb04b317f7ce7bbf23c6dfcb34742637120cedcc134fe880bb3372bd84a",
+      "completion_by_policy": {
+        "adaptive_acquisition": 116,
+        "fixed_restoration": 116,
+        "fixed_view_order": 116,
+        "random_request": 116,
+        "oracle": 116
+      },
+      "manifests": [
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-0/manifest.json",
+          "sha256": "9673246b1b69a9add757b65ffb6a134d4e0c82d6c8f5f1f95fb187c9a3f5e3b3",
+          "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+        },
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-1/manifest.json",
+          "sha256": "26ae087acea597dd3c35162c81a5b66146b3dc33338f8ec4baffa3e6c74d6248",
+          "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+        }
+      ],
+      "model_configuration": {
+        "base_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+        "configuration": {
+          "chat_template.json": "5c72a170d2a4a1a3bc5adad2e689ae28138a9700e5b8c96c0266331e86c0acce",
+          "config.json": "5cd452860dc1e9c29dd71cc3cef7f39b338b7a40793f7a260655c2d3568f3661",
+          "generation_config.json": "8469742d1fce0de951c8909b26a2c0c0d8490837ce476efb114da9e0cefc4d44",
+          "model.safetensors.index.json": "520b2e05079402e9468a8701d03d1154d14b2599593afb6effa7fb60c1bff070",
+          "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+          "tokenizer_config.json": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+          "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "weight_shards": {
+          "model-00001-of-00004.safetensors": 4902275944,
+          "model-00002-of-00004.safetensors": 4915962496,
+          "model-00003-of-00004.safetensors": 4999831048,
+          "model-00004-of-00004.safetensors": 2716270024
+        },
+        "weight_sha256_recomputed": false
+      },
+      "policies": {
+        "adaptive_acquisition": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 40,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 40,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 34.48275862068966,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 34.48275862068966,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 5586.0,
+            "output_tokens": 3.0,
+            "wall_latency_s": 2.313754326865631,
+            "model_calls": 3.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 1,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 3,
+              "both_second_requests_match_observed_targets": 1
+            },
+            "both_members_evidence_found_pct": 1.7241379310344827,
+            "correct_switch_pct_all_banks": 1.7241379310344827,
+            "correct_switch_pct_given_both_front": 1.7241379310344827,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_restoration": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 116,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 1764.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.1286365149255666,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_view_order": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 38,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 38,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 32.758620689655174,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 32.758620689655174,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2615.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.4070069148638766,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "random_request": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 12,
+            "source_label_correct": 3,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 5,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 6
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 10.344827586206897,
+            "source_label_correct": 2.586206896551724,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 4.310344827586207,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 5.172413793103448
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2386.206896551724,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.3319913999213644,
+            "model_calls": 1.0,
+            "new_image_requests": 1.5862068965517242,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 13,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "oracle": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 116,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 116,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2615.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.4017219392568725,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 58,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 58,
+              "both_second_requests_match_observed_targets": 58
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 34.48275862068966,
+            "paired_bank_bootstrap_ci95_pp": [
+              27.586206896551722,
+              40.51724137931034
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 1.7241379310344827,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              4.310344827586207
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 24.137931034482758,
+            "paired_bank_bootstrap_ci95_pp": [
+              15.517241379310345,
+              32.758620689655174
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": -2.586206896551724,
+            "paired_bank_bootstrap_ci95_pp": [
+              -6.0344827586206895,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        }
+      }
+    },
+    "SFT+RL": {
+      "complete": true,
+      "completed_episodes": 580,
+      "expected_episodes": 580,
+      "ordered_episode_sha256": "2b23c44324507441cb561aada1f228c12a180028e191a69bcc023c1b219e55b9",
+      "completion_by_policy": {
+        "adaptive_acquisition": 116,
+        "fixed_restoration": 116,
+        "fixed_view_order": 116,
+        "random_request": 116,
+        "oracle": 116
+      },
+      "manifests": [
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-0/manifest.json",
+          "sha256": "be5798d2d7bb30da2b3da65dfd8faf233f2feb261e53041f8b671682fc0610eb",
+          "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+        },
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-1/manifest.json",
+          "sha256": "e7d3486c306438a5d8378e34e0bd22474c300cf132a2590c8feecaad2e773bc9",
+          "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+        }
+      ],
+      "model_configuration": {
+        "base_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/model",
+        "configuration": {
+          "chat_template.json": "5c72a170d2a4a1a3bc5adad2e689ae28138a9700e5b8c96c0266331e86c0acce",
+          "config.json": "5cd452860dc1e9c29dd71cc3cef7f39b338b7a40793f7a260655c2d3568f3661",
+          "generation_config.json": "8469742d1fce0de951c8909b26a2c0c0d8490837ce476efb114da9e0cefc4d44",
+          "model.safetensors.index.json": "520b2e05079402e9468a8701d03d1154d14b2599593afb6effa7fb60c1bff070",
+          "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+          "tokenizer_config.json": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+          "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "weight_shards": {
+          "model-00001-of-00004.safetensors": 4902275944,
+          "model-00002-of-00004.safetensors": 4915962496,
+          "model-00003-of-00004.safetensors": 4999831048,
+          "model-00004-of-00004.safetensors": 2716270024
+        },
+        "weight_sha256_recomputed": false,
+        "adapter": {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/qwen3_8b_grpo/latest",
+          "configuration_sha256": "ae82d10319c8d4d60ee9ff68475cc59a80e39df917ea3d7ba0ffe611651bd10a",
+          "weight_sha256": "e2834c04bec82ce59f2325586bde4f39ac268137b0ddbbcfbfc2c0e03b3ac210",
+          "processor_configuration": {
+            "added_tokens.json": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+            "checkpoint_group.json": "c5834abaaa608678c693ad5011a6483acd6d6e8853e08c4935c72192e4c28950",
+            "preprocessor_config.json": "b828200f394d072d276e36cea35d9526685918e014a1dc5542d0b63cb69524cf",
+            "special_tokens_map.json": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+            "tokenizer_config.json": "8e17140a9a6df37e8ddf500468fd9e9563ee86850d7199066df183c036949abf",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1",
+            "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+          }
+        }
+      },
+      "policies": {
+        "adaptive_acquisition": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 2,
+            "source_label_correct": 4,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 2,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 8
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 1.7241379310344827,
+            "source_label_correct": 3.4482758620689653,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 1.7241379310344827,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 6.896551724137931
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 5243.3448275862065,
+            "output_tokens": 3.0,
+            "wall_latency_s": 2.334818995864821,
+            "model_calls": 3.0,
+            "new_image_requests": 1.2413793103448276,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 4,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_restoration": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 116,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 1764.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.181124091830811,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_view_order": {
+          "front_slot_assessable_episodes": 7,
+          "selected_chain_target_correct_pct_given_assessable": 42.857142857142854,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 3,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 38,
+            "source_label_correct": 3,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 3,
+            "finished": 116,
+            "front_then_target_rear": 38,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 4
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 32.758620689655174,
+            "source_label_correct": 2.586206896551724,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 2.586206896551724,
+            "finished": 100.0,
+            "front_then_target_rear": 32.758620689655174,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 3.4482758620689653
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2615.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.4810158763881693,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "random_request": {
+          "front_slot_assessable_episodes": 15,
+          "selected_chain_target_correct_pct_given_assessable": 33.333333333333336,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 4,
+            "localized_grounded_correct": 1
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 12,
+            "source_label_correct": 15,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 5,
+            "finished": 116,
+            "front_then_target_rear": 5,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 29
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 10.344827586206897,
+            "source_label_correct": 12.931034482758621,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 4.310344827586207,
+            "finished": 100.0,
+            "front_then_target_rear": 4.310344827586207,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 25.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2386.206896551724,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.4268566428800113,
+            "model_calls": 1.0,
+            "new_image_requests": 1.5862068965517242,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 13,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "oracle": {
+          "front_slot_assessable_episodes": 10,
+          "selected_chain_target_correct_pct_given_assessable": 100.0,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 7,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 116,
+            "source_label_correct": 7,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 10,
+            "finished": 116,
+            "front_then_target_rear": 116,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 3
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "source_label_correct": 6.0344827586206895,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 8.620689655172415,
+            "finished": 100.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 2.586206896551724
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2615.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.484287131738303,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 58,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 58,
+              "both_second_requests_match_observed_targets": 58
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 1.7241379310344827,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              4.310344827586207
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 3.4482758620689653,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.8620689655172413,
+              6.896551724137931
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -31.03448275862069,
+            "paired_bank_bootstrap_ci95_pp": [
+              -37.06896551724138,
+              -25.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 0.8620689655172413,
+            "paired_bank_bootstrap_ci95_pp": [
+              -2.586206896551724,
+              4.310344827586207
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": -2.586206896551724,
+            "paired_bank_bootstrap_ci95_pp": [
+              -6.0344827586206895,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -8.620689655172415,
+            "paired_bank_bootstrap_ci95_pp": [
+              -13.793103448275861,
+              -3.4482758620689653
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": -9.482758620689655,
+            "paired_bank_bootstrap_ci95_pp": [
+              -15.517241379310345,
+              -4.310344827586207
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": -4.310344827586207,
+            "paired_bank_bootstrap_ci95_pp": [
+              -7.758620689655173,
+              -0.8620689655172413
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        }
+      }
+    },
+    "Qwen3.5-9B": {
+      "complete": true,
+      "completed_episodes": 580,
+      "expected_episodes": 580,
+      "ordered_episode_sha256": "7c6afdbd446750e8444998563ba199f7848e3e4e74e5ea93320d45c3e3443b92",
+      "completion_by_policy": {
+        "adaptive_acquisition": 116,
+        "fixed_restoration": 116,
+        "fixed_view_order": 116,
+        "random_request": 116,
+        "oracle": 116
+      },
+      "manifests": [
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen35_9b/full-choice-v1/shard-0/manifest.json",
+          "sha256": "2ad5e5dd6f14af1275b697fdbd14a2f1b7e0e1a5a25bfaed11501318718ef601",
+          "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+        },
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen35_9b/full-choice-v1/shard-1/manifest.json",
+          "sha256": "b9f78fbed52111ca5533440ad29c9403231106b8bb6ec3cb55bad3913b3ce9a8",
+          "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+        }
+      ],
+      "model_configuration": {
+        "base_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/qwen35-9b",
+        "configuration": {
+          "config.json": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+          "model.safetensors.index.json": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5",
+          "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+          "tokenizer_config.json": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+          "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+          "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+        },
+        "weight_shards": {
+          "model.safetensors-00001-of-00004.safetensors": 5276436216,
+          "model.safetensors-00002-of-00004.safetensors": 5335161512,
+          "model.safetensors-00003-of-00004.safetensors": 5368717440,
+          "model.safetensors-00004-of-00004.safetensors": 3325995712
+        },
+        "weight_sha256_recomputed": false
+      },
+      "policies": {
+        "adaptive_acquisition": {
+          "front_slot_assessable_episodes": 19,
+          "selected_chain_target_correct_pct_given_assessable": 31.57894736842105,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 3,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 6,
+            "source_label_correct": 17,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 6,
+            "finished": 116,
+            "front_then_target_rear": 1,
+            "episodes_with_duplicate_requests": 66,
+            "selection_complete": 116,
+            "unsupported_decisions": 33
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 5.172413793103448,
+            "source_label_correct": 14.655172413793103,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 5.172413793103448,
+            "finished": 100.0,
+            "front_then_target_rear": 0.8620689655172413,
+            "episodes_with_duplicate_requests": 56.89655172413793,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 28.448275862068964
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 4994.827586206897,
+            "output_tokens": 3.0,
+            "wall_latency_s": 3.023488239847838,
+            "model_calls": 3.0,
+            "new_image_requests": 0.5948275862068966,
+            "duplicate_requests": 0.5689655172413793
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 5,
+              "second_views_differ": 3,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_restoration": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 116,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 1768.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.434903127217569,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_view_order": {
+          "front_slot_assessable_episodes": 103,
+          "selected_chain_target_correct_pct_given_assessable": 33.00970873786408,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 19,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 38,
+            "source_label_correct": 52,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 34,
+            "finished": 116,
+            "front_then_target_rear": 38,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 84
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 32.758620689655174,
+            "source_label_correct": 44.827586206896555,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 29.310344827586206,
+            "finished": 100.0,
+            "front_then_target_rear": 32.758620689655174,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 72.41379310344827
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2619.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 2.0045657629349893,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "random_request": {
+          "front_slot_assessable_episodes": 37,
+          "selected_chain_target_correct_pct_given_assessable": 32.432432432432435,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 6,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 12,
+            "source_label_correct": 40,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 12,
+            "finished": 116,
+            "front_then_target_rear": 5,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 73
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 10.344827586206897,
+            "source_label_correct": 34.48275862068966,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 10.344827586206897,
+            "finished": 100.0,
+            "front_then_target_rear": 4.310344827586207,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 62.93103448275862
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2390.206896551724,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.8083889917008868,
+            "model_calls": 1.0,
+            "new_image_requests": 1.5862068965517242,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 13,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "oracle": {
+          "front_slot_assessable_episodes": 105,
+          "selected_chain_target_correct_pct_given_assessable": 100.0,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 58,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 116,
+            "source_label_correct": 58,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 105,
+            "finished": 116,
+            "front_then_target_rear": 116,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 47
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "source_label_correct": 50.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 90.51724137931035,
+            "finished": 100.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 40.51724137931034
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2619.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 2.007875187691815,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 58,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 58,
+              "both_second_requests_match_observed_targets": 58
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 5.172413793103448,
+            "paired_bank_bootstrap_ci95_pp": [
+              1.7241379310344827,
+              9.482758620689655
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 14.655172413793101,
+            "paired_bank_bootstrap_ci95_pp": [
+              8.620689655172415,
+              20.689655172413794
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 5.172413793103448,
+            "paired_bank_bootstrap_ci95_pp": [
+              1.7241379310344827,
+              9.482758620689655
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -27.586206896551722,
+            "paired_bank_bootstrap_ci95_pp": [
+              -34.48275862068966,
+              -19.82758620689655
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": -30.17241379310345,
+            "paired_bank_bootstrap_ci95_pp": [
+              -37.06896551724138,
+              -23.275862068965516
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": -24.137931034482758,
+            "paired_bank_bootstrap_ci95_pp": [
+              -31.03448275862069,
+              -16.379310344827587
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -5.172413793103448,
+            "paired_bank_bootstrap_ci95_pp": [
+              -11.206896551724139,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": -19.82758620689655,
+            "paired_bank_bootstrap_ci95_pp": [
+              -25.862068965517242,
+              -13.793103448275861
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": -5.172413793103448,
+            "paired_bank_bootstrap_ci95_pp": [
+              -11.206896551724139,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        }
+      }
+    },
+    "InternVL3.5-8B": {
+      "complete": true,
+      "completed_episodes": 580,
+      "expected_episodes": 580,
+      "ordered_episode_sha256": "9c528eb73a5c6a3cfd00454cff442c4a02277ac7c03130224d6ebee6313c0972",
+      "completion_by_policy": {
+        "adaptive_acquisition": 116,
+        "fixed_restoration": 116,
+        "fixed_view_order": 116,
+        "random_request": 116,
+        "oracle": 116
+      },
+      "manifests": [
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/internvl35_8b/full-choice-v1/shard-0/manifest.json",
+          "sha256": "5e408f2a3c36bbae8eae1553de7e38bedecaa59b36e645afc67d711871688729",
+          "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+        },
+        {
+          "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/internvl35_8b/full-choice-v1/shard-1/manifest.json",
+          "sha256": "e89e6167a1831691fc685e3b90e163e92c6a44fbb4ca255612355244f00a6cb7",
+          "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+        }
+      ],
+      "model_configuration": {
+        "base_path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/models/internvl35",
+        "configuration": {
+          "added_tokens.json": "21d196327bf587cb24ec39db1dbe52cd68d243fdde8bc60dff2c867261b703fe",
+          "config.json": "32a9a726c8fd4d2386038bb1eab9fd34c6e04cf89c070e44aab346a41d9454e6",
+          "generation_config.json": "b17e2c6813e1f5e4de267a4c7697b46f69ba7ba95643c8253ad671fab7d7271c",
+          "model.safetensors.index.json": "b15fa5f358beeadf2901d180db961be52ec0c1a0f17fcdb064e4e9c304f77d1b",
+          "preprocessor_config.json": "af09ffbe57900d5ae07f93f4c20693559a272e32fa6c5f816132cb71985aac98",
+          "processor_config.json": "3511f4ae65c2fa5c1ab6a0fb2bb2fe767d6f0ee53ba412953b33acc892327c2a",
+          "special_tokens_map.json": "e847a86633f2470a0d9fed41b5a36ff1f4435050929aa80b28c41d28420501b2",
+          "tokenizer_config.json": "5d109a013cdc2b9b5914dbd9564e8e1ef591b91c4d5d5584a00b1f01f28c0749",
+          "video_preprocessor_config.json": "b7f9c784a27f30ddb3fc78fca353ab6ce982c2a263b702e2547302e8c1e0087a",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "weight_shards": {
+          "model-00001-of-00004.safetensors": 4906355392,
+          "model-00002-of-00004.safetensors": 4915962480,
+          "model-00003-of-00004.safetensors": 4915962496,
+          "model-00004-of-00004.safetensors": 2318463688
+        },
+        "weight_sha256_recomputed": false
+      },
+      "policies": {
+        "adaptive_acquisition": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 35,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 35,
+            "episodes_with_duplicate_requests": 9,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 30.17241379310345,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 30.17241379310345,
+            "episodes_with_duplicate_requests": 7.758620689655173,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 5569.5948275862065,
+            "output_tokens": 3.0,
+            "wall_latency_s": 2.2242058992680915,
+            "model_calls": 3.0,
+            "new_image_requests": 1.9051724137931034,
+            "duplicate_requests": 0.07758620689655173
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 55,
+              "second_views_differ": 3,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_restoration": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 0,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 0,
+            "episodes_with_duplicate_requests": 116,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 0.0,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 0.0,
+            "episodes_with_duplicate_requests": 100.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 1785.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.1165141918935315,
+            "model_calls": 1.0,
+            "new_image_requests": 0.0,
+            "duplicate_requests": 1.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 0,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": null,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "fixed_view_order": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 38,
+            "source_label_correct": 0,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 38,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 32.758620689655174,
+            "source_label_correct": 0.0,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 32.758620689655174,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2637.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.368338404060743,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "random_request": {
+          "front_slot_assessable_episodes": 0,
+          "selected_chain_target_correct_pct_given_assessable": null,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 0,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": false,
+          "counts": {
+            "procedural_evidence_sufficient": 12,
+            "source_label_correct": 11,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 0,
+            "finished": 116,
+            "front_then_target_rear": 5,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 22
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 10.344827586206897,
+            "source_label_correct": 9.482758620689655,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 0.0,
+            "finished": 100.0,
+            "front_then_target_rear": 4.310344827586207,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 18.96551724137931
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2406.655172413793,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.3023939382993408,
+            "model_calls": 1.0,
+            "new_image_requests": 1.5862068965517242,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 0,
+              "same_first_request": 58,
+              "both_first_front": 13,
+              "second_views_differ": 0,
+              "both_second_requests_match_observed_targets": 0
+            },
+            "both_members_evidence_found_pct": 0.0,
+            "correct_switch_pct_all_banks": 0.0,
+            "correct_switch_pct_given_both_front": 0.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        },
+        "oracle": {
+          "front_slot_assessable_episodes": 2,
+          "selected_chain_target_correct_pct_given_assessable": 100.0,
+          "assisted_scoring_raw_counts": {
+            "chain_grounded_correct": 2,
+            "localized_grounded_correct": 0
+          },
+          "assisted_scoring_scope": "Publicly generated region candidates and automatic identity links; not native grounding performance",
+          "episodes": 116,
+          "privileged_reference": true,
+          "counts": {
+            "procedural_evidence_sufficient": 116,
+            "source_label_correct": 2,
+            "choice_valid": 116,
+            "selected_chain_target_correct": 2,
+            "finished": 116,
+            "front_then_target_rear": 116,
+            "episodes_with_duplicate_requests": 0,
+            "selection_complete": 116,
+            "unsupported_decisions": 0
+          },
+          "rates_pct": {
+            "procedural_evidence_sufficient": 100.0,
+            "source_label_correct": 1.7241379310344827,
+            "choice_valid": 100.0,
+            "selected_chain_target_correct": 1.7241379310344827,
+            "finished": 100.0,
+            "front_then_target_rear": 100.0,
+            "episodes_with_duplicate_requests": 0.0,
+            "selection_complete": 100.0,
+            "unsupported_decisions": 0.0
+          },
+          "mean": {
+            "requests": 2.0,
+            "input_tokens": 2637.0,
+            "output_tokens": 1.0,
+            "wall_latency_s": 1.3649705418602338,
+            "model_calls": 1.0,
+            "new_image_requests": 2.0,
+            "duplicate_requests": 0.0
+          },
+          "token_accounting_complete": true,
+          "paired_history_behavior": {
+            "counts": {
+              "banks": 58,
+              "both_members_evidence_found": 58,
+              "same_first_request": 58,
+              "both_first_front": 58,
+              "second_views_differ": 58,
+              "both_second_requests_match_observed_targets": 58
+            },
+            "both_members_evidence_found_pct": 100.0,
+            "correct_switch_pct_all_banks": 100.0,
+            "correct_switch_pct_given_both_front": 100.0,
+            "conditional_denominator": "Banks where both matched histories first request front_survey",
+            "initial_observations_identical": true
+          }
+        }
+      },
+      "adaptive_minus_baseline": {
+        "fixed_restoration": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 30.17241379310345,
+            "paired_bank_bootstrap_ci95_pp": [
+              24.137931034482758,
+              36.206896551724135
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "fixed_view_order": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": -2.586206896551724,
+            "paired_bank_bootstrap_ci95_pp": [
+              -6.0344827586206895,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        },
+        "random_request": {
+          "procedural_evidence_sufficient": {
+            "difference_pp": 19.82758620689655,
+            "paired_bank_bootstrap_ci95_pp": [
+              11.206896551724139,
+              27.586206896551722
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "source_label_correct": {
+            "difference_pp": -9.482758620689655,
+            "paired_bank_bootstrap_ci95_pp": [
+              -14.655172413793101,
+              -4.310344827586207
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "choice_valid": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "selected_chain_target_correct": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          },
+          "finished": {
+            "difference_pp": 0.0,
+            "paired_bank_bootstrap_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "banks": 58,
+            "episodes": 116
+          }
+        }
+      }
+    }
+  },
+  "development_exclusion": {
+    "rule": "Exclude all paired banks in the separately frozen supplied development cohort; never filter by outcome.",
+    "development_dataset": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/multistep-hard-v2/pilot/cases.json",
+    "development_dataset_sha256": "db0028f046b15fbc70a9ba9bbf0b3e547d2ae37edea405b29cd9276bdc744399",
+    "development_manifest_sha256": "899325abad82b175da594254e6218507c622567c9d1911e967a16db2200f1a5c",
+    "excluded_case_ids": [
+      "sim-search-10a3fa04cc8a69299fee-Obtainable",
+      "sim-search-2680892b8f892dbf5ef5-Obtainable",
+      "sim-search-2bf59d8a11a3aa87dad4-Obtainable",
+      "sim-search-2f9c32bda4ab6a1abefe-Obtainable",
+      "sim-search-387d8a3f3395c5dd748e-Obtainable",
+      "sim-search-4e6c29be2b0380bf9da3-Obtainable",
+      "sim-search-514ff6d77acdf793899c-Obtainable",
+      "sim-search-5a90fd2a079790246f5f-Obtainable",
+      "sim-search-603c0371115b11a8672b-Obtainable",
+      "sim-search-6c2e9045b4c0cb39ae62-Obtainable",
+      "sim-search-7251b391b736eef97f74-Obtainable",
+      "sim-search-8a58a2585c6cd0284221-Obtainable",
+      "sim-search-cf409364e63c24a70891-Obtainable",
+      "sim-search-d1fcbca1a08c45291aed-Obtainable",
+      "sim-search-d7518ef96abf7f5801c2-Obtainable",
+      "sim-search-f8f83fea98682fe273d1-Obtainable"
+    ],
+    "excluded_paired_history_ids": [
+      "sim-bank-159f9424acc7d363",
+      "sim-bank-31eb3d2fc4ff2727",
+      "sim-bank-6ad1e0cdbec2523f",
+      "sim-bank-7e31fe5dd655af7a",
+      "sim-bank-a13ba3e78ffd58fb",
+      "sim-bank-b93c7bb31ef25f12",
+      "sim-bank-d5dfd53a061cdc0f",
+      "sim-bank-ef4ffac4d75b96f8"
+    ],
+    "excluded_episodes_per_policy": 16,
+    "excluded_paired_banks": 8,
+    "all_development_records_identical": true,
+    "retained_episodes_per_policy": 116,
+    "retained_paired_banks": 58,
+    "full_cohort_validation": {
+      "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+      "manifest_sha256": "9c0e2b6a77120e0ba7fc168bcea9f5dc9c57c83a4e691ec251ef775da20b87c5",
+      "episodes_per_policy": 132,
+      "paired_banks": 66,
+      "case_ids": [
+        "sim-search-01f3321419a73ac2135d-Obtainable",
+        "sim-search-03a97c35daf7a69eaca2-Obtainable",
+        "sim-search-046285a2b17c7cf7c1c4-Obtainable",
+        "sim-search-09606ce2bc7bcc05e310-Obtainable",
+        "sim-search-0cb644587baa6f1ee89f-Obtainable",
+        "sim-search-0cbf75e26f7151ba8abf-Obtainable",
+        "sim-search-1089f3398ed6fe8b2565-Obtainable",
+        "sim-search-10a3fa04cc8a69299fee-Obtainable",
+        "sim-search-133726c38468eca25ca8-Obtainable",
+        "sim-search-177a2b3f6a861113bd35-Obtainable",
+        "sim-search-18786ad4a7d3577eaebe-Obtainable",
+        "sim-search-1952428925d81a3ddb62-Obtainable",
+        "sim-search-1f6c0fd274aa2b93766f-Obtainable",
+        "sim-search-1ffa5916a634393772ba-Obtainable",
+        "sim-search-228120056c8531da8979-Obtainable",
+        "sim-search-258c8545ede1587fc468-Obtainable",
+        "sim-search-26750131f3e8f94f5248-Obtainable",
+        "sim-search-2680892b8f892dbf5ef5-Obtainable",
+        "sim-search-275004eacbab8bcff4ef-Obtainable",
+        "sim-search-27a13aa9de9bbce8a48d-Obtainable",
+        "sim-search-2b3ae6dbfbe826f00391-Obtainable",
+        "sim-search-2bf59d8a11a3aa87dad4-Obtainable",
+        "sim-search-2f9c32bda4ab6a1abefe-Obtainable",
+        "sim-search-2fcd0934aa1e6679d3a3-Obtainable",
+        "sim-search-30aab618949d55bb829e-Obtainable",
+        "sim-search-320077ceaeb5702e40f0-Obtainable",
+        "sim-search-3373d96632a3ec58b99f-Obtainable",
+        "sim-search-33d7b32f8d914f7425a3-Obtainable",
+        "sim-search-345665c5d7e7eef04a21-Obtainable",
+        "sim-search-35bd6a1e8458f898ab8c-Obtainable",
+        "sim-search-387d8a3f3395c5dd748e-Obtainable",
+        "sim-search-3ecaac7e24e7dcfb2e80-Obtainable",
+        "sim-search-3f54206d0c0b11bf69a3-Obtainable",
+        "sim-search-3fdbc1e1fbd2736a5188-Obtainable",
+        "sim-search-40b9b697fb77594985fe-Obtainable",
+        "sim-search-43fbef01995d6ebcde58-Obtainable",
+        "sim-search-46e1856f34730284fb07-Obtainable",
+        "sim-search-49be419292e9a43d6e0e-Obtainable",
+        "sim-search-49f40a3c8f22fa0534bb-Obtainable",
+        "sim-search-4b3a78351e748755e16c-Obtainable",
+        "sim-search-4cc7f02b4f3f9a88a00a-Obtainable",
+        "sim-search-4df14c0cefdb7d099cf8-Obtainable",
+        "sim-search-4e6c29be2b0380bf9da3-Obtainable",
+        "sim-search-514ff6d77acdf793899c-Obtainable",
+        "sim-search-5251afe09cc1022c59e2-Obtainable",
+        "sim-search-52604c887273ab0ea9fd-Obtainable",
+        "sim-search-52b7518ec49240f43884-Obtainable",
+        "sim-search-549178fef2644d34b79e-Obtainable",
+        "sim-search-5576ee58e5fbfeb11dec-Obtainable",
+        "sim-search-56d425bf49797c8eccde-Obtainable",
+        "sim-search-57703beca0bbaf9209f5-Obtainable",
+        "sim-search-5a90fd2a079790246f5f-Obtainable",
+        "sim-search-5d44d7a580d4c5ee425d-Obtainable",
+        "sim-search-5d841d7e09b6975fcf1f-Obtainable",
+        "sim-search-5df1b75379fa8bcd2ae9-Obtainable",
+        "sim-search-603c0371115b11a8672b-Obtainable",
+        "sim-search-613f3610f778259724ff-Obtainable",
+        "sim-search-62411c5faa10d1dc62c4-Obtainable",
+        "sim-search-62ce2686825241750ec8-Obtainable",
+        "sim-search-65b32c5e4b597549aa42-Obtainable",
+        "sim-search-66be11b46eddd746fc47-Obtainable",
+        "sim-search-67537c1c0d3803dd6ec0-Obtainable",
+        "sim-search-6944a7e2a5aeced854b2-Obtainable",
+        "sim-search-6b39dc51a0c81f2aafb6-Obtainable",
+        "sim-search-6baa3130ed44c0c83f83-Obtainable",
+        "sim-search-6c2e9045b4c0cb39ae62-Obtainable",
+        "sim-search-6efc84efd401c2e94999-Obtainable",
+        "sim-search-718ea7c8640137c064a6-Obtainable",
+        "sim-search-7251b391b736eef97f74-Obtainable",
+        "sim-search-734a3650aa4b0fe5b20d-Obtainable",
+        "sim-search-735bf0ed45bd8d8b42ed-Obtainable",
+        "sim-search-7590082b829ed0852709-Obtainable",
+        "sim-search-78227b42b7ccf6a0e5f2-Obtainable",
+        "sim-search-78ac662a3000766b5e8f-Obtainable",
+        "sim-search-7d159f500a094d1836bf-Obtainable",
+        "sim-search-8085cdeaff31143eb56e-Obtainable",
+        "sim-search-813e1ace6b4d6e3e7f10-Obtainable",
+        "sim-search-8174272ba6fd8eb51314-Obtainable",
+        "sim-search-825158449145796b6c0c-Obtainable",
+        "sim-search-83de636d4277d156d951-Obtainable",
+        "sim-search-88170f3c5e401807b327-Obtainable",
+        "sim-search-8a58a2585c6cd0284221-Obtainable",
+        "sim-search-8a75e323a5bdf0adb62b-Obtainable",
+        "sim-search-8b7435a026216a121a91-Obtainable",
+        "sim-search-90e3469cfe7cba780942-Obtainable",
+        "sim-search-91146425f2d6788f6910-Obtainable",
+        "sim-search-9544dbdffecaafce83f5-Obtainable",
+        "sim-search-97e81c7fe5bcd428405f-Obtainable",
+        "sim-search-9adbd9a83e2b22941f34-Obtainable",
+        "sim-search-9b398945493e130eebb9-Obtainable",
+        "sim-search-9c209f221f61b3bbafc0-Obtainable",
+        "sim-search-a38a1bf85016d61f3f7a-Obtainable",
+        "sim-search-a5a335accd939713c1c6-Obtainable",
+        "sim-search-a62ab0fc459aac21ebc1-Obtainable",
+        "sim-search-a634242496b132102e89-Obtainable",
+        "sim-search-a80c640f7cec1066d20e-Obtainable",
+        "sim-search-aba21d19d3a190d4bba0-Obtainable",
+        "sim-search-ad12b6ebbf56583aecd8-Obtainable",
+        "sim-search-af086009e46af3197b19-Obtainable",
+        "sim-search-afd4b5a1c48e1ebb4fdd-Obtainable",
+        "sim-search-b14438c4902da76d9168-Obtainable",
+        "sim-search-b2b1d6037d0714505e49-Obtainable",
+        "sim-search-b382f744b18f82959e1b-Obtainable",
+        "sim-search-b754757a3b81122fd62f-Obtainable",
+        "sim-search-ba8acc274b99fcaa3d46-Obtainable",
+        "sim-search-bc1665c7deb827cb196e-Obtainable",
+        "sim-search-bda136885707af70a8e6-Obtainable",
+        "sim-search-c71197672cc1653c25d1-Obtainable",
+        "sim-search-c77668a234451f4e602a-Obtainable",
+        "sim-search-c7ea576f5e851306fb7d-Obtainable",
+        "sim-search-ce686726f9b9cf4d2ab1-Obtainable",
+        "sim-search-ce757f8c8d3730d09bcf-Obtainable",
+        "sim-search-cf409364e63c24a70891-Obtainable",
+        "sim-search-d1fcbca1a08c45291aed-Obtainable",
+        "sim-search-d37c32f8556028f8e50f-Obtainable",
+        "sim-search-d3b6964b7ec89cd3e803-Obtainable",
+        "sim-search-d51093e3e4ec3d3c9218-Obtainable",
+        "sim-search-d5468365167cfb22a079-Obtainable",
+        "sim-search-d5f40c1888201485fe6d-Obtainable",
+        "sim-search-d6153cdae5405ad84d92-Obtainable",
+        "sim-search-d70e085785222aa193f1-Obtainable",
+        "sim-search-d7518ef96abf7f5801c2-Obtainable",
+        "sim-search-d9c9d94af71b58cdef32-Obtainable",
+        "sim-search-ec73aa2f2c5b8ccbae2e-Obtainable",
+        "sim-search-ed8c85364aed8c61b798-Obtainable",
+        "sim-search-f368d426d6d1656b111e-Obtainable",
+        "sim-search-f49dfc85552e9aef18b4-Obtainable",
+        "sim-search-f623b4112521ed1de87a-Obtainable",
+        "sim-search-f8f83fea98682fe273d1-Obtainable",
+        "sim-search-f9835d0de36599c1b816-Obtainable",
+        "sim-search-fa956060620e7ef98b88-Obtainable",
+        "sim-search-fb08847aa9def0e6fd17-Obtainable"
+      ],
+      "complete": true,
+      "models": {
+        "Base": {
+          "complete": true,
+          "completed_episodes": 660,
+          "expected_episodes": 660,
+          "completion_by_policy": {
+            "adaptive_acquisition": 132,
+            "fixed_restoration": 132,
+            "fixed_view_order": 132,
+            "random_request": 132,
+            "oracle": 132
+          },
+          "ordered_episode_sha256": "67c6b8d603850c305fc80398ed7001b063917f514503f23d7eb1f39b5e263191",
+          "manifests": [
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-0/manifest.json",
+              "sha256": "9673246b1b69a9add757b65ffb6a134d4e0c82d6c8f5f1f95fb187c9a3f5e3b3",
+              "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+            },
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-1/manifest.json",
+              "sha256": "26ae087acea597dd3c35162c81a5b66146b3dc33338f8ec4baffa3e6c74d6248",
+              "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+            }
+          ]
+        },
+        "SFT+RL": {
+          "complete": true,
+          "completed_episodes": 660,
+          "expected_episodes": 660,
+          "completion_by_policy": {
+            "adaptive_acquisition": 132,
+            "fixed_restoration": 132,
+            "fixed_view_order": 132,
+            "random_request": 132,
+            "oracle": 132
+          },
+          "ordered_episode_sha256": "6b7a6b981676be014d37ec54c29ca38d870fa60eb8731a700c222ea8e10282e9",
+          "manifests": [
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-0/manifest.json",
+              "sha256": "be5798d2d7bb30da2b3da65dfd8faf233f2feb261e53041f8b671682fc0610eb",
+              "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+            },
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-1/manifest.json",
+              "sha256": "e7d3486c306438a5d8378e34e0bd22474c300cf132a2590c8feecaad2e773bc9",
+              "source_commit": "89b03db81b09e64767dbe96ca665a4712037b8d0"
+            }
+          ]
+        },
+        "Qwen3.5-9B": {
+          "complete": true,
+          "completed_episodes": 660,
+          "expected_episodes": 660,
+          "completion_by_policy": {
+            "adaptive_acquisition": 132,
+            "fixed_restoration": 132,
+            "fixed_view_order": 132,
+            "random_request": 132,
+            "oracle": 132
+          },
+          "ordered_episode_sha256": "a79b303ac831e9d9033188de9356b92a6e55aad9f5d4549f69a4dd96fab86cdf",
+          "manifests": [
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen35_9b/full-choice-v1/shard-0/manifest.json",
+              "sha256": "2ad5e5dd6f14af1275b697fdbd14a2f1b7e0e1a5a25bfaed11501318718ef601",
+              "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+            },
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/qwen35_9b/full-choice-v1/shard-1/manifest.json",
+              "sha256": "b9f78fbed52111ca5533440ad29c9403231106b8bb6ec3cb55bad3913b3ce9a8",
+              "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+            }
+          ]
+        },
+        "InternVL3.5-8B": {
+          "complete": true,
+          "completed_episodes": 660,
+          "expected_episodes": 660,
+          "completion_by_policy": {
+            "adaptive_acquisition": 132,
+            "fixed_restoration": 132,
+            "fixed_view_order": 132,
+            "random_request": 132,
+            "oracle": 132
+          },
+          "ordered_episode_sha256": "6a870e4b3efe0ad39a40b815deee6a40e3531fc5bfb64b42aa2dc65bcba54d18",
+          "manifests": [
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/internvl35_8b/full-choice-v1/shard-0/manifest.json",
+              "sha256": "5e408f2a3c36bbae8eae1553de7e38bedecaa59b36e645afc67d711871688729",
+              "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+            },
+            {
+              "path": "/home/cxu-serve/p62/zzh136/experiments/resolveai-poc/evaluation/cvpr-paper-priority/multistep-hard-v2/internvl35_8b/full-choice-v1/shard-1/manifest.json",
+              "sha256": "e89e6167a1831691fc685e3b90e163e92c6a44fbb4ca255612355244f00a6cb7",
+              "source_commit": "9a324c6bf5fd1810cbdb0f39b0c40103bc16f7ae"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
