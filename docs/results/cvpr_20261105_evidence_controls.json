@@ -214,9 +214,11 @@
   "source_label_scope": "Unreviewed source-derived labels; not grounded accuracy",
   "denominator": "All planned cases; abstentions and unfinished attempts remain in denominators",
   "request_scope": "Public request options only; fixed_original skips tasks without original",
-  "new_image_definition": "Request returned an image_ref PNG hash not present in any prior observation; not evidence sufficiency",
+  "new_image_definition": "Request returned decoded RGB pixels and dimensions absent from prior observations; not evidence sufficiency",
   "new_released_record_definition": "New released image_id relative to the initial set; distinct from pixel novelty",
-  "novelty_method_source_sha256": "b901f179bc86e6dba88a4c81f567a7b535da4af1e88ec2bb69bf9c0b1fa43f75",
+  "novelty_method_source_sha256": "2db418464f388faec8abe2fd603d1f8ae7e8fb8a594327bddaae5018572a0eff",
+  "summary_source_sha256": "f0218dc383b2eb23886a2b1cdc98dff6c980e7bb0d4051925c79eeb2f458b315",
+  "input_token_scope": "Offered input tokens, including rejected context-limit calls; distinct from executed-input counts",
   "token_scope": "Generated model tokens; scripted calls remain in input but cost zero generated tokens",
   "settings": {
     "experiment": "public-request-schedules-v1",

@@ -1,24 +1,26 @@
-# 论文：任务说明与实验组织
+# 论文：任务、实验与排版
 
-2026-11-06 更新。
+2026-11-06 完整更新。
 
-本次修改先让读者理解比较对象，再看结果。参考 MMMU 和 VSI-Bench 的实验组织方式，保留设置、主结果、训练结果及机制分析四个小节。
+论文标题为 **Can Vision-Language Models Find the Evidence They Need?**。正文八页，参考文献另页；保留两幅图和四张表。实验采用五个常规小节：Experimental Setup、Main Results、Post-training Results、Behavior Analysis、Ablation Studies，段内标题直接说明分析主题。
 
-- **状态验证**：声明指定目标物品的某种缺陷，判断是否存在。正常参考可能来自另一实物，不当作目标的先前状态。
-- **身份验证**：声明两组照片是否为同一实物。目前有标签控制为同序列正例与跨类别反例，同类别跨序列候选不强行赋真值。
-- **访问设置**：Sufficient、Obtainable、Missing、Unavailable 用于上述两个任务，描述照片是否提供及能否请求。
-- **回答方式**：No tools 直接回答；With tools 可以检查、裁剪、比较或请求；全部照片可见结果另列参考。
-- **训练方式**：Base、SFT、从 Base 开始的 RL、SFT 后的 RL，定义放正文设置中。
-- **指标**：准确率按来源标签；Finished 包含有效弃答；New image 可以是原帧高清版本，不等同新视角或充分证据；时间与输出 token 累计整个交互。
+## 先讲清比较对象
 
-七个主图表采用短 caption，题量、模型配置、预算、分母和 token 含义移到正文。主表用 Condition / Identity、No tools / With tools、Output tokens 等完整名称。
+- **状态验证**：判断目标物品是否存在声明指定的缺陷。正常参考可能来自另一实物，不当作目标的先前状态。
+- **身份验证**：判断两组照片是否为同一实物。目前有标签控制为同序列正例与跨类别反例；其他跨序列候选不强行赋真值。
+- **访问设置**：Sufficient、Obtainable、Missing、Unavailable 描述照片是否提供及能否请求，不是四种物品任务。
+- **回答方式**：No tools 直接回答；With tools 可检查、裁剪、比较和请求；全部照片可见结果单列参考。
+- **训练方式**：Base、SFT、从 Base 开始的 RL、SFT 后的 RL。表 2 与基础模型表分开。
+- **指标**：准确率按来源标签；Finished 包含有效弃答；New image 可包含同帧高清版本，不等同新视角或充分证据。时间和输出 token 累计整个交互。
 
-主文把重复的逐模型计数收拢成几个结论：缺图造成的差距；SFT 的完成率与效率收益；这些收益能否转成索证能力；重复图片、失败反馈与实际像素内容分别怎样影响结果。条件弃答公式及完整细目移到补充材料。
+## 图表与分析
 
-新 Figure 3 展示完整 204 条像素内容对照：原图回答36 Supported、32 Refuted；灰图和置乱图各68 Refuted。它是68段已选请求历史上的单次判断检查，不混入主表的原生交互成绩。
+图 1 用真实照片解释身份和状态任务，图 2 展示构造与交互环境。原 Fig. 3 已删除，204 条图片内容对照结果仍保留在正文和附录，不用重复图形占据正文篇幅。
 
-参考写法：
+表 1 比较完整模型题组；表 2 比较三种底座的四种训练状态；表 3 分开请求、获得新像素和停止；表 4 加入固定顺序、随机请求及原图恢复基线。Caption 保持简短，题量、设置、预算和统计口径在正文或附录解释。
 
-- [MMMU（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/papers/Yue_MMMU_A_Massive_Multi-discipline_Multimodal_Understanding_and_Reasoning_Benchmark_for_CVPR_2024_paper.pdf)
-- [VSI-Bench（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_Thinking_in_Space_How_Multimodal_Large_Language_Models_See_Remember_CVPR_2025_paper.pdf)
+正文围绕实际差异展开：会回答不一定会请求；SFT 的完成率和效率收益不必然转成索证收益；请求可能只返回已有图片；成功取图与正确使用内容仍有区别；固定恢复原图在当前题库中是必须比较的强基线。每个结论保留对应设置，不混用成本上限 12 的主表和上限 3 的控制实验。
 
+附录保留实现、检查点与完整结果，统一新图和 token 统计定义。独立充分性审核仍未完成，不将来源标签准确率写成 grounded accuracy。
+
+当前实验和剩余问题见[完整状态](reviewer_evidence_search.zh-CN.md)，论文入口见[paper/README](../../paper/README.md)。

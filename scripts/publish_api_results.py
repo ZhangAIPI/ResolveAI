@@ -43,7 +43,7 @@ def publish(repository, report, lock_path):
             "Output tokens count all generated tokens, including end markers and any API reasoning tokens; input prompts and images are excluded.")
         text=text.replace("Qwen3-VL-8B achieves the highest accuracy with tools, at","Qwen3-VL-8B reaches")
         inference=("API runs use provider-native sampling and retain the image-size, context, action and turn limits. "
-                   "Their generation settings and treatment of the direct-only Decisions interface are given in the supplement.")
+                   "Their generation settings and treatment of the Decisions action interface are given in the supplement.")
         text=replace_block(text,"% api-inference-start","% api-inference-end",inference,
                            "We also report mean episode time, input/output tokens")
         main.write_text(text)
@@ -76,7 +76,7 @@ def publish(repository, report, lock_path):
             source=replace_block(source,"% api-settings-start","% api-settings-end",details)
         appendix.write_text(source)
         lines=[r"\begin{table*}[t]",r"\centering\small",
-               r"\caption{\textbf{API inference costs on the fixed cohort.} Means include all attempts. Decisions uses the no-tools condition; other rows use the tool condition.}",
+               r"\caption{\textbf{API inference costs on Sufficient with tools.} Means include all attempts.}",
                r"\begin{tabular}{@{}llrrrrr@{}}",r"\toprule",
                r"Model & Endpoint & Input tokens (k) & Reasoning tokens & Calls & Tool calls & Finished (\%)\\",r"\midrule"]
         for worker in workers:
@@ -92,7 +92,7 @@ def publish(repository, report, lock_path):
             with bib.open("a") as out:
                 out.write('\n@misc{openai_api,\n  author = {{OpenAI}},\n  title = {API Models and Decisions Documentation},\n  year = {2026},\n  howpublished = {\\url{https://developers.openai.com/api/docs/models}},\n  note = {Accessed November 3, 2026}\n}\n')
         readme=repository/"README.md"
-        body=["**闭源对照：同一固定 209 族（来源标签，尚未独立审核）**","",
+        body=["**API 对照：同一固定 209 族的 Sufficient 设置（来源标签）**","",
               "| 模型 | 无工具 | 有工具 |","| --- | ---: | ---: |"]
         for worker in workers:
             direct=worker["arms"]["initial_text"]

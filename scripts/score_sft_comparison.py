@@ -274,6 +274,8 @@ def render_training_ablation(reports):
     """A compact paired ablation, rather than a catalogue of every training run."""
     by_name = {r["models"][1]["name"]:r for r in reports
                if r["base_model_id"]=="Qwen/Qwen3-VL-8B-Instruct"}
+    updates = {(u["base_model_id"],u["stage"],u["arm"]):u["accuracy_percent"]
+               for u in reported_training_updates()}
     variants = [
         ("Identity","Final decisions","Terminal-only SFT"),
         ("","Actions + decisions","Acquisition SFT"),
@@ -282,15 +284,15 @@ def render_training_ablation(reports):
     ]
     lines = [
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}",
-        r"\begin{minipage}{.86\textwidth}\centering",
+        r"\begin{minipage}{.72\textwidth}\centering",
         r"\caption{\textbf{Training data and action supervision.} All rows use Qwen3-VL-8B.",
-        r"Condition, Identity and Overall are accuracy (\%) with tools on initially sufficient cases.",
+        r"Sufficient accuracy (\%) uses tools and is averaged over the fixed cohort.",
         r"Request (\%) is the fraction requesting another photograph in Obtainable.",
         r"Final-decision supervision retains the same public histories but omits tool-action targets.",
         r"The update limit is shared; target-token compute is not matched.}",
         r"\label{tab:training-ablation}",
-        r"\begin{tabular}{@{}llrrrr@{}}\toprule",
-        r"Training data & Supervised targets & Condition & Identity & Overall & Request (\%)\\\midrule",
+        r"\begin{tabular}{@{}llrr@{}}\toprule",
+        r"Training data & Supervised targets & Sufficient accuracy (\%) & Obtainable request (\%)\\\midrule",
     ]
     for data,targets,name in variants:
         if name not in by_name:
@@ -298,8 +300,10 @@ def render_training_ablation(reports):
         report = by_name[name]
         scores = report["models"][1]["arms"]["interactive_agent"]
         behavior = report["acquisition_behavior"][1]["by_variant"]["Obtainable"]
-        values = [100*scores["by_task"][task]["label_agreement"] for task in ("state","identity")]
-        values += [100*scores["label_agreement"],100*behavior["episodes_with_request"]/behavior["episodes"]]
+        accuracy = 100*scores["label_agreement"]
+        if name == "Mixed-source SFT":
+            accuracy = updates.get((report["base_model_id"],"SFT","interactive_agent"),accuracy)
+        values = [accuracy,100*behavior["episodes_with_request"]/behavior["episodes"]]
         if data=="Mixed-task":
             lines.append(r"\midrule")
         lines.append(data+" & "+targets+" & "+" & ".join(f"{v:.1f}" for v in values)+r"\\")

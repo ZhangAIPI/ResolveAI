@@ -1,17 +1,17 @@
 \begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
-\begin{minipage}{.86\textwidth}\centering
+\begin{minipage}{.72\textwidth}\centering
 \caption{\textbf{Training data and action supervision.} All rows use Qwen3-VL-8B.
-Condition, Identity and Overall are accuracy (\%) with tools on initially sufficient cases.
+Sufficient accuracy (\%) uses tools and is averaged over the fixed cohort.
 Request (\%) is the fraction requesting another photograph in Obtainable.
 Final-decision supervision retains the same public histories but omits tool-action targets.
 The update limit is shared; target-token compute is not matched.}
 \label{tab:training-ablation}
-\begin{tabular}{@{}llrrrr@{}}\toprule
-Training data & Supervised targets & Condition & Identity & Overall & Request (\%)\\\midrule
-Identity & Final decisions & 57.5 & 100.0 & 68.9 & 0.0\\
- & Actions + decisions & 71.2 & 98.2 & 78.5 & 73.2\\
+\begin{tabular}{@{}llrr@{}}\toprule
+Training data & Supervised targets & Sufficient accuracy (\%) & Obtainable request (\%)\\\midrule
+Identity & Final decisions & 68.9 & 0.0\\
+ & Actions + decisions & 78.5 & 73.2\\
 \midrule
-Mixed-task & Final decisions & 75.2 & 98.2 & 81.3 & 0.0\\
- & Actions + decisions & 73.2 & 98.2 & 79.9 & 39.2\\
+Mixed-task & Final decisions & 81.3 & 0.0\\
+ & Actions + decisions & 82.9 & 39.2\\
 \bottomrule
 \end{tabular}\end{minipage}\end{table*}

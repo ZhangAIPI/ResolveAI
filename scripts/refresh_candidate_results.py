@@ -85,7 +85,7 @@ def refresh(reference, plan, priority, specs):
 def markdown_results(report):
     from scripts.paper_result_table import NAMES, ORDER
     lines = [
-        "当前主表已覆盖 **"+str(len(report["workers"]))+" 个模型**，使用同一固定题组。",
+        "已完成 **"+str(len(report["workers"]))+" 个开源模型**的 Sufficient（初始证据充足）对照，使用同一固定 209 族。",
         "下表是来源标签下的答对率（%），并非独立审核后的证据充分性成绩。",
         "",
         "| 模型 | 无工具 | 有工具 |",
@@ -95,7 +95,7 @@ def markdown_results(report):
         values = [100*worker["arms"][arm]["label_agreement"]
                   for arm in ("initial_text","interactive_agent")]
         lines.append("| "+NAMES[worker["model_id"]]+f" | {values[0]:.1f} | {values[1]:.1f} |")
-    lines += ["","模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)。"]
+    lines += ["","下表仅报告 Sufficient。Obtainable、任务拆分、训练和效率见[当前实验](docs/experiments/reviewer_evidence_search.zh-CN.md)。"]
     return "\n".join(lines)+"\n"
 
 

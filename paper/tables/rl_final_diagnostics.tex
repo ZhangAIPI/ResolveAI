@@ -1,7 +1,7 @@
 \begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}
 \begin{minipage}{.94\textwidth}\centering
 \caption{\textbf{Checkpoint choice after online GRPO.}
-SFT and Final GRPO match the main training comparison; Selected GRPO uses held-out validation selection.
+Validation-selected and fixed-endpoint checkpoints after SFT+RL are evaluated on the same cohort.
 Condition, Identity and Overall are source-label accuracy (\%) on initially sufficient cases.
 Time (s) and output tokens are means over all attempts.
 Request (\%) is the fraction requesting a photograph in Obtainable, a different access version.
@@ -9,12 +9,10 @@ $^{*}$Validation retained the initial SFT policy. Both checkpoint choices are re
 \label{tab:rl-final}
 \begin{tabular}{@{}llrrrrrr@{}}\toprule
 Model & Checkpoint & Condition & Identity & Overall & Time (s) & Output & Request (\%)\\\midrule
-Qwen3-VL-2B & SFT & 61.4 & 100.0 & 71.8 & 5.5 & 118 & 0.0\\
- & Selected GRPO & 62.7 & 98.2 & 72.2 & 5.4 & 117 & 0.0\\
- & Final GRPO & 63.4 & 98.2 & 72.7 & 6.1 & 140 & 30.6\\
+Qwen3-VL-2B & Validation-selected & 62.7 & 98.2 & 72.2 & 5.4 & 117 & 0.0\\
+ & Fixed endpoint & 63.4 & 98.2 & 72.7 & 6.1 & 140 & 30.6\\
 \midrule
-Qwen3-VL-8B & SFT & 73.2 & 98.2 & 79.9 & 7.1 & 117 & 39.2\\
- & Selected GRPO$^{*}$ & 73.2 & 98.2 & 79.9 & 7.2 & 117 & 39.2\\
- & Final GRPO & 78.4 & 98.2 & 83.7 & 8.0 & 129 & 44.0\\
+Qwen3-VL-8B & Validation-selected$^{*}$ & 73.2 & 98.2 & 79.9 & 7.2 & 117 & 39.2\\
+ & Fixed endpoint & 78.4 & 98.2 & 83.7 & 8.0 & 129 & 44.0\\
 \bottomrule
 \end{tabular}\end{minipage}\end{table*}

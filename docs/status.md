@@ -1,5 +1,13 @@
 # Execution status
 
+## Current snapshot: 2026-11-06
+
+The fixed-cohort base-model, post-training, request-control and returned-image studies are complete. See the [current experiment summary](experiments/reviewer_evidence_search.zh-CN.md) and [paper](../paper/README.md).
+
+Allocations 26645, 26646, 26647 and 26671 remain on macula, each retaining one RTX A6000; code and runtime data remain on p62. These completed evaluation batches are no longer running model inference. No allocation has been released.
+
+The entries below are dated execution and deployment history. Earlier GPU IDs, public web addresses and study plans are not a live-service inventory or evidence that independent sufficiency annotation has been completed.
+
 Historical: the 7,200-episode candidate evaluation and the subsequent 2,160-episode paired diagnostic are complete and published. These are separate experiments, not one score. See the [plain Chinese diagnosis](benchmark_diagnosis.zh-CN.md) for the next benchmark fixes. Allocation entries below describe execution history, not live resources.
 
 Repository: https://github.com/ZhangAIPI/ResolveAI

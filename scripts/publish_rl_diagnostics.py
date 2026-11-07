@@ -19,7 +19,7 @@ def render(reports):
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
         r"\begin{minipage}{.94\textwidth}\centering",
         r"\caption{\textbf{Checkpoint choice after online GRPO.}",
-        r"SFT and Final GRPO match the main training comparison; Selected GRPO uses held-out validation selection.",
+        r"Validation-selected and fixed-endpoint checkpoints after SFT+RL are evaluated on the same cohort.",
         r"Condition, Identity and Overall are source-label accuracy (\%) on initially sufficient cases.",
         r"Time (s) and output tokens are means over all attempts.",
         r"Request (\%) is the fraction requesting a photograph in Obtainable, a different access version.",
@@ -29,7 +29,9 @@ def render(reports):
         r"Model & Checkpoint & Condition & Identity & Overall & Time (s) & Output & Request (\%)\\\midrule",
     ]
     for group in reports:
-        for index, (stage, report) in enumerate(group):
+        checkpoints = [(stage, report) for stage, report in group if stage != "SFT"]
+        for index, (stage, report) in enumerate(checkpoints):
+            stage = {"Selected GRPO":"Validation-selected", "Final GRPO":"Fixed endpoint"}.get(stage, stage)
             if index == 0:
                 label = NAMES[report["base_model_id"]]
             else:
@@ -102,9 +104,9 @@ def main():
                     continue
                 changes["paper/tables/rl_final_diagnostics.tex"]=render(groups)
                 paragraph=(
-                    "\\section{Final-Checkpoint Diagnostics}\n"
+                    "\\section{Checkpoint Selection}\n"
                     "The main GRPO results use the fixed endpoint at group 64. Validation selection also includes the initial policy as a candidate. "
-                    "We separately evaluate the fixed final checkpoint at group 64 for both backbones to examine the policies after actual optimization. "
+                    "We compare validation-selected and group-64 endpoint SFT+RL checkpoints for Qwen3-VL-2B and Qwen3-VL-8B. "
                     "The endpoint evaluations were specified before their scoring. We adopted endpoint reporting for the main table on November 4 after inspecting both checkpoint variants for 2B and 8B; both variants remain reported here. Remaining RL runs follow the same endpoint rule regardless of their test scores. "
                     "The data, tools, inference allowances and fixed paper cohort remain unchanged.\n"
                     "\\input{tables/rl_final_diagnostics}\n")
@@ -113,7 +115,7 @@ def main():
                     score=lambda report:100*report["models"][1]["arms"]["interactive_agent"]["label_agreement"]
                     behavior=final["acquisition_behavior"][1]["by_variant"]["Obtainable"]
                     paragraph += (NAMES[final["base_model_id"]]+f" scores {score(final):.1f}\\% at the final checkpoint, "
-                        +f"compared with {score(selected):.1f}\\% after validation selection and {score(sft):.1f}\\% after SFT. "
+                        +f"compared with {score(selected):.1f}\\% after validation selection. "
                         +f"It requests photographs in {behavior['episodes_with_request']} Obtainable cases; "
                         +"request frequency alone does not establish evidence utility.\n")
                 appendix=(repo/"paper/appendix.tex").read_text()

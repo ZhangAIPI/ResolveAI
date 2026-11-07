@@ -185,7 +185,7 @@ def metric_groups(indexed, model, arm, families, cases, helper):
             mean_episode_wall_s=sum(x["result"]["latency_s"] for x in items) / len(items),
             mean_input_tokens=sum(x["result"]["input_tokens"] for x in items) / len(items),
             mean_output_tokens=sum(x["result"]["output_tokens"] for x in items) / len(items),
-            input_accounting="All recorded offered input tokens, including context-limit rejections",
+            input_accounting="All recorded offered input tokens, including context-limit rejections; unlike executed-input counts, rejected calls are retained",
         )
         output[task] = value
     return output
@@ -272,14 +272,8 @@ def render(report):
         raise ValueError("Joined table requires complete references")
     lines = [
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
-        r"\caption{\textbf{Photo-access controls on Obtainable cases.} Accuracy and new-image rates are percentages.",
-        r"New images are identified from decoded RGB pixels. All attempts remain in denominators.",
-        r"Input counts include offered tokens in rejected context-limit calls.",
-        r"No-new-photo preserves the native initial prompt and tool schema but blocks additional photographs.",
-        r"Full available is a privileged access reference.",
-        (r"Restore preview matches the provisional annotation-guided requests; "
-         if report["annotation_reference"]["verified_action_equivalence"] else "")
-        + r"no separate oracle inference or timing is reported.}",
+        r"\caption{\textbf{Photo-access controls on Obtainable cases.}",
+        r"Accuracy and rates are percentages.}",
         r"\label{tab:evidence-interventions}",
         r"\begin{tabular}{@{}llrrrrrrrr@{}}\toprule",
         r"& & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{New image} & & & &\\",

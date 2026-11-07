@@ -1,13 +1,13 @@
 # ResolveAI
 
-[**CVPR 英文方案初稿：Evidence Before Verdicts**](paper/README.md)
+[**CVPR 论文：Can Vision-Language Models Find the Evidence They Need?**](paper/README.md)
 
-[**最新模型结果、SFT 与 RL 进度**](docs/experiments/cvpr_20261102-paper-priority.zh-CN.md)
+[**最新实验：完整模型比较、SFT/RL、索证与消融**](docs/experiments/reviewer_evidence_search.zh-CN.md)
 
-[闭源模型接入：80 美元预算、60 美元运行上限（API 认证通过）](docs/experiments/openai-budget.zh-CN.md)
+[API 预算与记录：两阶段上限合计 80 美元](docs/experiments/openai-budget.zh-CN.md)
 
 <!-- benchmark-results-start -->
-当前主表已覆盖 **10 个模型**，使用同一固定题组。
+下面是 **10 个开源模型在 Sufficient（初始证据充足）设置下的对照**，使用固定 209 族。
 下表是来源标签下的答对率（%），并非独立审核后的证据充分性成绩。
 
 | 模型 | 无工具 | 有工具 |
@@ -23,11 +23,11 @@
 | SmolVLM2-2.2B | 50.7 | 0.0 |
 | Pixtral-12B | 42.1 | 8.1 |
 
-模型完成固定题组的三个设置后即入表，其余题目可继续运行。完整进度、SFT 与效率见[最新实验记录](docs/experiments/cvpr_20261104-adaptation.zh-CN.md)。
+缺图的 Obtainable 交互评测也已完成。论文主表统一呈现 10 个开源、5 个 API 模型及额外 Decisions 接口，按状态/身份任务拆分，并报告索证、完成率和效率；见[完整结果](docs/experiments/obtainable_results.md)。
 <!-- benchmark-results-end -->
 
 <!-- api-results-start -->
-**闭源对照：同一固定 209 族（来源标签，尚未独立审核）**
+**API 对照：同一固定 209 族的 Sufficient 设置（来源标签）**
 
 | 模型 | 无工具 | 有工具 |
 | --- | ---: | ---: |
@@ -36,9 +36,9 @@
 | GPT-6 Luna | 59.3 | 67.5 |
 | GPT-6 Luna (Decisions) | 55.5 | 57.4 |
 | GPT-5.4 mini | 50.7 | 75.1 |
-| GPT-6.1 Sol (low) | 77.5 | 74.6 |
+| GPT-6.1 Sol | 77.5 | 74.6 |
 
-仅完整固定题组入表。Decisions 的多轮版本从公开候选动作中选择，参数由程序提供；预算预留不等于实际支出。[完整记录](docs/results/openai_candidate_scores.json)。
+五款 API 模型和额外 Decisions 接口的 Obtainable 交互题组均为 209/209。Decisions 从公开候选动作中选择，参数由程序提供；接口差异单列。[完整记录](docs/results/obtainable_results.json)。
 <!-- api-results-end -->
 [**2026-11-01 四卡实验：四个开源模型 × 完整478族题库**](docs/experiments/cvpr_20261101.zh-CN.md)
 
@@ -57,7 +57,7 @@
 ![工具操作展示](docs/demo/assets/operations.webp)
 
 A multi-turn visual evidence environment for training and evaluating agents that
-choose what to inspect, request and cite. Verdicts are `Supported`, `Refuted` and
+choose what to inspect, request and cite. Possible answers are `Supported`, `Refuted` and
 `Need more evidence`. Visual state changes do not establish liability.
 
 ## Environment
@@ -83,8 +83,8 @@ supervision from prompts and reject unreviewed/proxy traces by default.
 ## Data and evaluation
 
 The current **v0.4.1 curation pool has 478 claim combinations and 1,912 release
-configurations**, built from 188 public state queries and 226 multiview source
-sequences. Normal references, explicit targets and resolution/wording controls
+configurations**, containing 188 condition families, 64 labelled identity controls and 226 unlabelled
+identity candidates. Normal references, explicit targets and resolution/wording controls
 make failures easier to diagnose. Independent visual-sufficiency review is still
 required before formal evaluation; these materials are not training supervision.
 See the [repair guide](docs/benchmark_v04.zh-CN.md).
@@ -94,7 +94,7 @@ The historical resolution-release benchmark contains **300 source images across 
 the [earlier pilot](docs/results/public_pilot.md). No future self-collected data is
 assumed. Static and full multi-turn policies use frozen Qwen3-VL-8B,
 Qwen2.5-VL-7B and InternVL3.5-8B checkpoints with the same interactive tool pool,
-costs and budget. See [benchmark protocol](docs/benchmark.md) for access conditions,
+costs and budget. See [benchmark settings](docs/benchmark.md) for access conditions,
 model adapters, reproducibility and the limits of the quality-proxy metric.
 
 Public images test anomaly recognition and controlled resolution release. They
@@ -102,7 +102,7 @@ are not same-object before/after photographs. Blender produces immutable-state,
 multi-view before/after scenes separately; the initial six-image scene is an
 integration fixture with unreviewed geometric annotations. Neither these scenes
 nor public quality-proxy scores establish simulation-training transfer.
-[Data protocol](docs/data_protocol.md) describes annotation and split requirements.
+[Data guide](docs/data_protocol.md) describes annotation and split requirements.
 
 ## Run
 

@@ -1,5 +1,7 @@
 # 三轮模拟 CVPR 审稿与作者修改
 
+> 以下为对应稿件版本的历史自审与作者回复，页码、图号及“尚未完成”事项按当时状态保留。当前实验和论文请看[最新状态](../docs/experiments/reviewer_evidence_search.zh-CN.md)。本次同步不新增或冒充独立会议评审。
+
 这是作者侧的三轮完整自审，不是三个独立审稿人的意见，也不是实际会议评审。每轮均通读当时的正文、附录、公式、图表、引用和证据边界，再进行修改与整稿编译。Recommendation 按“当前稿件作为完整投稿”判断；没有写入的标注和实验结果不会被假定存在。Confidence 使用文字等级。
 
 审稿组织参考 [CVPR Reviewer Guidelines](https://cvpr.thecvf.com/Conferences/2026/ReviewerGuidelines) 和 [Reviewer Training Material](https://cvpr.thecvf.com/Conferences/2026/ReviewerTrainingMaterial)：具体说明贡献与缺陷，问题必须指向可核查的内容，不把措辞偏好或是否超过 SOTA 当成唯一判断依据。格式检查参照 [CVPR 2027 Author Guidelines](https://cvpr.thecvf.com/Conferences/2027/AuthorGuidelines)。

@@ -7,6 +7,7 @@ model weights, images, evaluation databases, or running task state.
 import argparse
 from contextlib import closing
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import sqlite3
@@ -85,7 +86,15 @@ def content_parts(m):
     value=m.get('content',[])
     return value if isinstance(value,list) else []
 
-def request_info(tr):
+def pixel_helpers():
+    path = Path(__file__).with_name("aggregate_obtainable.py")
+    spec = importlib.util.spec_from_file_location("evidence_control_pixel_helpers", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module, path
+
+
+def request_info(tr, directory, fingerprint):
     seen=set()
     records=[]
     names={}
@@ -94,7 +103,8 @@ def request_info(tr):
             for c in m.get('tool_calls',[]):
                 fun=c.get('function',{})
                 names[c.get('id')]=fun
-        imgs={Path(x['image_ref']).name for x in content_parts(m) if x.get('type')=='image' and x.get('image_ref')}
+        image_refs={Path(x['image_ref']).name for x in content_parts(m) if x.get('type')=='image' and x.get('image_ref')}
+        imgs={fingerprint(x,directory) for x in content_parts(m) if x.get('type')=='image' and x.get('image_ref')}
         if m.get('role')=='tool' and (m.get('name')=='request_photo' or names.get(m.get('tool_call_id'),{}).get('name')=='request_photo'):
             objs=[]
             for part in content_parts(m):
@@ -108,7 +118,7 @@ def request_info(tr):
                 except ValueError:arg={}
             records.append({'status':status,'novel_images':len(imgs-seen),'returned_images':len(imgs),
                'repeated_only':bool(imgs) and not bool(imgs-seen),'query':arg.get('query',{}),
-               'image_refs':sorted(imgs)})
+               'image_refs':sorted(image_refs)})
         seen.update(imgs)
     return records
 
@@ -148,6 +158,7 @@ def collect(root, models, plan, cohort, shards):
     ready, status, manifests, cases = matrix_status(root, models, plan, cohort, shards)
     if not ready:
         return None, status
+    helper, helper_path = pixel_helpers()
     results, provenance = {}, {}
     shared = None
     for model in models:
@@ -184,7 +195,7 @@ def collect(root, models, plan, cohort, shards):
                     raise ValueError("Input-token accounting differs")
                 if row["output_tokens"] != sum(g.get("output_tokens", 0) for g in trace["generation"]):
                     raise ValueError("Output-token accounting differs")
-                requests = request_info(trace)
+                requests = request_info(trace, entry["directory"], helper.image_fingerprint)
                 row["new_image"] = any(r["novel_images"] > 0 for r in requests)
                 row["new_released_record"] = bool(set(row["released"]) - set(case["initial"]))
                 row["repeated_image_request"] = any(r["repeated_only"] for r in requests)
@@ -215,9 +226,11 @@ def collect(root, models, plan, cohort, shards):
         "source_label_scope": "Unreviewed source-derived labels; not grounded accuracy",
         "denominator": "All planned cases; abstentions and unfinished attempts remain in denominators",
         "request_scope": "Public request options only; fixed_original skips tasks without original",
-        "new_image_definition": "Request returned an image_ref PNG hash not present in any prior observation; not evidence sufficiency",
+        "new_image_definition": "Request returned decoded RGB pixels and dimensions absent from prior observations; not evidence sufficiency",
         "new_released_record_definition": "New released image_id relative to the initial set; distinct from pixel novelty",
-        "novelty_method_source_sha256": "b901f179bc86e6dba88a4c81f567a7b535da4af1e88ec2bb69bf9c0b1fa43f75",
+        "novelty_method_source_sha256": digest(helper_path),
+        "summary_source_sha256": digest(Path(__file__)),
+        "input_token_scope": "Offered input tokens, including rejected context-limit calls; distinct from executed-input counts",
         "token_scope": "Generated model tokens; scripted calls remain in input but cost zero generated tokens",
         "settings": shared, "models": results, "provenance": provenance,
     }, status
@@ -228,11 +241,7 @@ def render(report):
         r"\begin{table*}[t]\centering\small\setlength{\tabcolsep}{4pt}",
         r"\begin{minipage}{.94\textwidth}\centering",
         r"\caption{\textbf{Evidence-request controls at budget " + str(report["settings"]["budget"]) + r".}",
-        r"Accuracy (\%) uses provisional source labels. All attempts remain in the denominators.",
-        r"Search and cost concern Obtainable; stopping rates concern Unavailable.",
-        r"A new image has a returned PNG hash absent from all prior observations; it need not be sufficient evidence.",
-        r"Fixed original makes no request when the public menu has no original view.",
-        r"Scripted requests count toward turns, cost and time; generated tokens count model output only.}",
+        r"Accuracy and rates are percentages.}",
         r"\label{tab:evidence-controls}",
         r"\begin{tabular}{@{}llrrrrrr@{}}\toprule",
         r"\multicolumn{8}{l}{\emph{(a) Source-label accuracy (\%)}}\\",

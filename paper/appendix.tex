@@ -246,7 +246,7 @@ Time is the episode's wall-clock duration, including image processing, model req
 Policy-checkpoint loading before the episode is excluded.
 Recorded photo requests perform a closed-pool lookup; their timing does not represent waiting for a person to capture or submit a photograph.
 
-Input tokens are the sum of native input token counts over actual model calls, including system instructions, tool schemas and repeated conversation history.
+For the original benchmark and post-training efficiency summaries, input tokens sum native input counts over actual model calls, including system instructions, tool schemas and repeated conversation history.
 The table's k denotes 1,000 tokens.
 Native visual tokenization differs across architectures, so these counts are not a common FLOP measure.
 Output tokens include all generated tokens, including malformed actions and termination markers; prompts and image representations are input, not output.
@@ -257,11 +257,18 @@ Missing token measurements cause the summary to fail rather than silently becomi
 Model calls count actual generation requests, including calls that produce invalid actions.
 Tool calls follow the environment's nonterminal call counter; finish is excluded and parsing failures do not become fictitious tool executions.
 Finished denotes submission of a valid final decision, including Need more evidence, and does not imply correctness.
-All compared runs report NVIDIA RTX A6000 GPUs.
+All compared local runs report NVIDIA RTX A6000 GPUs.
 Timing comes from ordinary evaluation jobs with other workloads on the same host, rather than an isolated throughput test.
 Native processors, library versions, LoRA execution and CPU tools can affect elapsed time.
 We report observed latency without assigning a speed winner.
 The released efficiency summary retains per-task means, model time and median/90th-percentile episode time in addition to the main-table averages.
+
+\paragraph{Smaller models can use more interaction.}
+On initially sufficient cases, the 2B model makes 6.71 model calls and emits 449 output tokens per case, compared with 3.24 calls and 283 tokens for the 8B model.
+Both average about 17 seconds.
+Model size alone therefore gives a poor estimate of the cost of a complete interaction.
+Conversely, Qwen2.5-VL-7B emits fewer tokens but is correct in only 3.8\% of interactive cases.
+Latency and token counts need to be read together with completion and answer accuracy.
 
 \subsection{Metrics and failure accounting}
 For reviewed case \(i\), let \(Y_i=Y_{q_i}(\mathcal{A}_i)\) and \(K_i=1\) when a definite decision has a valid evidence set citing only released evidence.
@@ -332,7 +339,7 @@ The source-supervised experiment above uses weak source labels and reference act
 
 % api-settings-start
 \paragraph{API-served models.}
-Responses runs use native function calls and best-effort schemas. Direct and interactive outputs permit 96 and 384 visible tokens. GPT-6.1 Sol uses low reasoning with a 2,048-token total cap; the visible counts exclude its reported reasoning tokens, and a response exceeding the visible cap receives no credit. We retain encrypted reasoning and native call identifiers between turns. Other API models use their documented non-reasoning setting. The Decisions API returns a choice among the same three decisions from the same pixels; it can also select an application-executed action. Our public-menu-v1 adapter constructs up to 64 concrete actions from released image metadata, public request options and tool availability. It includes requests, image operations, grounding and explicit finish choices. All three decisions remain available; ordering is deterministic and independent of labels. Tool results, including failed requests and new image pixels, enter the next decision. The same eight-turn and cost limits apply. Candidate parameters and source-region citation presets are provided by the application, so this condition is marked separately from native argument generation. The menu does not read hidden availability, annotations or asset paths. Only complete interactive cohorts populate its tool columns; generated-text counts remain inapplicable. All API times include network round trips, input counting and CPU tool execution; they are not an equal-hardware throughput comparison with local GPUs. Pilot response reuse retains original token counts and generation time rather than treating replay as fresh inference. Checkpoint aliases or pinned snapshots and returned model IDs are recorded with the run.
+Responses runs use native function calls and best-effort schemas. Direct and interactive outputs permit 96 and 384 visible tokens. GPT-6.1 Sol uses low reasoning with a 2,048-token total cap; the visible-token cap excludes reported reasoning tokens, while tabulated output includes them. A response exceeding the visible cap receives no credit. We retain encrypted reasoning and native call identifiers between turns. Other API models use their documented non-reasoning setting. The Decisions API returns a choice among the same three decisions from the same pixels; it can also select an application-executed action. Our public-menu-v1 adapter constructs up to 64 concrete actions from released image metadata, public request options and tool availability. It includes requests, image operations, grounding and explicit finish choices. All three decisions remain available; ordering is deterministic and independent of labels. Tool results, including failed requests and new image pixels, enter the next decision. The same eight-turn and cost limits apply. Candidate parameters and source-region citation presets are provided by the application, so this condition is marked separately from native argument generation. The menu does not read hidden availability, annotations or asset paths. Only complete interactive cohorts populate its tool columns; generated-text counts remain inapplicable. All API times include network round trips, input counting and CPU tool execution; they are not an equal-hardware throughput comparison with local GPUs. Pilot response reuse retains original token counts and generation time rather than treating replay as fresh inference. Checkpoint aliases or pinned snapshots and returned model IDs are recorded with the run.
 \input{tables/api_settings}
 % api-settings-end
 
@@ -345,7 +352,7 @@ Identity-only SFT uses CO3D trajectories; mixed-task SFT adds balanced condition
 
 \subsection{Training Details}
 
-Qwen3-VL-2B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 44 optimizer updates and records validation-selected group 24; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
+Qwen3-VL-2B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 44 optimizer updates and records validation-selected group 24; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
 Qwen2.5-VL-7B with mixed-task SFT completes 200 optimizer steps, using the same rank-32 attention adapters and held-out token-loss selection as the other SFT runs. Its data and exact selected checkpoint are recorded with the released comparison.
 
@@ -355,46 +362,30 @@ Finish-only retains complete public histories at the final decision, but removes
 
 Qwen3-VL-8B with mixed-task terminal-only SFT completes 175 optimizer steps, using the same rank-32 attention adapters and held-out token-loss selection as the other SFT runs. Its data and exact selected checkpoint are recorded with the released comparison.
 
-Finish-only retains complete public histories at the final decision, but removes tool-action prediction targets. It uses the same update limit, not matched target-token compute, as the corresponding full-trajectory SFT.
+Qwen3-VL-8B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 24 optimizer updates and records validation-selected group 0; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
-Qwen3-VL-8B after mixed-task SFT and online GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 24 optimizer updates and records validation-selected group 0; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
+Qwen2.5-VL-7B with SFT followed by GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 24 optimizer updates and records validation-selected group 8; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
-Qwen2.5-VL-7B with SFT followed by GRPO continues mixed-task SFT for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 24 optimizer updates and records validation-selected group 8; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
+Qwen2.5-VL-7B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 124 optimizer updates and records validation-selected group 48; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
-Qwen2.5-VL-7B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 124 optimizer updates and records validation-selected group 48; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
+Qwen3-VL-2B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 124 optimizer updates and records validation-selected group 16; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
-Qwen3-VL-2B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 124 optimizer updates and records validation-selected group 16; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
-
-Qwen3-VL-8B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The benchmark supplies no training or checkpoint-selection feedback. The run performs 116 optimizer updates and records validation-selected group 48; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
+Qwen3-VL-8B with direct GRPO starts from the pretrained base without SFT, for 64 sampled groups of 4 trajectories, with two clipped policy updates per nonconstant-reward group. The learning rate is \(1e-05\), clipping threshold 0.2 and reference penalty 0.02. The reference is the frozen initial policy. Training sees only public observations; private source annotations enter as scalar rewards. A fixed held-out set of eight source families across four access versions records validation-selected checkpoints for the supplementary comparison. The test families provide neither training rewards nor checkpoint-selection feedback. The run performs 116 optimizer updates and records validation-selected group 48; group zero denotes the initial policy. Main-table RL scores use the fixed endpoint at group 64.
 
 RL and SFT+RL share the sampled-group budget, but differ in optimizer updates, reference policies and total training compute. Each setting uses one training seed, so these comparisons do not establish a general ranking of training methods. All rows retain the fixed paper cohort, failure accounting and inference allowances. Sharded evaluation, where used, partitions complete case families and reads original episode traces without averaging shard percentages.
 % adaptation-results-end
 
-\paragraph{Action targets change request behavior.}
-SFT on full public histories can predict only the final decision or both actions and the final decision.
-With identity-only training, photograph requests rise from 0\% to 73.2\% when action targets are included; with mixed-task training, they rise from 0\% to 39.2\%.
-All additional requests concern condition originals, with no new identity views.
-The update cap is shared within each pair; target-token compute is not matched.
-The supplement gives the complete comparison.
-
-\begin{table}[t]\centering\small
-\caption{\textbf{Action-target ablation for 8B SFT.}
-Fraction (\%) requesting a photograph in Obtainable.
-Public histories and the update cap are shared within each pair.}
-\label{tab:action-targets}
-\begin{tabular}{@{}lrr@{}}\toprule
-Training data & Final decision & Actions + final\\\midrule
-Identity & 0.0 & 73.2\\
-Mixed-task & 0.0 & 39.2\\
-\bottomrule\end{tabular}
-\end{table}
+\paragraph{Action supervision.}
+Table~\ref{tab:training-ablation} compares final-decision supervision with action and decision targets on the same public histories.
+The added requests recover condition originals, without new identity views.
+The update cap is shared within each pair, but target-token compute is not matched.
 
 % rl-final-diagnostics-start
-\section{Final-Checkpoint Diagnostics}
-The main GRPO results use the fixed endpoint at group 64. Validation selection also includes the initial policy as a candidate. We separately evaluate the fixed final checkpoint at group 64 for both backbones to examine the policies after actual optimization. The endpoint evaluations were specified before their scoring. We adopted endpoint reporting for the main table on November 4 after inspecting both checkpoint variants for 2B and 8B; both variants remain reported here. Remaining RL runs follow the same endpoint rule regardless of their test scores. The data, tools, inference allowances and fixed paper cohort remain unchanged.
+\section{Checkpoint Selection}
+The main GRPO results use the fixed endpoint at group 64. Validation selection also includes the initial policy as a candidate. We compare validation-selected and group-64 endpoint SFT+RL checkpoints for Qwen3-VL-2B and Qwen3-VL-8B. The endpoint evaluations were specified before their scoring. We adopted endpoint reporting for the main table on November 4 after inspecting both checkpoint variants for 2B and 8B; both variants remain reported here. Remaining RL runs follow the same endpoint rule regardless of their test scores. The data, tools, inference allowances and fixed paper cohort remain unchanged.
 \input{tables/rl_final_diagnostics}
 Qwen3-VL-2B scores 72.7\% at the final checkpoint, compared with 72.2\% after validation selection and 71.8\% after SFT. It requests photographs in 64 Obtainable cases; request frequency alone does not establish evidence utility.
-Qwen3-VL-8B scores 83.7\% at the final checkpoint, compared with 79.9\% after validation selection and 79.9\% after SFT. It requests photographs in 92 Obtainable cases; request frequency alone does not establish evidence utility.
+Qwen3-VL-8B scores 83.7\% at the fixed endpoint, compared with 79.9\% after validation selection. It requests photographs in 92 Obtainable cases; request frequency alone does not establish evidence utility.
 % rl-final-diagnostics-end
 
 
@@ -436,7 +427,6 @@ The additional audited screw case, \texttt{case-035e4ca9730fd6a3fcab-Sufficient}
 The released analysis JSON records case identifiers, exact tool arguments, source database locations, trace hashes and unchanged figure-image hashes. It can be regenerated from existing records without rerunning a model.
 % paired-case-analysis-end
 
-\section{Paired Answer Changes}
 \begin{figure}[t]\centering\input{figures/diagnosis}
 \caption{\textbf{Answers corrected and lost in the interactive setting.}
 Counts pair the same source-labeled cases without and with tools.
@@ -459,7 +449,7 @@ The source-label comparison does not substitute for reviewed evidence sufficienc
 The complete initially sufficient task and efficiency breakdown is retained below.
 \input{tables/sufficient_results}
 
-\section{Which Request Meets the Constructed Evidence Set?}
+\section{Constructed Evidence Requirements}
 We enumerate public object, time and view queries through the actual evidence-release function, using the constructed evidence sets only in an evaluator-side shortest-path search.
 Every Obtainable case has a one-request path to its annotated image-record requirements; Sufficient needs no request, and the corresponding required records are unreachable in Missing and Unavailable.
 For all 56 identity controls, the withheld required record shares its source photograph with an initial preview.
@@ -469,19 +459,18 @@ Consequently, these cases do not require choosing a sequence of previously unsee
 This is a structural property of the construction, rather than an independent judgment that the resulting pixels suffice.
 The released audit records the exact queries and their equality; no model generation is needed to establish that equality.
 
-\paragraph{Smaller models can use more interaction.}
-On initially sufficient cases, the 2B model makes 6.71 model calls and emits 449 output tokens per case, compared with 3.24 calls and 283 tokens for the 8B model.
-Both average about 17 seconds.
-Model size alone therefore gives a poor estimate of the cost of a complete interaction.
-Conversely, Qwen2.5-VL-7B emits fewer tokens but is correct in only 3.8\% of interactive cases.
-Latency and token counts need to be read together with completion and answer accuracy.
-
 \section{Complete Initially Sufficient Training Costs}
 \input{tables/training_sufficient_detail}
 
 % evidence-controls-complete
 \section{Fixed and Adaptive Evidence Requests}
 These comparisons use the same frozen 209 families and four access versions. All policies share the model, native finish schema and 384-token call allowance; the adaptive policy retains the full tool menu, while scheduled policies end with finish only. Scheduled requests use public options and count against the same eight turns and total cost of three. Random order is seeded by family so all versions share its order. Fixed original skips cases without a publicly offered original view. Accuracy uses source labels and does not establish sufficient evidence.
+New-image rates use displayed RGB pixels and image dimensions, not encoded-file hashes.
+Re-encoding the same displayed image does not count as new evidence.
+For Tables~\ref{tab:evidence-controls} and~\ref{tab:evidence-interventions}, input tokens include all offered prompts, including any rejected before a model forward because of the context limit.
+This differs from the executed-input accounting in the original benchmark and training efficiency summaries.
+Output counts still measure generated tokens.
+
 \input{tables/evidence_controls}
 
 % evidence-interventions-complete

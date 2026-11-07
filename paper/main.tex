@@ -467,9 +467,9 @@ All 56 identity controls can meet their recorded evidence requirements by restor
 \textbf{The current cases admit a fixed detail-recovery strategy without requiring a sequence of new viewpoints.}
 
 \paragraph{Computational cost.}
-At cost three, SFT+RL reduces mean model calls from 4.03 to 1.35 and input tokens from 14,350 to 4,475.
+Under adaptive control at cost three, SFT+RL reduces mean model calls from 4.03 to 1.35 and input tokens from 14,350 to 4,475 relative to Base.
 Output tokens fall from 264 to 144.
-Fewer calls reduce repeated context processing, an efficiency gain that output length alone does not capture.
+Fewer calls also reduce repeated context processing.
 
 \paragraph{Evaluation controls and limitations.}
 For Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B, increasing the direct output limit from 96 to 384 tokens leaves every paired answer unchanged.
