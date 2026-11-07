@@ -268,7 +268,68 @@ def _paired_behavior(records, cases, groups, policy):
             "initial_observations_identical": True}
 
 
-def analyze(data, runs, *, seed=SEED, replicates=REPLICATES):
+def _exclude_development(path, source, cases, groups, dataset_manifest, loaded):
+    """Exclude entire frozen development banks only after full-run validation."""
+    requested = Path(path)
+    if requested.is_file() and requested.name == "dataset_manifest.json":
+        requested = requested.parent / "cases.json"
+    dev_source, dev_cases, dev_groups, dev_manifest = load_dataset(requested)
+    if (dev_manifest.get("renderer_source_sha256")
+            != dataset_manifest.get("renderer_source_sha256")):
+        raise ValueError("Development and full cohorts use different renderers")
+    def all_rows(file):
+        document = json.loads(file.read_text())
+        rows = document["cases"] if isinstance(document, dict) else document
+        indexed = {c["case_id"]: c for c in rows}
+        if len(indexed) != len(rows):
+            raise ValueError("Duplicate case IDs in development/full dataset")
+        return indexed
+    original, development = all_rows(source), all_rows(dev_source)
+    if any(k not in original or canonical(c) != canonical(original[k])
+           for k, c in development.items()):
+        raise ValueError("Development cases are not an unchanged subset of the full dataset")
+    if not set(dev_cases) < set(cases):
+        raise ValueError("Development exclusion must be a nonempty proper subset")
+    for bank, pair in dev_groups.items():
+        if bank not in groups or {c["case_id"] for c in pair} != {c["case_id"] for c in groups[bank]}:
+            raise ValueError("Development exclusions must contain whole paired banks")
+    retained = {k: c for k, c in cases.items() if k not in dev_cases}
+    retained_groups = {k: pair for k, pair in groups.items() if k not in dev_groups}
+    audit = {
+        "rule": "Exclude all paired banks in the separately frozen supplied development cohort; never filter by outcome.",
+        "development_dataset": str(dev_source), "development_dataset_sha256": digest(dev_source),
+        "development_manifest_sha256": digest(dev_source.parent / "dataset_manifest.json"),
+        "excluded_case_ids": sorted(dev_cases), "excluded_paired_history_ids": sorted(dev_groups),
+        "excluded_episodes_per_policy": len(dev_cases), "excluded_paired_banks": len(dev_groups),
+        "all_development_records_identical": True,
+        "retained_episodes_per_policy": len(retained), "retained_paired_banks": len(retained_groups),
+        "full_cohort_validation": {
+            "dataset_sha256": digest(source),
+            "manifest_sha256": digest(source.parent / "dataset_manifest.json"),
+            "episodes_per_policy": len(cases), "paired_banks": len(groups),
+            "case_ids": sorted(cases), "complete": True,
+            "models": {name: {
+                "complete": run["complete"], "completed_episodes": len(run["records"]),
+                "expected_episodes": run["expected"],
+                "completion_by_policy": {p: sum(k[1] == p for k in run["records"]) for p in POLICIES},
+                "ordered_episode_sha256": run["ordered_episode_sha256"],
+                "manifests": run["manifests"],
+            } for name, run in loaded.items()},
+        },
+    }
+    filtered = {}
+    expected = {(case_id, policy) for case_id in retained for policy in POLICIES}
+    for name, run in loaded.items():
+        records = {k: row for k, row in run["records"].items() if k[0] in retained}
+        if set(records) != expected:
+            raise ValueError("A validated full run lost retained episode keys")
+        filtered[name] = {**run, "records": records, "expected": len(expected), "complete": True,
+                          "ordered_episode_sha256": sha256(canonical([
+                              [*k, records[k]["_record_sha256"]] for k in sorted(records)]).encode()).hexdigest()}
+    return retained, retained_groups, filtered, audit
+
+
+def analyze(data, runs, *, seed=SEED, replicates=REPLICATES, exclude_development=None):
     source, cases, groups, dataset_manifest = load_dataset(data)
     if not runs:
         raise ValueError("Specify the complete planned set of model runs")
@@ -283,6 +344,12 @@ def analyze(data, runs, *, seed=SEED, replicates=REPLICATES):
     if any(_common_config(c) != _common_config(configs[0]) for c in configs[1:]):
         raise ValueError("Models differ in cohort, source or inference settings")
     complete = all(r["complete"] for r in loaded.values())
+    exclusion = None
+    if exclude_development is not None:
+        if not complete:
+            raise ValueError("Development exclusion requires complete full-cohort runs for every requested model")
+        cases, groups, loaded, exclusion = _exclude_development(
+            exclude_development, source, cases, groups, dataset_manifest, loaded)
     report = {
         "complete": complete, "scope": "Standalone procedural identity-condition search; Obtainable only",
         "independent_human_review": False, "interface_track": track,
@@ -307,6 +374,10 @@ def analyze(data, runs, *, seed=SEED, replicates=REPLICATES):
         "completion_rule": "Each model reports scores only after its entire five-policy cohort is complete; cross-model comparison waits for all requested models",
         "models": {},
     }
+    if exclusion is not None:
+        report["development_exclusion"] = exclusion
+        report["cohort"]["selection"] = "Full frozen cohort minus the separately frozen development paired banks"
+        report["cohort"]["case_ids_sha256"] = sha256(canonical(sorted(cases)).encode()).hexdigest()
     for name, run in loaded.items():
         records = run["records"]
         entry = {
@@ -386,13 +457,20 @@ def markdown(report):
         if not any(entry["complete"] for entry in report["models"].values()):
             return "\n".join(lines) + "\n"
         lines.append("")
+    exclusion = report.get("development_exclusion")
+    if exclusion:
+        full = exclusion["full_cohort_validation"]
+        lines += [
+            f"先验证每个模型原始完整 {full['episodes_per_policy']} 题×5策略（{full['paired_banks']} 个配对场景），再排除冻结development集合。",
+            f"排除 {exclusion['excluded_episodes_per_policy']} 题／{exclusion['excluded_paired_banks']} 组；保留 {exclusion['retained_episodes_per_policy']} 题／{exclusion['retained_paired_banks']} 组。",
+            "development源SHA、完整原队列校验和逐模型原始记录哈希见JSON；失败记录继续保留在分母。", ""]
     assisted = report["interface_track"] == "assisted_finite_choice"
     metrics = (("procedural_evidence_sufficient", "source_label_correct", "choice_valid",
                 "selected_chain_target_correct", "finished") if assisted else METRICS)
     lines += [f"每策略 {report['cohort']['episodes_per_policy']} 个案件；{report['cohort']['paired_banks']} 个配对场景作为统计单位。",
               "搜索、提交失败和弃答都保留在分母；oracle为特权参考。", ""]
     if assisted:
-        lines += ["此表为有界面辅助的有限选项诊断；候选区域和身份链接由程序生成，不代表模型原生grounding能力。",
+        lines += ["此表为有界面辅助的有限选项诊断，采用单字母受限logit选择，候选区域和身份链接由程序生成；不是原生工具生成或RGB-only sanity接口，不能跨接口比较效率或grounding能力。",
                   "", "| 模型 | 策略 | 找到证据% | 来源标签正确% | 选择有效% | 候选链目标正确%(全部) | 完成提交% | 请求 | 重复请求 | 输入token | 输出token | 秒 |"]
     else:
         lines += ["| 模型 | 策略 | 找到证据% | 证据链正确% | 区域定位正确% | 来源标签正确% | 完成提交% | 请求 | 重复请求 | 输入token | 输出token | 秒 |"]
@@ -431,6 +509,8 @@ def main():
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--run", action="append", required=True, metavar="MODEL=DIR")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--exclude-development", type=Path,
+                        help="Frozen development cases/directory/dataset_manifest.json; full runs are validated before whole-bank exclusion")
     args = parser.parse_args()
     runs = {}
     for value in args.run:
@@ -438,7 +518,7 @@ def main():
         if not separator or not name or name in runs:
             parser.error("Use unique MODEL=DIR run specifications")
         runs[name] = Path(path)
-    report = analyze(args.data, runs)
+    report = analyze(args.data, runs, exclude_development=args.exclude_development)
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "multistep_analysis.json").write_text(json.dumps(report, indent=2) + "\n")
     (args.output / "multistep_analysis.zh-CN.md").write_text(markdown(report))

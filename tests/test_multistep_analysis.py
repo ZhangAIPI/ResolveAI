@@ -279,6 +279,71 @@ class AnalysisTests(unittest.TestCase):
         self.assertIn("界面辅助", markdown(report))
         self.assertNotIn("| 证据链正确%", markdown(report))
 
+    def development(self, name="development", *, changed=False, all_cases=False):
+        root = self.root / name
+        root.mkdir()
+        rows = deepcopy(self.cases if all_cases else self.cases[:2])
+        if changed:
+            rows[0]["claim"] = "This development item changed."
+        path = root / "cases.json"
+        path.write_text(json.dumps(rows))
+        (root / "dataset_manifest.json").write_text(json.dumps({
+            "dataset_sha256": digest(path), "annotation_status": "procedural",
+            "paired_scene_banks": 2 if all_cases else 1,
+            "renderer_source_sha256": hashed("renderer")}))
+        return root
+
+    def test_development_exclusion_keeps_full_audit_and_whole_bank_denominator(self):
+        failure = (self.cases[2]["case_id"], "adaptive_acquisition")
+        a = self.run_fixture("heldout-a", shards=2, failures=[failure])
+        b = self.run_fixture("heldout-b")
+        dev = self.development()
+        report = analyze(self.data, {"a": a, "b": b}, exclude_development=dev / "dataset_manifest.json", replicates=100)
+        self.assertTrue(report["complete"])
+        self.assertEqual(report["cohort"]["episodes_per_policy"], 2)
+        self.assertEqual(report["cohort"]["paired_banks"], 1)
+        audit = report["development_exclusion"]
+        self.assertEqual(audit["excluded_episodes_per_policy"], 2)
+        self.assertEqual(audit["excluded_paired_banks"], 1)
+        self.assertEqual(audit["full_cohort_validation"]["models"]["a"]["completed_episodes"], 20)
+        self.assertEqual(audit["full_cohort_validation"]["models"]["a"]["expected_episodes"], 20)
+        self.assertEqual(len(audit["full_cohort_validation"]["models"]["a"]["manifests"]), 2)
+        model = report["models"]["a"]
+        self.assertEqual((model["completed_episodes"], model["expected_episodes"]), (10, 10))
+        self.assertEqual(model["policies"]["adaptive_acquisition"]["rates_pct"]["finished"], 50)
+        self.assertEqual(model["adaptive_minus_baseline"]["fixed_view_order"]["source_label_correct"]["episodes"], 2)
+        self.assertEqual(report["bootstrap"]["seed"], 20261107)
+        self.assertEqual(audit["development_dataset_sha256"], digest(dev / "cases.json"))
+        self.assertEqual(report["cohort"]["case_ids"], sorted(c["case_id"] for c in self.cases[2:]))
+        again = analyze(self.data, {"a": a, "b": b}, exclude_development=dev / "cases.json", replicates=100)
+        self.assertEqual(report["models"], again["models"])
+        self.assertIn("先验证", markdown(report))
+
+    def test_exclusion_cannot_hide_incomplete_excluded_case_or_corrupt_full_row(self):
+        dev = self.development()
+        a = self.run_fixture("partial-before-exclusion", missing=[(self.cases[0]["case_id"], "oracle")])
+        with self.assertRaisesRegex(ValueError, "complete full-cohort"):
+            analyze(self.data, {"a": a}, exclude_development=dev, replicates=100)
+        b = self.run_fixture("corrupt-excluded")
+        with sqlite3.connect(b / "shard-0/episodes.sqlite") as db:
+            db.execute("UPDATE episodes SET trace='{}' WHERE case_id=? AND policy='oracle'",
+                       (self.cases[0]["case_id"],))
+        with self.assertRaisesRegex(ValueError, "checksum"):
+            analyze(self.data, {"b": b}, exclude_development=dev, replicates=100)
+
+    def test_development_must_be_identical_frozen_proper_subset(self):
+        a = self.run_fixture("development-integrity")
+        changed = self.development("changed-development", changed=True)
+        with self.assertRaisesRegex(ValueError, "unchanged subset"):
+            analyze(self.data, {"a": a}, exclude_development=changed, replicates=100)
+        entire = self.development("entire-cohort", all_cases=True)
+        with self.assertRaisesRegex(ValueError, "proper subset"):
+            analyze(self.data, {"a": a}, exclude_development=entire, replicates=100)
+        path = changed / "cases.json"
+        path.write_text(path.read_text() + " ")
+        with self.assertRaisesRegex(ValueError, "checksum"):
+            analyze(self.data, {"a": a}, exclude_development=changed, replicates=100)
+
     def test_pending_model_directory_has_no_scores(self):
         report = analyze(self.data, {"not_started": self.root / "pending"}, replicates=100)
         self.assertFalse(report["complete"])
