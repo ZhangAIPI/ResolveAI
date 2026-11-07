@@ -1,6 +1,6 @@
 # 论文：任务、实验与排版
 
-2026-11-06 完整更新。
+2026-11-07 更新。
 
 论文标题为 **Can Vision-Language Models Find the Evidence They Need?**。正文八页，参考文献另页；保留两幅图和四张表。实验采用五个常规小节：Experimental Setup、Main Results、Post-training Results、Behavior Analysis、Ablation Studies，段内标题直接说明分析主题。
 
@@ -24,3 +24,9 @@
 附录保留实现、检查点与完整结果，统一新图和 token 统计定义。独立充分性审核仍未完成，不将来源标签准确率写成 grounded accuracy。
 
 当前实验和剩余问题见[完整状态](reviewer_evidence_search.zh-CN.md)，论文入口见[paper/README](../../paper/README.md)。
+
+## 图文叙述
+
+图 1 的 caption 聚焦 ResolveAI 中的比较、索证与回答；图 2 聚焦任务、访问条件和交互。图内来源名称改为状态与身份任务名称，避免把首屏写成对数据来源的介绍。构造段落保留数据来源和引用，具体照片归属仍可追溯。
+
+引言和构造段落以本工作的实验与设计为主语；方法中的共享历史比较保留必要引用。相关工作仍负责说明与既有评测的区别。

@@ -26,8 +26,8 @@
 \maketitle
 \begin{center}
 \resizebox{\textwidth}{!}{\input{figures/teaser}}
-\captionof{figure}{\textbf{Visual evidence search.}
-Identity matching uses CO3D views; condition verification may require original MVTec detail~\cite{co3d,mvtec}.}
+\captionof{figure}{\textbf{Visual evidence search in \benchmark.}
+Models compare views, request finer detail and decide whether the available photographs support an answer.}
 \label{fig:teaser}
 \end{center}
 }]
@@ -53,7 +53,7 @@ We introduce \benchmark to study these decisions through matched case families. 
 
 The paired construction exposes differences that a final score can hide. A policy can repeatedly examine the same pixels, request an image that adds no new material, or stop while further photographs remain accessible. It can also obtain additional detail and still answer incorrectly. The recorded interaction links each answer to the observations that preceded it.
 
-We construct condition and identity cases from MVTec AD and CO3D photographs~\cite{mvtec,co3d}. Experiments compare ten open-weight and five API models, with SFT and RL studies on three open-weight models. Post-training can produce shorter, more accurate answers without corresponding changes in photograph requests. Two training routes with similar answer accuracy also behave differently when evidence is withheld.
+Our experiments study condition and identity verification under matched photograph access. Experiments compare ten open-weight and five API models, with SFT and RL studies on three open-weight models. Post-training can produce shorter, more accurate answers without corresponding changes in photograph requests. Two training routes with similar answer accuracy also behave differently when evidence is withheld.
 
 Our contributions are:
 \begin{itemize}
@@ -75,19 +75,18 @@ WebQA evaluates multimodal source selection~\cite{webqa}; AVerImaTeC verifies im
 
 \begin{figure*}[t]\centering
 \resizebox{\textwidth}{!}{\input{figures/framework}}
-\caption{\textbf{Benchmark overview.}
-Source photographs (a) form matched access settings (b).
-Tool examples (c) come from different cases.}
+\caption{\textbf{The \benchmark environment.}
+Object claims (a) are paired across photograph-access settings (b); models inspect, request and answer (c).}
 \label{fig:framework}
 \end{figure*}
 
 \subsection{Object Condition and Identity}
-We construct two verification tasks from public photographs (Figure~\ref{fig:teaser}).
+\benchmark evaluates object condition and identity through two verification tasks (Figure~\ref{fig:teaser}).
 
 \paragraph{Object condition.}
 A claim names a defect on a target item, such as a squeezed capsule or a chipped bottle.
 The model must determine whether that defect is present in the submitted photograph.
-MVTec AD supplies the images and anomaly annotations~\cite{mvtec}.
+We construct condition claims using MVTec AD photographs and anomaly annotations~\cite{mvtec}.
 Some cases include a normal reference from another specimen.
 That reference illustrates normal appearance; it is not an earlier photograph of the target.
 A preview may hide small defects that remain visible in the recorded original.
@@ -95,7 +94,7 @@ A preview may hide small defects that remain visible in the recorded original.
 \paragraph{Object identity.}
 A claim states that two submissions show the same physical item.
 The model compares the items across photographs.
-We use CO3D sequences and recorded views~\cite{co3d}.
+We form identity pairs from recorded CO3D sequences~\cite{co3d}.
 For labelled controls, Supported pairs contain views from one sequence, while Refuted pairs depict different categories.
 Other cross-sequence pairs remain unlabelled because different sequences can depict the same item.
 These controls therefore cover same-sequence matching and cross-category mismatches, rather than fine-grained identity discrimination among similar items.
@@ -220,7 +219,7 @@ Initial-only, interactive and full-access settings compare a model before and af
 Full access removes the choice of which photographs to obtain, but does not guarantee higher accuracy, so it serves as a reference.
 We also record requests, tool cost, tokens and running time.
 
-The environment also supports replaying a shared history before alternative actions, following shared-history comparisons of visual calls~\cite{countercredit}.
+The environment replays a shared evidence history before alternative actions, enabling comparisons from the same observations~\cite{countercredit}.
 Action-value definitions and content controls are given in the supplement.
 \section{Experiments}
 We first evaluate condition and identity verification across models, then study whether post-training improves the ability to obtain and use additional photographs.
@@ -432,7 +431,7 @@ For SFT+RL, blocking photographs changes 52 source-matching answers to Need more
 All changes concern condition; identity answers are unchanged.
 Agreement with the original source labels falls from 69.4\% to 44.5\%, a 24.9-point difference (paired 95\% CI: 19.1--30.6).
 These abstentions can be appropriate under blocked access.
-The comparison therefore demonstrates a response to access and failure feedback, rather than by itself establishing use of the returned pixels.
+This control measures responses to photograph access and request feedback; the next probe isolates returned-image content.
 
 \paragraph{Returned-image content.}
 We replay 68 condition histories where 8B SFT+RL requests an original under the cost-three limit.
