@@ -27,7 +27,9 @@
 \begin{center}
 \resizebox{\textwidth}{!}{\input{figures/teaser}}
 \captionof{figure}{\textbf{Visual evidence search in \benchmark.}
-Models compare views, request finer detail and decide whether the available photographs support an answer.}
+An illustrative identity task (a) compares views of an object.
+In condition traces (b), overview requests repeat a preview; original requests reveal finer detail.
+If the original cannot be supplied, the policy abstains.}
 \label{fig:teaser}
 \end{center}
 }]
@@ -76,7 +78,9 @@ WebQA evaluates multimodal source selection~\cite{webqa}; AVerImaTeC verifies im
 \begin{figure*}[t]\centering
 \resizebox{\textwidth}{!}{\input{figures/framework}}
 \caption{\textbf{The \benchmark environment.}
-Object claims (a) are paired across photograph-access settings (b); models inspect, request and answer (c).}
+Condition and identity claims (a) are paired across four access settings (b), holding each claim and object state fixed.
+The last three settings share a preview; crossed-out photographs remain unreleased.
+Tool examples (c) come from different cases and use recorded images.}
 \label{fig:framework}
 \end{figure*}
 
@@ -102,12 +106,11 @@ These controls therefore cover same-sequence matching and cross-category mismatc
 The candidate pool contains 478 families: 188 condition families, 64 labelled identity controls and 226 unlabelled identity candidates.
 Each family has four photograph-access versions, yielding 1,912 cases.
 An agent rollout on one version is one episode.
-All versions share the claim and physical content.
 Related views and claim rewrites stay in the same source group when splitting training and evaluation data.
 The experiments use the fixed labelled subset described in Section~\ref{sec:setup}.
 
 \subsection{One Claim, Four Evidence Settings}
-An episode starts with an object claim and a set of photographs.
+An episode starts with an object claim and a set of photographs (Figure~\ref{fig:framework}).
 The model can inspect released images, crop regions, compare views, use grounding tools and request a recorded photograph of a specified object, time or view.
 It ends with \emph{Supported}, \emph{Refuted} or \emph{Need more evidence}, citing images and regions.
 Its actions change what it sees, not the underlying scene.
@@ -118,19 +121,16 @@ At step \(t\), \(\mathcal{E}_t^v\) records the source regions and resolutions sh
 The model sees the claim, released images, tool responses and remaining budget.
 The evaluator keeps the physical state and evidence annotations private.
 
-The four versions differ only in access to photographs.
 In \emph{Sufficient}, the initial images establish an answer.
 In \emph{Obtainable}, a permitted request can supply the missing evidence.
 In \emph{Missing}, the recorded collection lacks sufficient evidence.
 In \emph{Unavailable}, relevant photographs exist but cannot be supplied.
 Missing and Unavailable differ in the recorded pool, but may return the same failure message and require the same final answer.
 They do not test distinct visual abilities when their public responses are identical.
-In Figure~\ref{fig:framework}, the last three versions begin with the same preview; crossed-out photographs are not released.
 
 Requests match the public object, time and view fields against recorded material.
 They can restore original detail or return another recorded frame.
 The matcher does not use evidence-sufficiency labels to choose a decisive photograph.
-All returned pixels come from the recorded collection.
 
 
 A usable path must also fit the interaction budget.
@@ -256,7 +256,6 @@ All base models receive no task demonstrations.
 \emph{No tools} asks for one direct answer from the initial images.
 \emph{With tools} starts from those same images and permits inspection, crops, comparisons and photograph requests before an answer with evidence references.
 A third, full-access reference supplies all obtainable photographs initially and is reported in the supplement.
-It removes the image-selection problem but does not guarantee higher accuracy.
 
 The main interactive runs allow eight assistant turns and tool cost 12.
 Local inference uses BF16 weights and greedy decoding on RTX A6000 GPUs, with each model's native image processor and supported call format.
@@ -280,6 +279,8 @@ RL uses 64 groups of four sampled trajectories, and the reported policy is the c
 Each training condition uses one run.
 Optimization details and alternative checkpoints are in the supplement.
 
+\input{tables/sft_results}
+
 \paragraph{Accuracy and completion.}
 Accuracy is the percentage of attempted episodes whose final answer matches the source label.
 For Sufficient and Obtainable, Need more evidence, an invalid submission and failure to finish all score zero and remain in the denominator.
@@ -293,13 +294,10 @@ For Missing and Unavailable, we report definite answers (Supported or Refuted) a
 \emph{Requests} counts episodes in which a photograph is requested.
 \emph{New image} counts episodes receiving RGB pixels not shown earlier.
 A higher-resolution version of an existing frame can qualify; this rate does not imply a new viewpoint or sufficient evidence.
-Table~\ref{tab:benchmark} reports new-image rates within each task; the other tables pool all attempted families.
 Time and output tokens cover the complete Obtainable interaction, including failures and abstentions.
 Output tokens accumulate model generation across calls, including API reasoning tokens, and exclude input prompts and image tokens.
 API time includes network round trips and CPU tools, so it is not an equal-hardware throughput comparison with local inference.
 A dash denotes an incomplete or inapplicable measurement.
-
-\input{tables/sft_results}
 
 \subsection{Main Results}
 
@@ -326,7 +324,6 @@ The 8B model gains 37 net correct answers over direct answering in Obtainable.
 Of these, 36 occur among the 197 episodes with no photograph request; requesting episodes contribute a net gain of one.
 These are groups chosen by the policy, so the comparison is descriptive.
 Nevertheless, the traces show that \textbf{most of this accuracy gain occurs while working with existing images}.
-We therefore examine requests and their outcomes alongside final answers.
 
 \paragraph{Interaction efficiency.}
 The 2B model averages 13.4 seconds in Obtainable, compared with 20.5 seconds for 8B, but finishes only 45.9\% of episodes rather than 85.2\%.
@@ -355,7 +352,6 @@ The paired runs share an update cap, rather than matched target-token compute; c
 \paragraph{Reinforcement learning.}
 SFT+RL improves Sufficient accuracy over SFT for all three models.
 Its Obtainable effects differ: 8B rises from 67.0\% to 70.8\%, while 7B falls from 57.9\% to 55.5\% and 2B from 59.3\% to 56.5\%.
-The distinction matters because the claims are unchanged; only photograph access differs.
 \textbf{Training that improves answers from supplied images need not improve answers when an image must be requested.}
 These single-run comparisons characterize the tested policies rather than establish a general ranking of SFT and RL.
 
@@ -378,11 +374,10 @@ Its extra requests therefore recover detail rather than additional identity view
 \input{tables/search_behavior}
 
 \paragraph{Request outcomes.}
-Table~\ref{tab:search-behavior} separates requests, new images and completion in Obtainable from final responses in Unavailable.
-The 2B SFT+RL policy requests photographs in 64 cases but receives a new image in only one.
+The 2B SFT+RL policy requests photographs in 64 cases but receives a new image in only one (Table~\ref{tab:search-behavior}).
 Its 63 condition requests ask for the overview already supplied.
 The 8B policy instead requests originals in 92 cases and receives new pixels in each.
-Figure~\ref{fig:teaser} shows the difference on a bottle: an overview request repeats the 48-pixel preview, while an original request returns 900-pixel detail from the same photograph.
+Figure~\ref{fig:teaser} illustrates these requests on the same bottle photograph.
 Enlarging or cropping the repeated preview cannot restore the discarded detail.
 \textbf{The content of a request matters even when two policies spend the same number of calls.}
 
@@ -397,7 +392,10 @@ Consistent abstention after denial does not establish that the policy reliably d
 \subsection{Ablation Studies}
 
 \begin{table}[t]\centering\small
-\caption{\textbf{Photo-request controls.}}
+\caption{\textbf{Photo-request controls.}
+Adaptive retains the full tool interface; blocking preserves it but denies new photographs.
+Fixed order, random order and fixed restoration share a finish-only continuation after requesting.
+Accuracy is task-specific; New image pools both tasks.}
 \label{tab:photo-access}
 \begin{tabular}{@{}lrrr@{}}\toprule
  & \multicolumn{2}{c}{Accuracy (\%)} & \\
@@ -421,11 +419,8 @@ Fixed restoration & 66.7 & 98.2 & 100.0\\
 
 \paragraph{Photograph availability.}
 Table~\ref{tab:photo-access} uses the same 209 Obtainable families with a common tool-cost limit of three, eight turns and 384 output tokens per call.
-Adaptive retains the original agent interface.
-New photos blocked preserves that initial prompt and tool menu, but denies additional photographs.
 Fixed and random order select the first public request in listed or family-seeded shuffled order.
 Fixed restoration uses public metadata to request each preview's original.
-All three schedules share a finish-only continuation; Adaptive retains intermediate tools.
 
 For SFT+RL, blocking photographs changes 52 source-matching answers to Need more evidence: 29 Supported and 23 Refuted.
 All changes concern condition; identity answers are unchanged.

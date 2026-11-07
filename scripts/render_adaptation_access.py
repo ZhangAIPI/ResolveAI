@@ -41,7 +41,7 @@ def render(repo,report):
     lines=[
       '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{3pt}',
       '\\begin{minipage}{.94\\textwidth}\\centering',
-      '\\caption{\\textbf{Effect of post-training.} Bold marks the best accuracy within each model.}',
+      '\\caption{\\textbf{Effect of post-training.} Each model is evaluated before adaptation, after SFT, after RL from Base and after SFT followed by RL. Accuracy is separated by access setting; new-image rates and cost concern Obtainable. Bold marks the best accuracy within each model.}',
       '\\label{tab:sft}',
       '\\begin{tabular}{@{}llrrrrrrrr@{}}\\toprule',
       ' & & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy with tools} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
