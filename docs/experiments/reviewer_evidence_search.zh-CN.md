@@ -1,5 +1,7 @@
 # 当前实验与论文状态
 
+[下载完整案例包（约36 MB）](https://github.com/ZhangAIPI/ResolveAI/releases/tag/multistep-search-v0.1) · [SHA-256及528版本验证记录](https://github.com/ZhangAIPI/ResolveAI/releases/tag/multistep-search-v0.1)
+
 ## 两步搜证补充实验（2026-11-07）
 
 **完整题组已冻结：66个场景、132个案件族、528个访问版本。** 正负各66，目标左／中／右各44。每个场景保留两个目标位置不同、答案相反的案件。种子71000–71065全部纳入，未按模型成绩筛题；首批8个场景的235个文件及其修改时间保持不变。
