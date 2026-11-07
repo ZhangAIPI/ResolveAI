@@ -1,0 +1,1269 @@
+{
+  "schema_version": "resolveai-multistep-choice-interface-audit-v1",
+  "created_utc": "2026-11-07T20:35:21.810693+00:00",
+  "scope": "Fixed-example input and interface audit; not a new model evaluation or a sufficiency review.",
+  "selection_rule": "For each model, merge both frozen shards; select the first two case_id values in lexicographic order separately for oracle and adaptive_acquisition.",
+  "analysis_report_sha256": "df27ca49bf2fdc91b73282a04bbd8737a2a3fc265cd744a16477aaacd4da4c84",
+  "interface_track": "assisted_finite_choice",
+  "model_inference_performed": false,
+  "model_weights_loaded": false,
+  "processor_reconstruction_device": "CPU",
+  "libraries": {
+    "python": "3.12.8",
+    "transformers": "4.57.6",
+    "torch": "2.4.0",
+    "Pillow": "12.2.0",
+    "numpy": "2.3.2",
+    "tokenizers": "0.22.2",
+    "peft": "0.17.1",
+    "opencv-python": "5.0.0.93"
+  },
+  "source_sha256": {
+    "scripts/evaluate_multistep_choice.py": "1f3e3a3866ecbdb8fc466df3c40fb6fbb1932e5627960837d398dca590dc1d81",
+    "src/resolveai/vlm_worker.py": "814825f7fce8729d864a11385ca48b6eb4168a5920352efa00893e7d24d73362",
+    "src/resolveai/model_processing.py": "a49a27536dcf14b80ff845f1a0b38931bae9733aef1274a33e00545f98e21eff"
+  },
+  "hash_definitions": {
+    "trace_sha256": "SHA256 of canonical parsed trace, checked against its stored result trace_sha256.",
+    "trace_sql_text_sha256": "SHA256 of the original SQLite trace text, without reserialization.",
+    "terminal_payload_sha256": "Canonical full worker request with image_png bytes reconstituted from unchanged content-addressed PNG blobs.",
+    "public_text_sha256": "Canonical terminal messages retaining only text content blocks, including system, claim, task instructions, public feedback, and displayed options."
+  },
+  "examples": [
+    {
+      "model": "Base",
+      "policy": "oracle",
+      "case_id": "sim-search-01f3321419a73ac2135d-Obtainable",
+      "trace_sha256": "dbbae0b1d8d5a33fe30473aa31b6639507c1479162d9bdf366b295b94411f679",
+      "trace_sql_text_sha256": "dbbae0b1d8d5a33fe30473aa31b6639507c1479162d9bdf366b295b94411f679",
+      "terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "reconstructed_terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "328e0fa6123cda994d875a6c14f4f4e99e1e294baae1716695d86fb592966744",
+          "png_bytes": 118363,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+          "png_bytes": 9695,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "cfdaf3d1859a502689e7655f48a0e00e3f32afe1464b032e28969167c0c4347a",
+          "png_bytes": 55642,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "74e72a194de057186a3a5a3b4e27ac57763f96beda8025f2d1c4804bf143be62",
+          "png_bytes": 7136,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 1.0,
+        "B": 1.9555681518568235e-08,
+        "C": 2.646573848963385e-09
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41703635454177856,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "Base",
+      "policy": "oracle",
+      "case_id": "sim-search-03a97c35daf7a69eaca2-Obtainable",
+      "trace_sha256": "624db1eade8f4fb79dcf0d4cb99386ad54cb0e647a0d2c0df031972aa9777d83",
+      "trace_sql_text_sha256": "624db1eade8f4fb79dcf0d4cb99386ad54cb0e647a0d2c0df031972aa9777d83",
+      "terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "reconstructed_terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "eb00dc4593e640b68a88c68228955dc3f7ad59988dfdbb687b9d0e25ca3d6554",
+          "png_bytes": 118569,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "298b6eeb38b83aa94065d7d7d946bcc82fe55a4cc76bb6af6a628e9c482bb6f5",
+          "png_bytes": 9622,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "632013de52b120ba039008df3a535f6a4668226b4d2e9d2afee548ccaea518a6",
+          "png_bytes": 56186,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "7f8fe2d7cd50ae961df300ff6d935b30e34a98d21ea2624e8d7c64019755252d",
+          "png_bytes": 10604,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.9999998807907104,
+        "B": 1.1253516163378663e-07,
+        "C": 2.510998697857758e-08
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41773703694343567,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "Base",
+      "policy": "adaptive_acquisition",
+      "case_id": "sim-search-01f3321419a73ac2135d-Obtainable",
+      "trace_sha256": "fe1f08e48794ccb28bd6644395002bcfd8152a1fa43a299f6df079f544c66488",
+      "trace_sql_text_sha256": "fe1f08e48794ccb28bd6644395002bcfd8152a1fa43a299f6df079f544c66488",
+      "terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "reconstructed_terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "328e0fa6123cda994d875a6c14f4f4e99e1e294baae1716695d86fb592966744",
+          "png_bytes": 118363,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+          "png_bytes": 9695,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "cfdaf3d1859a502689e7655f48a0e00e3f32afe1464b032e28969167c0c4347a",
+          "png_bytes": 55642,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "74e72a194de057186a3a5a3b4e27ac57763f96beda8025f2d1c4804bf143be62",
+          "png_bytes": 7136,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 1.0,
+        "B": 1.9555681518568235e-08,
+        "C": 2.646573848963385e-09
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41703635454177856,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "Base",
+      "policy": "adaptive_acquisition",
+      "case_id": "sim-search-03a97c35daf7a69eaca2-Obtainable",
+      "trace_sha256": "766c08f7f8185d8f3b7acbaeb174ee0eafff1a4280584766fcd233a0e298205d",
+      "trace_sql_text_sha256": "766c08f7f8185d8f3b7acbaeb174ee0eafff1a4280584766fcd233a0e298205d",
+      "terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "reconstructed_terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "eb00dc4593e640b68a88c68228955dc3f7ad59988dfdbb687b9d0e25ca3d6554",
+          "png_bytes": 118569,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "298b6eeb38b83aa94065d7d7d946bcc82fe55a4cc76bb6af6a628e9c482bb6f5",
+          "png_bytes": 9622,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "632013de52b120ba039008df3a535f6a4668226b4d2e9d2afee548ccaea518a6",
+          "png_bytes": 56186,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "7f8fe2d7cd50ae961df300ff6d935b30e34a98d21ea2624e8d7c64019755252d",
+          "png_bytes": 10604,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.9999998807907104,
+        "B": 1.1253516163378663e-07,
+        "C": 2.510998697857758e-08
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41773703694343567,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "SFT+RL",
+      "policy": "oracle",
+      "case_id": "sim-search-01f3321419a73ac2135d-Obtainable",
+      "trace_sha256": "66ea07f5c467cf062bb904b07e00a5cd3f60c3f7bd20f29700a694c08165601a",
+      "trace_sql_text_sha256": "66ea07f5c467cf062bb904b07e00a5cd3f60c3f7bd20f29700a694c08165601a",
+      "terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "reconstructed_terminal_payload_sha256": "9696fbdd5ec25656953539ed2a49397441e688968398424a01856c64272b763d",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "328e0fa6123cda994d875a6c14f4f4e99e1e294baae1716695d86fb592966744",
+          "png_bytes": 118363,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+          "png_bytes": 9695,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "cfdaf3d1859a502689e7655f48a0e00e3f32afe1464b032e28969167c0c4347a",
+          "png_bytes": 55642,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "74e72a194de057186a3a5a3b4e27ac57763f96beda8025f2d1c4804bf143be62",
+          "png_bytes": 7136,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.9844943881034851,
+        "B": 0.0058540175668895245,
+        "C": 0.00965164415538311
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41703635454177856,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "SFT+RL",
+      "policy": "oracle",
+      "case_id": "sim-search-03a97c35daf7a69eaca2-Obtainable",
+      "trace_sha256": "5305b307b320c5103acdb50e439e1633440db48d0eec250a7a289151a5f2ba50",
+      "trace_sql_text_sha256": "5305b307b320c5103acdb50e439e1633440db48d0eec250a7a289151a5f2ba50",
+      "terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "reconstructed_terminal_payload_sha256": "4bd78d91d57e46ffef41f42097491ed2e63e3a718433e0d0395fbb264959508b",
+      "payload_sha_matches": true,
+      "public_text_sha256": "b7c814bf2e270b446ba7526908c2ca05db9250923e69f67137679384c4c601bd",
+      "actual_request_views": [
+        "front_survey",
+        "rear_left"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "eb00dc4593e640b68a88c68228955dc3f7ad59988dfdbb687b9d0e25ca3d6554",
+          "png_bytes": 118569,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "298b6eeb38b83aa94065d7d7d946bcc82fe55a4cc76bb6af6a628e9c482bb6f5",
+          "png_bytes": 9622,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "front_survey",
+          "png_sha256": "632013de52b120ba039008df3a535f6a4668226b4d2e9d2afee548ccaea518a6",
+          "png_bytes": 56186,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "7f8fe2d7cd50ae961df300ff6d935b30e34a98d21ea2624e8d7c64019755252d",
+          "png_bytes": 10604,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": "left",
+          "citation_image_ids": [
+            "reference",
+            "front_survey",
+            "rear_left"
+          ],
+          "identity_link_count": 2
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.7969599366188049,
+        "B": 0.09518329054117203,
+        "C": 0.10785679519176483
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2615,
+        "reconstructed_input_tokens": 2615,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.41773703694343567,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "SFT+RL",
+      "policy": "adaptive_acquisition",
+      "case_id": "sim-search-01f3321419a73ac2135d-Obtainable",
+      "trace_sha256": "1c225ab684f5a6f0abcf76591f788cea4771cb765f1b3d233ff24df2da21c400",
+      "trace_sql_text_sha256": "1c225ab684f5a6f0abcf76591f788cea4771cb765f1b3d233ff24df2da21c400",
+      "terminal_payload_sha256": "6c08cb522ba2addcf347b4ae1a61df846261f4f90530d16560fe1ade1f59a0a7",
+      "reconstructed_terminal_payload_sha256": "6c08cb522ba2addcf347b4ae1a61df846261f4f90530d16560fe1ade1f59a0a7",
+      "payload_sha_matches": true,
+      "public_text_sha256": "447d10eb5ce16e9e2b1e10a27554f1e2845601dff8183f253cdffc9c1460b59a",
+      "actual_request_views": [
+        "rear_center",
+        "original"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "328e0fa6123cda994d875a6c14f4f4e99e1e294baae1716695d86fb592966744",
+          "png_bytes": 118363,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+          "png_bytes": 9695,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_center",
+          "png_sha256": "d66dc147dc31ba1bee3e0c30a46acf8dda1283a02e4ee871874d39d3274e88c9",
+          "png_bytes": 10409,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "original",
+          "png_sha256": "c8788c414278e4867fdabe00bb048b8a9933269b4b6833e31709397bc9c03930",
+          "png_bytes": 9695,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_center"
+          ],
+          "identity_link_count": 0
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_center"
+          ],
+          "identity_link_count": 0
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.7053843140602112,
+        "B": 0.06561096012592316,
+        "C": 0.22900475561618805
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2195,
+        "reconstructed_input_tokens": 2195,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4024,
+          1536
+        ],
+        "pixel_values_std": 0.3983207046985626,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    },
+    {
+      "model": "SFT+RL",
+      "policy": "adaptive_acquisition",
+      "case_id": "sim-search-03a97c35daf7a69eaca2-Obtainable",
+      "trace_sha256": "988eb8c8070fdef0162a76c864ba5a1df319a19b58d7721e2df29f723492f1d0",
+      "trace_sql_text_sha256": "988eb8c8070fdef0162a76c864ba5a1df319a19b58d7721e2df29f723492f1d0",
+      "terminal_payload_sha256": "1e7929d270ccbd51086554e8af5bb9f564dca5f443cd1652349a25b0de5a0dd9",
+      "reconstructed_terminal_payload_sha256": "1e7929d270ccbd51086554e8af5bb9f564dca5f443cd1652349a25b0de5a0dd9",
+      "payload_sha_matches": true,
+      "public_text_sha256": "a59f5058c0e5bc03c925f6f1346ea3cca4f6444e72aafa5e5429a60c2e463137",
+      "actual_request_views": [
+        "rear_left",
+        "rear_center"
+      ],
+      "released_image_blocks": [
+        {
+          "image_id": "reference",
+          "png_sha256": "eb00dc4593e640b68a88c68228955dc3f7ad59988dfdbb687b9d0e25ca3d6554",
+          "png_bytes": 118569,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "initial",
+          "png_sha256": "298b6eeb38b83aa94065d7d7d946bcc82fe55a4cc76bb6af6a628e9c482bb6f5",
+          "png_bytes": 9622,
+          "source_size": [
+            768,
+            512
+          ],
+          "display_size": [
+            768,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_left",
+          "png_sha256": "7f8fe2d7cd50ae961df300ff6d935b30e34a98d21ea2624e8d7c64019755252d",
+          "png_bytes": 10604,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        },
+        {
+          "image_id": "rear_center",
+          "png_sha256": "31b40ed60993a59e72a9274b3dbb888ed5856a21adf6501048e885d422e77662",
+          "png_bytes": 6984,
+          "source_size": [
+            512,
+            512
+          ],
+          "display_size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "displayed_options": {
+        "A": {
+          "verdict": "Need more evidence",
+          "front_slot": null,
+          "citation_image_ids": [],
+          "identity_link_count": 0
+        },
+        "B": {
+          "verdict": "Supported",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_left"
+          ],
+          "identity_link_count": 0
+        },
+        "C": {
+          "verdict": "Refuted",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_left"
+          ],
+          "identity_link_count": 0
+        },
+        "D": {
+          "verdict": "Supported",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_center"
+          ],
+          "identity_link_count": 0
+        },
+        "E": {
+          "verdict": "Refuted",
+          "front_slot": null,
+          "citation_image_ids": [
+            "reference",
+            "rear_center"
+          ],
+          "identity_link_count": 0
+        }
+      },
+      "selected_choice": "A",
+      "restricted_option_probabilities": {
+        "A": 0.6245779395103455,
+        "B": 0.07459519803524017,
+        "C": 0.05809479579329491,
+        "D": 0.22976939380168915,
+        "E": 0.012962700799107552
+      },
+      "processor": {
+        "class": "Qwen3VLProcessor",
+        "recorded_input_tokens": 2401,
+        "reconstructed_input_tokens": 2401,
+        "token_count_matches": true,
+        "image_grid_thw": [
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            26,
+            38
+          ],
+          [
+            1,
+            32,
+            32
+          ],
+          [
+            1,
+            32,
+            32
+          ]
+        ],
+        "image_blocks_present": 4,
+        "pixel_values_shape": [
+          4060,
+          1536
+        ],
+        "pixel_values_std": 0.4278891980648041,
+        "choice_token_ids": {
+          "A": [
+            32
+          ],
+          "B": [
+            33
+          ],
+          "C": [
+            34
+          ],
+          "D": [
+            35
+          ],
+          "E": [
+            36
+          ]
+        },
+        "ends_with_assistant_generation_prompt": true
+      }
+    }
+  ],
+  "limitations": [
+    "A is always Need more evidence in terminal choices; option order was not randomized or counterbalanced.",
+    "Saved option probabilities are softmax values restricted to the displayed single-letter logits, not calibrated confidence or the full next-token distribution.",
+    "Constrained next-token argmax may reflect answer-position, wording, interface, or synthetic-domain effects; zero source-label accuracy does not establish zero visual ability.",
+    "Region candidates and identity links are interface assistance, not model-predicted grounding.",
+    "Image tensors present in the processor input do not prove that a model attended to or correctly interpreted them.",
+    "This audit does not change prompts, infer new outputs, establish human sufficiency judgments, or validate transfer to natural multiview recognition."
+  ],
+  "summary": {
+    "fixed_examples": 8,
+    "payload_sha_matches": 8,
+    "CPU_token_count_matches": 8,
+    "image_block_count_matches": 8,
+    "single_token_choice_labels": true,
+    "observed_terminal_mapping": {
+      "A": "Need more evidence",
+      "B": "Supported",
+      "C": "Refuted"
+    },
+    "observation": "No missing images, wrong option mapping, context truncation, or parser remapping was found in these fixed examples; all eight terminal choices are A."
+  }
+}
