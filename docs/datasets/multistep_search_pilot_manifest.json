@@ -1,0 +1,81 @@
+{
+  "schema_version": "procedural-search-v1",
+  "annotation_status": "procedural",
+  "families": 16,
+  "cases": 64,
+  "paired_scene_banks": 8,
+  "dataset_sha256": "db0028f046b15fbc70a9ba9bbf0b3e547d2ae37edea405b29cd9276bdc744399",
+  "bank_manifests": {
+    "banks/seed-71000/bank.json": "dab37a1b69a46f9f30b74e59038c289fa16a5de16358367dd864da286c20aeab",
+    "banks/seed-71001/bank.json": "e70384d5f5e773ec1af0c0a50b7860455911328776691e67ff52ac77609c5143",
+    "banks/seed-71002/bank.json": "92352054b24214f9416839cba9ad20aa1a3b58e32347ee8c9baa0140dd51921b",
+    "banks/seed-71003/bank.json": "61231d20898cf452e2911c87b72c52a65deac7d1611f4f31be6b22daf12662d0",
+    "banks/seed-71004/bank.json": "81e019d004d1cf5d966bb422a8fd7ee0008e593c0b78f8e0b29627da3e8f9bbf",
+    "banks/seed-71005/bank.json": "f8cca119de17041a2c1bdb6238b1032502586a485426fbf609b9a965e0cbdee6",
+    "banks/seed-71006/bank.json": "e0327ec0c76be4742aebcc8ee731ad19c069a78cdd5068b5abba08e2f5d2b460",
+    "banks/seed-71007/bank.json": "130844063bf3515f2156f18e979eb627a87a99561ada93b54243c9973a19d754"
+  },
+  "renderer_source_sha256": "3310b14b6b5a4d7fad23009f4bbb03692140f07508c0ff713772265db7044ed4",
+  "render_settings": {
+    "blender": "4.3.2",
+    "engine": "Cycles",
+    "device": "CPU",
+    "samples": 64,
+    "max_bounces": 1,
+    "diffuse_bounces": 0,
+    "glossy_bounces": 0,
+    "denoising": false,
+    "adaptive_sampling": false,
+    "dither": 0,
+    "light_tree": false,
+    "lighting": "deterministic matte normal shading; no stochastic reflections",
+    "scratch_shadows": false
+  },
+  "budget": 6,
+  "minimum_informative_photo_requests": 2,
+  "counterfactual_worlds_per_bank": 48,
+  "scope": "Controlled procedural identity and condition search; not independently reviewed real photographs",
+  "split_group": "paired_history_id; both matched worlds remain in the same split and bootstrap group",
+  "selection": "All completed banks in sorted order; positions cycle through all unordered pairs; each paired bank has one positive and one negative case with the same mixed state vector",
+  "status": "frozen pilot; local model evaluation not yet complete",
+  "primary_models": [
+    "Qwen3-VL-8B Base",
+    "Qwen3-VL-8B SFT+RL"
+  ],
+  "primary_policies": [
+    "adaptive_acquisition",
+    "fixed_restoration",
+    "fixed_view_order",
+    "random_request",
+    "oracle"
+  ],
+  "final_cohort_target": {
+    "scene_banks": 66,
+    "paired_families": 132,
+    "seeds": [
+      71000,
+      71065
+    ]
+  },
+  "independent_human_review": false,
+  "validity_checks": {
+    "first_hit_masks_checked": 112,
+    "actual_hidden_change_rerender_checks": 24,
+    "every_zero_or_one_request_history_ambiguous": true,
+    "every_correct_two_request_history_identified": true
+  },
+  "inference": {
+    "photo_requests": 2,
+    "tool_budget": 6,
+    "output_cap_per_model_call": 768,
+    "terminal_interface": "one shared finish-only call",
+    "adaptive_selector_prose": "withheld from terminal, retained in raw audit"
+  },
+  "statistics_group": "paired_history_id / rendered bank",
+  "scoring": {
+    "chain_grounded_correct": "Correct answer with an identifiable observed history, localized identity links and visible diagnostic-mask coverage.",
+    "localized_grounded_correct": "Chain-grounded correctness plus diagnostic-box IoU and precision.",
+    "independent_human_review": false
+  },
+  "test_status": "28 focused certificate, mask and controlled-runner checks passed"
+}
