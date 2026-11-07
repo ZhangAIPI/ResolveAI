@@ -248,6 +248,8 @@ def _paired_behavior(records, cases, groups, policy):
             raise ValueError("Matched histories did not share their initial public input")
         a, b = [r["_views"] for r in rows]
         counts["banks"] += 1
+        counts["both_members_evidence_found"] += all(
+            r["multistep_evaluation"]["procedural_evidence_sufficient"] for r in rows)
         counts["same_first_request"] += bool(a and b and a[0] == b[0])
         both_front = bool(a and b and a[0] == b[0] == "front_survey")
         counts["both_first_front"] += both_front
@@ -258,6 +260,7 @@ def _paired_behavior(records, cases, groups, policy):
     n = counts["banks"]
     front = counts["both_first_front"]
     return {"counts": dict(counts),
+            "both_members_evidence_found_pct": 100 * counts["both_members_evidence_found"] / n,
             "correct_switch_pct_all_banks": 100 * counts["both_second_requests_match_observed_targets"] / n,
             "correct_switch_pct_given_both_front": (
                 100 * counts["both_second_requests_match_observed_targets"] / front if front else None),

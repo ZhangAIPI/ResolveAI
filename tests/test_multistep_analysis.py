@@ -195,6 +195,18 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(policies["random_request"]["rates_pct"]["front_then_target_rear"], 0)
         self.assertEqual(policies["random_request"]["rates_pct"]["procedural_evidence_sufficient"], 50)
 
+    def test_paired_found_requires_both_members_not_only_one_lucky_target(self):
+        a = self.run_fixture("paired-found")
+        report = analyze(self.data, {"a": a}, replicates=100)
+        policies = report["models"]["a"]["policies"]
+        adaptive = policies["adaptive_acquisition"]["paired_history_behavior"]
+        fixed = policies["fixed_view_order"]["paired_history_behavior"]
+        self.assertEqual(adaptive["counts"]["both_members_evidence_found"], 2)
+        self.assertEqual(adaptive["both_members_evidence_found_pct"], 100)
+        self.assertEqual(fixed["counts"]["both_members_evidence_found"], 0)
+        self.assertEqual(fixed["both_members_evidence_found_pct"], 0)
+        self.assertEqual(policies["fixed_view_order"]["rates_pct"]["procedural_evidence_sufficient"], 50)
+
     def test_cluster_bootstrap_is_seeded_and_weights_all_cases(self):
         values = {"a": 1, "b": 1, "c": 1, "d": -1}
         groups = {"a": "bank1", "b": "bank1", "c": "bank1", "d": "bank2"}
