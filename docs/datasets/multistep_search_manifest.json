@@ -1,0 +1,208 @@
+{
+  "schema_version": "resolveai-multistep-search-manifest-v1",
+  "dataset": {
+    "schema_version": "procedural-search-v1",
+    "annotation_status": "procedural",
+    "families": 132,
+    "cases": 528,
+    "paired_scene_banks": 66,
+    "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+    "bank_manifests": {
+      "banks/seed-71000/bank.json": "dab37a1b69a46f9f30b74e59038c289fa16a5de16358367dd864da286c20aeab",
+      "banks/seed-71001/bank.json": "e70384d5f5e773ec1af0c0a50b7860455911328776691e67ff52ac77609c5143",
+      "banks/seed-71002/bank.json": "92352054b24214f9416839cba9ad20aa1a3b58e32347ee8c9baa0140dd51921b",
+      "banks/seed-71003/bank.json": "61231d20898cf452e2911c87b72c52a65deac7d1611f4f31be6b22daf12662d0",
+      "banks/seed-71004/bank.json": "81e019d004d1cf5d966bb422a8fd7ee0008e593c0b78f8e0b29627da3e8f9bbf",
+      "banks/seed-71005/bank.json": "f8cca119de17041a2c1bdb6238b1032502586a485426fbf609b9a965e0cbdee6",
+      "banks/seed-71006/bank.json": "e0327ec0c76be4742aebcc8ee731ad19c069a78cdd5068b5abba08e2f5d2b460",
+      "banks/seed-71007/bank.json": "130844063bf3515f2156f18e979eb627a87a99561ada93b54243c9973a19d754",
+      "banks/seed-71008/bank.json": "6516ecfe62dcc92dcfd580ee0733a5c506ed377e4127a6cd93e965880cc6d509",
+      "banks/seed-71009/bank.json": "29a5c7129636ba3292c1072a620e571b941363d9b8830b513268f3cad262bac5",
+      "banks/seed-71010/bank.json": "67acec7a5210455a3154e6fa2c2df68aef7aac5441d27c7f90507b23bee711e4",
+      "banks/seed-71011/bank.json": "930f271021150e55c7f821a6b34f82fa0fb04c2dda06d6b067841692b80050b8",
+      "banks/seed-71012/bank.json": "5e9b4fe5e8e0395867aed5453bc737dda0985f4e546e5cdc3dcd5b33a854d517",
+      "banks/seed-71013/bank.json": "cd7874c02e9a2b5390adf70607c40d09e0dbc9a782f06ab2378a5c357095b323",
+      "banks/seed-71014/bank.json": "cbd6de6fcffd3041b31a4c544872e2a505ea987d7fbf160fdc4fef4322883200",
+      "banks/seed-71015/bank.json": "da4eb5e6d352b7bd34b7db43edb897978d45d99e1f3f3b87837cd564b90daf4e",
+      "banks/seed-71016/bank.json": "9a0703199a92a35ce41c92141398db139957436a7e39406b0929a9e3c89f0c00",
+      "banks/seed-71017/bank.json": "c2d318ff91416fbeb7ad5e05634ea8eaa8a92b459a98f1b660925b5811b9043d",
+      "banks/seed-71018/bank.json": "0a280509dbb14ae797b3391bab2db9242ac91a9436c922b4d327f3bb51d70ec7",
+      "banks/seed-71019/bank.json": "0ba9736ba1ebeebb863d387faf3c6a6c253299113ea6865e5c23d7f13bf6bb3f",
+      "banks/seed-71020/bank.json": "5cac88491e5f8dab947b6b09be061d214ea6e04778906693b48adef0ea4608f6",
+      "banks/seed-71021/bank.json": "c9f82c6af59bb73d0e5fe30c4864ad98bae4b2ded566540c36fdf98bd34767b9",
+      "banks/seed-71022/bank.json": "c389483b541f0cdded7b5fc46e4a8a2c7d783798086dc7c6d2bd4c54949e0aa7",
+      "banks/seed-71023/bank.json": "7a70e5fecdf82622c096163fef9f6a89652125e2aca5afa845b906bfa209edc4",
+      "banks/seed-71024/bank.json": "138fd03b246a106598115a2a5af727b1322411c7b73343eaedff308ae85ca99c",
+      "banks/seed-71025/bank.json": "8c611f6e19addf2c88618dd2d4b0aa8007c6864b2eee1bdbb3f46de7d0293217",
+      "banks/seed-71026/bank.json": "b99ce8f24df0b6dbd457e9260fc7c8275a3c83e19b7e2e1e4379ff88e04f1a0d",
+      "banks/seed-71027/bank.json": "85f63ea12da99c41809b719228d09a7d25e6bd89cbf6efd4584234b5e35e95e8",
+      "banks/seed-71028/bank.json": "f71474afc6f8e974f7bd0b9fc3571f1df353ec26d944e9b0fc40a3e280c40fe7",
+      "banks/seed-71029/bank.json": "62a8330d190565a9c35c94ff501be56fa9e03389f811fa9da68a339d0eaa094b",
+      "banks/seed-71030/bank.json": "4b079b370b3019f84c6492826b4a3127ae2e731bcd9e45261a08cb4ef7d33843",
+      "banks/seed-71031/bank.json": "f10caee79dcf2101fcb90cf47efbf724c687b8a3ea4ff1aa5fd2b76dd8ad2f1b",
+      "banks/seed-71032/bank.json": "5280249827a0e1111b5f6949026d23c4cda776ba2714625d5ad0bd52e3f56544",
+      "banks/seed-71033/bank.json": "63b660a6a8b74084c324046418eeb619fa3f15e7bbdff004f19e7b3a0f82d892",
+      "banks/seed-71034/bank.json": "91f5b837e22d3f2c8a45dfc53e04dcd8397b0b2b8d77e6434b99c3c7558b3c63",
+      "banks/seed-71035/bank.json": "0b58f2e9bb05af65fea5ee484a7374ae130a0d688df8ea0a10d22f168d2f575d",
+      "banks/seed-71036/bank.json": "c81dabc0b9a6762c887fc49a0259e7ca95473b07e938f7ca49499dbabeb16b1f",
+      "banks/seed-71037/bank.json": "ecc09c7ce0ace13c1ad19399ab5aa21d109c82661e115238235c9b4e63a2b7c1",
+      "banks/seed-71038/bank.json": "9b207c11ab79aeff12b63b7debf9e168903dc4c841154a555a291273faf757f8",
+      "banks/seed-71039/bank.json": "bb17924c5d72cb07322c488c7a31328ef49f4a1ec6db8bd7b86114a5c74e4c85",
+      "banks/seed-71040/bank.json": "04c8ac77beb2b61ef84388152e01a1866048fddd170d0433a4d131dcdc75f2a3",
+      "banks/seed-71041/bank.json": "d0c920a043c88feb939d11edb1cdf9a7e4d1d391a341e90c7b1922c176c5615f",
+      "banks/seed-71042/bank.json": "14ae5c39aa5fec7c558747c766e99800a12a5c3ae5641d131c90a9b4193f0c4c",
+      "banks/seed-71043/bank.json": "5fc85ab9375ea64194ae30f6d7ad41653b97ac7eb721dc2f689f098231aa2ac4",
+      "banks/seed-71044/bank.json": "1076a65cfcd25fb6977b813bc3682a3d483593ee0cef30c319a76b0254926564",
+      "banks/seed-71045/bank.json": "d1a5f18458ff23f2c51598e689f2e9809e4bd4a32e9c694c14ca1d9ca10461d9",
+      "banks/seed-71046/bank.json": "c6e3a751fc44c32b2d96e6e0f72ea44cf406ac2effd3e32ffcdd69d2f85919f4",
+      "banks/seed-71047/bank.json": "4e0e089224ae5927f8ceab191e1cd9af12b81b51cc799ed22d46cecedbb7b0bb",
+      "banks/seed-71048/bank.json": "b2a24ff8686b0e20a72033b341fb81a3d7005efc5c318c3f8733938ed2906fa9",
+      "banks/seed-71049/bank.json": "4727fe786de295133ef849637612b320ac266236abdaff82dfdc457f986d550f",
+      "banks/seed-71050/bank.json": "ee46553e7d27c4f0aeca9947931da29e3cfefa1d26448a5408ee1180a766facb",
+      "banks/seed-71051/bank.json": "6d15937c96d6ab9591a202df24c8c71b3c0e4c4a742f87e41c28bce2ca33467b",
+      "banks/seed-71052/bank.json": "3a3f6fd46cb60ba3c4127633d3c5d04de8464e6e8ddca5b3b7197a650097307d",
+      "banks/seed-71053/bank.json": "159c97a84c2b8c6d9fa380467cf50f93f804a7bcdd96a78da2c8df45e76cdc0b",
+      "banks/seed-71054/bank.json": "700755a7da23a5197756693d5ac3961e699e4dfb83ce8f79fd2da32113315e5f",
+      "banks/seed-71055/bank.json": "594eb97dce1f2f27476b455d60726383e0392a4b377de06ec006aaf129f2621a",
+      "banks/seed-71056/bank.json": "0f9e80dc4a9caffa3e6288a40902142a2f9199eab8d8f0b72f8f28d9acac77d3",
+      "banks/seed-71057/bank.json": "e738586b6ca142739b56217663a355b5686ed963bd591d118f9314037d3a21cd",
+      "banks/seed-71058/bank.json": "6820e27e754bd4d0557efcee97ed373c4eda50280837f1c78f0af7c7285b4a70",
+      "banks/seed-71059/bank.json": "f060179551317438b8e9ccdad3362c7f72e3a04494f44e52df74b0f9b63b6c8f",
+      "banks/seed-71060/bank.json": "4924a45e76a95d16cf1227ad0846a3d8bce02b474bb263435329054c63565c87",
+      "banks/seed-71061/bank.json": "28be3a9ab2ac8504167cfdd77a25e6b8ca4bcb4093cb02ac28015dba9b0d66c7",
+      "banks/seed-71062/bank.json": "ab0c2729a7e3af76015db8bf9b9e0f0988a6b0ea1c8be50f17c5408c405fbc12",
+      "banks/seed-71063/bank.json": "e19fea310a053f9bfc6f83d710c71ad1fd9c663f623a8f80c87480122355b211",
+      "banks/seed-71064/bank.json": "a7ee73f5d0195548b0af2115254b574cf5ac25631f4bc63c934fb63620c1b761",
+      "banks/seed-71065/bank.json": "8e67de6cc9d2e185ecb68219b76e421261e4601bad677856668d7a8d8a15cb47"
+    },
+    "renderer_source_sha256": "3310b14b6b5a4d7fad23009f4bbb03692140f07508c0ff713772265db7044ed4",
+    "render_settings": {
+      "blender": "4.3.2",
+      "engine": "Cycles",
+      "device": "CPU",
+      "samples": 64,
+      "max_bounces": 1,
+      "diffuse_bounces": 0,
+      "glossy_bounces": 0,
+      "denoising": false,
+      "adaptive_sampling": false,
+      "dither": 0,
+      "light_tree": false,
+      "lighting": "deterministic matte normal shading; no stochastic reflections",
+      "scratch_shadows": false
+    },
+    "budget": 6,
+    "minimum_informative_photo_requests": 2,
+    "counterfactual_worlds_per_bank": 48,
+    "scope": "Controlled procedural identity and condition search; not independently reviewed real photographs",
+    "split_group": "paired_history_id; both matched worlds remain in the same split and bootstrap group",
+    "selection": "All completed banks in sorted order; positions cycle through all unordered pairs; each paired bank has one positive and one negative case with the same mixed state vector"
+  },
+  "cohort": {
+    "seeds": {
+      "first": 71000,
+      "last": 71065,
+      "count": 66,
+      "contiguous_without_omissions": true
+    },
+    "variants": {
+      "Sufficient": 132,
+      "Obtainable": 132,
+      "Missing": 132,
+      "Unavailable": 132
+    },
+    "labels_per_family": {
+      "Refuted": 66,
+      "Supported": 66
+    },
+    "target_locations_per_family": {
+      "rear_center": 44,
+      "rear_left": 44,
+      "rear_right": 44
+    },
+    "target_location_by_label": {
+      "rear_center": {
+        "Refuted": 22,
+        "Supported": 22
+      },
+      "rear_left": {
+        "Refuted": 22,
+        "Supported": 22
+      },
+      "rear_right": {
+        "Refuted": 22,
+        "Supported": 22
+      }
+    },
+    "independent_scene_groups": 66,
+    "selection": "Every bank in the preset contiguous seed range is included. The builder selects the two matched worlds using seed and bank index; it does not consume model outputs or scores.",
+    "model_score_filtering": false
+  },
+  "construction_checks": {
+    "RGB_images": 924,
+    "mask_images": 924,
+    "actual_counterfactual_RGB_checks": 198,
+    "counterfactual_check": "Decoded RGB equality after actual rerendering with changed hidden states or identities.",
+    "enumerated_worlds": 3168,
+    "zero_or_one_request_histories_ambiguous": true,
+    "target_two_request_histories_identifiable": true,
+    "final_file_hashes_verified": {
+      "RGB_images": 924,
+      "mask_images": 924,
+      "bank_manifests": 66
+    },
+    "post_canonical_bank_manifest_digest": "74dd8179728b30c5291c8de345699297f9aa2780342fb87d281ba2231835b610",
+    "independent_human_review": false,
+    "scope": "Procedural finite-world construction and rendering audit; not human visual adjudication.",
+    "proof_access_variant": "Obtainable",
+    "proof_initial_views": [
+      "reference",
+      "initial"
+    ]
+  },
+  "source_fingerprints": {
+    "renderer": {
+      "path": "src/resolveai/render_multistep.py",
+      "sha256": "3310b14b6b5a4d7fad23009f4bbb03692140f07508c0ff713772265db7044ed4",
+      "last_change_commit": "2c80c5b46335b6f081710ac6d2d903554ec20bac"
+    },
+    "builder": {
+      "path": "scripts/build_multistep_cases.py",
+      "sha256": "974a05a91c40102d6a61e5c4ebe0cb6a2d5818ef1c8a02c0677f56be7f8e211b",
+      "last_change_commit": "de0473d22c33277a918778729d6de93e6bb8a404"
+    },
+    "certificate_and_scorer": {
+      "path": "src/resolveai/multistep.py",
+      "sha256": "404ca58ed246bf17e669f8ab31ba3b2eda6201e0f6e2005a32cebc16f1b3840c",
+      "last_change_commit": "2c80c5b46335b6f081710ac6d2d903554ec20bac"
+    }
+  },
+  "scorer": {
+    "certificate_version": "finite-world-v1",
+    "region_thresholds": {
+      "identity_iou": 0.5,
+      "defect_iou": 0.25,
+      "defect_precision": 0.25,
+      "defect_coverage": 0.5,
+      "panel_iou": 0.5,
+      "panel_precision": 0.5,
+      "panel_coverage": 0.9
+    }
+  },
+  "pilot_preservation": {
+    "banks": 8,
+    "families": 16,
+    "case_records": 64,
+    "files": 235,
+    "file_hashes_and_mtimes_unchanged": 235,
+    "full_dataset_prefix_case_records_unchanged": 64,
+    "description": "All 14 RGB images, 14 masks and bank.json for each of the first eight banks, plus cases.json, dataset_manifest.json and construction_audit.json in the frozen pilot, retain their original SHA256 and mtime_ns. The first 64 full-dataset case records equal the frozen pilot records.",
+    "pilot_cases_sha256": "db0028f046b15fbc70a9ba9bbf0b3e547d2ae37edea405b29cd9276bdc744399",
+    "preservation_snapshot_sha256": "9d3d37cfd7cd1847eb27f5ac6771981177b0e6ef02653df62b2da25bce21bed0"
+  },
+  "artifact_sha256": {
+    "dataset_manifest.json": "9c0e2b6a77120e0ba7fc168bcea9f5dc9c57c83a4e691ec251ef775da20b87c5",
+    "construction_audit.json": "d51816d698a90bca8c0550948ca888fa6623a63ed4ad1e5e6081476802b009bb",
+    "full-bank-audit.json": "74f0b3e28a09ecfc9bc62000d684a7192bd0f296c30331fa7d5792fec43a8cb9"
+  }
+}
