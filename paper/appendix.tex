@@ -660,3 +660,11 @@ Qwen3.5's adaptive-minus-fixed evidence difference is $-27.6$ points (paired-sce
 With privileged views, Qwen3.5 matches 58/116 scene labels, whereas InternVL matches two.
 Finite-choice validity is perfect for all arms.
 The adapters receive no procedural-case training; these runs evaluate existing policies under the specified interface rather than the effect of training on this new task.
+
+
+\paragraph{Correct label without sufficient evidence.}
+For procedural family \texttt{6b39dc51a0c81f2aafb6}, the adaptive RGB program requests the front survey and the right rear view, then answers Refuted.
+The answer matches the scene label, but the inspected crate is not the reference target.
+Four alternative worlds, including both Supported and Refuted claims, remain compatible with the actually released images.
+The submitted definite answer therefore receives zero chain and localized grounded credit.
+This episode accounts for the difference between 107 scene-label matches and 106 strict grounded answers in the 116-case adaptive program comparison.

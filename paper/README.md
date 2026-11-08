@@ -6,7 +6,7 @@ ResolveAI studies how vision-language models inspect submitted photographs, requ
 
 ## Current manuscript
 
-The main text occupies eight CVPR pages, with references on the following page. It contains three figures and four tables. Experimental Setup, Main Results, Post-training Results and Behavior Analysis cover the public-photo study; Photo-request Controls and Two-step Evidence Search isolate image content and observation-dependent view selection.
+The main text occupies eight CVPR pages, with references on the following page. It contains three figures and four tables. The experiments have four subsections: Experimental Setup, Verification on Public Photographs, Post-training and Evidence Requests, and Controlled Comparisons. Both collections and their metrics are introduced before the results.
 
 - **Figure 1:** real-image examples of identity matching and condition-detail requests.
 - **Figure 2:** data sources, matched photograph-access settings and the tool environment.
@@ -15,6 +15,8 @@ The main text occupies eight CVPR pages, with references on the following page. 
 - **Table 2:** Base, SFT, RL and SFT+RL for three backbones, with training results kept separate from the base-model comparison.
 - **Table 3:** photograph requests, genuinely new displayed pixels and stopping after requests fail.
 - **Table 4:** the held-out two-step search study: a public-RGB program with five request policies, and MLLM evidence selection under a shared finite-choice interface.
+
+The main text follows one comparison: answers from supplied evidence, requests after post-training, the competitive restoration rule, and conditional view selection in the controlled scenes. A capsule detail case, matched scene pairs and a wrong-crate answer explain the measurements.
 
 The former low-information result figure remains removed. Its 204 returned-image content trials are analyzed in the text and supplement. Figure 3 instead displays actual rendered images and the two-step decision. Full configurations, checkpoint comparisons, failure accounting and additional results are supplementary.
 
