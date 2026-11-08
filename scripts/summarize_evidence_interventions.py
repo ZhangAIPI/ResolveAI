@@ -276,7 +276,7 @@ def render(report):
         r"Accuracy and rates are percentages.}",
         r"\label{tab:evidence-interventions}",
         r"\begin{tabular}{@{}llrrrrrrrr@{}}\toprule",
-        r"& & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{New image} & & & &\\",
+        r"& & \multicolumn{2}{c}{Accuracy} & \multicolumn{2}{c}{Photo retrieval} & & & &\\",
         r"Model & Policy & Cond. & Ident. & Cond. & Ident. & Finish & Time (s) & Input & Output\\\midrule",
     ]
     order = ("adaptive", "adaptive_no_new_photo", "finish_only", "fixed_original",

@@ -269,7 +269,7 @@ def render(report):
         r"\multicolumn{10}{l}{\emph{(b) Search, stopping and interaction cost}}\\",
         r"& & \multicolumn{2}{c}{Obtainable (\%)} & \multicolumn{3}{c}{Unavailable (\%)} & & &\\",
         r"\cmidrule(lr){3-4}\cmidrule(lr){5-7}",
-        r"Model & Policy & Request & New image & Definite & Need more & Failure & Time (s) & Input & Output\\\midrule",
+        r"Model & Policy & Request & Photo retrieval & Definite & Need more & Failure & Time (s) & Input & Output\\\midrule",
     ]
     for model, arms in report["models"].items():
         for index, arm in enumerate(ARMS):

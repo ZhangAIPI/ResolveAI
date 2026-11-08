@@ -318,18 +318,18 @@ def aggregate(repository,runtime,output):
     return result
 
 def render(result,output):
-    header=["Model","Initial acc.","Full-access acc.","Agent condition","Agent identity","Agent overall","Request","New image","Repeated image","Finish"]
+    header=["Model","Initial acc.","Full-access acc.","Agent condition","Agent identity","Agent overall","Request","Photo retrieval","Repeated image","Finish"]
     markdown=["# Obtainable: source-label agreement and recorded behavior","",
       "Fixed 209 families: 153 condition and 56 identity. Accuracy, requests and completion use every expected family; missing or abstaining final answers remain in the denominator.",
       "Each arm requires all 209 episode keys before any score is shown. -- means unavailable, never zero. New pixels do not certify sufficiency.",
       "Grounded accuracy, evidence-found rate, correct-evidence-use rate and unsupported-decision rate are null until independent evidence sets exist.","",
       "| "+" | ".join(header)+" |","| "+" | ".join(["---"]+["---:"]*(len(header)-1))+" |"]
     tex=[r"\begin{table*}[t]\centering\small",r"\setlength{\tabcolsep}{3.2pt}",
-      r"\caption{\textbf{Obtainable evidence: source-label agreement and observed search.} Percentages on the frozen 209 families (153 condition, 56 identity); scores require every episode key in an arm. New image counts requests returning previously unseen pixels, not reviewed sufficient evidence. -- denotes unmeasured results.}",
+      r"\caption{\textbf{Obtainable evidence: source-label agreement and observed search.} Percentages on the frozen 209 families (153 condition, 56 identity); scores require every episode key in an arm. Photo retrieval counts requests returning previously unseen pixels, not reviewed sufficient evidence. -- denotes unmeasured results.}",
       r"\label{tab:obtainable-all}",r"\begin{tabular}{@{}lrrrrrrrrr@{}}\toprule",
       r" & Initial & Full access & \multicolumn{3}{c}{Interactive accuracy} & \multicolumn{4}{c}{Interactive behavior}\\",
       r"\cmidrule(lr){4-6}\cmidrule(l){7-10}",
-      r"Model & Overall & Overall & Condition & Identity & Overall & Request & New image & Repeated & Finish\\\midrule"]
+      r"Model & Overall & Overall & Condition & Identity & Overall & Request & Photo retrieval & Repeated & Finish\\\midrule"]
     def value(group,key):
         return "--" if group is None else f"{group[key]:.1f}"
     previous=None

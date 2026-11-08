@@ -34,10 +34,10 @@ def render(sufficient, closed, obtainable):
     lines=[
       '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{2.2pt}',
       '\\begin{minipage}{.98\\textwidth}\\centering',
-      '\\caption{\\textbf{Zero-shot model comparison.} Sufficient supplies the relevant photographs initially; Obtainable withholds a requestable photograph. Accuracy matches source labels. New-image rates are task-specific, while completion and cost cover the full Obtainable episode. Failed submissions and abstentions remain in all denominators.}',
+      '\\caption{\\textbf{Zero-shot model comparison.} Sufficient supplies the relevant photographs initially; Obtainable withholds a requestable photograph. Accuracy matches source labels. Photo retrieval is the percentage of Obtainable cases receiving an unseen image or higher-resolution original; repeated images do not count. Retrieval is split by task, while completion and cost include all Obtainable attempts, including abstentions and failed submissions.}',
       '\\label{tab:benchmark}',
       '\\begin{tabular}{@{}lrrrrrrrrrr@{}}\\toprule',
-      ' & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy} & \\multicolumn{2}{c}{New image} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
+      ' & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy} & \\multicolumn{2}{c}{Photo retrieval} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
       '\\cmidrule(lr){2-3}\\cmidrule(lr){4-6}\\cmidrule(lr){7-8}\\cmidrule(l){9-11}',
       ' & \\multicolumn{2}{c}{Overall} & \\multicolumn{3}{c}{With tools} & \\multicolumn{2}{c}{(\\%)} & & &\\\\',
       'Model & No tools & With tools & Condition & Identity & Overall & Condition & Identity & Finished (\\%) & Time (s) & Output tokens\\\\\\midrule',

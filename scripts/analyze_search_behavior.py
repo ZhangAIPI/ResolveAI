@@ -49,7 +49,7 @@ def render_main_search_behavior(result):
       '\\begin{tabular}{@{}llrrrrr@{}}\\toprule',
       ' & & \\multicolumn{3}{c}{Obtainable (\\%)} & \\multicolumn{2}{c}{Unavailable (\\%)}\\\\',
       '\\cmidrule(lr){3-5}\\cmidrule(l){6-7}',
-      'Model & Training & Requests & New image & Finished & Definite & Need more\\\\\\midrule',
+      'Model & Training & Requests & Photo retrieval & Finished & Definite & Need more\\\\\\midrule',
     ]
     for name,model,training in rows:
         obtainable=result["policies"][name]["Obtainable"]["overall"]["totals"]
@@ -161,7 +161,7 @@ def paired(a,b,task=None):
        'direction':'SFT+RL minus direct RL'}
 
 all_data={k:load(v) for k,v in DIRS.items()}
-result={'scope':'Observed actions and source-label agreement only. New image is new image_ref pixel hash relative to all prior observations, not reviewed sufficient evidence.',
+result={'scope':'Observed actions and source-label agreement only. Photo retrieval is new image_ref pixel hash relative to all prior observations, not reviewed sufficient evidence.',
 'dataset_sha256':REF['dataset_sha256'],'family_ids':sorted(F),
 'policies':{},'paired_8b_rl_to_sftrl':{},'text384_controls':{}}
 for name,data in all_data.items():
@@ -234,11 +234,11 @@ for policy in result['policies'].values():
 out=args.output
 out.write_text(json.dumps(result,indent=2)+'\n')
 lines=[r'\begin{table*}[t]',r'\centering\small',r'\setlength{\tabcolsep}{4pt}',
-r'\caption{\textbf{Requesting evidence versus receiving a new image.} Counts on 209 fixed families. Obtainable columns show episodes with a request, a new returned image, a repeated-image request, an abstention and a valid finish. New images need not establish sufficient evidence; new-image and repeated-image columns can overlap. The final column shows definite answers among episodes with a failed request in Unavailable; it is behavior, not an independently reviewed error rate.}',
+r'\caption{\textbf{Requesting evidence versus receiving a new image.} Counts on 209 fixed families. Obtainable columns show episodes with a request, a new returned image, a repeated-image request, an abstention and a valid finish. Photo retrievals need not establish sufficient evidence; new-image and repeated-image columns can overlap. The final column shows definite answers among episodes with a failed request in Unavailable; it is behavior, not an independently reviewed error rate.}',
 r'\label{tab:search-behavior}',r'\begin{tabular}{@{}lrrrrrr@{}}',r'\toprule',
 r' & \multicolumn{5}{c}{Obtainable} & Unavailable\\',
 r'\cmidrule(lr){2-6}\cmidrule(l){7-7}',
-r'Policy & Requested & New image & Repeated image & Abstained & Finished & Definite after failure\\',
+r'Policy & Requested & Photo retrieval & Repeated image & Abstained & Finished & Definite after failure\\',
 r'\midrule']
 for name in DIRS:
     o=result['policies'][name]['Obtainable']['overall']['totals']
