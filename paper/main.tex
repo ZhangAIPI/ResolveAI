@@ -353,17 +353,17 @@ Yet the interactive policy retrieves a new image in only 5.7\% of episodes.
 Of its 37 net additional correct answers over direct answering, 36 occur among the 197 episodes without a photograph request.
 Although this grouping depends on the policy's choices, \textbf{most of the improvement occurs with existing images}.
 
-Retrieving photographs does not remove the distinction between the two tasks.
 Sol reaches 81.7\% on condition and 53.6\% on identity; Luna reaches 57.5\% and 82.1\%, respectively.
 Both retrieve new images in nearly every episode.
 The reversed ranking motivates reporting condition and identity separately.
 
-Some losses arise before a valid answer is submitted.
-Qwen3-VL-2B loses 63 Obtainable answers that were correct without tools; 55 end without a valid submission.
-In an initially sufficient vehicle case, 8B correctly describes the same item across views but makes seven unparseable finish attempts.
-It scores zero after 100.5 seconds, compared with 1.1 seconds for the correct direct answer.
-Likewise, 2B's shorter mean interaction (13.4 versus 20.5 seconds for 8B) accompanies lower completion (45.9\% versus 85.2\%).
-Efficiency must therefore be interpreted alongside completion, retaining failed episodes in the denominator.
+\paragraph{Why tools can lower accuracy.}
+Interactive evaluation also requires selecting actions and submitting a valid cited answer.
+On Sufficient, Qwen3-VL-2B corrects seven direct-answer errors but loses 48 correct answers; 46 end without a valid final submission.
+Sol completes every episode yet loses 16 previously correct answers: seven become abstentions and nine change to the wrong label.
+An 8B vehicle trace still describes the same item, but seven malformed final calls leave it without a submitted answer.
+\textbf{Lower interactive accuracy need not mean worse visual recognition.}
+Prompts, format and computation also change; the supplement separates the losses and gives case traces.
 
 \subsection{Post-training and Evidence Requests}
 \label{sec:sft}

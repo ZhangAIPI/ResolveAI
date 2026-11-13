@@ -390,13 +390,77 @@ Qwen3-VL-8B scores 83.7\% at the fixed endpoint, compared with 79.9\% after vali
 
 
 % paired-case-analysis-start
-\section{Paired Answer Changes and Recorded Examples}
+\section{Why Tool-Enabled Scores Can Be Lower}
+\label{sec:tool-regressions}
+We pair No tools and With tools on the same 209 Sufficient families and initial images.
+Table~\ref{tab:tool-regressions} separates newly correct answers from previously correct answers lost during interaction.
+The lost cases have three mutually exclusive final outcomes: an opposite definite label, an accepted \emph{Need more evidence}, or no valid final answer.
+An invalid or absent answer is not counted as an abstention.
+All comparisons use the source labels.
 
-All comparisons below retain the same 209 families and count failed and abstaining attempts as incorrect. The intervals use 10,000 paired family resamples with seed 20261104. They describe evaluation-set uncertainty for one trained run, not variation across training seeds.
+\input{tables/tool_regressions}
 
+\paragraph{Different sources of lost answers.}
+Qwen3-VL-2B loses 48 previously correct answers, of which 46 have no valid final submission.
+InternVL3.5-8B loses 92, with 91 unsubmitted.
+These runs include several execution failures: among the latter 91, 88 reach the turn limit and three exceed the configured context limit.
+Qwen2.5-VL-7B instead loses 29 answers, including 25 accepted abstentions.
+Sol finishes every case, but seven of its 16 lost answers become abstentions and nine switch to the wrong label.
+The net accuracy change also depends on corrected answers, which the table reports separately.
+SmolVLM2-2.2B answers Refuted on all direct cases, so its 106 source-label matches equal a constant-label baseline.
+
+\paragraph{Incomplete final calls.}
+In \texttt{case-cc1dcd4afe1b98c554c6-Sufficient}, Qwen3-VL-8B answers Supported directly.
+Its interactive response compares the images and describes the same vehicle from different angles.
+The first final-call attempt is truncated; six later attempts contain Supported but omit a closing JSON brace.
+None is accepted, and the run reaches the turn limit after 100.5 seconds, compared with 1.1 seconds for the direct answer.
+This is a failed submission despite source-matching answer content (Figure~\ref{fig:cases}).
+
+\begin{figure}[t]\centering
+\input{figures/submission_case}
+\caption{\textbf{Correct content without a valid final answer.}
+The model describes the same vehicle across views, but incomplete structured calls prevent submission.}
+\label{fig:cases}
+\end{figure}
+
+\paragraph{Valid calls without stopping.}
+In \texttt{case-00bb48fa5a6b3e55662e-Sufficient}, InternVL3.5-8B directly answers Refuted for a bottle-rim claim, matching the source label.
+With tools, it makes eight valid compare/crop calls without attempting a final answer.
+It reaches the turn limit after 89.8 seconds with no tool error.
+This loss follows repeated inspection without completion.
+
+\paragraph{Context exhaustion.}
+For the initially sufficient capsule in \texttt{case-008fddbd675adc4570ad-Sufficient}, LLaVA-OneVision-7B answers correctly when asked directly.
+With tools, it alternates full-image crops and quality checks.
+After seven valid actions, the next prompt contains 8,828 tokens and is rejected before generation by our configured 8,192-token input limit.
+No photograph was requested and no final answer was submitted.
+This failure involves repeated interaction and the experiment's input allowance; it does not measure the checkpoint's native maximum context length.
+
+\paragraph{Explicit abstention.}
+Qwen2.5-VL-7B also directly answers Refuted on the bottle-rim case above.
+Its interactive run recovers from one incomplete inspect call, inspects the original and reference, compares them, then submits \emph{Need more evidence} with no citations.
+The final call is accepted.
+Its source-label score is zero because it abstains, not because the earlier formatting error prevents submission.
+
+\paragraph{A valid answer reversal.}
+For the foreign-material claim in \texttt{case-13a2fed0403ff94d313e-Sufficient}, GPT-4.1 mini directly answers Supported, matching the source label.
+After valid inspect, crop and zoom calls, it submits Refuted.
+The run finishes with no tool error.
+This loss remains after successful execution and belongs in the wrong-label column.
+
+\paragraph{Interpreting the comparison.}
+The interactive setting changes prompts, response structure, available actions and computation.
+The outcomes above distinguish unsuccessful execution from changes in submitted answers; they do not isolate a causal effect of executing a tool.
+For example, a missing final answer does not show that the model changed its visual judgment.
+Conversely, the GPT-4.1 mini trace shows that successful execution does not guarantee retaining a source-matching answer.
+The released analysis records per-family transitions, input hashes and selected trace identifiers without rerunning inference.
+
+\paragraph{Additional paired comparisons.}
+The following intervals use 10,000 paired family resamples with seed 20261104.
+They quantify evaluation-set uncertainty for one run.
 \begin{table*}[t]\centering\small
 
-\caption{\textbf{Paired changes in source-label accuracy.} Differences and percentile bootstrap intervals are in percentage points.}
+\caption{\textbf{Additional paired comparisons on Sufficient cases.} Differences and percentile bootstrap intervals are in percentage points.}
 
 \begin{tabular}{@{}lrrr@{}}\toprule
 
@@ -415,25 +479,6 @@ Qwen2.5-VL-7B: SFT+RL vs SFT & 13 & 5 & +3.8 [+0.0, +8.1]\\
 \paragraph{Bottle: a successful request can repeat existing pixels.}
 
 The case is \texttt{case-52a69b7c898d12a8e0a5-Obtainable}. Both models start with a normal reference and the same preview. The 2B SFT+RL policy requests object bottle, time capture, view overview. The response has status provided, but returns the preview already visible. The policy answers Refuted and also links the different normal reference specimen as the same object. The 8B SFT+RL policy changes the view field to original, receives the recorded original and answers Supported. The observation is a difference in request content, not a controlled causal comparison between the two models. In the 8B policy, all 92 families with an original request share exactly the same public images, tool definitions and first request across Obtainable, Missing and Unavailable. The provided originals lead to 50 Supported and 42 Refuted answers. Both failure versions return the same unable-to-provide status and lead to 92 Need more evidence answers. These are observed stopping decisions, not an independent sufficiency annotation.
-
-\paragraph{Vehicle: descriptive success and interface failure.}
-
-The case is \texttt{case-cc1dcd4afe1b98c554c6-Sufficient}. The base 8B model answers Supported in the direct setting. In the interactive run it compares the two images and describes the same vehicle from different angles. Seven subsequent finish attempts are not parsed as accepted tool calls, and the run ends at the turn limit with no submitted answer. It therefore receives zero under the recorded completion rule. This trace cannot establish that the model failed to recognize the vehicle.
-
-\paragraph{Source-label disagreement is not independent visual review.}
-
-The additional audited screw case, \texttt{case-035e4ca9730fd6a3fcab-Sufficient}, is labelled normal by its source. The base 8B model answers Refuted directly but Supported after inspect, crop, inspect, crop and compare. The crops use the same pixel rectangle in two differently posed specimens, which does not establish part correspondence. The answer disagrees with the source label; deciding whether the cited mark is genuinely a scratch requires independent condition review.
-
-The released analysis JSON records case identifiers, exact tool arguments, source database locations, trace hashes and unchanged figure-image hashes. It can be regenerated from existing records without rerunning a model.
-% paired-case-analysis-end
-
-\begin{figure}[t]\centering\input{figures/diagnosis}
-\caption{\textbf{Answers corrected and lost in the interactive setting.}
-Counts pair the same source-labeled cases without and with tools.
-A lost answer includes a wrong answer, abstention or failure to finish.
-Response format and generation allowances differ between the settings.}
-\label{fig:transitions}
-\end{figure}
 \section{Output-Allowance Control}
 Identical prompts and photographs are retained while increasing the direct-answer output allowance from 96 to 384 tokens.
 All 1,672 paired source-label responses per model are unchanged across four versions and both direct arms for Qwen2.5-VL-7B, Qwen3-VL-8B and InternVL3.5-8B.
@@ -504,15 +549,6 @@ All 92 requested episodes concern condition; among the other 117 episodes, one i
 The 7B policy makes no requests and gives 209 definite answers in Unavailable.
 These outcomes distinguish responding to access feedback from initiating a search.
 A policy can consistently change its answer after denial while leaving other photographs unrequested.
-
-\section{Illustrative Submission Failure}
-\begin{figure}[t]\centering
-\input{figures/submission_case}
-\caption{\textbf{A failed final submission.}
-The model recognizes the vehicle across views but does not submit a valid answer.}
-\label{fig:cases}
-\end{figure}
-
 
 \section{Returned-Image Content Probe}
 We select all 68 budget-three SFT+RL histories with a request that returned new pixels.

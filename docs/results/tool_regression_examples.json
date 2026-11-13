@@ -1,0 +1,425 @@
+{
+  "schema": "resolveai-tool-regression-examples-v1",
+  "scope": "Recorded Sufficient outcomes and execution details against source labels; no new model inference or visual relabelling.",
+  "source_analysis": "docs/results/paired_tool_regressions.json",
+  "source_analysis_sha256": "df9fcc0d166cd95a710ef9d50171ce1d704ab517789da83d4273e9cb9918b03b",
+  "valid_call_and_answer_cases": [
+    {
+      "model": "qwen25",
+      "family_id": "case-00bb48fa5a6b3e55662e",
+      "task": "state",
+      "transition": "lost_explicit_NME",
+      "source_label": "Refuted",
+      "direct_verdict": "Refuted",
+      "interactive_verdict": "Need more evidence",
+      "termination": "finished",
+      "errors": 1,
+      "latency_s": 8.283808891021181,
+      "trace_sha256": "92a953a3eb3b7af051798a5133a1af7fad3b853e06986de80e16969a14e9aac8",
+      "initial_image_refs": [
+        "images/00d6f93d23cb0d36894ac48e68c2bede1b56bc48e5b8052dcd3183252592940a.png",
+        "images/4931edb84fc75687f953199ec778641b0f71dd18cb2837d04a074cd5c4281dce.png"
+      ],
+      "claim": "The target bottle in the submitted photo shows a chipped or broken rim.",
+      "action_sequence": [
+        "inspect",
+        "inspect",
+        "compare",
+        "finish"
+      ],
+      "tool_error_responses": {},
+      "invalid_format_corrections": 1,
+      "finish_attempts": 1,
+      "rejected_finish_responses": 0
+    },
+    {
+      "model": "internvl35",
+      "family_id": "case-00bb48fa5a6b3e55662e",
+      "task": "state",
+      "transition": "lost_no_valid_final",
+      "source_label": "Refuted",
+      "direct_verdict": "Refuted",
+      "interactive_verdict": null,
+      "termination": "max_turns",
+      "errors": 0,
+      "latency_s": 89.81332054600352,
+      "trace_sha256": "93ef90c3d4a5685f711c29dd25ae10ce0af4f44cd885cedde17db1c5b7ecda75",
+      "initial_image_refs": [
+        "images/00d6f93d23cb0d36894ac48e68c2bede1b56bc48e5b8052dcd3183252592940a.png",
+        "images/4931edb84fc75687f953199ec778641b0f71dd18cb2837d04a074cd5c4281dce.png"
+      ],
+      "claim": "The target bottle in the submitted photo shows a chipped or broken rim.",
+      "action_sequence": [
+        "compare",
+        "crop",
+        "crop",
+        "compare",
+        "crop",
+        "crop",
+        "compare",
+        "crop"
+      ],
+      "tool_error_responses": {},
+      "invalid_format_corrections": 0,
+      "finish_attempts": 0,
+      "rejected_finish_responses": 0
+    },
+    {
+      "model": "gpt41_mini",
+      "family_id": "case-13a2fed0403ff94d313e",
+      "task": "state",
+      "transition": "lost_valid_wrong_label",
+      "source_label": "Supported",
+      "direct_verdict": "Supported",
+      "interactive_verdict": "Refuted",
+      "termination": "finished",
+      "errors": 0,
+      "latency_s": 12.483422752004117,
+      "trace_sha256": "fe6974857da7dd245b3eee06f9cf569b25f611c1245b5920b9c0bf3dfc023b00",
+      "initial_image_refs": [
+        "images/00d6f93d23cb0d36894ac48e68c2bede1b56bc48e5b8052dcd3183252592940a.png",
+        "images/d9f6a20a6da798d4ca74f80c036b3f0ac10a86c077dd881ebf858796836e764c.png"
+      ],
+      "claim": "The target bottle in the submitted photo shows visible foreign material or contamination.",
+      "action_sequence": [
+        "inspect",
+        "crop",
+        "zoom",
+        "finish"
+      ],
+      "tool_error_responses": {},
+      "invalid_format_corrections": 0,
+      "finish_attempts": 1,
+      "rejected_finish_responses": 0
+    }
+  ],
+  "vehicle_submission_failure": {
+    "case_id": "case-cc1dcd4afe1b98c554c6-Sufficient",
+    "claim": "The target objects in subject-A and subject-B are the same physical item.",
+    "result": {
+      "case_id": "case-cc1dcd4afe1b98c554c6-Sufficient",
+      "family_id": "case-cc1dcd4afe1b98c554c6",
+      "task": "identity",
+      "variant": "Sufficient",
+      "arm": "interactive_agent",
+      "verdict": null,
+      "termination": "max_turns",
+      "errors": 7,
+      "requests": 0,
+      "tool_calls": 1,
+      "released": [
+        "photo-0a79f3148c6f7adf7798",
+        "photo-6f948d8055dc1737c205"
+      ],
+      "source_label": "Supported",
+      "source_label_match": false,
+      "tool_cost": 2,
+      "request_cost": 0,
+      "latency_s": 100.52858190401457
+    },
+    "actions": [
+      {
+        "name": "compare",
+        "arguments": {
+          "image_ids": [
+            "photo-6f948d8055dc1737c205",
+            "photo-0a79f3148c6f7adf7798"
+          ]
+        }
+      }
+    ],
+    "trace_sha256": "1e31f78c466d428201dfdebee870e453ae98bd5b506d80ed133ed8315b1bf784",
+    "source_database": "evaluation/cvpr-20261101/qwen3/episodes.sqlite"
+  },
+  "configured_context_limit_case": {
+    "schema_version": "resolveai-context-failure-case-v1",
+    "scope": "Descriptive original Sufficient evaluation trace; no new inference or independent visual sufficiency review.",
+    "case_id": "case-008fddbd675adc4570ad-Sufficient",
+    "variant": "Sufficient",
+    "task": "state",
+    "claim": "The target capsule in the submitted photo shows a squeezed or deformed body.",
+    "source_label": "Supported",
+    "model_id": "llava-hf/llava-onevision-qwen2-7b-ov-hf",
+    "model_revision": "0d50680527681998e456c7b78950205bedd8a068",
+    "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+    "database": {
+      "path": "evaluation/cvpr-paper-priority/llava_onevision/episodes.sqlite",
+      "bytes": 54853632,
+      "sha256": "d3814cf85eaadc7fa58ca82b8b1c17ddbeae8f6e656812d02fbb57e3630ede50",
+      "sha256_source": {
+        "path": "paper-draft/tool-regression-20261113/paired_tool_regressions.json",
+        "sha256": "df9fcc0d166cd95a710ef9d50171ce1d704ab517789da83d4273e9cb9918b03b",
+        "field": "models[name=llava_onevision].provenance.interactive_agent.database_sha256"
+      },
+      "query": "SELECT result,trace FROM episodes WHERE case_id=? AND arm=?"
+    },
+    "manifest": {
+      "path": "evaluation/cvpr-paper-priority/llava_onevision/manifest.json",
+      "sha256": "30f7072db197fcefec84af5d174e97ecf40602fadcf0b6c42134276f4f5fe08f"
+    },
+    "settings": {
+      "max_context_tokens": 8192,
+      "max_turns": 8,
+      "tool_budget": 12,
+      "direct_output_cap": 96,
+      "interactive_output_cap_per_call": 384,
+      "tool_adapter": "portable",
+      "processor": "LlavaOnevisionProcessor"
+    },
+    "direct": {
+      "arm": "initial_text",
+      "verdict": "Supported",
+      "termination": "finished",
+      "source_label_match": true,
+      "wall_latency_s": 1.4419256079709157,
+      "input_tokens": 2078,
+      "output_tokens": 2,
+      "result_sql_sha256": "2b37c906feb6d57125a2820371aab765e6d91100b85b354aca1b1569585e79a2",
+      "trace_sql_sha256": "7b9cb50b26444eaf6e54ddd6f6e28fc30cb5be97b88f9f6375d773802b505046"
+    },
+    "interactive": {
+      "arm": "interactive_agent",
+      "verdict": null,
+      "termination": "context_limit",
+      "errors": 0,
+      "source_label_match": false,
+      "wall_latency_s": 19.785043979005422,
+      "accepted_actions": [
+        {
+          "name": "crop",
+          "arguments": {
+            "image_id": "original",
+            "bbox": [
+              0,
+              0,
+              1000,
+              1000
+            ]
+          }
+        },
+        {
+          "name": "assess_quality",
+          "arguments": {
+            "image_id": "original"
+          }
+        },
+        {
+          "name": "crop",
+          "arguments": {
+            "image_id": "original",
+            "bbox": [
+              0,
+              0,
+              1000,
+              1000
+            ]
+          }
+        },
+        {
+          "name": "assess_quality",
+          "arguments": {
+            "image_id": "original"
+          }
+        },
+        {
+          "name": "crop",
+          "arguments": {
+            "image_id": "original",
+            "bbox": [
+              0,
+              0,
+              1000,
+              1000
+            ]
+          }
+        },
+        {
+          "name": "assess_quality",
+          "arguments": {
+            "image_id": "original"
+          }
+        },
+        {
+          "name": "crop",
+          "arguments": {
+            "image_id": "original",
+            "bbox": [
+              0,
+              0,
+              1000,
+              1000
+            ]
+          }
+        }
+      ],
+      "requests": 0,
+      "tool_calls": 7,
+      "remaining_budget": 5,
+      "finish_attempts": 0,
+      "result_sql_sha256": "0d64c7f77ca851f5480d65b98aaa9e6a33d6325f4c801439055ee46c8007612f",
+      "trace_sql_sha256": "fb66690cb3e363071b106b958dd28c3cacfd883b7708621657f66a4204ceed3d",
+      "generation_attempts": [
+        {
+          "attempt": 1,
+          "offered_input_tokens": 4429,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 40,
+          "parse_error": false,
+          "latency_s": 1.979715389024932,
+          "accepted_action": {
+            "name": "crop",
+            "arguments": {
+              "image_id": "original",
+              "bbox": [
+                0,
+                0,
+                1000,
+                1000
+              ]
+            }
+          }
+        },
+        {
+          "attempt": 2,
+          "offered_input_tokens": 5389,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 20,
+          "parse_error": false,
+          "latency_s": 1.5105716499965638,
+          "accepted_action": {
+            "name": "assess_quality",
+            "arguments": {
+              "image_id": "original"
+            }
+          }
+        },
+        {
+          "attempt": 3,
+          "offered_input_tokens": 5576,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 40,
+          "parse_error": false,
+          "latency_s": 2.212287011963781,
+          "accepted_action": {
+            "name": "crop",
+            "arguments": {
+              "image_id": "original",
+              "bbox": [
+                0,
+                0,
+                1000,
+                1000
+              ]
+            }
+          }
+        },
+        {
+          "attempt": 4,
+          "offered_input_tokens": 6536,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 20,
+          "parse_error": false,
+          "latency_s": 1.7433314039953984,
+          "accepted_action": {
+            "name": "assess_quality",
+            "arguments": {
+              "image_id": "original"
+            }
+          }
+        },
+        {
+          "attempt": 5,
+          "offered_input_tokens": 6722,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 40,
+          "parse_error": false,
+          "latency_s": 2.4678787229931913,
+          "accepted_action": {
+            "name": "crop",
+            "arguments": {
+              "image_id": "original",
+              "bbox": [
+                0,
+                0,
+                1000,
+                1000
+              ]
+            }
+          }
+        },
+        {
+          "attempt": 6,
+          "offered_input_tokens": 7682,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 20,
+          "parse_error": false,
+          "latency_s": 1.990139244007878,
+          "accepted_action": {
+            "name": "assess_quality",
+            "arguments": {
+              "image_id": "original"
+            }
+          }
+        },
+        {
+          "attempt": 7,
+          "offered_input_tokens": 7868,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": true,
+          "output_tokens": 40,
+          "parse_error": false,
+          "latency_s": 2.7506470669759437,
+          "accepted_action": {
+            "name": "crop",
+            "arguments": {
+              "image_id": "original",
+              "bbox": [
+                0,
+                0,
+                1000,
+                1000
+              ]
+            }
+          }
+        },
+        {
+          "attempt": 8,
+          "offered_input_tokens": 8828,
+          "input_token_cap": 8192,
+          "output_token_cap": 384,
+          "forward_executed": false,
+          "output_tokens": 0,
+          "parse_error": null,
+          "accepted_action": null,
+          "halt": "context_limit",
+          "output_tokens_note": "No forward or generation; zero generated tokens, not a measured model response."
+        }
+      ]
+    },
+    "guard": {
+      "source_file": "src/resolveai/vlm_worker.py",
+      "source_commit": "f0a31739ba6a4322a8e53ca8f0f7958e8327697a",
+      "source_sha256": "d27a165352db1e09eb85cba9149b8859e286d0ad47d963c8b5b9cf573dfa69da",
+      "line": 250,
+      "condition": "input_ids.shape[1] > request.max_context_tokens",
+      "observed_comparison": "8828 > 8192",
+      "rejected_attempt": 8,
+      "before_model_forward": true,
+      "source_excerpt": "        if inputs.input_ids.shape[1] > request.get(\"max_context_tokens\", 8192):\n            print(json.dumps({\"halt\": \"context_limit\", \"input_tokens\": int(inputs.input_ids.shape[1])}), flush=True)\n            continue\n        inputs = inputs.to(model.device)"
+    },
+    "interpretation": "The model repeated valid full-image crops and quality checks instead of finishing. Its eighth offered prompt exceeded the evaluation-configured input allowance and was rejected before generation. This is not a syntax failure or a demonstration of the model native context limit; increasing the cap has not been tested and would not establish that the looping policy would finish."
+  }
+}
