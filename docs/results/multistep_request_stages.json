@@ -1,0 +1,100 @@
+{
+  "schema_version": "resolveai-first-view-audit-v1",
+  "dataset_sha256": "712c6680fdea3d10553ddcc75a9abdc1ef7416d7d883854a26e9a0fe0e1f1bd5",
+  "heldout_families": 116,
+  "paired_banks": 58,
+  "policy": "adaptive_acquisition",
+  "definitions": {
+    "first_front": "First executed request is front_survey, status provided, with actual returned token matching its frozen RGB and public metadata",
+    "evidence_found": "Independent compatible-world label uniqueness from all actual saved observation tokens, including initial images",
+    "second_views_differ": "Executed second-view names differ between matched pair members; not automatically a correct switch",
+    "scope_limit": "Front-first is not the only valid ordering. A rear-first sequence can succeed. No claim of native tool-call grounding or independent human sufficiency."
+  },
+  "scope": "Qwen3-VL-8B assisted view-selection request stages, independently reconstructed from saved requests and returned observations.",
+  "source_result": {
+    "path": "docs/results/multistep_search_assisted_heldout.json",
+    "sha256": "6b3e7cd1189c9f32da1276d12f65a0e815fb69f7223e4c9239b994337aac7fa2"
+  },
+  "models": {
+    "Base": {
+      "adaptive_heldout_rows": 116,
+      "counts": {
+        "banks": 58,
+        "same_first_request": 58,
+        "both_first_front": 58,
+        "both_first_original": 0,
+        "second_views_differ": 3,
+        "both_second_requests_match_observed_targets": 1,
+        "both_members_evidence_found": 1
+      },
+      "first_request_episode_counts": {
+        "front_survey": 116
+      },
+      "request_sequence_episode_counts": {
+        "front_survey -> rear_left": 109,
+        "front_survey -> rear_center": 7
+      },
+      "existing_public_artifact_field": "models.Base.policies.adaptive_acquisition.paired_history_behavior.counts",
+      "raw_trace_field": "acquisition.executed_requests[*].call.arguments.query.view",
+      "return_checks": "All232 requests per model provided; view tokens present; label compatibility independently recomputed and equal saved Found",
+      "sources": [
+        {
+          "manifest": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-0/manifest.json",
+          "manifest_sha256": "9673246b1b69a9add757b65ffb6a134d4e0c82d6c8f5f1f95fb187c9a3f5e3b3",
+          "sqlite": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-0/episodes.sqlite",
+          "sqlite_sha256": "e79704b6c56343d8588b54cab8a506316a2d28f55f371d97797dc79a3fac3e37",
+          "rows": 330
+        },
+        {
+          "manifest": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-1/manifest.json",
+          "manifest_sha256": "26ae087acea597dd3c35162c81a5b66146b3dc33338f8ec4baffa3e6c74d6248",
+          "sqlite": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_base/full-choice-v1-sharded/shard-1/episodes.sqlite",
+          "sqlite_sha256": "5cd0e36dbcecec21e4782bd3fc5d673580b69d91c300a7932297f5ba02de0e80",
+          "rows": 330
+        }
+      ]
+    },
+    "SFT+RL": {
+      "adaptive_heldout_rows": 116,
+      "counts": {
+        "banks": 58,
+        "same_first_request": 58,
+        "both_first_front": 4,
+        "both_first_original": 0,
+        "second_views_differ": 0,
+        "both_second_requests_match_observed_targets": 0,
+        "both_members_evidence_found": 0
+      },
+      "first_request_episode_counts": {
+        "rear_center": 96,
+        "rear_left": 12,
+        "front_survey": 8
+      },
+      "request_sequence_episode_counts": {
+        "rear_center -> original": 86,
+        "rear_left -> rear_center": 12,
+        "front_survey -> rear_left": 8,
+        "rear_center -> rear_left": 10
+      },
+      "existing_public_artifact_field": "models.SFT+RL.policies.adaptive_acquisition.paired_history_behavior.counts",
+      "raw_trace_field": "acquisition.executed_requests[*].call.arguments.query.view",
+      "return_checks": "All232 requests per model provided; view tokens present; label compatibility independently recomputed and equal saved Found",
+      "sources": [
+        {
+          "manifest": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-0/manifest.json",
+          "manifest_sha256": "be5798d2d7bb30da2b3da65dfd8faf233f2feb261e53041f8b671682fc0610eb",
+          "sqlite": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-0/episodes.sqlite",
+          "sqlite_sha256": "c6033a6c063e211eaaecc380b024cf97f71fc589c482d42250e868d448854114",
+          "rows": 330
+        },
+        {
+          "manifest": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-1/manifest.json",
+          "manifest_sha256": "e7d3486c306438a5d8378e34e0bd22474c300cf132a2590c8feecaad2e773bc9",
+          "sqlite": "evaluation/cvpr-paper-priority/multistep-hard-v2/qwen3_8b_sftrl/full-choice-v1-sharded/shard-1/episodes.sqlite",
+          "sqlite_sha256": "bed390ff380dc705461a87aa0170b7dd0eb79bd96b7ee1b105ddf2b958e50b4a",
+          "rows": 330
+        }
+      ]
+    }
+  }
+}

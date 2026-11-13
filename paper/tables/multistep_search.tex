@@ -1,12 +1,12 @@
 \begin{table}[t]\centering\small
-\caption{\textbf{Two-step search.}
-The RGB program shares one reader across request policies.
-Grounded requires a correct answer, identity links and localized references.
-The lower block measures MLLM evidence found with assisted choices.
-All rates use the same held-out cases.}
+\caption{\textbf{Two-step evidence search.}
+A renderer-specific program (top) shares one image reader across request strategies.
+Models (bottom) choose from supplied request, answer, region and identity-link options.
+Found counts cases whose collected images settle the claim; Grounded also requires a correct answer and supporting references.
+All rates use held-out cases.}
 \label{tab:multistep}
 \begin{tabular}{@{}lrr@{}}\toprule
-RGB request policy & Found (\%) & Grounded (\%)\\\midrule
+Request strategy & Found (\%) & Grounded (\%)\\\midrule
 Restore original & 0.0 & 0.0\\
 Fixed front $\rightarrow$ left & 32.8 & 29.3\\
 Random two views & 10.3 & 9.5\\

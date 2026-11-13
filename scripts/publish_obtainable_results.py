@@ -8,7 +8,7 @@ import sqlite3
 import time
 
 from scripts.aggregate_obtainable import aggregate
-from scripts.paper_result_table import ORDER, display_api_workers
+from scripts.paper_result_table import display_api_workers
 from scripts.watch_adaptation_results import publish_changes
 from scripts.sync_api_paper import synchronize
 
@@ -19,6 +19,16 @@ def value(group,key,integer=False):
     return f"{group[key]:.0f}" if integer else f"{group[key]:.1f}"
 
 
+def model_sort_key(model):
+    """API first; rank each group by Obtainable overall accuracy, then label."""
+    overall=(model.get("arms", {}).get("interactive_agent", {})
+             .get("by_task", {}).get("overall") or {})
+    accuracy=overall.get("source_label_accuracy_pct")
+    return (0 if model["group"]=="API" else 1,
+            accuracy is None, -accuracy if accuracy is not None else 0,
+            model["label"])
+
+
 def render(sufficient, closed, obtainable):
     """One row per model; each access condition retains its own denominator."""
     if sufficient["dataset_sha256"] != obtainable["dataset_sha256"] or set(sufficient["family_ids"]) != set(obtainable["family_ids"]):
@@ -27,14 +37,11 @@ def render(sufficient, closed, obtainable):
     for w in display_api_workers(closed["workers"]):
         name="luna_decisions_tools" if w["name"]=="luna_decisions" else w["name"]
         primary[name]=w
-    models=sorted(obtainable["models"],key=lambda m:(
-        0 if m["group"]=="Open weights" else 1,
-        ORDER.index(m["model_id"]) if m["group"]=="Open weights" else
-        ["gpt61_sol","terra-eval","gpt54_mini","gpt41_mini","luna","luna_decisions_tools"].index(m["name"])))
+    models=sorted(obtainable["models"],key=model_sort_key)
     lines=[
       '\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{2.2pt}',
       '\\begin{minipage}{.98\\textwidth}\\centering',
-      '\\caption{\\textbf{Zero-shot model comparison.} Sufficient supplies the relevant photographs initially; Obtainable withholds a requestable photograph. Accuracy matches source labels. Photo retrieval is the percentage of Obtainable cases receiving an unseen image or higher-resolution original; repeated images do not count. Retrieval is split by task, while completion and cost include all Obtainable attempts, including abstentions and failed submissions.}',
+      '\\caption{\\textbf{Zero-shot model comparison.} Sufficient supplies the relevant photographs initially; Obtainable withholds a requestable photograph. Accuracy matches source labels. Photo retrieval is the percentage of Obtainable cases receiving an unseen image or higher-resolution original; repeated images do not count. Retrieval is split by task, while completion and cost include all Obtainable attempts, including abstentions and failed submissions. Within each group, models are ordered by Obtainable overall accuracy.}',
       '\\label{tab:benchmark}',
       '\\begin{tabular}{@{}lrrrrrrrrrr@{}}\\toprule',
       ' & \\multicolumn{2}{c}{Sufficient accuracy} & \\multicolumn{3}{c}{Obtainable accuracy} & \\multicolumn{2}{c}{Photo retrieval} & \\multicolumn{3}{c}{Obtainable interaction}\\\\',
