@@ -1,0 +1,875 @@
+{
+  "audited_on": "2026-11-16",
+  "scope": "All 34 original bibliography entries and their cited claims in the main paper, appendix and related-work comparison table. One direct documentation citation was added.",
+  "method": "Checked primary arXiv records, proceedings/publisher pages or paper PDFs, author repositories and exact official model cards. Title, author prefix/order, year, venue and URL-to-work identity were compared. Cited passages were checked for claim support; this is not validation of ResolveAI experiment scores. Official indexed proceedings records were cross-checked with an independent primary source when direct page retrieval returned a browser challenge or HTTP 403.",
+  "summary": {
+    "original_entries_checked": 34,
+    "existence_verified": 34,
+    "fabricated_or_mismatched_work_found": 0,
+    "original_entries_updated": 11,
+    "new_direct_documentation_entries": 1,
+    "final_bibliography_entries": 35,
+    "cited_keys_in_main_and_supplement": 31,
+    "uncited_bibliography_keys": [
+      "missingbench",
+      "mmmu",
+      "mmstar",
+      "vidcomposition"
+    ],
+    "unsupported_cited_descriptions_found": 0
+  },
+  "publication_updates": [
+    "groundingdino",
+    "dinov2",
+    "clip",
+    "selective",
+    "visa",
+    "abstaineqa",
+    "mmstar",
+    "llavaonevision"
+  ],
+  "important_resolutions": [
+    "MMPerspective official HTML differs from its paper PDF in the first author name and author order. Preserve the published PDF author list; no manuscript author correction is justified.",
+    "VisualToolBench retains its verifiable 2025 arXiv citation. A possible ICLR 2026 workshop publication is not promoted to a main-conference acceptance or treated as independently confirmed here.",
+    "MissingBench remains a preprint; submission to a workshop is not acceptance.",
+    "SmolVLM2 now cites the paper explicitly recommended by the exact official model card. Qwen3.5-9B retains its genuine official model-card reference.",
+    "OpenAI Models and Decisions are separate real documentation resources; the earlier composite reference title was replaced with their actual titles."
+  ],
+  "source_bibliography_sha256": "cb4f4dd3e1465bbfa970a5a356bd9d6e03b932a706228fbd09507ebeeb8bba27",
+  "final_bibliography_sha256": "eebba2ad803b6e97e1658d5a6de3b18963a3539c6c71a0ee1e06afcc094ee3f6",
+  "entries": [
+    {
+      "key": "abstaineqa",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_identity_update_publication",
+      "primary_sources": [
+        "https://arxiv.org/abs/2512.04597",
+        "https://abstaineqa.github.io/",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_When_Robots_Should_Say_I_Dont_Know_Benchmarking_Abstention_in_CVPR_2026_paper.pdf"
+      ],
+      "changes": [
+        "entry_type",
+        "year",
+        "url",
+        "booktitle",
+        "journal"
+      ],
+      "claim_support": {
+        "status": "supported",
+        "summary": "Original OpenEQA questions are paired with annotator-created abstention variants, exactly supporting the manuscript's description.",
+        "locations": [
+          "paper/main.tex:96",
+          "paper/tables/related_benchmarks.tex:27"
+        ]
+      },
+      "final_fields": {
+        "author": "Tao Wu and Chuhao Zhou and Guangyu Zhao and Haozhi Cao and Yewen Pu and Jianfei Yang",
+        "title": "When Robots Should Say \"I Don't Know\": Benchmarking Abstention in Embodied Question Answering",
+        "year": "2026",
+        "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_When_Robots_Should_Say_I_Dont_Know_Benchmarking_Abstention_in_CVPR_2026_paper.pdf",
+        "booktitle": "CVPR"
+      },
+      "verification_notes": [
+        "The official project identifies CVPR 2026 Highlight with the same author order; the official CVF indexed PDF also identifies the accepted conference paper.",
+        "Page range was not verified and is deliberately omitted rather than guessed."
+      ]
+    },
+    {
+      "key": "activevision",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2607.16165",
+        "https://arxiv.org/html/2607.16165v1"
+      ],
+      "changes": [
+        "url"
+      ],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The full paper defines distributed scanning, sequential traversal and visual attribute transfer as three task families, supporting the repeated-inspection, traversal and attribute-comparison wording.",
+        "locations": [
+          "paper/main.tex:88",
+          "paper/tables/related_benchmarks.tex:21"
+        ]
+      },
+      "final_fields": {
+        "title": "An Exam for Active Observers",
+        "author": "Zhang, Jiarui and Tao, Muzi and Wang, Shangshang and Liu, Ollie and Ma, Xuezhe and Neiswanger, Willie",
+        "journal": "arXiv preprint arXiv:2607.16165",
+        "year": "2026",
+        "url": "https://arxiv.org/abs/2607.16165"
+      },
+      "verification_notes": [
+        "Title and all six authors match. A stable URL may be added to the current BibTeX, which presently gives the correct arXiv ID in the journal field.",
+        "No final conference venue verified; do not infer one from the paper date."
+      ]
+    },
+    {
+      "key": "actiview",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://aclanthology.org/2025.acl-long.376/"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The ACL abstract explicitly restricts the perceptual field and requires active zooming or shifting, directly supporting both manuscript descriptions.",
+        "locations": [
+          "paper/main.tex:55",
+          "paper/main.tex:88",
+          "paper/tables/related_benchmarks.tex:21"
+        ]
+      }
+    },
+    {
+      "key": "averimatec",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2505.17978",
+        "https://proceedings.neurips.cc/paper_files/paper/2025/hash/0695cbd1f85f54780e2b351db4252a97-Abstract-Datasets_and_Benchmarks_Track.html",
+        "https://papers.nips.cc/paper_files/paper/2025/file/0695cbd1f85f54780e2b351db4252a97-Paper-Datasets_and_Benchmarks_Track.pdf"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official abstract states that image-text claims have question-answer annotations containing web evidence and that annotation uses a two-stage sufficiency check. This directly supports the main description and the appendix table's annotated web evidence and sufficiency checks. These are annotation-quality checks, not a claim that AVerImaTeC uses ResolveAI's paired access conditions.",
+        "locations": [
+          "paper/main.tex:95",
+          "paper/tables/related_benchmarks.tex:24"
+        ]
+      }
+    },
+    {
+      "key": "blink",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2404.12390",
+        "https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/3356_ECCV_2024_paper.php",
+        "https://link.springer.com/chapter/10.1007/978-3-031-73337-6_9",
+        "https://arxiv.org/html/2404.12390v2"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper explicitly includes visual correspondence and multi-view reasoning, supporting the main descriptions. The appendix comparison table's visual-perception target is also supported. Section 3.1 describes repurposing existing vision datasets, and Sections 3.2/4.3 describe constructed visual prompts/alternatives and prompt variations; these support image reuse and controlled visual variants as prior practices. The paper does not establish ResolveAI's own evidence-access construction, which is the authors' separately stated contribution.",
+        "locations": [
+          "paper/main.tex:54",
+          "paper/main.tex:80",
+          "paper/tables/related_benchmarks.tex:18"
+        ]
+      }
+    },
+    {
+      "key": "clip",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "correct_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2103.00020",
+        "https://proceedings.mlr.press/v139/radford21a.html"
+      ],
+      "changes": [
+        "entry_type",
+        "url",
+        "booktitle",
+        "pages",
+        "journal"
+      ],
+      "claim_support": "Natural-language supervision and zero-shot text-image matching support ranking supplied descriptions.",
+      "final_fields": {
+        "author": "Alec Radford and Jong Wook Kim and Chris Hallacy and others",
+        "title": "Learning Transferable Visual Models From Natural Language Supervision",
+        "year": "2021",
+        "url": "https://proceedings.mlr.press/v139/radford21a.html",
+        "booktitle": "ICML",
+        "pages": "8748--8763"
+      }
+    },
+    {
+      "key": "co3d",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2109.00512",
+        "https://openaccess.thecvf.com/content/ICCV2021/html/Reizenstein_Common_Objects_in_3D_Large-Scale_Learning_and_Evaluation_of_Real-Life_ICCV_2021_paper.html",
+        "https://github.com/facebookresearch/co3d"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper describes real multiview object frames/videos, camera annotations and reconstruction/new-view synthesis evaluation. This supports the manuscript description of multiview object sequences. It does not independently establish physical identity across different sequences.",
+        "locations": [
+          "paper/main.tex:83",
+          "paper/main.tex:128",
+          "paper/tables/related_benchmarks.tex:15"
+        ]
+      }
+    },
+    {
+      "key": "countercredit",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2609.22910",
+        "https://arxiv.org/html/2609.22910v1"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported_with_operational_scope",
+        "summary": "The method fixes the realized prefix, compares looking with immediate answering, and replaces returned crops by size-matched random patches. Call-specific credit requires both counterfactual checks. These are operational score-based tests, not oracle proof of human-semantic necessity.",
+        "locations": [
+          "paper/main.tex:97",
+          "paper/main.tex:264",
+          "paper/appendix.tex:328",
+          "paper/tables/related_benchmarks.tex:30"
+        ]
+      },
+      "verification_notes": [
+        "All six listed authors match arXiv. The official comment states preprint under review; no accepted conference venue claimed.",
+        "If more precision is desired, describe rewards as using counterfactual tests of call necessity and pixel use. The existing short description is consistent with the paper's stated method."
+      ]
+    },
+    {
+      "key": "dinov2",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "correct_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2304.07193",
+        "https://openreview.net/forum?id=a68SUt6zFt"
+      ],
+      "changes": [
+        "journal",
+        "year",
+        "url"
+      ],
+      "claim_support": "General-purpose image and pixel-level visual features support the feature-correspondence tool; no identity oracle is attributed to the paper.",
+      "final_fields": {
+        "author": "Maxime Oquab and Timoth{\\'e}e Darcet and Th{\\'e}o Moutakanni and others",
+        "title": "{DINOv2}: Learning Robust Visual Features without Supervision",
+        "journal": "Transactions on Machine Learning Research",
+        "year": "2024",
+        "url": "https://openreview.net/forum?id=a68SUt6zFt"
+      },
+      "access_note": "OpenReview page currently presents a browser check; official indexed PDF states Published in TMLR 01/2024; arXiv independently confirms title and authors."
+    },
+    {
+      "key": "groundingdino",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "correct_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2303.05499",
+        "https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/6319_ECCV_2024_paper.php"
+      ],
+      "changes": [
+        "entry_type",
+        "year",
+        "url",
+        "booktitle",
+        "journal"
+      ],
+      "claim_support": "Text-conditioned region detection is supported by the paper and its referring-expression evaluation.",
+      "final_fields": {
+        "author": "Shilong Liu and Zhaoyang Zeng and Tianhe Ren and others",
+        "title": "Grounding {DINO}: Marrying {DINO} with Grounded Pre-Training for Open-Set Object Detection",
+        "year": "2024",
+        "url": "https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/6319_ECCV_2024_paper.php",
+        "booktitle": "ECCV"
+      }
+    },
+    {
+      "key": "internvl35",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2508.18265",
+        "https://github.com/OpenGVLab/InternVL",
+        "https://huggingface.co/OpenGVLab/InternVL3_5-8B-HF",
+        "https://huggingface.co/OpenGVLab/InternVL3_5-14B-HF",
+        "https://huggingface.co/OpenGVLab/InternVL3_5-8B"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official repository lists the 8B-HF and 14B-HF formats as InternVL3.5 releases and recommends the same arXiv report. Metadata matches the original arXiv record.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "OpenGVLab/InternVL3_5-8B-HF",
+          "OpenGVLab/InternVL3_5-14B-HF"
+        ],
+        "not_verified": [
+          "No separate conference/journal venue confirmed for InternVL3.5."
+        ]
+      }
+    },
+    {
+      "key": "llavaonevision",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_preprint_published_version_available",
+      "primary_sources": [
+        "https://arxiv.org/abs/2408.03326",
+        "https://llava-vl.github.io/blog/2024-08-05-llava-onevision/",
+        "https://huggingface.co/llava-hf/llava-onevision-qwen2-7b-ov-hf",
+        "https://openreview.net/forum?id=zKv8qULV6n",
+        "https://openreview.net/pdf/5f36c0c4436ea26159310510d02dd062b913402d.pdf"
+      ],
+      "changes": [
+        "journal",
+        "year",
+        "url"
+      ],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The exact HF checkpoint card points to arXiv:2408.03326 and describes the 7B OneVision model and multi-image support. Current bibliography authors match arXiv v3, including Peiyuan Zhang.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "llava-hf/llava-onevision-qwen2-7b-ov-hf"
+        ]
+      },
+      "final_fields": {
+        "title": "LLaVA-OneVision: Easy Visual Task Transfer",
+        "author": "Li, Bo and Zhang, Yuanhan and Guo, Dong and Zhang, Renrui and Li, Feng and Zhang, Hao and Zhang, Kaichen and Zhang, Peiyuan and Li, Yanwei and Liu, Ziwei and Li, Chunyuan",
+        "journal": "Transactions on Machine Learning Research",
+        "year": "2025",
+        "url": "https://openreview.net/forum?id=zKv8qULV6n"
+      }
+    },
+    {
+      "key": "missingbench",
+      "existence_verified": true,
+      "cited_in_manuscript": false,
+      "original_status": "verified_preprint_uncited",
+      "primary_sources": [
+        "https://arxiv.org/abs/2607.18673"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "not_cited_in_current_manuscript",
+        "summary": "The paper studies recognition of missing object parts, including tool-assisted inspection. No current main, appendix or table citation to this key was found.",
+        "locations": []
+      },
+      "verification_notes": [
+        "The official arXiv comment says submitted to the ECCV 2026 eXCV workshop; submission does not establish acceptance. No final venue verified."
+      ]
+    },
+    {
+      "key": "mmmu",
+      "existence_verified": true,
+      "cited_in_manuscript": false,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2311.16502",
+        "https://openaccess.thecvf.com/content/CVPR2024/html/Yue_MMMU_A_Massive_Multi-discipline_Multimodal_Understanding_and_Reasoning_Benchmark_for_CVPR_2024_paper.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "not_cited_in_current_main_or_appendix_tables",
+        "summary": "The entry exists in references.bib but no citation to this key occurs in current paper/*.tex, including main.tex, appendix.tex and related_benchmarks.tex. There is no corresponding manuscript assertion to check.",
+        "locations": []
+      }
+    },
+    {
+      "key": "mmperspective",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_with_primary_source_metadata_conflict",
+      "primary_sources": [
+        "https://proceedings.neurips.cc/paper_files/paper/2025/file/6f17e48da556b38db2906acd7594a0ff-Paper-Datasets_and_Benchmarks_Track.pdf",
+        "https://proceedings.neurips.cc/paper_files/paper/2025/hash/6f17e48da556b38db2906acd7594a0ff-Abstract-Datasets_and_Benchmarks_Track.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official paper evaluates perspective perception, reasoning and robustness, including geometric and spatial consistency tasks. This supports the manuscript perspective/spatial-reasoning description.",
+        "locations": [
+          "paper/main.tex:54",
+          "paper/main.tex:81",
+          "paper/tables/related_benchmarks.tex:18"
+        ]
+      },
+      "primary_source_conflicts": [
+        {
+          "field": "author",
+          "pdf_first_four": [
+            "Yolo Yunlong Tang",
+            "Pinxin Liu",
+            "Zhangyun Tan",
+            "Mingqian Feng"
+          ],
+          "html_first_four": [
+            "Yunlong Tang",
+            "Pinxin Liu",
+            "Mingqian Feng",
+            "Zhangyun Tan"
+          ],
+          "resolution": "Use the official paper PDF for this audit; HTML differs in first-author name and third/fourth author order. All remaining authors match. This is a publisher-metadata conflict, not a demonstrated manuscript error."
+        }
+      ]
+    },
+    {
+      "key": "mmstar",
+      "existence_verified": true,
+      "cited_in_manuscript": false,
+      "original_status": "verified_preprint_with_available_publication",
+      "primary_sources": [
+        "https://arxiv.org/abs/2403.20330",
+        "https://proceedings.neurips.cc/paper_files/paper/2024/hash/2f8ee6a3d766b426d2618e555b5aeb39-Abstract-Conference.html",
+        "https://proceedings.neurips.cc/paper_files/paper/2024/file/2f8ee6a3d766b426d2618e555b5aeb39-Paper-Conference.pdf"
+      ],
+      "changes": [
+        "entry_type",
+        "url",
+        "booktitle",
+        "journal"
+      ],
+      "claim_support": {
+        "status": "not_cited_in_current_main_or_appendix_tables",
+        "summary": "The entry exists in references.bib but no citation to this key occurs in current paper/*.tex, including main.tex, appendix.tex and related_benchmarks.tex. There is no corresponding manuscript assertion to check.",
+        "locations": []
+      },
+      "final_fields": {
+        "author": "Lin Chen and Jinsong Li and Xiaoyi Dong and others",
+        "title": "Are We on the Right Way for Evaluating Large Vision-Language Models?",
+        "year": "2024",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/2f8ee6a3d766b426d2618e555b5aeb39-Abstract-Conference.html",
+        "booktitle": "NeurIPS"
+      }
+    },
+    {
+      "key": "mmvp",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2401.06209",
+        "https://openaccess.thecvf.com/content/CVPR2024/html/Tong_Eyes_Wide_Shut_Exploring_the_Visual_Shortcomings_of_Multimodal_LLMs_CVPR_2024_paper.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper constructs MMVP from visually different image pairs that CLIP represents similarly and studies failures across basic visual patterns. This supports the manuscript description of fine visual distinctions and visual shortcomings; the grouped introductory citation need not imply that MMVP alone measures correspondence and all spatial reasoning.",
+        "locations": [
+          "paper/main.tex:54",
+          "paper/main.tex:81"
+        ]
+      }
+    },
+    {
+      "key": "mvtec",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://openaccess.thecvf.com/content_CVPR_2019/html/Bergmann_MVTec_AD_--_A_Comprehensive_Real-World_Dataset_for_Unsupervised_Anomaly_CVPR_2019_paper.html",
+        "https://www.mvtec.com/research-teaching/datasets/mvtec-ad"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official dataset and CVPR paper describe industrial anomaly images and pixel-level anomaly regions, supporting the manuscript description of anomaly labels/regions and condition-image construction. The citation does not itself certify the sufficiency of the manuscript previews.",
+        "locations": [
+          "paper/main.tex:83",
+          "paper/main.tex:122",
+          "paper/tables/related_benchmarks.tex:12"
+        ]
+      }
+    },
+    {
+      "key": "openai_api",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "composite_title_and_insufficiently_specific_URL",
+      "primary_sources": [
+        "https://developers.openai.com/api/docs/models",
+        "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
+        "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+        "https://developers.openai.com/api/docs/guides/decisions"
+      ],
+      "changes": [
+        "title",
+        "note"
+      ],
+      "claim_support": "Official catalog confirms Sol, Terra and Luna names; model pages confirm both mini variants. Decisions guide explicitly supports gpt-6-luna and application-executed actions selected by typed choices.",
+      "final_fields": {
+        "author": "{OpenAI}",
+        "title": "Models",
+        "year": "2026",
+        "howpublished": "\\url{https://developers.openai.com/api/docs/models}",
+        "note": "Accessed November 16, 2026"
+      }
+    },
+    {
+      "key": "openeqa",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://open-eqa.github.io/",
+        "https://openaccess.thecvf.com/content/CVPR2024/html/Majumdar_OpenEQA_Embodied_Question_Answering_in_the_Era_of_Foundation_Models_CVPR_2024_paper.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official project and CVF record explicitly support both episodic-memory and active-exploration settings. Describing it as including active exploration is accurate.",
+        "locations": [
+          "paper/main.tex:55",
+          "paper/main.tex:89",
+          "paper/tables/related_benchmarks.tex:27"
+        ]
+      },
+      "verification_notes": [
+        "Author prefix, title and CVPR year match. Direct CVF HTML returned 403, but its official indexed proceedings metadata and the authors' project were readable."
+      ]
+    },
+    {
+      "key": "pixtral",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_report_checkpoint_family_supported",
+      "primary_sources": [
+        "https://arxiv.org/abs/2410.07073",
+        "https://huggingface.co/mistralai/Pixtral-12B-2409",
+        "https://huggingface.co/mistral-experimental/pixtral-12b"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The original report verifies metadata and describes Pixtral-12B. The exact evaluated checkpoint card identifies itself as a Transformers-compatible Pixtral checkpoint; the Mistral official card identifies the Pixtral-12B-2409 family.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "mistral-experimental/pixtral-12b"
+        ],
+        "not_verified": [
+          "Bit-for-bit weight equivalence between the experimental conversion and the mistralai original package was not independently verified and is not inferred from the shared family name.",
+          "No separate conference/journal venue confirmed."
+        ]
+      }
+    },
+    {
+      "key": "qwen25",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2502.13923",
+        "https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct",
+        "https://github.com/QwenLM/Qwen3-VL"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The arXiv record verifies metadata; the official Qwen model card identifies the 7B instruction model and the author repository recommends the same technical report.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "Qwen/Qwen2.5-VL-7B-Instruct"
+        ],
+        "not_verified": [
+          "No separate conference/journal venue confirmed; the existing arXiv citation is valid."
+        ]
+      }
+    },
+    {
+      "key": "qwen3",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.21631",
+        "https://github.com/QwenLM/Qwen3-VL",
+        "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The arXiv report explicitly covers dense 2B/4B/8B variants. The author repository gives the same title, first authors, identifier and year, and lists the corresponding Instruct releases.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "Qwen/Qwen3-VL-2B-Instruct",
+          "Qwen/Qwen3-VL-4B-Instruct",
+          "Qwen/Qwen3-VL-8B-Instruct"
+        ],
+        "not_verified": [
+          "No separate conference/journal venue confirmed."
+        ]
+      }
+    },
+    {
+      "key": "qwen35",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_primary_model_card",
+      "primary_sources": [
+        "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "https://qwen.ai/blog?id=qwen3.5"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The official card identifies the post-trained 9B vision-language model and gives a Qwen Team 2026 official citation.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "Qwen/Qwen3.5-9B"
+        ],
+        "not_verified": [
+          "Individual first three authors do not apply to the current corporate card citation.",
+          "No dedicated Qwen3.5-9B arXiv report or peer-reviewed venue confirmed."
+        ]
+      }
+    },
+    {
+      "key": "selective",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "correct_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/1705.08500",
+        "https://proceedings.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html"
+      ],
+      "changes": [
+        "entry_type",
+        "url",
+        "booktitle",
+        "journal"
+      ],
+      "claim_support": "Coverage and selective risk are explicitly defined; a continuous curve also needs an actual confidence/threshold rule as stated in the appendix.",
+      "final_fields": {
+        "author": "Yonatan Geifman and Ran El-Yaniv",
+        "title": "Selective Classification for Deep Neural Networks",
+        "year": "2017",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html",
+        "booktitle": "NIPS"
+      }
+    },
+    {
+      "key": "sketchpad",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2406.09403",
+        "https://proceedings.neurips.cc/paper_files/paper/2024/hash/fb82011040977c7712409fbdb5456647-Abstract-Conference.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "Sketchpad supplies drawing operations and specialist detection/segmentation models for visual reasoning, supporting the manuscript's broad description of richer image operations.",
+        "locations": [
+          "paper/main.tex:90"
+        ]
+      }
+    },
+    {
+      "key": "smolvlm2",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_primary_model_card_paper_preferred",
+      "primary_sources": [
+        "https://huggingface.co/HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+        "https://arxiv.org/abs/2504.05299",
+        "https://openreview.net/pdf/ff0790564f57d670a9033629dfbdaa6328752eca.pdf"
+      ],
+      "changes": [
+        "entry_type",
+        "title",
+        "author",
+        "url",
+        "journal"
+      ],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The exact official card describes SmolVLM2 2.2B, credits Hugging Face, supports image/multi-image/video input, and explicitly recommends the SmolVLM paper.",
+        "locations": [],
+        "evaluated_model_ids": [
+          "HuggingFaceTB/SmolVLM2-2.2B-Instruct"
+        ],
+        "not_verified": [
+          "No separate peer-reviewed venue confirmed for the recommended SmolVLM paper."
+        ]
+      },
+      "final_fields": {
+        "title": "{SmolVLM}: Redefining Small and Efficient Multimodal Models",
+        "author": "Andr{\\'e}s Marafioti and Orr Zohar and Miquel Farr{\\'e} and Merve Noyan and Elie Bakouch and Pedro Cuenca and Cyril Zakka and Loubna Ben Allal and Anton Lozhkov and Nouamane Tazi and Vaibhav Srivastav and Joshua Lochner and Hugo Larcher and Mathieu Morlon and Lewis Tunstall and Leandro von Werra and Thomas Wolf",
+        "year": "2025",
+        "url": "https://arxiv.org/abs/2504.05299",
+        "journal": "arXiv preprint arXiv:2504.05299"
+      }
+    },
+    {
+      "key": "vidcomposition",
+      "existence_verified": true,
+      "cited_in_manuscript": false,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://openaccess.thecvf.com/content/CVPR2025/html/Tang_VidComposition_Can_MLLMs_Analyze_Compositions_in_Compiled_Videos_CVPR_2025_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2025/papers/Tang_VidComposition_Can_MLLMs_Analyze_Compositions_in_Compiled_Videos_CVPR_2025_paper.pdf",
+        "https://arxiv.org/abs/2411.10979"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "not_cited_in_current_main",
+        "summary": "The bib entry is present, but the current author main.tex contains no citation to this key, so there is no manuscript claim to check for this entry. The paper itself concerns composition understanding in compiled videos.",
+        "locations": []
+      }
+    },
+    {
+      "key": "visa",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "correct_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2207.14315",
+        "https://link.springer.com/chapter/10.1007/978-3-031-20056-4_23"
+      ],
+      "changes": [
+        "entry_type",
+        "booktitle",
+        "pages",
+        "doi",
+        "url",
+        "journal"
+      ],
+      "claim_support": "The primary paper introduces VisA with image/pixel anomaly labels, appropriate as the named training image source.",
+      "final_fields": {
+        "title": "SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation",
+        "author": "Zou, Yang and Jeong, Jongheon and Pemula, Latha and Zhang, Dongqing and Dabeer, Onkar",
+        "year": "2022",
+        "booktitle": "ECCV",
+        "pages": "392--408",
+        "doi": "10.1007/978-3-031-20056-4_23",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-031-20056-4_23"
+      }
+    },
+    {
+      "key": "visualtoolbench",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_preprint_workshop_update_indicated",
+      "primary_sources": [
+        "https://arxiv.org/abs/2510.12712",
+        "https://openreview.net/pdf?id=JfRtB3Ss1A"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The benchmark explicitly evaluates image manipulation, transformation and integration with tools; it supports the collective statement about tool-enabled image inspection.",
+        "locations": [
+          "paper/main.tex:90"
+        ]
+      },
+      "publication_update": {
+        "venue": "ICLR 2026 Workshop on Multimodal Intelligence",
+        "year": 2026,
+        "evidence_status": "Official OpenReview PDF search index displays a published-workshop header and matching title/authors; direct forum and PDF access returned browser verification.",
+        "recommended_action": "The existing 2025 arXiv citation is authentic. A workshop citation is a possible update, not an ICLR main-conference acceptance; confirm the indexed PDF or workshop listing before replacing."
+      }
+    },
+    {
+      "key": "vsibench",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2412.14171",
+        "https://openaccess.thecvf.com/content/CVPR2025/html/Yang_Thinking_in_Space_How_Multimodal_Large_Language_Models_See_Remember_CVPR_2025_paper.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper introduces a video-based visual-spatial benchmark and analyzes spatial reasoning limitations, supporting the manuscript spatial-reasoning description.",
+        "locations": [
+          "paper/main.tex:54",
+          "paper/main.tex:81"
+        ]
+      }
+    },
+    {
+      "key": "vstar",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2312.14135",
+        "https://openaccess.thecvf.com/content/CVPR2024/html/Wu_V_Guided_Visual_Search_as_a_Core_Mechanism_in_Multimodal_CVPR_2024_paper.html"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper proposes language-guided visual search and a working-memory mechanism to find image details. This supports its inclusion among methods extending visual inspection.",
+        "locations": [
+          "paper/main.tex:90"
+        ]
+      },
+      "verification_notes": [
+        "arXiv title and both authors match; CVF indexed proceedings record confirms CVPR 2024 and page range. A 2023 arXiv date does not invalidate the cited 2024 conference year.",
+        "Direct CVF HTML returned 403; its official indexed record and arXiv were accessible."
+      ]
+    },
+    {
+      "key": "vtcbench",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified_preprint",
+      "primary_sources": [
+        "https://arxiv.org/abs/2603.15030"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "This paper evaluates composition of OpenCV-based visual operations and multi-step execution, supporting the manuscript's visual-tool benchmark characterization.",
+        "locations": [
+          "paper/main.tex:90"
+        ]
+      },
+      "verification_notes": [
+        "The actual arXiv page, not only its ID, was read and matches the title and author prefix.",
+        "Do not confuse this work with the separate VTC-Bench visual-token-compression papers published at ACL/EMNLP. No final venue was verified for this particular tool-chaining paper."
+      ]
+    },
+    {
+      "key": "webqa",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "original_status": "verified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2109.00590",
+        "https://openaccess.thecvf.com/content/CVPR2022/html/Chang_WebQA_Multihop_and_Multimodal_QA_CVPR_2022_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2022/papers/Chang_WebQA_Multihop_and_Multimodal_QA_CVPR_2022_paper.pdf"
+      ],
+      "changes": [],
+      "claim_support": {
+        "status": "supported",
+        "summary": "The paper requires finding and combining relevant snippets/images among source candidates to answer multihop multimodal questions. This supports multimodal source selection in the main text and the appendix comparison table; it does not mean that WebQA uses the same paired evidence-availability design as ResolveAI.",
+        "locations": [
+          "paper/main.tex:95",
+          "paper/tables/related_benchmarks.tex:24"
+        ]
+      }
+    },
+    {
+      "key": "openai_decisions",
+      "existence_verified": true,
+      "cited_in_manuscript": true,
+      "primary_sources": [
+        "https://developers.openai.com/api/docs/guides/decisions"
+      ],
+      "changes": [
+        "new_entry"
+      ],
+      "claim_support": "The official guide identifies gpt-6-luna, typed choices and application-executed actions. This is a separate documentation reference, not an additional evaluated model."
+    }
+  ]
+}
