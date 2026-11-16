@@ -36,85 +36,77 @@ If the original cannot be supplied, the policy abstains.}
 
 \begin{abstract}
 Verifying an object's identity or condition can require photographs beyond those initially supplied.
-We introduce \benchmark, an interactive benchmark in which vision-language models inspect available images, request additional photographs and decide whether the evidence supports an answer.
+We introduce \benchmark, an interactive benchmark in which vision-language models inspect available images, request additional photographs and decide whether the evidence settles the claims.
 Each case family fixes the claim and object state while varying access to recorded images.
 Public-photo cases test identity and condition verification; paired rendered scenes require complementary views to link a reference item to its hidden condition.
 The rendered pairs share initial images but require different follow-up views.
 Enumerating alternative scenes establishes whether the collected images settle the claim.
 We evaluate ten open-weight and five API models on 209 public-photo families and four local model configurations on 116 held-out rendered cases.
-Post-training improves answer accuracy and completion on public photographs, but models still request images they have already seen or stop without seeking missing evidence.
-In the rendered scenes, even with multiple-choice requests, the tested models rarely collect sufficient evidence for both members of a pair.
+Post-training the open-weight models improves answer accuracy and completion on public photographs, but they still request images they have already seen or stop without seeking missing evidence.
+In the rendered scenes, even when requests are presented as multiple-choice options, the tested models rarely collect sufficient evidence for both members of a pair.
 \end{abstract}
 
 \section{Introduction}
-A close-up can reveal a chip without identifying the item, while a wider view can establish identity and hide the defect.
-Verifying an object claim may therefore require several photographs, each answering a different question.
+A close-up can reveal a chipped rim without identifying the item, while a wider view can establish identity but hide the defect.
+Verifying a claim about an object’s identity or condition may therefore require several photographs, each answering a different question.
 A model must decide which detail to inspect, whether another view is worth requesting, and when the available material supports an answer.
 
 Existing evaluations study visual distinctions, correspondence and spatial reasoning~\cite{mmvp,blink,mmperspective,vsibench}.
-Active-perception benchmarks also evaluate how models choose observations~\cite{actiview,openeqa}.
-In object verification, the claim determines which observation is needed.
+Active-perception benchmarks evaluate where models look, such as zooming within an image or exploring an environment~\cite{actiview,openeqa}.
+Object verification adds a further requirement: the claim determines which observation is needed.
 A small defect may require a sharper image; uncertain identity may require another view.
 A photograph of the wrong item resolves neither question, and the requested record may be missing or unavailable.
 
-We introduce \benchmark to examine these choices through matched case families.
-Each family fixes an object claim and its physical state, while access versions vary which photographs are supplied or can be requested.
+We introduce \benchmark to examine how models make these choices through matched case families.
+Each family fixes an object claim and its actual state; access versions vary whether needed photographs are supplied initially, requestable or unobtainable.
 Models inspect released images, ask for additional records and submit \emph{Supported}, \emph{Refuted} or \emph{Need more evidence} with image references.
 Requests change the observations without changing the scene.
 
-The benchmark has two complementary collections.
-Public photographs test verification across varied object appearances and image quality.
-They also admit a fixed restoration rule: requesting an original can recover detail from a preview.
-To test multi-step view selection, we construct rendered scenes in which a claim links a reference item to its hidden rear condition.
-Both members of a scene pair begin with identical images.
-A front survey reveals the target at different positions, so the relevant rear view changes.
-No single request settles the claim.
-Alternative scenes and localized references establish whether the collected images support the answer.
+The benchmark has two complementary collections. Public photographs test verification across varied appearances and image quality; requesting a preview's original recovers lost detail. For multi-step view selection, paired rendered scenes concern the hidden rear of an item shown in a reference photograph. The pairs begin with identical images, but a front view reveals different target positions, requiring different rear views. No single request settles the claim. We check the collected evidence by enumerating consistent alternative scenes and verifying cited regions.
 
 We evaluate ten open-weight and five API models on public photographs and study SFT and RL on three backbones.
-Post-training improves completion and answer accuracy more consistently than useful requests.
-The paired scenes expose a further difficulty: four tested model configurations seldom collect enough evidence for both members, even when the interface ensures valid request choices.
+Post-training improves completion and answer accuracy, but its effect on useful requests varies across models.
+The paired scenes expose a further difficulty: four tested model configurations seldom collect enough evidence for both members of a pair, even when requests are presented as multiple-choice options.
 
 Our contributions are:
 \begin{itemize}
-\item An interactive object-verification benchmark combining public photographs and controlled scenes under matched evidence access.
+\item An interactive object-verification benchmark combining public photographs and rendered scenes, with each claim posed under multiple evidence-access versions.
 \item Paired two-step cases requiring observation-dependent view selection, with exact sufficiency checks and scoring of cited objects and regions.
-\item Model and post-training comparisons that distinguish answer accuracy, successful evidence requests and the use of returned images.
+\item An evaluation of 15 models and SFT/RL post-training that separately measures answer accuracy, successful evidence requests, and the use of returned images.
 \end{itemize}
 
 \section{Related Work}
 \paragraph{Visual benchmarks and source datasets.}
 BLINK brings correspondence and multi-view reasoning into multimodal evaluation~\cite{blink}.
 MMVP tests fine visual distinctions, while MMPerspective and VSI-Bench examine perspective and spatial reasoning~\cite{mmvp,mmperspective,vsibench}.
-Object verification also requires deciding which observations to obtain.
-Our public-photo cases draw on MVTec AD, which provides anomaly labels and regions, and CO3D, which provides object sequences for reconstruction and novel-view synthesis~\cite{mvtec,co3d}.
-We construct claims, request options and access settings from these records.
+Beyond these perceptual skills, object verification requires deciding which observations to obtain.
+Our public-photo cases draw on MVTec AD for anomaly labels and regions and on CO3D for multi-view object sequences~\cite{mvtec,co3d}.
+We construct claims, request options and access settings from these datasets.
 Rendered cases further control which views establish identity and condition.
 
 \paragraph{Active observation and visual tools.}
 ActiView tests zooming and shifting within a restricted field of view~\cite{actiview}; ActiveVision studies repeated inspection through scanning, traversal and attribute comparison~\cite{activevision}.
 OpenEQA includes active exploration of embodied environments~\cite{openeqa}.
 V*, Visual Sketchpad and visual-tool benchmarks extend the operations available for examining images~\cite{vstar,sketchpad,visualtoolbench,vtcbench}.
-\benchmark combines operations on available images with requests for recorded photographs.
-New photographs can reveal detail or surfaces absent from the supplied pixels.
+Alongside image inspection, \benchmark lets models request new photographs, which can reveal detail or surfaces absent from the supplied pixels.
 A request may also fail, requiring the model to decide whether the remaining evidence justifies an answer.
 
 \paragraph{Evidence selection and abstention.}
 WebQA evaluates multimodal source selection~\cite{webqa}, and AVerImaTeC verifies image--text claims using annotated web evidence~\cite{averimatec}.
 AbstainEQA pairs embodied questions with variants requiring abstention~\cite{abstaineqa}.
-CounterCredit evaluates visual calls through shared-history answering and image-content substitutions~\cite{countercredit}.
-We study how access to photographs changes verification of a fixed object claim.
-Matched access versions compare a policy's response when the same request succeeds or fails.
+CounterCredit rewards visual calls only when they were needed and their returned pixels were used~\cite{countercredit}.
+We study how access to photographs changes the verification of a fixed object claim.
+Matched access versions let us compare a policy's response when the same request succeeds or fails.
 Paired rendered scenes address a further question: can the first returned photograph change which photograph the model requests next?
-Their shared initial images and different useful second views let us compare adaptive requests with fixed schedules, while checking whether the resulting evidence supports the answer.
+Because the paired scenes share initial images but need different second views, we can compare adaptive requests with fixed request orders and check whether the resulting evidence supports the answer.
 \section{The \benchmark Benchmark}
 
 \begin{figure*}[t]\centering
 \resizebox{\textwidth}{!}{\input{figures/framework}}
 \caption{\textbf{The \benchmark environment.}
-Condition and identity claims (a) are paired across four access settings (b), holding each claim and object state fixed.
-The last three settings share a preview; crossed-out photographs remain unreleased.
-The tools (c) inspect existing pixels or request recorded photographs; examples come from different cases.}
+Each claim (a), whether about the condition or identity, is posed under four access versions (b), holding the claim and object state fixed.
+The last three versions start from the same preview; crossed-out photographs are never supplied to the model.
+The tools (c) inspect existing pixels or request recorded photographs before the model submits an answer with image or region references; examples come from different cases.}
 \label{fig:framework}
 \end{figure*}
 
@@ -122,52 +114,48 @@ The tools (c) inspect existing pixels or request recorded photographs; examples 
 \benchmark uses two collections to study different requirements of object verification.
 Public photographs test condition and identity separately.
 The rendered collection links the two: a defect must be shown on the item identified by a reference photograph.
-This requires collecting complementary views rather than checking an arbitrary object of the same category.
+This requires collecting complementary views rather than inspecting a look-alike object.
 
 \paragraph{Object condition.}
 A condition claim names a defect on a target item, such as a squeezed capsule or a chipped bottle.
-The model determines whether that defect is present in the submitted photograph.
+The model determines whether that defect is present in the photograph submitted with the claim.
 We construct these claims from MVTec AD images and anomaly annotations~\cite{mvtec}.
 Some cases include a normal reference from another specimen, which illustrates normal appearance but does not document the target's earlier state.
-Small defects may be difficult to see in a preview and visible in the recorded original.
+Small defects may be difficult to see in a preview but visible in the recorded original.
 
 \paragraph{Object identity.}
-An identity claim states that two submissions show the same physical item.
+An identity claim states that two submitted photographs show the same physical item.
 We form image pairs from recorded CO3D sequences~\cite{co3d}.
-For labelled controls, Supported pairs contain views from one sequence and Refuted pairs depict different categories.
-Cross-sequence pairs remain unlabelled when different sequences could depict the same item.
-The labelled controls test same-sequence matching and cross-category mismatches; fine-grained identity among similar objects is addressed by the rendered cases.
+For labeled controls, Supported pairs contain views from one sequence and Refuted pairs depict different categories.
+Cross-sequence pairs remain unlabeled when different sequences could depict the same item.
+The labeled controls test same-sequence matching and cross-category mismatches; fine-grained identity among similar objects is addressed by the rendered cases.
 
 The public-photo pool contains 478 candidate families: 188 condition families, 64 labelled identity controls and 226 unlabelled identity candidates.
 Four access versions per family yield 1,912 cases.
-One agent rollout on one version is an episode.
-Related views and claim rewrites stay in the same source group when separating training and evaluation data.
-The fixed labelled test subset is described in Section~\ref{sec:setup}.
+A single run of a policy on one case is an episode.
+To prevent leakage, related views and rewritten claims from the same source are assigned to the same split.
+The fixed labeled test subset is described in Section~\ref{sec:setup}.
 
 \subsection{One Claim, Four Evidence Settings}
-An episode presents an object claim and initial photographs (Figure~\ref{fig:framework}).
-The model can inspect images, crop regions, compare views, use grounding tools and request a recorded photograph of a specified object, time or view.
-It finishes with \emph{Supported}, \emph{Refuted} or \emph{Need more evidence}, citing the images and regions used.
-Requests change which records are visible without changing the physical scene.
+The model can inspect images, crop regions, compare views, use grounding tools and request a recorded photograph of a specified object, time or view (Figure~\ref{fig:framework}).
+Requests reveal records without changing the scene.
 
-A family fixes the claim \(q\) and object state \(z\).
-Version \(v\) specifies initial images \(\mathcal{E}_0^v\) and the full accessible collection \(\mathcal{A}^v\).
-At step \(t\), \(\mathcal{E}_t^v\) records the source regions and resolutions already shown, including crops.
-The model sees the claim, released images, tool responses and remaining budget.
-Object state and evidence annotations are private.
+A family fixes claim \(q\) and object state \(z\).
+Version \(v\) specifies initial images \(\mathcal{E}_0^v\) and all obtainable images \(\mathcal{A}^v\), including requestable photographs.
+At step \(t\), the model sees \(q\), previously shown source regions and resolutions \(\mathcal{E}_t^v\) (including crops), tool responses and remaining budget; object state and annotations remain hidden.
 
 In \emph{Sufficient}, the records selected to establish the answer are supplied initially.
-In \emph{Obtainable}, they are withheld and can be released through public request options.
+In \emph{Obtainable}, they are withheld and can be returned through public request options.
 In \emph{Missing}, the recorded collection lacks the required evidence.
 In \emph{Unavailable}, relevant photographs exist but cannot be supplied.
-The last two settings can produce identical public failures: they distinguish why a record is absent, while requiring the same decision when the available evidence is identical.
+The last two settings distinguish why a record is absent but require the same decision under identical observations.
 
-Requests match public object, time and view fields to records.
-Writing \(c^\star(q,v)\) for the minimum cost of sufficient evidence (infinite if unreachable), Sufficient has \(c^\star=0\); Obtainable requires a finite path within cost and turn limits.
+Requests match public object, time and view fields to recorded photographs.
+The minimum cost of reaching sufficient evidence, \(c^\star(q,v)\), is zero in Sufficient, finite within the cost and turn limits in Obtainable, and infinite in Missing and Unavailable.
 The model is not told the access version and must base requests on its public observation history.
 
 \subsection{What Is Enough to Decide?}
-Evidence sufficiency is defined by the claim; different action sequences may reach a sufficient set.
+For a fixed claim, sufficiency depends on the observed evidence, not on the acquisition path.
 For a claim with parts \(q=\bigwedge_{j=1}^{m}q_j\), let \(s_j(\mathcal{E})\) and \(r_j(\mathcal{E})\) indicate whether the observations support or refute part \(j\).
 Then
 \begin{equation}
@@ -176,11 +164,11 @@ S_q(\mathcal{E})=\bigwedge_{j=1}^{m}s_j(\mathcal{E}),
 R_q(\mathcal{E})=\bigvee_{j=1}^{m}r_j(\mathcal{E}).
 \label{eq:sufficiency}
 \end{equation}
-Supporting a claim requires evidence for every part; a decisive counterexample to one part can be enough to refute it.
-For example, a close-up may show damage without identifying the item.
-An identity mismatch, however, refutes the compound claim that the photograph shows damage to the listed item.
+Supporting a claim requires evidence for every part; a decisive counterexample to one part can be enough to refute the whole claim.
+For example, a close-up showing damage does not support the claim if it does not identify the item.
+An identity mismatch, however, refutes the compound claim that the photograph shows damage to the target item.
 
-For consistent annotations, the answer justified by the observed evidence is
+Because consistent annotations never make \(S_q\) and \(R_q\) both 1, the answer justified by the observed evidence is
 \begin{equation}
 Y_q(\mathcal{E})=
 \begin{cases}
@@ -190,20 +178,18 @@ Y_q(\mathcal{E})=
 \end{cases}
 \label{eq:decision}
 \end{equation}
-where \(\Spt,\Rft,\Nme\) denote the three responses.
-The episode target is \(Y_q(\mathcal{A})\), accounting for accessible records and permitted viewing actions.
-Thus, a true claim still requires \(\Nme\) when none of the accessible evidence establishes it.
+where \(\Spt,\Rft,\Nme\) denote the three responses: Supported, Refuted and Need more evidence.
+The episode target is \(Y_q(\mathcal{A}^v)\), the answer justified by all evidence obtainable in that version through permitted requests and viewing actions.
+Even a true claim requires \(\Nme\) when accessible evidence cannot establish it.
 
-For an Obtainable case, the initial images must leave the claim unresolved,
-\(Y_q(\mathcal{E}_0)=\Nme\), while an accessible set within budget determines an answer, \(Y_q(\mathcal{A})\ne\Nme\).
-A smaller preview alone does not guarantee this ambiguity.
-Public-photo versions use source labels and selected records to construct the access conditions.
-The rendered versions additionally check initial ambiguity and eventual sufficiency against the images themselves, as described next.
-Missing and Unavailable exclude sufficient evidence from every accessible path.
+For an Obtainable case, the initial images must leave the claim unresolved, \(Y_q(\mathcal{E}_0^v)=\Nme\), while an accessible set within budget determines an answer, \(Y_q(\mathcal{A}^v)\ne\Nme\).
+Downscaling alone does not guarantee that the preview leaves the claim unresolved.
+Public-photo versions use source labels and selected records to construct the access conditions, whereas rendered versions also verify initial ambiguity and eventual sufficiency against the images themselves, as described next.
+Missing and Unavailable exclude sufficient evidence from every accessible set.
 
 Alternative sufficient sets receive equal credit.
 Crops retain their source mapping, so repeated crops do not become independent evidence.
-A model that abstains before obtaining accessible evidence leaves an answerable claim unresolved; when no accessible set settles the claim, abstention is the appropriate answer.
+A model that abstains before obtaining accessible evidence leaves an answerable claim unresolved; when no accessible set settles the claim, abstention is the correct answer.
 
 \subsection{Constructing Two-step Cases}
 \label{sec:two-step-construction}
@@ -213,23 +199,23 @@ Their rear panels can be scratched or intact.
 The claim concerns the rear condition of the crate identified in a reference photograph.
 Inspecting an intact distractor does not refute damage to that target.
 
-In Obtainable, an initial overview hides both the identifying textures and rear condition.
+In Obtainable, an initial overview hides both the identifying textures and the rear condition.
 A front survey reveals the target's position; inspecting the rear at that position reveals its condition.
 The inspection positions are fixed and publicly named.
 This construction tests whether the model selects the relevant view after locating the target.
 
 We render 66 scene pairs, giving 132 families: eight pairs for development and 58 pairs (116 families) for held-out evaluation.
 Members of a pair have identical reference and overview images but different target positions and opposite labels.
-A fixed front-then-left sequence can solve a case whose target is at left, but will miss its paired case when the target stands elsewhere.
-Each family's scene stays fixed across requests and access versions, with positions and labels balanced across the full collection.
+A fixed front-then-left sequence can solve a case whose target is on the left, but misses its paired case, whose target sits elsewhere.
+Each family's scene stays fixed across requests and access versions. Target positions and labels are balanced across the full collection.
 
 To check sufficiency, we enumerate 48 alternative worlds per scene: six identity permutations and eight rear-condition assignments.
 For history \(h\), let \(\mathcal{Z}(h)\) contain worlds whose released RGB images and public metadata exactly match the observations.
-The evidence determines an answer only if
+The evidence determines an answer exactly when
 \begin{equation}
-\bigl|\{y(z):z\in\mathcal{Z}(h)\}\bigr|=1.
+\bigl|\{y(z):z\in\mathcal{Z}(h)\}\bigr|=1,
 \label{eq:compatible-worlds}
-\end{equation}
+\end{equation} where \(y(z)\) is the claim label in world \(z\).
 Every initial and one-request history in Obtainable admits both labels.
 A front survey and the target rear view leave only one possible claim label.
 The evaluator also checks the reference-to-front and front-to-rear links and the cited diagnostic region against rendered visibility masks.
@@ -248,10 +234,10 @@ Display crops and blue boxes are for illustration only.}
 \subsection{Finding Evidence and Using It Correctly}
 Collecting a new photograph, collecting sufficient evidence and answering correctly are different outcomes.
 Let \(d=(\hat y,\mathcal{C},\mathcal{L})\) contain the answer, image/region/time references and links between images.
-Define \(V_q(d)=1\) when the cited released evidence establishes the submitted definite answer.
+Define \(V_q(d)=1\) when the cited released evidence establishes the submitted definite answer (\(\Spt\) or \(\Rft\)).
 Grounded correctness is
 \begin{equation}
-G(d)=\ind[\hat y=Y_q(\mathcal{A})]\,
+G(d)=\ind[\hat y=Y_q(\mathcal{A}^v)]\,
 \ind[\hat y=\Nme\ \lor\ V_q(d)=1].
 \label{eq:grounded}
 \end{equation}
@@ -277,7 +263,7 @@ We compare answering from initial images, interactive evidence collection and an
 Requests, tool cost, tokens and time measure the cost of reaching a decision.
 Shared-history image substitutions~\cite{countercredit} further test whether the returned pixels affect the answer.
 \section{Experiments}
-We evaluate verification and post-training on public photographs, then test image use and adaptive view selection with controlled comparisons.
+We evaluate verification and post-training on public photographs, and then test image use and adaptive view selection with controlled comparisons.
 
 \input{tables/benchmark_results}
 
@@ -285,16 +271,16 @@ We evaluate verification and post-training on public photographs, then test imag
 \label{sec:setup}
 
 \paragraph{Image collections.}
-The public-photo evaluation uses a fixed common cohort of 209 labelled families: 153 condition cases and 56 identity controls, with 103 Supported and 106 Refuted claims.
+The public-photo evaluation uses a fixed common cohort of 209 labelled families: 153 condition families and 56 identity controls, with 103 Supported and 106 Refuted claims.
 Unlabelled candidates are excluded.
 Condition accuracy measures agreement on the named defect; identity accuracy measures agreement on the same-item claim.
 Overall accuracy pools both tasks.
 Sufficient supplies the selected records, whereas Obtainable withholds a full-resolution image while retaining its preview and public request options.
 Missing and Unavailable test stopping when required records cannot be supplied.
-The procedural comparison uses the 116 held-out Obtainable families from Section~\ref{sec:two-step-construction}, excluding the 16 development families.
+The rendered comparison uses the 116 held-out Obtainable families from Section~\ref{sec:two-step-construction}, excluding the 16 development families.
 
 \paragraph{Models and answering settings.}
-We evaluate ten open-weight models: Qwen2.5-VL-7B~\cite{qwen25}; Qwen3-VL-2B/4B/8B~\cite{qwen3}; Qwen3.5-9B~\cite{qwen35}; InternVL3.5-8B/14B~\cite{internvl35}; LLaVA-OneVision-7B~\cite{llavaonevision}; SmolVLM2-2.2B~\cite{smolvlm2}; and Pixtral-12B.
+We evaluate ten open-weight models: Qwen2.5-VL-7B~\cite{qwen25}; Qwen3-VL-2B/4B/8B~\cite{qwen3}; Qwen3.5-9B~\cite{qwen35}; InternVL3.5-8B/14B~\cite{internvl35}; LLaVA-OneVision-7B~\cite{llavaonevision}; SmolVLM2-2.2B~\cite{smolvlm2}; and Pixtral-12B~\cite{pixtral}.
 % api-models-start
 API models are GPT-6.1 Sol, GPT-6.1 Terra, GPT-5.4 mini, GPT-4.1 mini and GPT-6 Luna, including a separate Decisions interface for Luna~\cite{openai_api}.
 % api-models-end
@@ -302,40 +288,40 @@ Base models receive no demonstrations.
 \emph{No tools} answers once from the initial images.
 \emph{With tools} starts from the same images and allows inspection and photograph requests before a cited answer.
 Full access supplies all obtainable images initially (supplement).
-Interactive runs allow eight turns, cost budget 12 and 384 output tokens per call; direct answers allow 96.
+Interactive runs allow eight turns, cost budget of 12 and 384 output tokens per call; direct answers allow 96 output tokens.
 Their comparison therefore includes format and computation differences.
 Local runs use BF16, greedy decoding and native image processors on RTX A6000 GPUs.
 % api-inference-start
-API runs retain the image, context and interaction limits with provider-native sampling.
-Luna Decisions selects application-supplied actions; generated-text tokens are inapplicable.
+API runs use the same image, context and interaction limits with provider-native sampling.
+Luna Decisions selects application-supplied actions, so generated-text token counts do not apply.
 % api-inference-end
 
 \paragraph{Post-training.}
 Table~\ref{tab:sft} compares Base, SFT, RL from Base and RL after SFT for Qwen2.5-VL-7B and Qwen3-VL-2B/8B.
-Attention LoRA adapters use source-disjoint CO3D and VisA~\cite{visa} histories, with 1,080 training and 360 validation decisions per task.
+We train LoRA adapters on attention layers using CO3D and VisA~\cite{visa} histories from sources disjoint from evaluation, with 1,080 training and 360 validation decisions per task.
 SFT checkpoints are selected by validation loss.
 Both RL routes use GRPO with 64 groups of four sampled trajectories and report the final checkpoint.
-Each condition has one run.
-No model is trained on procedural cases.
+Each training configuration has one run.
+No model is trained on rendered cases.
 Optimization details and action-target ablations are in the supplement.
 
 \input{tables/sft_results}
 
 \paragraph{Controlled request strategies.}
-Each two-step strategy has two request slots and cost budget six.
-Adaptive selection is compared with repeating the original, fixed front-then-left requests, two distinct random views and privileged selection of the target rear.
+Each two-step strategy has two request slots and a cost budget of six.
+Adaptive selection is compared with (i) repeating the original, (ii) fixed front-then-left requests, (iii) two distinct random views and (iv) privileged selection of the target rear.
 An image-processing program matches front textures to locate the target and reads its rear condition from RGB pixels.
 The program is specific to this renderer, with parameters frozen after development.
 We keep its image reader fixed across request strategies to test whether adaptive requests help with the same visual processing.
 A separate model diagnostic tests Qwen3-VL-8B Base and SFT+RL, Qwen3.5-9B and InternVL3.5-8B.
 Models select requests from a lettered menu, then choose an answer using image-derived candidate boxes and supplied identity links.
-Each model retains the same terminal interface across strategies.
+Each model retains the same final-answer interface across strategies.
 This assistance removes call-format failures and supplies region candidates; the model must still select useful views and an answer.
 
 \paragraph{Metrics.}
 Public-photo accuracy is source-label agreement over all attempts.
 Abstentions, invalid submissions and failure to finish score zero in Sufficient and Obtainable.
-For procedural cases, \emph{Found} means the observed pixels determine the claim label.
+For rendered cases, \emph{Found} means the observed pixels determine the claim label.
 \emph{Grounded} additionally requires a correct answer, valid identity links and localized references (Equation~\ref{eq:grounded}).
 \emph{Finished} counts valid submissions, including abstentions.
 \emph{Requests} counts episodes requesting photographs; \emph{Photo retrieval} counts those receiving content or resolution not shown earlier.
@@ -346,14 +332,13 @@ A dash marks incomplete or inapplicable measurements.
 
 \subsection{Verification on Public Photographs}
 
-Image access substantially changes performance.
 Interactive Qwen3-VL-8B reaches 82.3\% in Sufficient and 52.6\% in Obtainable (Table~\ref{tab:benchmark}).
 Supplying all obtainable images to direct answering raises Obtainable accuracy from 34.9\% to 72.7\% (supplement).
 Yet the interactive policy retrieves a new image in only 5.7\% of episodes.
 Of its 37 net additional correct answers over direct answering, 36 occur among the 197 episodes without a photograph request.
 Although this grouping depends on the policy's choices, \textbf{most of the improvement occurs with existing images}.
 
-Sol reaches 81.7\% on condition and 53.6\% on identity; Luna reaches 57.5\% and 82.1\%, respectively.
+In Obtainable, Sol reaches 81.7\% on condition and 53.6\% on identity; Luna reaches 57.5\% and 82.1\%, respectively.
 Both retrieve new images in nearly every episode.
 The reversed ranking motivates reporting condition and identity separately.
 
@@ -361,7 +346,7 @@ The reversed ranking motivates reporting condition and identity separately.
 Interactive evaluation also requires selecting actions and submitting a valid cited answer.
 On Sufficient, Qwen3-VL-2B corrects seven direct-answer errors but loses 48 correct answers; 46 end without a valid final submission.
 Sol completes every episode yet loses 16 previously correct answers: seven become abstentions and nine change to the wrong label.
-An 8B vehicle trace still describes the same item, but seven malformed final calls leave it without a submitted answer.
+In one Qwen3-VL-8B trace on a vehicle pair, the reasoning correctly identifies the same item, but seven malformed final calls leave it without a submitted answer.
 \textbf{Lower interactive accuracy need not mean worse visual recognition.}
 Prompts, format and computation also change; the supplement separates the losses and gives case traces.
 
@@ -370,67 +355,58 @@ Prompts, format and computation also change; the supplement separates the losses
 % adaptation-results-start
 % adaptation-analysis-reviewed
 \paragraph{Answering after training.}
-SFT makes answering substantially more reliable.
 Qwen2.5-VL-7B rises from 3.8\% to 73.7\% with tools in Sufficient.
 For 2B in Obtainable, completion increases from 45.9\% to 100\%, while mean time falls from 13.4 to 6.2 seconds.
 The 7B and 2B SFT policies nevertheless request no photographs.
 The 8B SFT policy obtains new images in 82 cases, all concerning condition detail.
-\textbf{SFT improves completion more consistently than useful requests.}
+\textbf{SFT improves completion, but its effect on useful requests varies across models.}
 
 SFT+RL improves Sufficient accuracy over SFT for all three models.
 Its Obtainable effects differ: 8B rises from 67.0\% to 70.8\%, while 7B falls from 57.9\% to 55.5\% and 2B from 59.3\% to 56.5\%.
 For 8B, identity accuracy rises from 76.8\% to 83.9\% without additional identity images.
-These single-run comparisons suggest that benefits depend on image access.
+These single-run comparisons suggest that the benefits of RL depend on image access.
 
 \paragraph{Choosing what to request.}
 In a matched-history 8B ablation, adding action targets to mixed-task SFT raises requests from zero to 39.2\%, all for condition originals.
-None requests an identity view.
+None of these requests targets an identity view.
 
 The 8B RL and SFT+RL policies differ by one correct Sufficient answer (84.2\% versus 83.7\%).
 Their Obtainable behavior diverges: SFT+RL reaches 70.8\% and retrieves 92 condition originals, whereas RL reaches 55.5\% and retrieves 14 new images, nine condition and five identity.
-The near tie with supplied records therefore conceals different responses to withheld detail.
+The near tie in Sufficient therefore conceals different responses to withheld detail.
 % adaptation-results-end
 
 \input{tables/search_behavior}
 
-The returned image matters as well as the decision to ask.
 The 2B SFT+RL policy requests photographs in 64 cases but receives a new image in only one (Table~\ref{tab:search-behavior}).
 Its other 63 requests ask for a condition overview already supplied.
-The 8B policy requests originals and receives new pixels in all 92 requesting cases.
-Figure~\ref{fig:teaser} shows this difference on the same bottle.
+The 8B SFT+RL policy requests originals and receives new pixels in all 92 requesting cases.
 Enlarging a repeated preview cannot recover discarded detail.
 
 In the 92 families where 8B SFT+RL asks for an original, Obtainable, Missing and Unavailable share the public history until the response.
 The policy answers definitively when the image arrives and abstains when it cannot be supplied.
 Across all 209 Unavailable cases, however, it gives 116 definite answers.
-The conditional response describes cases where the policy chose to ask.
-Consistent abstention after denial can coexist with answering without requests elsewhere.
 
 \subsection{Controls on Public Photographs}
 
 \paragraph{Restoration.}
 We first ask whether the public-photo gains require choosing an action from the returned observations.
-At cost budget three, fixed restoration reaches 75.1\% source-label accuracy for 8B SFT+RL, compared with 69.4\% for adaptive requests (difference 5.7 points; paired 95\% CI: $[-0.5,12.4]$).
+With a cost budget of three, fixed restoration reaches 75.1\% source-label accuracy for 8B SFT+RL, compared with 69.4\% for adaptive requests (difference 5.7 points; paired 95\% CI: $[-0.5,12.4]$).
 Fixed restoration is competitive with the agent; its advantage is uncertain.
-The fixed arm also constrains the continuation to finish.
-All 209 public-photo cases, including the 56 identity controls, admit a one-request path to their constructed evidence requirements.
+The fixed arm permits only a final answer after the request; both arms finish all 209 episodes.
+A single request reaches the selected records in all 209 public-photo cases, including the 56 identity controls.
 They consequently permit detail recovery without forcing observation-dependent view selection.
 
-A capsule case makes the distinction concrete.
 The adaptive policy rejects the squeezed-body claim from a $48\!\times\!48$ preview and stops.
 The fixed-restoration control obtains the $1000\!\times\!1000$ original and answers Supported, matching the source annotation.
-The useful request is already identifiable from the preview's public record.
-The additional image helps, but no earlier returned view is needed to choose it.
+The preview's public record already identifies the original to request.
 
 \paragraph{Returned pixels.}
-Changing image access can change whether a model answers at all.
-Blocking new photographs while retaining the tool interface changes 52 source-matching answers to \emph{Need more evidence}.
-All these changes are abstentions.
+For 8B SFT+RL, blocking new photographs while retaining the tool interface changes 52 source-matching answers to \emph{Need more evidence}.
 In a matched finish-format comparison, restoring the original raises condition accuracy from 41.2\% to 66.7\%, with valid submissions throughout.
 
 To test the effect of the image content itself, we hold the earlier history and request feedback fixed in 68 selected condition histories from 8B SFT+RL.
-A common single-call finish readout receives the real original, gray pixels or a spatial shuffle.
-Real images yield 49 correct source labels, versus 35 for either substitution: a 20.6-point difference (95\% CI: 4.4--36.8).
+The model answers once with the real original, a gray image or a spatially shuffled image.
+Real images yield 49 correct source labels, versus 35 for either substitution: a 20.6-point difference (paired 95\% CI: $[4.4,36.8]$).
 All altered-image answers are Refuted.
 \textbf{The returned pixels change answers, while uninformative substitutions do not reliably prompt abstention.}
 
@@ -442,22 +418,19 @@ All altered-image answers are Refuted.
 After the front survey locates the target, its rear view can complete the evidence.
 The image-processing program tests this strategy with the same reader used for fixed and random requests.
 Adaptive requests reach 91.4\% grounded accuracy, versus 29.3\% for fixed front-then-left requests and zero for restoration (Table~\ref{tab:multistep}).
-The adaptive--fixed difference is 62.1 points (paired-scene 95\% CI: 54.3--69.8).
+The adaptive--fixed difference is 62.1 points (paired-scene 95\% CI: $[54.3,69.8]$).
 Giving the program the correct view in every case yields the same grounded accuracy: remaining errors concern reading and identity matching.
 This control shows that adapting requests to the front survey can improve the evidence available to a fixed reader.
 
 In one program episode, the reader inspects the wrong crate and answers Refuted, matching the target's label.
 Because both labels remain compatible with the observed images, this correct guess receives no grounded credit.
 
-A fixed position can succeed without responding to the front view.
-In Figure~\ref{fig:multistep-case}, the target is at left in one case and at center in the other.
-A fixed left-rear request settles only the first.
-We therefore report pairs where both members obtain sufficient evidence alongside average case success.
+We also report the fraction of pairs in which both members obtain sufficient evidence: a fixed left-rear request settles only one case in Figure~\ref{fig:multistep-case}.
 
 \paragraph{Model results.}
 We next ask whether the four model configurations collect the needed views when requests are presented as multiple-choice options.
 Across the four configurations, Found ranges from 1.7\% to 34.5\%, versus 32.8\% for fixed order.
-Qwen3-VL-8B Base's 1.7-point difference has a paired 95\% interval of $[0,4.3]$.
+Qwen3-VL-8B Base exceeds fixed order by only 1.7 points (paired 95\% CI: $[0,4.3]$).
 It obtains sufficient images for both members of only one of 58 pairs; the other configurations do so in none.
 All return valid choices, and Found is independent of final-answer or citation errors.
 \textbf{Removing call-format failures does not make the models reliably collect the views needed in both cases.}
@@ -467,15 +440,15 @@ SFT+RL starts with a rear view in 108 of 116 cases; in 86 it then requests the u
 This returns no identity information linking the inspected rear to the reference item.
 The traces locate failures within the search sequence, independently of the final answer.
 
-Supplying the correct views still gives at most 50.0\% label accuracy, equal to a constant answer on these balanced claims.
+Even when supplied the correct views, the four models reach at most 50.0\% label accuracy, equal to a constant answer on these balanced claims.
 Both image collection and answer selection remain difficult in this interface; the supplement reports native-call results.
 Fixed option order and renderer-specific appearance can affect both request and answer choices.
 
 \section{Conclusion}
 \benchmark evaluates how models obtain and use photographs to verify object claims.
-Post-training improves answers and completion on public photographs, but useful requests remain inconsistent.
-Matched rendered scenes require complementary identity and condition views and permit exact checks of the collected evidence.
-The tested models rarely obtain sufficient images for both members of a pair, despite valid request choices.
+Post-training improves answers and completion on public photographs, but its effect on useful requests varies across models.
+Paired rendered scenes require complementary identity and condition views and permit exact checks of the collected evidence.
+The tested models rarely obtain sufficient images for both members of a pair, even when requests are presented as multiple-choice options.
 The request histories reveal failures that final-answer accuracy alone does not identify.
 
 \label{resolveai-main-end}
