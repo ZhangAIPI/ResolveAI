@@ -8,6 +8,7 @@
 \usetikzlibrary{arrows.meta,positioning,calc}
 \definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
 \usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\def\paperID{27939}
 \def\confName{CVPR}
 \def\confYear{2027}
 \newcommand{\benchmark}{ResolveAI\xspace}
@@ -36,14 +37,14 @@ If the original cannot be supplied, the policy abstains.}
 
 \begin{abstract}
 Verifying an object's identity or condition can require photographs beyond those initially supplied.
-We introduce \benchmark, an interactive benchmark in which vision-language models inspect available images, request additional photographs and decide whether the evidence settles the claims.
-Each case family fixes the claim and object state while varying access to recorded images.
-Public-photo cases test identity and condition verification; paired rendered scenes require complementary views to link a reference item to its hidden condition.
-The rendered pairs share initial images but require different follow-up views.
-Enumerating alternative scenes establishes whether the collected images settle the claim.
+We introduce \benchmark, an interactive benchmark where vision-language models inspect images, request photographs and decide whether the evidence settles a claim.
+Each family fixes the claim and object state while varying image access.
+Public photographs test identity and condition verification.
+Paired rendered scenes share initial images but require different follow-up views to link a reference item to its hidden condition.
+Enumerating alternative scenes establishes whether the collected evidence settles the claim.
 We evaluate ten open-weight and five API models on 209 public-photo families and four local model configurations on 116 held-out rendered cases.
-Post-training the open-weight models improves answer accuracy and completion on public photographs, but they still request images they have already seen or stop without seeking missing evidence.
-In the rendered scenes, even when requests are presented as multiple-choice options, the tested models rarely collect sufficient evidence for both members of a pair.
+Post-training improves the open-weight models' accuracy and completion on public photographs, but they still request images already seen or stop without seeking missing evidence.
+With multiple-choice requests, the tested models rarely collect sufficient evidence for both paired cases.
 \end{abstract}
 
 \section{Introduction}
@@ -428,7 +429,7 @@ Because both labels remain compatible with the observed images, this correct gue
 We also report the fraction of pairs in which both members obtain sufficient evidence: a fixed left-rear request settles only one case in Figure~\ref{fig:multistep-case}.
 
 \paragraph{Model results.}
-We next ask whether the four model configurations collect the needed views when requests are presented as multiple-choice options.
+The four configurations choose views from multiple-choice requests.
 Across the four configurations, Found ranges from 1.7\% to 34.5\%, versus 32.8\% for fixed order.
 Qwen3-VL-8B Base exceeds fixed order by only 1.7 points (paired 95\% CI: $[0,4.3]$).
 It obtains sufficient images for both members of only one of 58 pairs; the other configurations do so in none.
@@ -438,7 +439,6 @@ All return valid choices, and Found is independent of final-answer or citation e
 Base always requests the front survey first, but changes its second request between the two cases in only three of 58 pairs.
 SFT+RL starts with a rear view in 108 of 116 cases; in 86 it then requests the unchanged original.
 This returns no identity information linking the inspected rear to the reference item.
-The traces locate failures within the search sequence, independently of the final answer.
 
 Even when supplied the correct views, the four models reach at most 50.0\% label accuracy, equal to a constant answer on these balanced claims.
 Both image collection and answer selection remain difficult in this interface; the supplement reports native-call results.
